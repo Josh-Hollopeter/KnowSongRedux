@@ -43,6 +43,10 @@ public class AuthController {
 	public Principal authenticate(Principal principal) {
 	    return principal;
 	}
+	
+	//------------------------------------------
+	//--------------- OAuth2 -------------------
+	//------------------------------------------
 
 
 }
