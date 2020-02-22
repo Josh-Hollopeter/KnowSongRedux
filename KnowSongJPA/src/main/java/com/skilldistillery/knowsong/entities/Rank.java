@@ -16,6 +16,31 @@ public class Rank {
 	
 	@Column(name = "img_source")
 	private String imgSource;
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getImgSource() {
+		return imgSource;
+	}
+
+
+	public void setImgSource(String imgSource) {
+		this.imgSource = imgSource;
+	}
+
+
+	public Rank() {
+		super();
+	}
 	
 	
 

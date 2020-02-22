@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.knowsong.entities.User;
+import com.skilldistillery.knowsong.repositories.RankRepository;
 import com.skilldistillery.knowsong.services.AuthService;
 
 @RestController
-@CrossOrigin({"*", "http://localhost:4200"})
+@CrossOrigin({"*", "http://localhost:4250"})
 public class AuthController {
 	
 	@Autowired
@@ -23,8 +24,11 @@ public class AuthController {
 	
 	
 	
+	
+	
 	@RequestMapping(path = "/register", method = RequestMethod.POST)
 	public User register(@RequestBody User user, HttpServletResponse res) {
+	
 
 	    if (user == null) {
 	        res.setStatus(400);
