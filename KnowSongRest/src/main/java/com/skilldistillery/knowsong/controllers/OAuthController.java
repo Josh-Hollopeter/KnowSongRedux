@@ -8,6 +8,8 @@ import com.wrapper.spotify.SpotifyApi;
 @RestController
 @CrossOrigin({"*", "http://localhost:4250"})
 public class OAuthController {
+	
+
 	private SpotifyApi spotifyApi = new SpotifyApi.Builder()
 			.setAccessToken("").build();
 	
