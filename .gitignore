@@ -4,4 +4,4 @@ build
 target
 .gradle
 /.metadata/
-clientSecret.txt
+string.txt
