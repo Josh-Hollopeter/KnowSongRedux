@@ -6,13 +6,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.knowsong.entities.User;
-import com.skilldistillery.knowsong.repositories.RankRepository;
 import com.skilldistillery.knowsong.services.AuthService;
 
 @RestController
@@ -39,7 +39,7 @@ public class AuthController {
 	    return user;
 	}
 
-	@RequestMapping(path = "/authenticate", method = RequestMethod.GET)
+	@GetMapping("/authenticate")
 	public Principal authenticate(Principal principal) {
 	    return principal;
 	}
