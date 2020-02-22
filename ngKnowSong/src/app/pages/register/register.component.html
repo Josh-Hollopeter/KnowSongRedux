@@ -3,10 +3,10 @@
 <hr>
 <div class="form">
   <form #registerForm="ngForm" (submit)="register(registerForm)">
-    Email: <input ngModel type="text" placeholder="email" name="email">
+    <!-- Email: <input ngModel type="text" placeholder="email" name="email"> -->
     <br> Username: <input ngModel type="text" placeholder="username" name="username">
     <br> Password: <input ngModel type="password" placeholder="password" name="password">
     <br> Verify Password: <input ngModel type="password" placeholder="Re-enter Password" name="verifyPassword">
-    <br> <input type="submit" value="Register" (click)="register(registerForm)">
+    <br> <input type="submit" value="Register">
   </form>
 </div>
