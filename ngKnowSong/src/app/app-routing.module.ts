@@ -7,6 +7,7 @@ import { UserpageComponent } from './pages/userpage/userpage.component';
 
 
 const routes: Routes = [
+  {path: '', pathMatch: 'full', redirectTo: 'index'},
   {path: 'index', component: IndexComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
