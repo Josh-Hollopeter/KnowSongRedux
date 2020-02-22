@@ -44,7 +44,7 @@ public class AuthController {
 		return user;
 	}
 
-	@RequestMapping(path = "/authenticate", method = RequestMethod.GET)
+	@GetMapping("/authenticate")
 	public Principal authenticate(Principal principal) {
 		return principal;
 	}
