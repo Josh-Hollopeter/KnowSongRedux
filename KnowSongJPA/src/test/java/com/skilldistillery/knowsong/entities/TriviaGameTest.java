@@ -1,8 +1,6 @@
 package com.skilldistillery.knowsong.entities;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,15 +12,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class UserTest {
-	
+class TriviaGameTest {
+
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private User user;
-
+	private TriviaGame tg;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		emf = Persistence.createEntityManagerFactory("knowsong");
+
 	}
 
 	@AfterAll
@@ -32,8 +30,7 @@ class UserTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		user = em.find(User.class, 1);
-		
+		tg = em.find(TriviaGame.class, 1);
 	}
 
 	@AfterEach
@@ -42,11 +39,7 @@ class UserTest {
 
 	@Test
 	void test() {
-		assertNotNull(user);
-		assertNotNull(user.getRank());
-		assertNotEquals(0, user.getPlaylists().size());
-
-		
+		assertNotNull(tg);
 	}
 
 }

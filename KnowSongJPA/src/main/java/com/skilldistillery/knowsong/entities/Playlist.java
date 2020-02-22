@@ -1,10 +1,13 @@
 package com.skilldistillery.knowsong.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Playlist {
@@ -17,9 +20,23 @@ public class Playlist {
 	@Column(name = "spotify_id")
 	private String spotifyId;
 	
+	@ManyToMany(mappedBy="playlists")
+	private List<User> users;
+	
 	private String name;
 	
 	private String description;
+
+	
+	
+	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 
 	public int getId() {
 		return id;
