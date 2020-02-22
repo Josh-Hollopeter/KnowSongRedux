@@ -13,16 +13,32 @@ export class AuthService {
 
   constructor( private http: HttpClient ) { }
 
-  login(username: string, password: string){
-
+  login(username, password) {
+    // Make credentials
     const credentials = this.generateBasicAuthCredentials(username, password);
+    console.log(credentials);
+    // Send credentials as Authorization header (this is spring security convention for basic auth)
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Basic ${credentials}`,
         'X-Requested-With': 'XMLHttpRequest'
       })
-    }
-  };
+    };
+
+    // create request to authenticate credentials
+    return this.http
+      .get(this.baseUrl + 'authenticate', httpOptions)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('credentials' , credentials);
+          return res;
+        }),
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('AuthService.login(): Error logging in.');
+        })
+      );
+  }
 
   register(user: User){
     return this.http.post(this.baseUrl + 'register', user)

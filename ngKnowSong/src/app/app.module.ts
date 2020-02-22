@@ -10,6 +10,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
+import { UserHomeComponent } from './pages/user-home/user-home.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {HttpClientModule} from '@angular/common/http';
     RegisterComponent,
     LoginComponent,
     NavbarComponent,
+    UserHomeComponent,
   ],
   imports: [
     BrowserModule,
