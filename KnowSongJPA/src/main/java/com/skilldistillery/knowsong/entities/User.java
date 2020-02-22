@@ -1,8 +1,15 @@
 package com.skilldistillery.knowsong.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -13,6 +20,24 @@ public class User {
 	private int id;
 	
 	private String username;
+	
+	@ManyToOne
+	@JoinColumn(name = "rank_id")
+	private Rank rank;
+	
+	@ManyToMany
+	@JoinTable(name="user_playlist",
+    joinColumns=@JoinColumn(name="user_id"),
+    inverseJoinColumns=@JoinColumn(name="playlist_id")
+  )
+	private List<Playlist> playlists;
+	
+	
+	
+	@OneToMany(mappedBy="user")
+	private List <TriviaGame> games;
+	
+	
 	
 	private String password;
 	
@@ -31,8 +56,32 @@ public class User {
 
 	
 	
+	public List<TriviaGame> getGames() {
+		return games;
+	}
+
+	public void setGames(List<TriviaGame> games) {
+		this.games = games;
+	}
+
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
 	public int getId() {
 		return id;
+	}
+
+	public Rank getRank() {
+		return rank;
+	}
+
+	public void setRank(Rank rank) {
+		this.rank = rank;
 	}
 
 	public void setId(int id) {
