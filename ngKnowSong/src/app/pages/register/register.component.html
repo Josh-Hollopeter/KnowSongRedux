@@ -1,1 +1,12 @@
-<p>register works!</p>
+<h1>Register with KnowSongs</h1>
+<p>Then login to spotify, we only require access to your <b>public</b> information.</p>
+<hr>
+<div class="form">
+  <form #registerForm="ngForm" (submit)="register(registerForm)">
+    Email: <input ngModel type="text" placeholder="email" name="email">
+    <br> Username: <input ngModel type="text" placeholder="username" name="username">
+    <br> Password: <input ngModel type="password" placeholder="password" name="password">
+    <br> Verify Password: <input ngModel type="password" placeholder="Re-enter Password" name="verifyPassword">
+    <br> <input type="submit" value="Register" (click)="register(registerForm)">
+  </form>
+</div>

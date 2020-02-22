@@ -15,6 +15,12 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  login(): void{
+    this.route.navigateByUrl('login');
+  }
+  register(): void{
+    this.route.navigateByUrl('register');
+  }
 
 
 }
