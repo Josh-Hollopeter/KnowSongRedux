@@ -1,1 +1,7 @@
-<p>navbar works!</p>
+
+<ul>
+  <a class="nav-link" [routerLink]="['/index']"> Home</a>
+  <a class="nav-link" [routerLink]="['/login']"> Login</a>
+  <a class="nav-link" [routerLink]="['/register']"> Register</a>
+  <a *ngIf="isLoggedIn()" class="nav-link" [routerLink]="['/logout']">Logout</a>
+</ul>
