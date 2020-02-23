@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { User } from '../models/user';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +49,18 @@ export class AuthService {
       })
     );
   }
+
+  requestAuthorization() {
+    return this.http.get(this.baseUrl + 'getAuthorized', {responseType: 'text'}).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('AuthService.requestAuthorization(): Error getting redirect uri.');
+      })
+    );
+  }
+
+
+  // small boys
 
   checkLogin() {
     if (localStorage.getItem('credentials')) {

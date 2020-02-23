@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `refresh_token` VARCHAR(200) NULL,
   `img_source` TEXT NULL,
   `spotify_username` VARCHAR(45) NULL,
+  `role` VARCHAR(45) NOT NULL DEFAULT 'standard',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   INDEX `fk_user_rank1_idx` (`rank_id` ASC),
@@ -220,10 +221,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `knowsong`;
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`) VALUES (1, 1, 'admin', 'admin', true, true, NULL, NULL, NULL, NULL);
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`) VALUES (2, 1, 'josh', 'josh', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTnwVZBOZei-0zETT_6deW7E1vQ2RQP11a3dJvAtsUKTjdOCcTC', NULL);
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`) VALUES (3, 1, 'neal', 'neal', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRc8_Db4AymKkryiX9laJDyTaMJdiwLXrMUednJAA5-1WYUkRsK', NULL);
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`) VALUES (4, 1, 'george', 'george', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTclSHuv_1kczqblnf7oQ3Qd4v3Fiz-R-aZNqTkWIz3JmGoV12H', NULL);
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (1, 1, 'admin', 'admin', true, true, NULL, NULL, NULL, NULL, DEFAULT);
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (2, 1, 'josh', 'josh', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTnwVZBOZei-0zETT_6deW7E1vQ2RQP11a3dJvAtsUKTjdOCcTC', NULL, DEFAULT);
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (3, 1, 'neal', 'neal', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRc8_Db4AymKkryiX9laJDyTaMJdiwLXrMUednJAA5-1WYUkRsK', NULL, DEFAULT);
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (4, 1, 'george', 'george', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTclSHuv_1kczqblnf7oQ3Qd4v3Fiz-R-aZNqTkWIz3JmGoV12H', NULL, DEFAULT);
 
 COMMIT;
 

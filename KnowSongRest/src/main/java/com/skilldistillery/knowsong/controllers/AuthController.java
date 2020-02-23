@@ -22,6 +22,7 @@ import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 
 @RestController
 @CrossOrigin({ "*", "http://localhost:4250" })
@@ -59,15 +60,30 @@ public class AuthController {
 	private static final String code = "code";
 	private static final String scope = "user-read-private user-read-email";
 	
+	// STEP 1 : GET AUTHORIZED BROH
+	
 	private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
-	          .setClientId(clientId)
-	          .setClientSecret(clientSecret)
-	          .setRedirectUri(redirectUri)
-	          .build();
+			.setClientId(clientId)
+			.setClientSecret(clientSecret)
+			.setRedirectUri(redirectUri)
+			.build();
+	
+	private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = 
+			spotifyApi
+			.authorizationCodeUri()
+			.scope(scope).show_dialog(true).build();
+	
+	@GetMapping("/getAuthorized")
+	public String getAuthorized(HttpServletResponse response) {
+		final URI uri = authorizationCodeUriRequest.execute();
+		System.out.println("URI : " + uri.toString());
+		return uri.toString();
+	}
+	
+	// STEP 2: RETRIEVE THE TOKENS FROM SPOTIFY BROH
+	
 	private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
 	          .build();
-	
-	
 	
 	@GetMapping("/getTokens")
 	public void getTokens(@RequestParam("code") String code, HttpServletResponse response) {

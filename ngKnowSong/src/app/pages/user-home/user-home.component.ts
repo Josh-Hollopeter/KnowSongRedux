@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-home',
@@ -11,13 +12,22 @@ export class UserHomeComponent implements OnInit {
 
   loggedUser:User;
 
-  constructor(private router: Router) { }
+  constructor(
+    private route: Router,
+    private auth: AuthService
+    ) { }
 
   ngOnInit(): void {
   }
 
-  playGame(){
-    console.log("here");
+  authorize(){
+    console.log("authoirzing");
+
+    this.auth.requestAuthorization().subscribe(
+      data => {
+        window.location.href = data;
+      }
+    );
   }
 
 }
