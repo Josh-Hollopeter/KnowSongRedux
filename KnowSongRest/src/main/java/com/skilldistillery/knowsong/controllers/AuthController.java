@@ -3,6 +3,9 @@ package com.skilldistillery.knowsong.controllers;
 import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,8 +59,7 @@ public class AuthController {
 	// ------------------------------------------
 	private static final String clientId = "a2398fd3acd54cf8b645af6884251a55";
 	private static final String clientSecret = "e8c8ceef3b064187ada929c80caaca17";
-	private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4250/authorize");
-	private static final String code = "code";
+	private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4250/callback");
 	private static final String scope = "user-read-private user-read-email";
 
 	// STEP 1 : GET AUTHORIZED BROH
@@ -66,14 +68,14 @@ public class AuthController {
 			.setClientSecret(clientSecret).setRedirectUri(redirectUri).build();
 
 	private AuthorizationCodeUriRequest authorizationCodeUriRequest;
+	private String stateKey;
 
 	@PostMapping("/getAuthorized")
 	public String getAuthorized(@RequestBody String state, HttpServletResponse response, Principal principal) {
-		 authorizationCodeUriRequest = spotifyApi.
-				authorizationCodeUri()
-				.scope(scope)
-				.show_dialog(false)
-				.state(state)
+		this.stateKey = state;
+		System.out.println("local state" + state);
+		System.out.println("global state: " +this.stateKey);
+		authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().scope(scope).show_dialog(true).state(state)
 				.build();
 		final URI uri = authorizationCodeUriRequest.execute();
 		System.out.println("URI : " + uri.toString());
@@ -82,25 +84,37 @@ public class AuthController {
 
 	// STEP 2: RETRIEVE THE TOKENS FROM SPOTIFY BROH
 
-	private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
+	private AuthorizationCodeRequest authorizationCodeRequest;
 
-	@GetMapping("/authorizeUser")
-	public void getTokens(@RequestParam("code") String code, HttpServletResponse response, Principal principal) {
+	@PostMapping("/authorizeUser")
+	public void getTokens(@RequestBody String packet, HttpServletResponse response, Principal principal) {
 		try {
 			/*
 			 * Request an access token and refresh token by creating an <a href=
 			 * "https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow"
 			 * >Authorization Code</a> request.
 			 */
-			System.out.println(code);
-			final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
-			spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
-			spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
-			System.out.println(spotifyApi.getAccessToken());
-			System.out.println(spotifyApi.getRefreshToken());
+			List<String> packetString = Arrays.asList(packet.split(","));
+			String code = packetString.get(0);
+			String state = packetString.get(1);
+			System.out.println("new state " +state);
+			System.out.println("this.state key " + this.stateKey);
+			System.out.println("state key " + stateKey);
+			//verify the state is the same get back to this later
+			if (state.equals(stateKey)) {
+				AuthorizationCodeRequest authorizationCodeRequest = spotifyApi
+						.authorizationCode(code)
+				          .build();
+				final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+				spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
+				spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+				System.out.println("ACCESS TOKEN " + spotifyApi.getAccessToken());
+				System.out.println("REFRESH TOKEN " + spotifyApi.getRefreshToken());
+			}
 		} catch (IOException | SpotifyWebApiException e) {
 			System.err.println("ERROR: " + e.getMessage());
 		}
+
 	}
 
 //	@PostMapping("")

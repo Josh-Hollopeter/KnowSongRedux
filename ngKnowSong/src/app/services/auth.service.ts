@@ -84,7 +84,30 @@ export class AuthService {
     }
     return text;
   }
+  //verify that state string is the same, then send code to server to retrieve OAuth2 token.
 
+  authorizeUser(code: string, state: string){
+    console.log("HELLO FROM AUTHorize");
+
+  //pack up our data into a comma sepearated string
+    let packet = code + "," + state;
+    //generate header
+    var credentials = localStorage.getItem('credentials');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${credentials}`,
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'text/plain; charset=utf-8'
+      })
+    };
+
+    return this.http.post(this.baseUrl + 'authorizeUser', packet, httpOptions).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('AuthService.requestAuthorization(): Error getting tokens :(');
+      })
+    );
+  }
   // small boys
 
   checkLogin() {
