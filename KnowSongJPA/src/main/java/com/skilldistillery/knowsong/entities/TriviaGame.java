@@ -1,5 +1,8 @@
 package com.skilldistillery.knowsong.entities;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +22,9 @@ public class TriviaGame {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@Column(name = "date_played")
+	private LocalDateTime datePlayed;
 
 	public int getId() {
 		return id;
@@ -35,5 +41,15 @@ public class TriviaGame {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public LocalDateTime getDatePlayed() {
+		return datePlayed;
+	}
+
+	public void setDatePlayed(LocalDateTime datePlayed) {
+		this.datePlayed = datePlayed;
+	}
+
+	
 
 }

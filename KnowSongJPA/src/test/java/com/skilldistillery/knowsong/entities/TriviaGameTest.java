@@ -40,6 +40,7 @@ class TriviaGameTest {
 	@Test
 	void test() {
 		assertNotNull(tg);
+		assertNotNull(tg.getUser());
 	}
 
 }
