@@ -2,8 +2,8 @@ export class Quizmodel {
   ID: number;
   language: String;
   question: String;
-  anslistobj;
-  answer;
+  anslistobj: any;
+  answer:any;
 
   constructor(
     ID: number,
