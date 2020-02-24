@@ -11,25 +11,21 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Playlist {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	
+
 	@Column(name = "spotify_id")
 	private String spotifyId;
-	
-	@ManyToMany(mappedBy="playlists")
-	private List<User> users;
-	
+
 	private String name;
-	
+
 	private String description;
 
-	
-	
-	
+	@ManyToMany(mappedBy = "playlists")
+	private List<User> users;
+
 	public List<User> getUsers() {
 		return users;
 	}
@@ -69,6 +65,5 @@ public class Playlist {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
 }

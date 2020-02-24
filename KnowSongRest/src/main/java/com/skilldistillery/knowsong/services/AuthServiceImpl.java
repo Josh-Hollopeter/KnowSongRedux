@@ -17,6 +17,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private PasswordEncoder encoder;
+	
 	@Autowired
 	private RankRepository rankRepo;
 
@@ -37,5 +38,17 @@ public class AuthServiceImpl implements AuthService {
 		userRepo.saveAndFlush(user);
 		return user;
 	}
+
+	@Override
+	public User findUser(String username) {
+		return userRepo.findByUsername(username);		
+	}
+	
+	@Override
+	public User save(User user) {
+		return userRepo.saveAndFlush(user);
+	}
+	
+
 
 }

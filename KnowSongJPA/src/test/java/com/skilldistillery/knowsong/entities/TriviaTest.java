@@ -40,6 +40,7 @@ class TriviaTest {
 	@Test
 	void test() {
 		assertNotNull(trivia);
+		assertNotNull(trivia.getQuestionCategory());
 	}
 
 }
