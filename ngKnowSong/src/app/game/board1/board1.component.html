@@ -1,0 +1,40 @@
+<div class="jumbotron">
+	<h1> QUIZ</h1>
+	<div class="form-group">
+		<label for="input3" class="col-sm-4 control-label">Search Language for mock test:</label>
+		<div class="col-sm-6">
+
+			<select [(ngModel)]="selectedvalue" (change)="gettinglanguage()">
+    <option *ngFor="let g of languages" [value]="g">{{g}}</option>
+  </select>
+		</div>
+	</div>
+
+<div class="jumbotron">
+  <ul>
+{{question}}
+
+  </ul>
+  	<ul *ngFor="let opt of option">
+					<div class="checkbox">
+						<label>
+             <input type="checkbox" (click)="check($event,opt)">
+           {{opt}}
+   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+
+
+
+   Option one
+   </label>
+					</div>
+				</ul>
+   <button (click)="previous()"*ngIf="i>0" >previous</button>
+     <button  (click)="next()" *ngIf="i<quizlength">next</button>
+
+</div>
+
+
+
+	<button class="btn btn-info" (click)="generatemark()">submit</button>
+</div>
+
