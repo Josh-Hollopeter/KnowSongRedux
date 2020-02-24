@@ -56,7 +56,7 @@ public class AuthController {
 	// ------------------------------------------
 	private static final String clientId = "a2398fd3acd54cf8b645af6884251a55";
 	private static final String clientSecret = "e8c8ceef3b064187ada929c80caaca17";
-	private static final URI redirectUri = SpotifyHttpManager.makeUri("https://lukesprogrammingtech.com");
+	private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4250/authorize");
 	private static final String code = "code";
 	private static final String scope = "user-read-private user-read-email";
 
@@ -65,12 +65,16 @@ public class AuthController {
 	private static final SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId)
 			.setClientSecret(clientSecret).setRedirectUri(redirectUri).build();
 
-	private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-			.scope(scope).show_dialog(false).build();
+	private AuthorizationCodeUriRequest authorizationCodeUriRequest;
 
 	@PostMapping("/getAuthorized")
-	public String getAuthorized(@RequestParam("state") String state, HttpServletResponse response) {
-		System.out.println("State: " + state);
+	public String getAuthorized(@RequestBody String state, HttpServletResponse response, Principal principal) {
+		 authorizationCodeUriRequest = spotifyApi.
+				authorizationCodeUri()
+				.scope(scope)
+				.show_dialog(false)
+				.state(state)
+				.build();
 		final URI uri = authorizationCodeUriRequest.execute();
 		System.out.println("URI : " + uri.toString());
 		return uri.toString();
@@ -81,7 +85,7 @@ public class AuthController {
 	private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
 
 	@GetMapping("/authorizeUser")
-	public void getTokens(@RequestParam("code") String code, HttpServletResponse response) {
+	public void getTokens(@RequestParam("code") String code, HttpServletResponse response, Principal principal) {
 		try {
 			/*
 			 * Request an access token and refresh token by creating an <a href=
