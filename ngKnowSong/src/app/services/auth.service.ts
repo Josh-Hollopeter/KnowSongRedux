@@ -50,8 +50,21 @@ export class AuthService {
     );
   }
 
-  requestAuthorization(state: string) {
-    return this.http.get(this.baseUrl + 'getAuthorized', {responseType: 'text'}).pipe(
+  requestAuthorization() {
+    var credentials = localStorage.getItem('credentials');
+    let state = this.generateStateString(16);
+    console.log("State: " + state);
+    console.log("credentials: " + credentials);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Basic ${credentials}`,
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Response-Type': 'text'
+      })
+    };
+
+    return this.http.post(this.baseUrl + 'getAuthorized', state, httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError('AuthService.requestAuthorization(): Error getting redirect uri.');
@@ -59,6 +72,16 @@ export class AuthService {
     );
   }
 
+  // generate random string of characters
+  // prevents against cross-site request forgery
+  generateStateString(length: number): string{
+    var text = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for ( var x = 0; x < length; x++){
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
 
   // small boys
 
