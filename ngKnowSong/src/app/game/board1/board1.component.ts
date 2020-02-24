@@ -108,7 +108,7 @@ this.quizlength = this.selectedlanques.length-1;
     // alert("your score is "+JSON.stringify(this.marks));
     if(this.lengthCheck === this.selectedlanques.length)
    var home = document.getElementsByClassName("home")[0];
-   var wrappedHome = angular.element(home);
+  //  var wrappedHome = angular.element(home);
      home.textContent = "your score is " + this.marks;
 
 
