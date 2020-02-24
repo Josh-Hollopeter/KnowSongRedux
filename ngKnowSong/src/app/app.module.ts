@@ -11,6 +11,8 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
+import { Board1Component } from './game/board1/board1.component';
+import { QuizComponent } from './game/quiz/quiz.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { UserHomeComponent } from './pages/user-home/user-home.component';
     LoginComponent,
     NavbarComponent,
     UserHomeComponent,
+    Board1Component,
+    QuizComponent,
   ],
   imports: [
     BrowserModule,
