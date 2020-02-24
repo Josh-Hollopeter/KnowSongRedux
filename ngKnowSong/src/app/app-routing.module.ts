@@ -1,3 +1,4 @@
+import { Board1Component } from './game/board1/board1.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: UserHomeComponent},
+  {path: 'game', component: Board1Component},
   {path: '**', component: IndexComponent},
 ];
 
