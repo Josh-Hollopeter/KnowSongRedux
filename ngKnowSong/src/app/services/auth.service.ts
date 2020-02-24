@@ -50,7 +50,7 @@ export class AuthService {
     );
   }
 
-  requestAuthorization() {
+  requestAuthorization(state: string) {
     return this.http.get(this.baseUrl + 'getAuthorized', {responseType: 'text'}).pipe(
       catchError((err: any) => {
         console.log(err);

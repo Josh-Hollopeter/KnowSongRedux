@@ -21,7 +21,7 @@ export class UserHomeComponent implements OnInit {
   }
 
   authorize(){
-    console.log("authoirzing");
+    console.log("authorizing");
 
     this.auth.requestAuthorization().subscribe(
       data => {

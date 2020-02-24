@@ -56,7 +56,7 @@ public class AuthController {
 	// ------------------------------------------
 	private static final String clientId = "a2398fd3acd54cf8b645af6884251a55";
 	private static final String clientSecret = "e8c8ceef3b064187ada929c80caaca17";
-	private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8085/getTokens");
+	private static final URI redirectUri = SpotifyHttpManager.makeUri("https://lukesprogrammingtech.com");
 	private static final String code = "code";
 	private static final String scope = "user-read-private user-read-email";
 	
@@ -71,10 +71,11 @@ public class AuthController {
 	private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = 
 			spotifyApi
 			.authorizationCodeUri()
-			.scope(scope).show_dialog(true).build();
+			.scope(scope).show_dialog(false).build();
 	
 	@GetMapping("/getAuthorized")
-	public String getAuthorized(HttpServletResponse response) {
+	public String getAuthorized(@RequestParam("state") String state, HttpServletResponse response) {
+		
 		final URI uri = authorizationCodeUriRequest.execute();
 		System.out.println("URI : " + uri.toString());
 		return uri.toString();
@@ -85,9 +86,15 @@ public class AuthController {
 	private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
 	          .build();
 	
-	@GetMapping("/getTokens")
+	@GetMapping("/authorizeUser")
 	public void getTokens(@RequestParam("code") String code, HttpServletResponse response) {
 		try {
+		/*
+		 * Request an access token and refresh token by creating an
+		 * <a href="https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow">Authorization Code</a>
+		 * request.
+		 */
+			System.out.println(code);
 			final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
 			spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
 			spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
@@ -97,6 +104,8 @@ public class AuthController {
 			System.err.println("ERROR: " + e.getMessage());
 		}
 	}
+	
+//	@PostMapping("")
 //	// not working rn just hard coding
 //	public String[] clientSecret() {
 //		String array[] = new String[2];
