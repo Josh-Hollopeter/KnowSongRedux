@@ -65,12 +65,16 @@ public class AuthController {
 	private static final SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId)
 			.setClientSecret(clientSecret).setRedirectUri(redirectUri).build();
 
-	private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-			.scope(scope).show_dialog(false).build();
+	private AuthorizationCodeUriRequest authorizationCodeUriRequest;
 
 	@PostMapping("/getAuthorized")
-	public String getAuthorized(@RequestParam("state") String state, HttpServletResponse response) {
-		System.out.println("State: " + state);
+	public String getAuthorized(@RequestBody String state, HttpServletResponse response, Principal principal) {
+		 authorizationCodeUriRequest = spotifyApi.
+				authorizationCodeUri()
+				.scope(scope)
+				.show_dialog(false)
+				.state(state)
+				.build();
 		final URI uri = authorizationCodeUriRequest.execute();
 		System.out.println("URI : " + uri.toString());
 		return uri.toString();
@@ -81,7 +85,7 @@ public class AuthController {
 	private static final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
 
 	@GetMapping("/authorizeUser")
-	public void getTokens(@RequestParam("code") String code, HttpServletResponse response) {
+	public void getTokens(@RequestParam("code") String code, HttpServletResponse response, Principal principal) {
 		try {
 			/*
 			 * Request an access token and refresh token by creating an <a href=
