@@ -13,6 +13,16 @@ export class AuthorizeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // AuthorizeComponent.
+    // window.opener && window.opener.postMessage(JSON.stringify({
+    //   type:'access_token',
+    //   access_token: '<%= access_token %>',
+    //   expires_in: '<%= expires_in %>',
+    //   refresh_token: '<%= refresh_token %>'
+    // }), '*');
+
+    // window.close();
   }
+
 
 }
