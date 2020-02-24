@@ -14,6 +14,7 @@ import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { Board1Component } from './game/board1/board1.component';
 import { QuizComponent } from './game/quiz/quiz.component';
 import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component';
+import { CallbackComponent } from './spotifyJSON/callback/callback.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component'
     Board1Component,
     QuizComponent,
     AuthorizeComponent,
+    CallbackComponent,
   ],
   imports: [
     BrowserModule,
