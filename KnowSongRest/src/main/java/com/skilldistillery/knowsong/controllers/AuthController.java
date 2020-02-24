@@ -56,7 +56,7 @@ public class AuthController {
 	// ------------------------------------------
 	private static final String clientId = "a2398fd3acd54cf8b645af6884251a55";
 	private static final String clientSecret = "e8c8ceef3b064187ada929c80caaca17";
-	private static final URI redirectUri = SpotifyHttpManager.makeUri("https://lukesprogrammingtech.com");
+	private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4250/authorize");
 	private static final String code = "code";
 	private static final String scope = "user-read-private user-read-email";
 
