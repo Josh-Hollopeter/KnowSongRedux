@@ -9,8 +9,8 @@ export class Quizmodel {
     ID: number,
     language: String,
     question: String,
-    anslistobj,
-    answer
+    anslistobj: any,
+    answer: any
   ) {
     this.ID = ID;
     this.language = language;
