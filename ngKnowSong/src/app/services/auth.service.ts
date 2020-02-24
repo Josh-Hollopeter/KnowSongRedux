@@ -40,6 +40,7 @@ export class AuthService {
       );
   }
 
+
   register(user: User){
     return this.http.post(this.baseUrl + 'register', user)
     .pipe(
@@ -86,11 +87,11 @@ export class AuthService {
   }
   //verify that state string is the same, then send code to server to retrieve OAuth2 token.
 
-  authorizeUser(code: string, state: string){
+  authorizeUser(code: string, state: string, username: string){
     console.log("HELLO FROM AUTHorize");
 
   //pack up our data into a comma sepearated string
-    let packet = code + "," + state;
+    let packet = code + "," + state + "," + username;
     //generate header
     var credentials = localStorage.getItem('credentials');
     const httpOptions = {

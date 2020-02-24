@@ -30,10 +30,14 @@ export class RegisterComponent implements OnInit {
 
     // }
 
-    this.newUser = new User(form.value.email, form.value.username, form.value.password);
+    this.newUser = new User();
+    this.newUser.password = form.value.password;
+    this.newUser.username = form.value.username;
+
     this.auth.register(this.newUser).subscribe(
       data => {
         console.log('RegisterComponent.register(): user registered.');
+        this.newUser.userId = data["id"];
       },
       err => {
         console.error('RegisterComponent.register(): error registering.');

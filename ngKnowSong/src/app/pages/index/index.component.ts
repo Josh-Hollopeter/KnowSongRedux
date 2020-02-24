@@ -8,11 +8,14 @@ import { Router } from '@angular/router';
 })
 export class IndexComponent implements OnInit {
 
+  public onIndex: boolean;
+
   constructor(
     private route: Router
   ) { }
 
   ngOnInit(): void {
+    this.onIndex = true;
   }
 
   login(): void{
