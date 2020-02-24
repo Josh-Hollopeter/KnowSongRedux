@@ -37,13 +37,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `rank_id` INT NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(150) NOT NULL,
+  `role` VARCHAR(45) NOT NULL,
   `enabled` TINYINT NULL DEFAULT 0,
   `admin` TINYINT NULL DEFAULT 0,
   `auth_token` VARCHAR(200) NULL,
   `refresh_token` VARCHAR(200) NULL,
   `img_source` TEXT NULL,
-  `spotify_username` VARCHAR(45) NULL,
-  `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   INDEX `fk_user_rank1_idx` (`rank_id` ASC),
@@ -221,10 +220,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `knowsong`;
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (1, 1, 'admin', '$2a$10$ox9m7AtAzlIZBH9k9pPz0efNkMADYHVQVbZ..y0D08G2KIT43eJCe', true, true, NULL, NULL, NULL, NULL, 'admin');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTnwVZBOZei-0zETT_6deW7E1vQ2RQP11a3dJvAtsUKTjdOCcTC', NULL, 'standard');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRc8_Db4AymKkryiX9laJDyTaMJdiwLXrMUednJAA5-1WYUkRsK', NULL, 'standard');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`, `spotify_username`, `role`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTclSHuv_1kczqblnf7oQ3Qd4v3Fiz-R-aZNqTkWIz3JmGoV12H', NULL, 'standard');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'admin', '$2a$10$ox9m7AtAzlIZBH9k9pPz0efNkMADYHVQVbZ..y0D08G2KIT43eJCe', 'admin', true, true, NULL, NULL, NULL);
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', 'standard', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTnwVZBOZei-0zETT_6deW7E1vQ2RQP11a3dJvAtsUKTjdOCcTC');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRc8_Db4AymKkryiX9laJDyTaMJdiwLXrMUednJAA5-1WYUkRsK');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'standard', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTclSHuv_1kczqblnf7oQ3Qd4v3Fiz-R-aZNqTkWIz3JmGoV12H');
 
 COMMIT;
 
@@ -255,6 +254,16 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `playlist` (`id`, `spotify_id`, `name`, `description`) VALUES (1, '19PgP2QSGPcm6Ve8VhbtpG', '80\'s Smash HIt', '1980s hits and retro favorites by Michael Jackson, Toto & more!');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `user_playlist`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `knowsong`;
+INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 1);
 
 COMMIT;
 

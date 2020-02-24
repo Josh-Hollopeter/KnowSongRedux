@@ -3,7 +3,6 @@ package com.skilldistillery.knowsong.controllers;
 import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.knowsong.entities.User;
@@ -52,6 +50,8 @@ public class AuthController {
 	public Principal authenticate(Principal principal) {
 		return principal;
 	}
+	
+
 
 	// ------------------------------------------
 	// --------------- OAuth2 -------------------
@@ -97,17 +97,24 @@ public class AuthController {
 			List<String> packetString = Arrays.asList(packet.split(","));
 			String code = packetString.get(0);
 			String state = packetString.get(1);
+			String username = principal.getName();
+			System.out.println(username);
+			
 			System.out.println("new state " +state);
 			System.out.println("this.state key " + this.stateKey);
 			System.out.println("state key " + stateKey);
 			//verify the state is the same get back to this later
 			if (state.equals(stateKey)) {
-				AuthorizationCodeRequest authorizationCodeRequest = spotifyApi
+				 authorizationCodeRequest = spotifyApi
 						.authorizationCode(code)
 				          .build();
 				final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+				User user = authService.findUser(username);
 				spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
 				spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+				user.setAuthToken(spotifyApi.getAccessToken());
+				user.setRefreshToken(spotifyApi.getRefreshToken());
+				authService.save(user);
 				System.out.println("ACCESS TOKEN " + spotifyApi.getAccessToken());
 				System.out.println("REFRESH TOKEN " + spotifyApi.getRefreshToken());
 			}

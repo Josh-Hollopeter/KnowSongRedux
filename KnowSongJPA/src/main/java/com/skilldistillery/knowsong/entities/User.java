@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -21,29 +20,15 @@ public class User {
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	private int id;
 	
-	private String username;
-	
-	private String role;
-	
 	@ManyToOne
 	@JoinColumn(name = "rank_id")
 	private Rank rank;
 	
-	@ManyToMany
-	@JoinTable(name="user_playlist",
-    joinColumns=@JoinColumn(name="user_id"),
-    inverseJoinColumns=@JoinColumn(name="playlist_id")
-  )
-	private List<Playlist> playlists;
-	
-	
-	
-	@OneToMany(mappedBy="user")
-	private List <TriviaGame> games;
-	
-	
+	private String username;
 	
 	private String password;
+	
+	private String role;
 	
 	private Boolean enabled;
 	
@@ -51,41 +36,28 @@ public class User {
 	
 	@Column(name = "auth_token")
 	private String authToken;
-	
+		
 	@Column(name = "refresh_token")
 	private String refreshToken;
 	
 	@Column(name = "img_source")
 	private String imgSource;
-
 	
+//	@OneToMany(mappedBy="user")
+//	private List <TriviaGame> games;
 	
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public List<TriviaGame> getGames() {
-		return games;
-	}
-
-	public void setGames(List<TriviaGame> games) {
-		this.games = games;
-	}
-
-	public List<Playlist> getPlaylists() {
-		return playlists;
-	}
-
-	public void setPlaylists(List<Playlist> playlists) {
-		this.playlists = playlists;
-	}
+	@ManyToMany
+	@JoinTable(name="user_playlist",
+	joinColumns=@JoinColumn(name="user_id"),
+	inverseJoinColumns=@JoinColumn(name="playlist_id"))
+	private List<Playlist> playlists;
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Rank getRank() {
@@ -94,10 +66,6 @@ public class User {
 
 	public void setRank(Rank rank) {
 		this.rank = rank;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -114,6 +82,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public Boolean getEnabled() {
@@ -155,13 +131,37 @@ public class User {
 	public void setImgSource(String imgSource) {
 		this.imgSource = imgSource;
 	}
-	
-	
-	
+
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
 	
 
-
-	
-	
 
 }

@@ -8,4 +8,8 @@ public interface AuthService {
 
 	User register(User user);
 
+	User findUser(String username);
+
+	User save(User user);
+
 }
