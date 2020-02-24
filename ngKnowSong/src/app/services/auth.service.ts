@@ -55,22 +55,24 @@ export class AuthService {
     let state = this.generateStateString(16);
     console.log("State: " + state);
     console.log("credentials: " + credentials);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Basic ${credentials}`,
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Response-Type': 'text'
-      })
-    };
 
-    return this.http.post(this.baseUrl + 'getAuthorized', state, httpOptions).pipe(
+    const headers = new HttpHeaders().set('Authorization', `Basic ${credentials}`);
+    headers.set('Content-Type', 'text/plain; charset=utf-8');
+
+    return this.http.post(this.baseUrl + 'getAuthorized', state, {headers, responseType:'text'}).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError('AuthService.requestAuthorization(): Error getting redirect uri.');
       })
     );
   }
+  //   return this.http.get(this.baseUrl + 'getAuthorized', {responseType: 'text'}).pipe(
+  //     catchError((err: any) => {
+  //       console.log(err);
+  //       return throwError('AuthService.requestAuthorization(): Error getting redirect uri.');
+  //     })
+  //   );
+  // }
 
   // generate random string of characters
   // prevents against cross-site request forgery
