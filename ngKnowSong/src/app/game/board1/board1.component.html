@@ -18,7 +18,7 @@
   	<ul *ngFor="let opt of option">
 					<div class="checkbox">
 						<label>
-             <input type="checkbox" (click)="check('',$event,opt)">
+             <input type="checkbox" (click)="check($event,opt)">
            {{opt}}
    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 
@@ -35,6 +35,7 @@
 
 
 
-	<button class="btn btn-info" (click)="generatemark()">submit</button>
+	<button class="btn btn-info" (click)="generatemark()" *ngIf="i>=0" >submit</button>
 </div>
+<div class="home"><a class="nav-link" [routerLink]="['/index']"> Home</a></div>
 
