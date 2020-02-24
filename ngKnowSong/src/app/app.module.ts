@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { Board1Component } from './game/board1/board1.component';
 import { QuizComponent } from './game/quiz/quiz.component';
+import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { QuizComponent } from './game/quiz/quiz.component';
     UserHomeComponent,
     Board1Component,
     QuizComponent,
+    AuthorizeComponent,
   ],
   imports: [
     BrowserModule,

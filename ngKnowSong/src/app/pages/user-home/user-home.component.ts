@@ -21,13 +21,15 @@ export class UserHomeComponent implements OnInit {
   }
 
   authorize(){
-    console.log("authoirzing");
 
+    console.log("authorizing");
     this.auth.requestAuthorization().subscribe(
       data => {
-        window.location.href = data;
+        window.location.href = String (data);
       }
     );
   }
+
+
 
 }
