@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './pages/index/index.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component';
+import { CallbackComponent } from './spotifyJSON/callback/callback.component';
 
 
 const routes: Routes = [
@@ -14,11 +16,13 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: UserHomeComponent},
   {path: 'game', component: Board1Component},
+  {path: 'authorize', component: AuthorizeComponent},
+  {path: 'callback', component: CallbackComponent},
   {path: '**', component: IndexComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
