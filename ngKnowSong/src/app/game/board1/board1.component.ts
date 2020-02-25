@@ -14,7 +14,7 @@ export class Board1Component implements OnInit {
 
   }
   myarray: String[] = [];
-i: number;
+i: number = 0;
 languages: String[] = ["java", "cprogram", "C++", "Spring", "Html", "Asp.net","Release Year"];
  newstr: String
  actress = "Beyonce" + "'s";
@@ -107,10 +107,7 @@ this.quizlength = this.selectedlanques.length-1;
     console.log(this.lengthCheck);
     // alert("your score is "+JSON.stringify(this.marks));
     if(this.lengthCheck === this.selectedlanques.length)
-   var home = document.getElementsByClassName("home")[0];
-  //  var wrappedHome = angular.element(home);
-     home.textContent = "your score is " + this.marks;
-
+    document.writeln("your score is " + this.marks);
 
 
 
