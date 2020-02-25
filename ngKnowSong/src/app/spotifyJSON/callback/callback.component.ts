@@ -1,7 +1,6 @@
 import { User } from 'src/app/models/user';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,24 +14,31 @@ export class CallbackComponent implements OnInit {
   private user: User;
 
   constructor(
-    private httpClient: HttpClient,
-    private route: ActivatedRoute,
-    private auth: AuthService,
+    private urlRouter: ActivatedRoute,
+    private route: Router,
+    private auth: AuthService
   ) {
-   }
+  }
 
   ngOnInit(): void {
-
-    this.route.queryParams.subscribe(params => {
+    //get credentials from URL Parameters
+    this.urlRouter.queryParams.subscribe(params => {
       this.code = params['code'];
       this.state = params['state'];
     })
+    this.authorizeUser();
+  }
 
+  authorizeUser() {
     this.auth.authorizeUser(this.code, this.state).subscribe(
-      good => console.log(good),
-      err => console.log(err)
+      good => {
+        console.log(good)
+        this.route.navigateByUrl('home');
+      },
+      err => {
+        console.log(err);
+      }
     );
-
   }
 
 }

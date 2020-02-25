@@ -24,11 +24,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(form.value.username, form.value.password).subscribe(
       success => {
         console.log(this.user.userId);
-        this.route.navigateByUrl('authorize');
+        this.route.navigateByUrl('home');
       },
       fail => {
         console.error('Error logging in');
-
       }
     )
 

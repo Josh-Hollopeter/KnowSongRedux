@@ -1,9 +1,5 @@
 <div >
   <ul>
-    <a class="nav-link" [routerLink]="['/index']"> Home</a>
-    <a class="nav-link" [routerLink]="['/login']"> Login</a>
-    <a class="nav-link" [routerLink]="['/register']"> Register</a>
-    <a class="nav-link" [routerLink]="['/game']"> Play Game</a>
     <button *ngIf="isLoggedIn()" class="button" (click)="logout()">Logout</button>
   </ul>
 </div>
