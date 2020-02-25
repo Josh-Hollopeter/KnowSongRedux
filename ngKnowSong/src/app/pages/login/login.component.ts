@@ -11,7 +11,10 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   user:User = new User();
-  constructor(private authService:AuthService,private router:Router) { }
+  constructor(
+    private authService:AuthService,
+    private route:Router
+    ) { }
 
   ngOnInit(): void {
 
@@ -21,11 +24,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(form.value.username, form.value.password).subscribe(
       success => {
         console.log(this.user.userId);
-          this.router.navigateByUrl('/home');
+        this.route.navigateByUrl('home');
       },
       fail => {
         console.error('Error logging in');
-
       }
     )
 

@@ -21,14 +21,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   register(form: NgForm) {
-    //check to make sure the password is correct
-    // if(form.value.password === form.value.verifyPassword){
-
-    // }
-    // else{
-
-    // }
+    // verify password
+    if(!(form.value.password === form.value.verifyPassword)){
+      window.alert("Password did not match.");
+    }
 
     this.newUser = new User();
     this.newUser.password = form.value.password;
@@ -36,8 +34,16 @@ export class RegisterComponent implements OnInit {
 
     this.auth.register(this.newUser).subscribe(
       data => {
-        console.log('RegisterComponent.register(): user registered.');
-        this.newUser.userId = data["id"];
+        console.log('RegisterComponent.register(): user registered.');  //auto login
+        this.auth.login(this.newUser.username, this.newUser.password).subscribe(
+          next => {
+            this.auth.requestAuthorization().subscribe(
+              redirectUri => {
+                window.location.href = String (redirectUri);  //redirect user to spotify authorization
+              }
+            )
+          }
+        )
       },
       err => {
         console.error('RegisterComponent.register(): error registering.');

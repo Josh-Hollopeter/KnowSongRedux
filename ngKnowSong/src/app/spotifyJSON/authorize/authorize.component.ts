@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AuthorizeComponent implements OnInit {
 
   constructor(
-    auth: AuthService
+    private auth: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -23,6 +23,14 @@ export class AuthorizeComponent implements OnInit {
 
     // window.close();
   }
+  authorize(){
 
+    console.log("authorizing");
+    this.auth.requestAuthorization().subscribe(
+      data => {
+        window.location.href = String (data);
+      }
+    );
+  }
 
 }

@@ -23,6 +23,7 @@ import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 
@@ -48,6 +49,8 @@ public class AuthController {
 
 	@GetMapping("/authenticate")
 	public Principal authenticate(Principal principal) {
+		//gives user a new auth token valid for 3600 seconds
+		exchangeRefreshToken(authService.findUser(principal.getName()));
 		return principal;
 	}
 	
@@ -64,7 +67,7 @@ public class AuthController {
 
 	// STEP 1 : GET AUTHORIZED BROH
 
-	private static final SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId)
+	private SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId)
 			.setClientSecret(clientSecret).setRedirectUri(redirectUri).build();
 
 	private AuthorizationCodeUriRequest authorizationCodeUriRequest;
@@ -86,6 +89,7 @@ public class AuthController {
 
 	private AuthorizationCodeRequest authorizationCodeRequest;
 
+	//	only called for new registering users!
 	@PostMapping("/authorizeUser")
 	public void getTokens(@RequestBody String packet, HttpServletResponse response, Principal principal) {
 		try {
@@ -114,6 +118,9 @@ public class AuthController {
 				spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
 				user.setAuthToken(spotifyApi.getAccessToken());
 				user.setRefreshToken(spotifyApi.getRefreshToken());
+				if(user.getAuthToken() == null || user.getRefreshToken() == null) {
+					System.err.println("AUTH TOKEN WAS NOT SET :(");
+				}
 				authService.save(user);
 				System.out.println("ACCESS TOKEN " + spotifyApi.getAccessToken());
 				System.out.println("REFRESH TOKEN " + spotifyApi.getRefreshToken());
@@ -122,6 +129,22 @@ public class AuthController {
 			System.err.println("ERROR: " + e.getMessage());
 		}
 
+	}
+	
+	private void exchangeRefreshToken(User user) {
+		spotifyApi.setRefreshToken(user.getRefreshToken());
+		
+		
+		AuthorizationCodeRefreshRequest authorizationCodeRefreshRequest = spotifyApi.authorizationCodeRefresh()
+		          .build();
+		try {
+			AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRefreshRequest.execute();
+			user.setAuthToken(authorizationCodeCredentials.getAccessToken());
+			System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
+			authService.save(user);
+		} catch (SpotifyWebApiException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 //	@PostMapping("")

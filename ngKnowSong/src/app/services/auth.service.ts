@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpBackend} from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { throwError, Observable } from 'rxjs';
@@ -10,10 +10,15 @@ import { throwError, Observable } from 'rxjs';
 export class AuthService {
 
   private baseUrl = 'http://localhost:8085/';
+  private http: HttpClient;
+  //authorization service go straight to backend
+  //they ignore the interceptor
+  constructor(handler: HttpBackend) {
+      this.http = new HttpClient(handler);
+   }
 
-  constructor( private http: HttpClient ) { }
 
-  login(username, password) {
+  login(username: string, password: string) {
     // Make credentials
     const credentials = this.generateBasicAuthCredentials(username, password);
     console.log(credentials);
@@ -67,13 +72,6 @@ export class AuthService {
       })
     );
   }
-  //   return this.http.get(this.baseUrl + 'getAuthorized', {responseType: 'text'}).pipe(
-  //     catchError((err: any) => {
-  //       console.log(err);
-  //       return throwError('AuthService.requestAuthorization(): Error getting redirect uri.');
-  //     })
-  //   );
-  // }
 
   // generate random string of characters
   // prevents against cross-site request forgery
@@ -87,11 +85,10 @@ export class AuthService {
   }
   //verify that state string is the same, then send code to server to retrieve OAuth2 token.
 
-  authorizeUser(code: string, state: string, username: string){
-    console.log("HELLO FROM AUTHorize");
+  authorizeUser(code: string, state: string){
 
   //pack up our data into a comma sepearated string
-    let packet = code + "," + state + "," + username;
+    let packet = code + "," + state;
     //generate header
     var credentials = localStorage.getItem('credentials');
     const httpOptions = {
