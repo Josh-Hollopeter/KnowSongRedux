@@ -24,4 +24,8 @@ export class UserHomeComponent implements OnInit {
     this.route.navigateByUrl('game');
   }
 
+  matchHistory(){
+    this.route.navigateByUrl('history');
+  }
+
 }

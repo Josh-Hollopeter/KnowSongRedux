@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component';
 import { CallbackComponent } from './spotifyJSON/callback/callback.component';
+import { MatchHistoryComponent } from './game/match-history/match-history.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: UserHomeComponent},
   {path: 'game', component: Board1Component},
+  {path: 'history', component: MatchHistoryComponent},
   {path: 'authorize', component: AuthorizeComponent},
   {path: 'callback', component: CallbackComponent},
   {path: '**', component: IndexComponent},
