@@ -21,6 +21,7 @@ export class UserHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+
     // let temp = localStorage.getItem('credentials');
     // let username = atob(temp).split(":");
 
@@ -38,6 +39,7 @@ export class UserHomeComponent implements OnInit {
         console.error(no);
       }
     )
+
 
   }
   createGame(){

@@ -26,6 +26,9 @@ export class NavbarComponent implements OnInit {
     this.route.navigateByUrl('index');
   }
 
+  userHome(){
+    this.route.navigateByUrl('home');
+  }
 
 
 }
