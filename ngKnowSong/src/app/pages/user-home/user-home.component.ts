@@ -18,20 +18,9 @@ export class UserHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-
-
   }
-
-  authorize(){
-
-    console.log("authorizing");
-    this.auth.requestAuthorization().subscribe(
-      data => {
-        window.location.href = String (data);
-      }
-    );
+  createGame(){
+    this.route.navigateByUrl('game');
   }
-
-
 
 }

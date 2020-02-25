@@ -37,7 +37,12 @@ export class RegisterComponent implements OnInit {
     this.auth.register(this.newUser).subscribe(
       data => {
         console.log('RegisterComponent.register(): user registered.');
-        this.newUser.userId = data["id"];
+        this.auth.login(this.newUser.username, this.newUser.password).subscribe(
+          next => {
+            console.log('Login component: user logged in, routing to home page');
+            this.route.navigateByUrl('home');
+          }
+        )
       },
       err => {
         console.error('RegisterComponent.register(): error registering.');

@@ -12,12 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CallbackComponent implements OnInit {
   private code: string;
   private state: string;
+  private user: User;
 
   constructor(
     private httpClient: HttpClient,
     private route: ActivatedRoute,
     private auth: AuthService,
-    private user: User
   ) {
    }
 
@@ -27,9 +27,8 @@ export class CallbackComponent implements OnInit {
       this.code = params['code'];
       this.state = params['state'];
     })
-    console.log(this.user.username);
 
-    this.auth.authorizeUser(this.code, this.state, this.user.username).subscribe(
+    this.auth.authorizeUser(this.code, this.state).subscribe(
       good => console.log(good),
       err => console.log(err)
     );

@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor( private http: HttpClient ) { }
 
-  login(username, password) {
+  login(username: string, password: string) {
     // Make credentials
     const credentials = this.generateBasicAuthCredentials(username, password);
     console.log(credentials);
@@ -87,11 +87,10 @@ export class AuthService {
   }
   //verify that state string is the same, then send code to server to retrieve OAuth2 token.
 
-  authorizeUser(code: string, state: string, username: string){
-    console.log("HELLO FROM AUTHorize");
+  authorizeUser(code: string, state: string){
 
   //pack up our data into a comma sepearated string
-    let packet = code + "," + state + "," + username;
+    let packet = code + "," + state;
     //generate header
     var credentials = localStorage.getItem('credentials');
     const httpOptions = {

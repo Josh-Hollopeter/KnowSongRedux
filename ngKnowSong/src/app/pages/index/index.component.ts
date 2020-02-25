@@ -11,11 +11,14 @@ export class IndexComponent implements OnInit {
 
 
   constructor(
-    private route: Router,private auth: AuthService
+    private route: Router,
+    private auth: AuthService
   ) { }
 
   ngOnInit(): void {
-    loggedIn = this.auth.checkLogin();
+    // if(this.auth.checkLogin){
+    //   this.route.navigateByUrl('home');
+    // }
   }
 
   login(): void{
