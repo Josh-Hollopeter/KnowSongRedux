@@ -16,9 +16,9 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // if(this.auth.checkLogin){
-    //   this.route.navigateByUrl('home');
-    // }
+    if(this.auth.checkLogin){
+      this.route.navigateByUrl('home');
+    }
   }
 
   login(): void{
