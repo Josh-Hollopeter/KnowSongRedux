@@ -1,3 +1,4 @@
+import { UserService } from './models/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -43,6 +44,7 @@ import { MatchHistoryComponent } from './game/match-history/match-history.compon
   ],
   providers: [
     AuthService,
+    UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Httpinterceptor,
