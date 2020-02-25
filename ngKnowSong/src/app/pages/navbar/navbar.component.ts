@@ -8,11 +8,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  public loggedIn:boolean;
   constructor(
     private auth: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.loggedIn = this.auth.checkLogin()
   }
 
   isLoggedIn(): boolean{
@@ -20,6 +22,11 @@ export class NavbarComponent implements OnInit {
   }
   logout(){
     this.auth.logout();
-
+    this.loggedIn = false;
   }
+  public setLoggedIn(status){
+  this.loggedIn = status
+  }
+
+
 }

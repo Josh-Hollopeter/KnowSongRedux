@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,14 +9,13 @@ import { Router } from '@angular/router';
 })
 export class IndexComponent implements OnInit {
 
-  public onIndex: boolean;
 
   constructor(
-    private route: Router
+    private route: Router,private auth: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.onIndex = true;
+    loggedIn = this.auth.checkLogin();
   }
 
   login(): void{
