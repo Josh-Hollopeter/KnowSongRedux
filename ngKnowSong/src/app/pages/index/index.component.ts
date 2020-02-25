@@ -16,6 +16,9 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    // loggedIn = this.auth.checkLogin();
+
   }
 
   login(): void{
