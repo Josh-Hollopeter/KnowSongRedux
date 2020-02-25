@@ -17,7 +17,6 @@ import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component'
 import { CallbackComponent } from './spotifyJSON/callback/callback.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { Httpinterceptor } from './services/interceptor/httpinterceptor';
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -18,6 +18,7 @@ export class UserHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+
   }
   createGame(){
     this.route.navigateByUrl('game');
