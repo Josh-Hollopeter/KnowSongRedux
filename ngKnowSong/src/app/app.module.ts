@@ -1,3 +1,4 @@
+import { UserService } from './models/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -40,6 +41,7 @@ import { Httpinterceptor } from './services/interceptor/httpinterceptor';
   ],
   providers: [
     AuthService,
+    UserService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Httpinterceptor,

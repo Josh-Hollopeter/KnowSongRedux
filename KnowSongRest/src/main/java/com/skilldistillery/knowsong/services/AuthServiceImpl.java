@@ -41,7 +41,12 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public User findUser(String username) {
-		return userRepo.findByUsername(username);		
+		try{
+			return userRepo.findByUsername(username);
+		}catch(Exception e) {
+			return null;
+		}
+				
 	}
 	
 	@Override
