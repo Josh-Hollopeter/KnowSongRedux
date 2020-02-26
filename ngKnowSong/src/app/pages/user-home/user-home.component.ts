@@ -23,17 +23,16 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let temp = localStorage.getItem('credentials');
-    let username = atob(temp).split(":");
+    // let temp = localStorage.getItem('credentials');
+    // let username = atob(temp).split(":");
 
-    console.log(username[0]);
+    // console.log(username[0]);
     this.usersvc.show().subscribe(
       yes=>{
         console.log(yes);
         this.user.authToken = yes["authToken"];
         this.user.rankImg = yes["rank"].imgSource;
         this.user.username = yes["username"];
-
         this.user.userImg = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
@@ -62,6 +61,17 @@ export class UserHomeComponent implements OnInit {
   matchHistory(){
     this.route.navigateByUrl('history');
   }
+  getAllUsers(){
+    this.usersvc.getAll().subscribe(
+      yes=>{
+        console.log(yes);
 
+      },
+      no=>{
+        console.log(no);
+
+      }
+    );
+  }
 
 }

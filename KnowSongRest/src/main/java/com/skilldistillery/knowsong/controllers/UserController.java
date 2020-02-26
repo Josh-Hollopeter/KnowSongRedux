@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,14 +27,14 @@ public class UserController {
 	@Autowired
 	private UserService uSvc;
 
-	@GetMapping()
-	public void checkAuthToken(Principal principal, HttpRequest request) {
-		User user = svc.findUser(principal.getName());
-
-	}
+//	@GetMapping()
+//	public void checkAuthToken(Principal principal, HttpRequest request) {
+//		User user = svc.findUser(principal.getName());
+//
+//	}
 	
 	@GetMapping("users")
-	public List<User> allUsers(Principal principal, HttpRequest request) {
+	public List<User> allUsers(Principal principal) {
 		return uSvc.listAllUsers();
 	}
 
