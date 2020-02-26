@@ -17,31 +17,31 @@ export class CreateGameComponent implements OnInit {
   constructor(
     private stream: SongstreamService,
     private userSvc: UserService
-  ) { }
+    ) { }
 
   ngOnInit(): void {
     this.userSvc.show().subscribe(
 
-      yes => {
-        console.log(yes);
-        this.user.authToken = yes["authToken"];
-        // this.user.rank
-        this.user.username = yes["username"];
-        console.log(this.user);
-        this.userSvc.setUser(this.user);
-      },
-      no => {
-        console.error("in user home init")
-        console.error(no);
-      }
-    )
+    yes=>{
+      console.log(yes);
+      this.user.authToken = yes["authToken"];
+      // this.user.rank
+      this.user.username = yes["username"];
+      console.log(this.user);
+      this.userSvc.setUser(this.user);
+    },
+    no=>{
+      console.error("in user home init")
+      console.error(no);
+    }
+  )
   }
 
-  searchForArtist() {
+  searchForArtist(){
     console.log(this.userSvc.getUser());
     var authToken = this.userSvc.getUser().authToken;
     this.stream.searchArtist(this.artistStr, authToken).subscribe(
-      response => {
+      response =>{
         // this.searchResult = response["name"];
         console.log(response);
 
