@@ -45,6 +45,11 @@ export class CreateGameComponent implements OnInit {
     )
   }
 
+  getTracksFromPlaylist(id: string){
+    console.log(id);
+
+  }
+
   getUserPlaylists() {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.getUserPlaylists(authToken).subscribe(
