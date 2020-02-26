@@ -1,6 +1,7 @@
 <h1>User Home Page</h1>
 <hr>
 <button (click)="createGame()">Create Game</button>
+<a routerLink="/game"><button class="btn btn-success" > temp game test </button></a>
 <button (click)="matchHistory()">Match History</button>
 
 <div *ngIf = "user.role === 'admin'">

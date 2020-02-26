@@ -15,63 +15,82 @@ export class Board1Component implements OnInit {
   }
   myarray: String[] = [];
 i: number = 0;
-languages: String[] = ["java", "cprogram", "C++", "Spring", "Html", "Asp.net","Release Year"];
+languages: String[] = ["play clip", "Name the Albums", "Release Year"];
  newstr: String
- actress = "Beyonce" + "'s";
+ singer = "Beyonce" + "'s";
  album = "Lemonade";
  year = 2014;
+ roundOver:boolean;
+ singerQuestion = "What year was " + this.singer + " album " + this.album + " released?";
 
-  quizQuestion = new Quizmodel(6, "Release Year", "What year was" + this.actress + "album" + this.album + "released?", [this.year, this.year +1, this.year +2, this.year -1], this.year )
+  quizQuestion = new Quizmodel(6, "Release Year", this.singerQuestion, [this.year, this.year +1, this.year +2, this.year -1], this.year )
   quizlist: Quizmodel[] = [
     {
-      ID: 1, language: "java", question: "Inventor of c++?", anslistobj: ["Pavan.c", "James Gosling", "Richie Richie", "Amos.Emmanual"], answer: "Richie Richie"
+      ID: 1, category: "play clip", question: "Inventor of c++?", anslistobj: ["Pavan.c", "James Gosling", "Richie Richie", "Amos.Emmanual"], answer: "Richie Richie"
     },
     {
-      ID: 2, language: "java", question: "Inventor of java?", anslistobj: ["Nayan.c", "Ärmesh", "Denish Richie", "Kiran.DY"], answer: "Denish Richie"
+      ID: 2, category: "play clip", question: "Inventor of java?", anslistobj: ["Nayan.c", "Ärmesh", "Denish Richie", "Kiran.DY"], answer: "Denish Richie"
     },
     {
-      ID: 3, language: "java", question: "how is java?", anslistobj: ["Easy", "Difficult", "moderate", "nonoe"], answer: "Easy"
+      ID: 3, category: "Release Year", question: "how is java?", anslistobj: ["Easy", "Difficult", "moderate", "nonoe"], answer: "Easy"
     },
     {
-      ID: 4, language: "cprogram", question: "Inventor of cprogram?", anslistobj: ["a", "b", "c", "d"], answer: "a"
+      ID: 4, category: "cprogram", question: "Inventor of cprogram?", anslistobj: ["a", "b", "c", "d"], answer: "a"
     } ,
     {
-      ID: 5, language: "cprogram", question: "Inventor of cprogram?", anslistobj: ["a", "b", "c", "d"], answer: "b"
+      ID: 5, category: "cprogram", question: "Inventor of cprogram?", anslistobj: ["a", "b", "c", "d"], answer: "b"
     },
-    { ID: 7, language: "Release Year", question: "What year was " + this.actress + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
+    { ID: 7, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
   },
     // },
-    {ID:this.quizQuestion.ID, language:this.quizQuestion.language, question:this.quizQuestion.question,anslistobj:this.quizQuestion.anslistobj,answer:this.quizQuestion.answer }
-    // this.quizQuestion
+    // {ID:this.quizQuestion.ID, category:this.quizQuestion.category, question:this.quizQuestion.question,anslistobj:this.quizQuestion.anslistobj,answer:this.quizQuestion.answer }
+    this.quizQuestion,
+    { ID: 8, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:[this.year,this.year+1,this.year+2,this.year-1], answer: 2014
+    },
+    { ID: 9, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
+    },{ ID: 10, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
+  },
 
   ];
 
   /******************************************************* */
 quizlength: number;
-selectedlanguage: Quizmodel[] = [];
+selectedcategory: Quizmodel[] = [];
 question: String;
 selectedvalue: String;
 option: any[];
-selectedlanques: any[];
-gettinglanguage() {
-this.selectedlanques =  this.quizlist.filter(d => (d.language == this.selectedvalue));
+selectedCategories: any[];
+gettingCategory() {
+
+  this.selectedCategories =  this.quizlist.filter(d => (d.category == this.selectedvalue));
+  console.log(this.selectedCategories[this.i].question)
+console.log(this.selectedCategories[this.i].question)
 this.i = 0;
-this.question = this.selectedlanques[this.i].question;
-this.option = this.selectedlanques[this.i].anslistobj;
+this.question = this.selectedCategories[this.i].question;
+this.option = this.selectedCategories[this.i].anslistobj;
 // this.i = 0;
-this.quizlength = this.selectedlanques.length-1;
+this.quizlength = this.selectedCategories.length-1;
   }
 
   /******************************************************** */
   next() {
-    ++this.i;
-    this.question = this.selectedlanques[this.i].question;
-    this.option = this.selectedlanques[this.i].anslistobj;
+
+
+    if(this.i < this.selectedCategories.length-1){
+      ++this.i;
+    }
+    if(this.i === this.selectedCategories.length){
+      this.roundOver = true;
+      // document.writeln("your score is " + this.marks);
+      }
+    console.log(this.selectedCategories[this.i].answer)
+    this.question = this.selectedCategories[this.i].question;
+    this.option = this.selectedCategories[this.i].anslistobj;
   }
   previous() {
     --this.i;
-    this.question = this.selectedlanques[this.i].question;
-    this.option = this.selectedlanques[this.i].anslistobj;
+    this.question = this.selectedCategories[this.i].question;
+    this.option = this.selectedCategories[this.i].anslistobj;
   }
 
 /********************************************************* */
@@ -79,9 +98,10 @@ this.quizlength = this.selectedlanques.length-1;
   answerkey: AnswerKey[] = [];
 
   check(e, str: String) {
+
     if (e.target.checked) {
-      console.log("..................."+str + " " + this.selectedlanques[this.i].answer);
-      this.answerkey.push(new AnswerKey(str,this.selectedlanques[this.i].answer));
+      console.log("..................."+str + " " + this.selectedCategories[this.i].answer);
+      this.answerkey.push(new AnswerKey(str,this.selectedCategories[this.i].answer));
     }
     else {
 
@@ -95,22 +115,25 @@ this.quizlength = this.selectedlanques.length-1;
   marks: number = 0;
   lengthCheck = 0;
   generatemark() {
-    for (var i = 0; i < this.answerkey.length; i++) {
+    for (var i = this.i; i < this.answerkey.length; i++) {
       console.log("chosen *****" + this.answerkey[i].chosen + "*******");
-      console.log("answer *****" + this.selectedlanques[this.i].answer + "*******");
-      if (this.answerkey[i].chosen ==  this.selectedlanques[this.i].answer) {
+      console.log("answer *****" + this.selectedCategories[this.i].answer + "*******");
+      if (this.answerkey[i].chosen ===  this.selectedCategories[this.i].answer) {
         this.marks++;
         this.lengthCheck++;
 
       }
+
+
     }
     console.log(this.lengthCheck);
     // alert("your score is "+JSON.stringify(this.marks));
-    if(this.lengthCheck === this.selectedlanques.length)
-    document.writeln("your score is " + this.marks);
 
-
-
+    this.next();
+    if(this.lengthCheck === this.selectedCategories.length){
+      this.roundOver = true;
+      // document.writeln("your score is " + this.marks);
+      }
   }
   returnHome(){
     console.log("click");
