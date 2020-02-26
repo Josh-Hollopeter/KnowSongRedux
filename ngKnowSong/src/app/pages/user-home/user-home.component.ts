@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserHomeComponent implements OnInit {
   user = new User();
+  allUsers : any;
 
 
   loggedUser:User;
@@ -33,23 +34,16 @@ export class UserHomeComponent implements OnInit {
         this.user.authToken = yes["authToken"];
         this.user.rankImg = yes["rank"].imgSource;
         this.user.username = yes["username"];
-        this.user.userImg = yes["imgSource"];
+        this.user.imgSource = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
-        console.log("User role: " + this.user.role);
-
-
-        console.log(this.user);
         this.usersvc.setUser(this.user);
-
       },
       no=>{
         console.error("in user home init")
         console.error(no);
       }
     )
-
-
 
   }
   createGame(){
@@ -64,14 +58,52 @@ export class UserHomeComponent implements OnInit {
   getAllUsers(){
     this.usersvc.getAll().subscribe(
       yes=>{
+        this.allUsers = yes;
+        console.log(yes);
+      },
+      no=>{
+        console.log(no);
+      }
+    );
+  }
+  deactivateUser(username : string){
+    this.usersvc.deleteUser(username).subscribe(
+      yes=>{
+        this.getAllUsers();
+        console.log(yes);
+      },
+      no=>{
+        console.log(no);
+        console.log("InDeactivateUser");
+      }
+    );
+  }
+
+  updateUser(){
+    this.usersvc.updateUser(this.user).subscribe(
+      yes=>{
+        // this.getAllUsers();
         console.log(yes);
 
       },
       no=>{
         console.log(no);
-
+        console.log("InUpdateUser");
       }
     );
   }
 
+  adminUpdateUser(username : string, imgSource : string){
+    this.usersvc.adminUpdateUser(username, imgSource).subscribe(
+      yes=>{
+        // this.getAllUsers();
+        console.log(yes);
+
+      },
+      no=>{
+        console.log(no);
+        console.log("InUpdateUser");
+      }
+    );
+  }
 }

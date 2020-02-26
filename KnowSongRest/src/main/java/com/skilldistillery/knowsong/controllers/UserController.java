@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +26,7 @@ public class UserController {
 
 	@Autowired
 	private AuthService svc;
-	
+
 	@Autowired
 	private UserService uSvc;
 
@@ -32,10 +35,19 @@ public class UserController {
 //		User user = svc.findUser(principal.getName());
 //
 //	}
-	
-	@GetMapping("users")
-	public List<User> allUsers(Principal principal) {
-		return uSvc.listAllUsers();
+
+	@GetMapping("/users")
+	public List<User> allUsers(HttpServletResponse resp, Principal principal) {
+		try {
+			System.out.println(uSvc.listAllUsers());
+
+			resp.setStatus(200);
+			return uSvc.listAllUsers();
+		} catch (Exception e) {
+			resp.setStatus(404);
+			return null;
+		}
+
 	}
 
 	@GetMapping("user")
@@ -51,12 +63,35 @@ public class UserController {
 		}
 
 	}
-	
-	@DeleteMapping("user")
-	public void deleteUser(HttpServletResponse resp, Principal principal) {
-		if(uSvc.delete(principal)) {
+
+	@DeleteMapping("user{username}")
+	public void deleteUser(HttpServletResponse resp, Principal principal, @PathVariable String username) {
+		if (uSvc.changeEnabled(username)) {
 			resp.setStatus(200);
-		}else {
+		} else {
+			resp.setStatus(404);
+		}
+	}
+	
+	@PutMapping("user/{username}")
+	public void adminUpdateUser(HttpServletResponse resp, Principal principal, @PathVariable String username, @RequestBody String imgSource) {
+		System.out.println("********************* " + imgSource + " ****************************");
+		User managedUser = uSvc.changeUserImage(username, imgSource);
+		if (managedUser != null) {
+			resp.setStatus(200);
+		} else {
+			resp.setStatus(404);
+		}
+	}
+	
+
+	@PutMapping("user")
+	public void updateUser(HttpServletResponse resp, Principal principal, @RequestBody User user) {
+		System.out.println(user.getImgSource());
+		User managedUser = uSvc.update(principal, user);
+		if (managedUser != null) {
+			resp.setStatus(200);
+		} else {
 			resp.setStatus(404);
 		}
 	}

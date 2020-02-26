@@ -7,8 +7,13 @@ import com.skilldistillery.knowsong.entities.User;
 
 public interface UserService {
 
-	boolean delete(Principal principal);
+	boolean changeEnabled(String username);
 	
 	public List<User> listAllUsers();
+	
+	public User update(Principal principal, User user);
+
+	public User changeUserImage(String username, String imgSource);
+
 
 }
