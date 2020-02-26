@@ -6,15 +6,31 @@
 <div *ngIf = "user.role === 'admin'">
   <p>{{user.enabled}}</p>
   <button (click)="getAllUsers()">List Users</button>
+  <ul>
+    <li *ngFor="let user1 of allUsers">
+      {{user1.id}} {{user1.username}}
+      {{user1.enabled}} <button (click)="deactivateUser(user1.username)">Disable</button>
+      Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource">
+  <br> <button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button>
+    </li>
+   </ul>
 
 </div>
+
+<form>
+  <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
+  <br> <button (click)="updateUser()">Update</button>
+</form>
+
+<p>{{user.imgSource}}</p>
 
 <div *ngIf = "user.rankImg">
   <img src={{user.rankImg}}>
 </div>
 
-<div *ngIf = "user.userImg">
-  <img src={{user.userImg}}>
+<div *ngIf = "user.imgSource">
+  <img src={{user.imgSource}}>
 </div>
+
 
 
