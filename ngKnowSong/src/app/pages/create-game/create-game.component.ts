@@ -46,8 +46,7 @@ export class CreateGameComponent implements OnInit {
   }
 
   getTracksFromPlaylist(id: string){
-    console.log(id);
-
+    // this.stream.get
   }
 
   getUserPlaylists() {
