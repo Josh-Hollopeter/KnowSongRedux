@@ -23,11 +23,9 @@ export class CreateGameComponent implements OnInit {
     this.userSvc.show().subscribe(
 
     yes=>{
-      console.log(yes);
       this.user.authToken = yes["authToken"];
       // this.user.rank
       this.user.username = yes["username"];
-      console.log(this.user);
       this.userSvc.setUser(this.user);
     },
     no=>{
@@ -38,7 +36,6 @@ export class CreateGameComponent implements OnInit {
   }
 
   searchForArtist(){
-    console.log(this.userSvc.getUser());
     var authToken = this.userSvc.getUser().authToken;
     this.stream.searchArtist(this.artistStr, authToken).subscribe(
       response =>{
