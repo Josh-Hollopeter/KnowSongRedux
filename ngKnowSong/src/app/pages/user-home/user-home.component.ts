@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserHomeComponent implements OnInit {
   user = new User();
 
+
   loggedUser:User;
   constructor(
     private route: Router,
@@ -22,23 +23,28 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // let temp = localStorage.getItem('credentials');
-    // let username = atob(temp).split(":");
+    let temp = localStorage.getItem('credentials');
+    let username = atob(temp).split(":");
 
-    // console.log(username[0]);
+    console.log(username[0]);
     this.usersvc.show().subscribe(
       yes=>{
         console.log(yes);
         this.user.authToken = yes["authToken"];
-        // this.user.rank
+        this.user.rankImg = yes["rank"].imgSource;
         this.user.username = yes["username"];
-        console.log(this.user);
+        this.user.userImg = yes["imgSource"];
+        this.user.enabled = yes["enabled"];
+        this.user.role = yes["role"];
+        console.log("User role: " + this.user.role);
+
       },
       no=>{
         console.error("in user home init")
         console.error(no);
       }
     )
+
 
 
   }
@@ -48,9 +54,9 @@ export class UserHomeComponent implements OnInit {
   setUsername(username:string){
     this.user.username = username;
   }
-
   matchHistory(){
     this.route.navigateByUrl('history');
   }
+
 
 }

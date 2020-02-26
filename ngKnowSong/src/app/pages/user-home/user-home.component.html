@@ -2,3 +2,17 @@
 <hr>
 <button (click)="createGame()">Create Game</button>
 <button (click)="matchHistory()">Match History</button>
+
+<div *ngIf = "user.role === 'admin'">
+  <p>{{user.enabled}}</p>
+</div>
+
+<div *ngIf = "user.rankImg">
+  <img src={{user.rankImg}}>
+</div>
+
+<div *ngIf = "user.userImg">
+  <img src={{user.userImg}}>
+</div>
+
+
