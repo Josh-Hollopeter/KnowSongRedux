@@ -39,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ErrorComponent,
     MatchHistoryComponent,
     CreateGameComponent,
+    CreateGameComponent
   ],
   imports: [
     BrowserModule,
