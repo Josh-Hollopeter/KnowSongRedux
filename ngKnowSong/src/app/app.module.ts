@@ -10,7 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { Board1Component } from './game/board1/board1.component';
 import { QuizComponent } from './game/quiz/quiz.component';
@@ -23,6 +23,9 @@ import { MatchHistoryComponent } from './game/match-history/match-history.compon
 import { CreateGameComponent } from './pages/create-game/create-game.component';
 import { SongstreamService } from './spotifyJSON/services/songstream.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,14 +42,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ErrorComponent,
     MatchHistoryComponent,
     CreateGameComponent,
-    CreateGameComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatTableModule
   ],
   providers: [
     AuthService,
