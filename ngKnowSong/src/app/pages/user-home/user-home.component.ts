@@ -33,10 +33,15 @@ export class UserHomeComponent implements OnInit {
         this.user.authToken = yes["authToken"];
         this.user.rankImg = yes["rank"].imgSource;
         this.user.username = yes["username"];
+
         this.user.userImg = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
         console.log("User role: " + this.user.role);
+
+
+        console.log(this.user);
+        this.usersvc.setUser(this.user);
 
       },
       no=>{
@@ -49,7 +54,7 @@ export class UserHomeComponent implements OnInit {
 
   }
   createGame(){
-    this.route.navigateByUrl('game');
+    this.route.navigateByUrl('createGame');
   }
   setUsername(username:string){
     this.user.username = username;

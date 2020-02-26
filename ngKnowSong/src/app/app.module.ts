@@ -18,8 +18,14 @@ import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component'
 import { CallbackComponent } from './spotifyJSON/callback/callback.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { Httpinterceptor } from './services/interceptor/httpinterceptor';
+<<<<<<< HEAD
 import { MatchHistoryComponent } from './game/match-history/match-history.component';
 
+=======
+import { CreateGameComponent } from './pages/create-game/create-game.component';
+import { SongstreamService } from './spotifyJSON/services/songstream.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+>>>>>>> master
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,17 +40,23 @@ import { MatchHistoryComponent } from './game/match-history/match-history.compon
     AuthorizeComponent,
     CallbackComponent,
     ErrorComponent,
+<<<<<<< HEAD
     MatchHistoryComponent,
+=======
+    CreateGameComponent,
+>>>>>>> master
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService,
     UserService,
+    SongstreamService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Httpinterceptor,
