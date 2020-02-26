@@ -1,9 +1,25 @@
-<p>create-game works!</p>
+<h1>Create a Trivia Game</h1>
 <hr>
 <div id="findArtist">
   <input type="text" name="artistStr" [(ngModel)]="artistStr" (keyup)="searchForArtist()" class="form-control"
     placeholder="Search for artist....." />
 </div>
+<div *ngIf="searchResult">
+  <div *ngFor="let result of searchResult; let i = index">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="search-res well">
+          <img src="{{result.img}}" width="100px" height="100px">
+          <h5><a routerLink="/artist/{{result.name}}">{{result.name}}</a></h5>
+          <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <hr>
 <div id="userPlaylists">
   User Playlists
