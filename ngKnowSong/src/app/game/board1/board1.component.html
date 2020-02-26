@@ -1,10 +1,12 @@
 <div class="jumbotron">
-	<h1> QUIZ</h1>
+  <h1> KnowSong!</h1>
+
+  <div *ngIf="!roundOver">
 	<div class="form-group">
-		<label for="input3" class="col-sm-4 control-label">Search Language for mock test:</label>
+		<label for="input3" class="col-sm-4 control-label">Select Category for Game</label>
 		<div class="col-sm-6">
 
-			<select [(ngModel)]="selectedvalue" (change)="gettinglanguage()">
+			<select [(ngModel)]="selectedvalue" (change)="gettingCategory()">
     <option *ngFor="let g of languages" [value]="g">{{g}}</option>
   </select>
 		</div>
@@ -28,14 +30,18 @@
    </label>
 					</div>
 				</ul>
-   <button (click)="previous()"*ngIf="i>0" >previous</button>
+   <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
      <button  (click)="next()" *ngIf="i<quizlength">next</button>
 
 </div>
 
 
 
-	<button class="btn btn-info" (click)="generatemark()" *ngIf="i>=0" >submit</button>
+	<button class="btn btn-info" (click)="roundOver = true" *ngIf="i>=0" >submit</button>
 </div>
-<!-- <div class="home"><a class="nav-link" [routerLink]="['/index']"> Home</a></div> -->
+</div>
+<div *ngIf = "roundOver">
+<p> Your score is  => {{marks}}</p>
+</div>
+<a routerLink="/home"><button class="btn btn-success" > Home </button></a>
 
