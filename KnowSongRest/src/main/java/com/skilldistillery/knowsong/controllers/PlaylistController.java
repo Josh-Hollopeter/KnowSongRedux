@@ -13,5 +13,7 @@ import com.skilldistillery.knowsong.services.PlaylistService;
 public class PlaylistController {
 
 		@Autowired
-		private PlaylistService playlistService;
+		private PlaylistService pSvc;
+		
+		
 }
