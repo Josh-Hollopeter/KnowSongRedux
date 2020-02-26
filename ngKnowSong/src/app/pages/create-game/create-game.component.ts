@@ -3,6 +3,7 @@ import { SongstreamService } from './../../spotifyJSON/services/songstream.servi
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/models/user.service';
+import { Playlist } from 'src/app/spotifyJSON/models/playlist';
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
@@ -14,8 +15,11 @@ export class CreateGameComponent implements OnInit {
 
   artistStr: string;
   searchResult: Artist[];
+  userPlaylists: Playlist[];
   private user: User = new User();
 
+  displayedColumns = ['name', 'description'];
+  dataSource = this.userPlaylists;
 
   constructor(
     private stream: SongstreamService,
@@ -37,6 +41,30 @@ export class CreateGameComponent implements OnInit {
       no => {
         console.error("in user home init")
         console.error(no);
+      }
+    )
+  }
+
+  getUserPlaylists() {
+    var authToken = this.userSvc.getUser().authToken;
+    this.stream.getUserPlaylists(authToken).subscribe(
+      response => {
+        console.log(response);
+        var items = response["items"];
+        this.userPlaylists = new Array();
+        for (let x = 0; x < items.length; x++) {
+          var item = items[x];
+          //get spotify id for following query
+          var id = item["id"];
+          //get playlist name
+          var name = item["name"];
+          //get playlist description
+          var description = item["description"];
+
+          var playlist = new Playlist(id, name, description);
+          this.userPlaylists.push(playlist);
+        }
+
       }
     )
   }
@@ -63,9 +91,9 @@ export class CreateGameComponent implements OnInit {
           console.log(item);
 
           // get image
-          if(item["images"].length < 1){
+          if (item["images"].length < 1) {
             var img = null;
-          }else{
+          } else {
             let imgs: any[] = item["images"];
             let firstImg = imgs[0];
             var img = firstImg["url"];

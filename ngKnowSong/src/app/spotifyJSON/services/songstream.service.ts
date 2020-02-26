@@ -34,7 +34,6 @@ export class SongstreamService {
   searchArtist(artistName: string, authToken: string) {
 
     let url = "https://api.spotify.com/v1/search?q=" + artistName + "&type=artist";
-    console.log(authToken);
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -52,6 +51,27 @@ export class SongstreamService {
         return throwError('Could not retrieve artist from spotify API');
       })
     )
+  }
+
+  getUserPlaylists(authToken: string) {
+    let url = "https://api.spotify.com/v1/me/playlists?limit=50&offset=0";
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`,
+        // 'Accept': 'text/plain'
+      })
+    };
+    return this.http.get(url, httpOptions).pipe(
+      tap((res) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Could not retrieve Playlists from current user');
+      })
+    )
+
   }
 }
 
