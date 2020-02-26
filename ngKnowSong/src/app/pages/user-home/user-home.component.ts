@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserHomeComponent implements OnInit {
   user = new User();
+  allUsers : any;
 
 
   loggedUser:User;
@@ -23,34 +24,26 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let temp = localStorage.getItem('credentials');
-    let username = atob(temp).split(":");
+    // let temp = localStorage.getItem('credentials');
+    // let username = atob(temp).split(":");
 
-    console.log(username[0]);
+    // console.log(username[0]);
     this.usersvc.show().subscribe(
       yes=>{
         console.log(yes);
         this.user.authToken = yes["authToken"];
         this.user.rankImg = yes["rank"].imgSource;
         this.user.username = yes["username"];
-
-        this.user.userImg = yes["imgSource"];
+        this.user.imgSource = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
-        console.log("User role: " + this.user.role);
-
-
-        console.log(this.user);
         this.usersvc.setUser(this.user);
-
       },
       no=>{
         console.error("in user home init")
         console.error(no);
       }
     )
-
-
 
   }
   createGame(){
@@ -62,6 +55,55 @@ export class UserHomeComponent implements OnInit {
   matchHistory(){
     this.route.navigateByUrl('history');
   }
+  getAllUsers(){
+    this.usersvc.getAll().subscribe(
+      yes=>{
+        this.allUsers = yes;
+        console.log(yes);
+      },
+      no=>{
+        console.log(no);
+      }
+    );
+  }
+  deactivateUser(username : string){
+    this.usersvc.deleteUser(username).subscribe(
+      yes=>{
+        this.getAllUsers();
+        console.log(yes);
+      },
+      no=>{
+        console.log(no);
+        console.log("InDeactivateUser");
+      }
+    );
+  }
 
+  updateUser(){
+    this.usersvc.updateUser(this.user).subscribe(
+      yes=>{
+        // this.getAllUsers();
+        console.log(yes);
 
+      },
+      no=>{
+        console.log(no);
+        console.log("InUpdateUser");
+      }
+    );
+  }
+
+  adminUpdateUser(username : string, imgSource : string){
+    this.usersvc.adminUpdateUser(username, imgSource).subscribe(
+      yes=>{
+        // this.getAllUsers();
+        console.log(yes);
+
+      },
+      no=>{
+        console.log(no);
+        console.log("InUpdateUser");
+      }
+    );
+  }
 }

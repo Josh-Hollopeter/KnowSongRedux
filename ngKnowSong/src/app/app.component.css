@@ -1,0 +1,10 @@
+
+.playlist-container {
+  height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 400px;
+
+}

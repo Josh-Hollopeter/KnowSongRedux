@@ -46,4 +46,71 @@ export class UserService {
     return this.user;
   }
 
+  getAll()  {
+    // const credentials = this.authService.getCredentials()
+
+    const options = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    };
+    return this.http.get(this.url + "s", options).pipe(
+      catchError((err: any) => {
+        console.error('user.getAll() : Error retrieving user');
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
+  deleteUser(username : string) {
+    const options = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    };
+    return this.http.delete(this.url + username, options).pipe(
+      catchError((err: any) => {
+        console.error('delete : Error retrieving user');
+        console.error(err);
+        return throwError(err);
+      })
+    );
+
+
+  }
+
+  updateUser(user : User) {
+    const options = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    };
+    return this.http.put(this.url, user, options).pipe(
+      catchError((err: any) => {
+        console.error('update : Error updating user');
+        console.error(err);
+        return throwError(err);
+      })
+    );
+
+
+  }
+
+  adminUpdateUser(username : string, imgSource : string) {
+    const options = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    };
+    return this.http.put(this.url +"/"+ username, imgSource, options).pipe(
+      catchError((err: any) => {
+        console.error('update : Error updating user');
+        console.error(err);
+        return throwError(err);
+      })
+    );
+
+
+  }
+
 }
