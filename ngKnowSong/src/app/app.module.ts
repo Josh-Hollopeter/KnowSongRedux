@@ -26,6 +26,8 @@ import { CreateGameComponent } from './pages/create-game/create-game.component';
 import { SongstreamService } from './spotifyJSON/services/songstream.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +47,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
     CreateGameComponent,
 
+    MatchHistoryComponent,
+    CreateGameComponent
   ],
   imports: [
     BrowserModule,
