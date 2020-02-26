@@ -33,6 +33,7 @@ export class UserHomeComponent implements OnInit {
         // this.user.rank
         this.user.username = yes["username"];
         console.log(this.user);
+        this.usersvc.setUser(this.user);
       },
       no=>{
         console.error("in user home init")
@@ -43,7 +44,7 @@ export class UserHomeComponent implements OnInit {
 
   }
   createGame(){
-    this.route.navigateByUrl('game');
+    this.route.navigateByUrl('createGame');
   }
   setUsername(username:string){
     this.user.username = username;
