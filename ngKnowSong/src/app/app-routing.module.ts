@@ -7,11 +7,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component';
 import { CallbackComponent } from './spotifyJSON/callback/callback.component';
-<<<<<<< HEAD
 import { MatchHistoryComponent } from './game/match-history/match-history.component';
-=======
 import { CreateGameComponent } from './pages/create-game/create-game.component';
->>>>>>> master
 
 
 const routes: Routes = [
