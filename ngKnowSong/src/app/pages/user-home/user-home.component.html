@@ -5,6 +5,8 @@
 
 <div *ngIf = "user.role === 'admin'">
   <p>{{user.enabled}}</p>
+  <button (click)="getAllUsers()">List Users</button>
+
 </div>
 
 <div *ngIf = "user.rankImg">

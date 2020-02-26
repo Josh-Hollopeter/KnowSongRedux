@@ -46,4 +46,23 @@ export class UserService {
     return this.user;
   }
 
+  getAll() {
+    // const credentials = this.authService.getCredentials()
+
+    const options = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    };
+    return this.http.get(this.url + "s", options).pipe(
+
+
+      catchError((err: any) => {
+        console.error('user.getAll() : Error retrieving user');
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
+
 }
