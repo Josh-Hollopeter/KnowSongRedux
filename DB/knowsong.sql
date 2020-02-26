@@ -210,7 +210,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `knowsong`;
-INSERT INTO `rank` (`id`, `img_source`) VALUES (1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTus7vAlw___0mQz_25r8NbdXQWXlsmh7477EKIzDaPsQLhIwuX');
+INSERT INTO `rank` (`id`, `img_source`) VALUES (1, 'https://www.disneyclips.com/images/images/jiminy.png');
 
 COMMIT;
 
@@ -221,9 +221,9 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'admin', '$2a$10$ox9m7AtAzlIZBH9k9pPz0efNkMADYHVQVbZ..y0D08G2KIT43eJCe', 'admin', true, true, NULL, NULL, NULL);
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', 'standard', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTnwVZBOZei-0zETT_6deW7E1vQ2RQP11a3dJvAtsUKTjdOCcTC');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRc8_Db4AymKkryiX9laJDyTaMJdiwLXrMUednJAA5-1WYUkRsK');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'standard', true, false, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTclSHuv_1kczqblnf7oQ3Qd4v3Fiz-R-aZNqTkWIz3JmGoV12H');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'admin', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
 
 COMMIT;
 
