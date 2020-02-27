@@ -12,11 +12,4 @@ body {
 .basic-container {
   padding: 30px;
 }
-.playlist-container {
-  height: 400px;
-  overflow: auto;
-}
 
-table {
-  width: 100%;
-}
