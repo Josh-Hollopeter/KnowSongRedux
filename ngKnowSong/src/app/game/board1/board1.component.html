@@ -12,32 +12,48 @@
 		</div>
 	</div>
 
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <ul>
 {{question}}
 
   </ul>
-  	<ul *ngFor="let opt of option">
-					<div class="checkbox">
+  	<ng-container *ngFor="let opt of option">
+					<*ng-form>
+            <ul>
+            <li>
 						<label>
-             <input type="checkbox" (click)="check($event,opt)">
-           {{opt}}
+             <input type="submit" value={{opt}} *ngIf="i<quizlength" name ={{i}} (click) = "(check(opt));next()" >
+           {{opt}} -->
    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 
 
+<!-- </label>
+  </li>
+</ul> -->
+<div class="form" *ngFor="let opt of option">
+  <form #registerForm="ngForm" (submit)="check(registerForm)">
+    <!-- Email: <input ngModel type="text" placeholder="email" name="email"> -->
+    {{opt}}
 
-   Option one
-   </label>
-					</div>
-				</ul>
-   <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
-     <button  (click)="next()" *ngIf="i<quizlength">next</button>
+
+    <br> <input type="button" value={{opt}}>
+  </form>
 
 </div>
 
 
 
-	<button class="btn btn-info" (click)="roundOver = true" *ngIf="i>=0" >submit</button>
+   <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
+  <!-- </div>
+</ng-container> -->
+<!-- <button  (click)="next();check($event,opt)" *ngIf="i<quizlength">next</button> -->
+
+
+
+
+
+	<button class="btn btn-info" (click)="generatemark();roundOver = true" *ngIf="i>=0" >submit</button>
+
 </div>
 </div>
 <div *ngIf = "roundOver">
