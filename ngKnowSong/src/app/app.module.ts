@@ -1,8 +1,8 @@
-
+import {A11yModule} from '@angular/cdk/a11y';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import {MatIconModule} from '@angular/material/icon';
 import { DataService } from './injectable/data.service';
-
+import {MatButtonModule} from '@angular/material/button';
 import { UserService } from './models/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -66,7 +66,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    A11yModule,
+
   ],
   providers: [
     AuthService,

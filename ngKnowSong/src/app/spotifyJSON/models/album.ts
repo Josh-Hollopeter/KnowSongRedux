@@ -3,8 +3,8 @@ import { Track } from './track';
 
 export class Album {
 
-  id: number;
-}
+
+
 
 
 // @Injectable({
@@ -26,7 +26,7 @@ export class Album {
   albumType: string;
   albumGenre: string[];
   artist: Artist;
-  tracks: Track[]
+  tracks: Track[];
 
   constructor(
     id?: string,
