@@ -3,6 +3,7 @@ import { Track } from './track';
 
 export class Album {
 
+
   id: string;
   name: string;
   releaseDate: number;
@@ -11,7 +12,7 @@ export class Album {
   albumType: string;
   albumGenre: string[];
   artist: Artist;
-  tracks: Track[]
+  tracks: Track[];
 
   constructor(
     id?: string,

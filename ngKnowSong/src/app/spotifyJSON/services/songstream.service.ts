@@ -24,12 +24,53 @@ export class SongstreamService {
 
   }
 
-  // U R L
-  // private artistUrl: string = "https://api.spotify.com/v1/artists/";
-  //  private artistAlbums: string = "https://api.spotify.com/v1/artists/{id}/albums";
 
+  //---------------------
+  //-  Playlist Methods -
+  //---------------------
+  getUserPlaylists(authToken: string) {
+    let url = "https://api.spotify.com/v1/me/playlists?limit=50&offset=0";
 
-  // M E T H O D S
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`,
+        // 'Accept': 'text/plain'
+      })
+    };
+    return this.http.get(url, httpOptions).pipe(
+      tap((res) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Could not retrieve Playlists from current user');
+      })
+    )
+
+  }
+
+  getTracksFromPlaylist(playlistId: string, authToken: string) {
+    let url = "https://api.spotify.com/v1/playlists/"+ playlistId +"/tracks";
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`,
+        // 'Accept': 'text/plain'
+      })
+    };
+    return this.http.get(url, httpOptions).pipe(
+      tap((res) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Could not retrieve tracks from playlist');
+      })
+    )
+  }
+  //---------------------
+  //-   Artist Methods  -
+  //---------------------
 
   searchArtist(artistName: string, authToken: string) {
 
@@ -53,27 +94,7 @@ export class SongstreamService {
     )
   }
 
-  getUserPlaylists(authToken: string) {
-    let url = "https://api.spotify.com/v1/me/playlists?limit=50&offset=0";
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${authToken}`,
-        // 'Accept': 'text/plain'
-      })
-    };
-    return this.http.get(url, httpOptions).pipe(
-      tap((res) => {
-        return res;
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Could not retrieve Playlists from current user');
-      })
-    )
-
-  }
-  getAlbumsFromArtist(artistId: string, authToken: string){
+  getAlbumsFromArtist(artistId: string, authToken: string) {
     let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums";
 
     const httpOptions = {
@@ -96,7 +117,7 @@ export class SongstreamService {
 
   }
 
-  getTracksFromAlbum(albumId: string, authToken: string){
+  getTracksFromAlbum(albumId: string, authToken: string) {
     let url = "https://api.spotify.com/v1/albums/" + albumId + "/tracks?limit=50";
 
     const httpOptions = {
@@ -117,7 +138,7 @@ export class SongstreamService {
     )
   }
 
-  getTracksFromPlaylist(id: string){}
+
 
 }
 
