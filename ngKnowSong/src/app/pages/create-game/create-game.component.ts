@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/models/user.service';
 import { Playlist } from 'src/app/spotifyJSON/models/playlist';
+import { Album } from 'src/app/spotifyJSON/models/album';
+import { Track } from 'src/app/spotifyJSON/models/track';
+import { timer } from 'rxjs';
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
@@ -15,11 +18,15 @@ export class CreateGameComponent implements OnInit {
 
   artistStr: string;
   searchResult: Artist[];
+
   userPlaylists: Playlist[];
   private user: User = new User();
 
   displayedColumns = ['name', 'description'];
   dataSource = this.userPlaylists;
+
+  // I N F O
+  private albums: Album[];
 
   constructor(
     private stream: SongstreamService,
@@ -45,7 +52,7 @@ export class CreateGameComponent implements OnInit {
     )
   }
 
-  getTracksFromPlaylist(id: string){
+  getTracksFromPlaylist(id: string) {
     // this.stream.get
   }
 
@@ -111,6 +118,83 @@ export class CreateGameComponent implements OnInit {
         }
       }
     )
+  }
+
+  getArtistAlbums(artist: Artist) {
+    var authToken = this.userSvc.getUser().authToken;
+    //get albums into array
+    this.albums = new Array();
+    //this is a simplified object
+    // it does not provide:
+    // popularity
+    // genres
+    // tracks
+    this.stream.getAlbumsFromArtist(artist.id, authToken).subscribe(
+      response => {
+        var items = response["items"];
+
+        //big overhead on server
+        for (let x = 0; x < items.length; x++) {
+          var item = items[x];
+          var id = item["id"];
+          var name = item["name"];
+          var releaseDate = item["release_date"];
+
+          let artSizesArray = item["images"];
+          let albumPhotoObject = artSizesArray[1];
+          var albumPhoto = albumPhotoObject["url"];
+
+          var albumType = item["type"];
+
+          var album: Album = new Album(
+            id, name, releaseDate, null, albumPhoto,
+            albumType, null, artist, null);
+
+            //run method below, heavy overhead on server
+          var tracks: Track[] = this.getAlbumTracks(album);
+          album.tracks = tracks;
+
+
+          //push album to arraylist
+          this.albums.push(album);
+          console.log(this.albums);
+
+        }
+      }
+    )
+  }
+  //get simplified track object. NOT audio_features
+  getAlbumTracks(album: Album): Track[] {
+    var authToken = this.userSvc.getUser().authToken;
+    var tracks: Track[] = new Array();
+
+    this.stream.getTracksFromAlbum(album.id, authToken).subscribe(
+      response => {
+
+        var items = response["items"];
+
+        for(let x = 0; x < items.length; x++){
+          var item = items[x];
+
+          var id = item["id"];
+          var name = item["name"];
+          var duration = item["duration_ms"];
+          var popularity = null;
+          var previewUrl = item["preview_url"];
+          var explicit = item["explicit"];
+          var album = album;
+
+          var track: Track = new Track(
+            id, name, duration, popularity, previewUrl, explicit, album
+          );
+
+          tracks.push(track);
+        }
+
+      }
+    )
+    //need a delay here
+    return tracks;
   }
 
 }
