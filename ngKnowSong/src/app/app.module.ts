@@ -1,4 +1,8 @@
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+import { DataService } from './injectable/data.service';
+
 import { UserService } from './models/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -68,6 +72,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AuthService,
     UserService,
     SongstreamService,
+    DataService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Httpinterceptor,

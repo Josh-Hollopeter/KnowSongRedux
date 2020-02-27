@@ -1,5 +1,9 @@
+import { NgForm } from '@angular/forms';
+import { DataService } from './../../injectable/data.service';
+import { Artist } from './../../spotifyJSON/models/artist';
 import { Quizmodel } from './../quiz/quizmodel';
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-board1',
@@ -8,48 +12,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Board1Component implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router,private aroute:ActivatedRoute,private data:DataService) { }
 
   ngOnInit(): void {
-
+    var artists = this.aroute.snapshot.paramMap.get("artists");
+    // var questionInfo = this.data.storage;
+    // console.log(questionInfo[0].name + "in game board");
+    this.questionBuilder();
   }
   myarray: String[] = [];
 i: number = 0;
 languages: String[] = ["play clip", "Name the Albums", "Release Year"];
  newstr: String
- singer = "Beyonce" + "'s";
+//  singer = "Beyonce" + "'s";
  album = "Lemonade";
  year = 2014;
  roundOver:boolean;
- singerQuestion = "What year was " + this.singer + " album " + this.album + " released?";
 
-  quizQuestion = new Quizmodel(6, "Release Year", this.singerQuestion, [this.year, this.year +1, this.year +2, this.year -1], this.year )
+
+  // quizQuestion = new Quizmodel(6, "Release Year", this.singerQuestion, [this.year, this.year +1, this.year +2, this.year -1], this.year )
   quizlist: Quizmodel[] = [
-    {
-      ID: 1, category: "play clip", question: "Inventor of c++?", anslistobj: ["Pavan.c", "James Gosling", "Richie Richie", "Amos.Emmanual"], answer: "Richie Richie"
-    },
-    {
-      ID: 2, category: "play clip", question: "Inventor of java?", anslistobj: ["Nayan.c", "Ärmesh", "Denish Richie", "Kiran.DY"], answer: "Denish Richie"
-    },
-    {
-      ID: 3, category: "Release Year", question: "how is java?", anslistobj: ["Easy", "Difficult", "moderate", "nonoe"], answer: "Easy"
-    },
-    {
-      ID: 4, category: "cprogram", question: "Inventor of cprogram?", anslistobj: ["a", "b", "c", "d"], answer: "a"
-    } ,
-    {
-      ID: 5, category: "cprogram", question: "Inventor of cprogram?", anslistobj: ["a", "b", "c", "d"], answer: "b"
-    },
-    { ID: 7, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
-  },
-    // },
-    // {ID:this.quizQuestion.ID, category:this.quizQuestion.category, question:this.quizQuestion.question,anslistobj:this.quizQuestion.anslistobj,answer:this.quizQuestion.answer }
-    this.quizQuestion,
-    { ID: 8, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:[this.year,this.year+1,this.year+2,this.year-1], answer: 2014
-    },
-    { ID: 9, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
-    },{ ID: 10, category: "Release Year", question: "What year was " + this.singer + " album " + this.album + " released?",anslistobj:this.quizQuestion.anslistobj, answer: 2014
-  },
+
+
+
+
 
   ];
 
@@ -60,6 +46,22 @@ question: String;
 selectedvalue: String;
 option: any[];
 selectedCategories: any[];
+questionBuilder(){
+  var questionInfo = this.data.storage;
+  console.log(questionInfo + "in game board");
+  let j = 0;
+  questionInfo.forEach(element => {
+    // console.log(element.name);
+    let singer = element.name;
+  let singerQuestion = "What year was " + singer + " album " + this.album + " released?";
+      this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:[this.year,this.year-1,this.year+1,this.year+2],answer:this.year});
+  });
+  j = 0;
+  console.log(this.quizlist);
+  // this.gettingCategory();
+}
+
+
 gettingCategory() {
 
   this.selectedCategories =  this.quizlist.filter(d => (d.category == this.selectedvalue));
@@ -78,9 +80,12 @@ this.quizlength = this.selectedCategories.length-1;
 
     if(this.i < this.selectedCategories.length-1){
       ++this.i;
+      // console.log(this.i);
     }
+      console.log(this.selectedCategories.length);
     if(this.i === this.selectedCategories.length){
       this.roundOver = true;
+      // console.log(this.roundOver);
       // document.writeln("your score is " + this.marks);
       }
     console.log(this.selectedCategories[this.i].answer)
@@ -97,18 +102,20 @@ this.quizlength = this.selectedCategories.length-1;
 
   answerkey: AnswerKey[] = [];
 
-  check(e, str: String) {
+  check(form:NgForm) {
 
-    if (e.target.checked) {
-      console.log("..................."+str + " " + this.selectedCategories[this.i].answer);
-      this.answerkey.push(new AnswerKey(str,this.selectedCategories[this.i].answer));
-    }
-    else {
+    // if (e.target.checked) {
+      console.log("..................."+form.value.name + " " + this.selectedCategories[this.i].answer);
+      this.answerkey.push(new AnswerKey(form.value.name,this.selectedCategories[this.i].answer));
+    // }
+    // else {
 
-      this.answerkey.splice(0, 1);
-    }
+    //   this.answerkey.splice(0, 1);
+    // // }
+
     console.log(this.answerkey);
-    this.generatemark();
+    this.sumAnswer();
+    // this.generatemark()
   }
   ///////////////////////////////////
 
@@ -129,11 +136,14 @@ this.quizlength = this.selectedCategories.length-1;
     console.log(this.lengthCheck);
     // alert("your score is "+JSON.stringify(this.marks));
 
-    this.next();
-    if(this.lengthCheck === this.selectedCategories.length){
+    if(this.lengthCheck === this.selectedCategories.length-1){
+      this.generatemark();
       this.roundOver = true;
       // document.writeln("your score is " + this.marks);
       }
+      // console.log(this.roundOver);
+      // console.log("*****" + this.i);
+      // console.log("****" + this.lengthCheck);
   }
   returnHome(){
     console.log("click");
@@ -141,30 +151,30 @@ this.quizlength = this.selectedCategories.length-1;
 
   ///////////////////////////////////
 
-//   sumAnswer() {
-//     var result1 = this.quizlist;
-//     var result2 = this.answerkey;
+  sumAnswer() {
+    var result1 = this.quizlist;
+    var result2 = this.answerkey;
 
-//     var props = ['id', 'answer'];
+    var props = ['id', 'answer'];
 
-//     var result = result1.filter(function (o1) {
-//       // filter out (!) items in result2
-//       return result2.some(function (o2) {
-//         return o1.answer === o2.answer;
-//         // assumes unique id
-//       });
+    var result = result1.filter(function (o1) {
+      // filter out (!) items in result2
+      return result2.some(function (o2) {
+        return o1.answer === o2.answer;
+        // assumes unique id
+      });
 
-//     }).map(function (o) {
+    }).map(function (o) {
 
-//       // use reduce to make objects with only the required properties
-//       // and map to apply this to the filtered array as a whole
-//       return props.reduce(function (newo, ans) {
-//         newo[ans] = o[ans];
-//         return newo;
-//       }, {});
-//     });
-//     console.log("result:" + JSON.stringify(result));
-//   }
+      // use reduce to make objects with only the required properties
+      // and map to apply this to the filtered array as a whole
+      return props.reduce(function (newo, ans) {
+        newo[ans] = o[ans];
+        return newo;
+      }, {});
+    });
+    console.log("result:" + JSON.stringify(result));
+  }
 
 
  }

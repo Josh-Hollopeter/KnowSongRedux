@@ -41,7 +41,7 @@ export class SongstreamService {
         // 'Accept': 'text/plain'
       })
     };
-    return this.http.get<Artist[]>(url, httpOptions).pipe(
+    return this.http.get(url, httpOptions).pipe(
       tap((res) => {
 
         return res;
@@ -73,11 +73,52 @@ export class SongstreamService {
     )
 
   }
+  getAlbumsFromArtist(artistId: string, authToken: string){
+    let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums";
 
-  getTracksFromPlaylist(id: string){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`,
+        // 'Accept': 'text/plain'
+      })
+    };
 
+
+    return this.http.get(url, httpOptions).pipe(
+      tap((res) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('Could not retrieve albums from artist');
+      })
+    )
 
   }
+
+  getTracksFromAlbum(albumId: string, authToken: string){
+    let url = "https://api.spotify.com/v1/albums/" + albumId + "/tracks?limit=50";
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`,
+        // 'Accept': 'text/plain'
+      })
+    };
+
+    return this.http.get(url, httpOptions).pipe(
+      tap((res) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('could not get tracks from album');
+      })
+    )
+  }
+
+  getTracksFromPlaylist(id: string){}
+
 }
 
 
