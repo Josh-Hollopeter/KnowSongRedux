@@ -4,32 +4,16 @@
 <div id="findArtist">
   Search for Artist
   <input type="text" name="artistStr" [(ngModel)]="artistStr" (keyup)="searchForArtist()" class="form-control"
-    placeholder="Search for artist....." />
+    placeholder="Search for artist....." /><br>
 </div>
 
-<!-- <div class="app flex-row align-items-center">
-  <div class="container">
-      <div class="card-deck row">
-          <div class="card col-md-6" *ngFor="let result of searchResult; let i = index">
-              <div class="card-block">
-                  <h4 class="card-title">Level {{data.id_nivel}} - {{data.nombre}} </h4>
-                  <p class="card-text"> {{data.descripcion}}</p>
-              </div>
-          </div>
-      </div>
-  </div>
-</div> -->
-
 <div *ngIf="searchResult">
-  <!-- <div *ngFor="let result of searchResult; let i = index"> -->
-    <!-- <div class="app flex-row align-items-center"> -->
-    <!-- <div class="container"> -->
-    <div class="card-deck row">
-      <div class="card col-sm-3" *ngFor="let result of searchResult; let i = index">
-          <div class="card-deck">
-        <div class="search-res well">
-          <img src="{{result.img}}" width="100px" height="100px">
-          <h5><a (click)="getArtistAlbums(result)">{{result.name}}</a></h5>
+    <div class="card-block row">
+      <div class="card col-sm-1.5" *ngFor="let result of searchResult; let i = index"  style="margin: 10px; padding: 10px;">
+          <div class="card-block">
+            <div class="search-res well">
+          <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
+          <h4 style="text-align: center;"><a (click)="getArtistAlbums(result)">{{result.name}}</a></h4>
           <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
 
         </div>
@@ -38,8 +22,7 @@
     </div>
 
   </div>
-<!-- </div> -->
-<!-- </div> -->
+
 
 
 
