@@ -67,7 +67,9 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
     // this.stream.get
 
   }
-
+  //--------------------
+  //User Playlist Methods
+  //---------------------
   getUserPlaylists() {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.getUserPlaylists(authToken).subscribe(
@@ -92,6 +94,10 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
     )
   }
 
+
+  //--------------------
+  //Artist Search Methods
+  //---------------------
   searchForArtist() {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.searchArtist(this.artistStr, authToken).subscribe(
