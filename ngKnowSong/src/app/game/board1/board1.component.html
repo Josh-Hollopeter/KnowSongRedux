@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <h1> KnowSong!</h1>
 
   <div *ngIf="!roundOver">
@@ -30,16 +30,16 @@
 <!-- </label>
   </li>
 </ul> -->
-<div class="form" *ngFor="let opt of option">
+<!-- <div class="form" *ngFor="let opt of option">
   <form #registerForm="ngForm" (submit)="check(registerForm)">
-    <!-- Email: <input ngModel type="text" placeholder="email" name="email"> -->
-    {{opt}}
+     Email: <input ngModel type="text" placeholder="email" name="email"> -->
+    <!-- {{opt}}
 
 
     <br> <input type="button" value={{opt}}>
   </form>
 
-</div>
+</div>   -->
 
 
 
@@ -52,9 +52,60 @@
 
 
 
-	<button class="btn btn-info" (click)="generatemark();roundOver = true" *ngIf="i>=0" >submit</button>
+	<!-- <button class="btn btn-info" (click)="generatemark();roundOver = true" *ngIf="i>=0" >submit</button> -->
+
+<!-- </div>
+</div> -->
+<div class="jumbotron">
+	<h1> KnowSong!</h1>
+	<div class="form-group">
+		<label for="input3" class="col-sm-4 control-label">Select Category:</label>
+		<div class="col-sm-6">
+
+			<select [(ngModel)]="selectedvalue" (change)="gettingCategory()">
+    <option *ngFor="let g of languages" [value]="g">{{g}}</option>
+  </select>
+		</div>
+	</div>
+
+<div class="jumbotron">
+  <ul>
+{{question}}
+
+  </ul>
+  	<!-- <ul *ngFor="let opt of option">
+					<div class="checkbox">
+						<label>
+             <input type="checkbox" (click)="check($event,opt)">
+           {{opt}}
+   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+
+
+
+   Option one
+   </label>
+					</div>
+        </ul> -->
+
+        <div class="form" *ngFor="let opt of option">
+  <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
+     <button mat-fab  name="opt" (click)= "selected = opt" >  {{opt}}</button>
+     <br>
+
+
+
+
+  </div>
+
+    <br>
+  <button (click)="previous()"*ngIf="i>0" >previous</button>
+     <button  (click)="next()" *ngIf="i<quizlength">next</button>
 
 </div>
+
+
+
+	<button class="btn btn-info" (click)="generatemark()">submit</button>
 </div>
 <div *ngIf = "roundOver">
 <p> Your score is  => {{marks}}</p>

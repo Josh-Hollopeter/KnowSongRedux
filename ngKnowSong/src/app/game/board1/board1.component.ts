@@ -46,6 +46,7 @@ question: String;
 selectedvalue: String;
 option: any[];
 selectedCategories: any[];
+selected;
 questionBuilder(){
   var questionInfo = this.data.storage;
   console.log(questionInfo + "in game board");
@@ -100,84 +101,60 @@ this.quizlength = this.selectedCategories.length-1;
 
 /********************************************************* */
 
-  answerkey: AnswerKey[] = [];
+answerkey: AnswerKey[] = [];
 
-  check(form:NgForm) {
-
-    // if (e.target.checked) {
-      console.log("..................."+form.value.name + " " + this.selectedCategories[this.i].answer);
-      this.answerkey.push(new AnswerKey(form.value.name,this.selectedCategories[this.i].answer));
-    // }
-    // else {
-
-    //   this.answerkey.splice(0, 1);
-    // // }
-
-    console.log(this.answerkey);
-    this.sumAnswer();
-    // this.generatemark()
+check(form:NgForm) {
+  if (true) {
+    console.log("..................."+form.value.name + " " + this.selectedCategories[this.i].answer);
+    this.answerkey.push(new AnswerKey(form.value.name, this.selectedCategories[this.i].answer));
   }
-  ///////////////////////////////////
+  else {
 
-  marks: number = 0;
-  lengthCheck = 0;
-  generatemark() {
-    for (var i = this.i; i < this.answerkey.length; i++) {
-      console.log("chosen *****" + this.answerkey[i].chosen + "*******");
-      console.log("answer *****" + this.selectedCategories[this.i].answer + "*******");
-      if (this.answerkey[i].chosen ===  this.selectedCategories[this.i].answer) {
-        this.marks++;
-        this.lengthCheck++;
-
-      }
-
-
-    }
-    console.log(this.lengthCheck);
-    // alert("your score is "+JSON.stringify(this.marks));
-
-    if(this.lengthCheck === this.selectedCategories.length-1){
-      this.generatemark();
-      this.roundOver = true;
-      // document.writeln("your score is " + this.marks);
-      }
-      // console.log(this.roundOver);
-      // console.log("*****" + this.i);
-      // console.log("****" + this.lengthCheck);
+    this.answerkey.splice(0, 1);
   }
-  returnHome(){
-    console.log("click");
+  console.log(this.answerkey);
+  this.recursivecheck();
+}
+///////////////////////////////////
+
+marks: number = 0;
+generatemark() {
+  for (var i = 0; i < this.answerkey.length; i++) {
+    if (this.answerkey[i].chosen == this.quizlist[i].answer) this.marks++;
   }
+  // alert("your score is "+JSON.stringify(this.marks));
+  document.writeln("your score is " + this.marks);
+}
 
-  ///////////////////////////////////
+///////////////////////////////////
 
-  sumAnswer() {
-    var result1 = this.quizlist;
-    var result2 = this.answerkey;
+recursivecheck() {
+  var result1 = this.quizlist;
+  var result2 = this.answerkey;
 
-    var props = ['id', 'answer'];
+  var props = ['id', 'answer'];
 
-    var result = result1.filter(function (o1) {
-      // filter out (!) items in result2
-      return result2.some(function (o2) {
-        return o1.answer === o2.answer;
-        // assumes unique id
-      });
-
-    }).map(function (o) {
-
-      // use reduce to make objects with only the required properties
-      // and map to apply this to the filtered array as a whole
-      return props.reduce(function (newo, ans) {
-        newo[ans] = o[ans];
-        return newo;
-      }, {});
+  var result = result1.filter(function (o1) {
+    // filter out (!) items in result2
+    return result2.some(function (o2) {
+      return o1.answer === o2.answer;
+      // assumes unique id
     });
-    console.log("result:" + JSON.stringify(result));
-  }
+
+  }).map(function (o) {
+
+    // use reduce to make objects with only the required properties
+    // and map to apply this to the filtered array as a whole
+    return props.reduce(function (newo, ans) {
+      newo[ans] = o[ans];
+      return newo;
+    }, {});
+  });
+  console.log("result:" + JSON.stringify(result));
+}
 
 
- }
+}
 
 export class AnswerKey {
   chosen: any;
