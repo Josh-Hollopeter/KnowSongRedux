@@ -8,8 +8,10 @@
 </div>
 <div *ngIf="searchResult">
   <div *ngFor="let result of searchResult; let i = index">
+
     <div class="row">
       <div class="col-md-12">
+        <div class="card">
         <div class="search-res well">
           <img src="{{result.img}}" width="100px" height="100px">
           <h5><a routerLink="/artist/{{result.name}}">{{result.name}}</a></h5>
@@ -18,6 +20,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 
