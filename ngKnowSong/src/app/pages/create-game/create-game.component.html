@@ -12,7 +12,7 @@
       <div class="col-md-12">
         <div class="search-res well">
           <img src="{{result.img}}" width="100px" height="100px">
-          <h5><a routerLink="/artist/{{result.name}}">{{result.name}}</a></h5>
+          <h5><a (click)="getArtistAlbums(result)">{{result.name}}</a></h5>
           <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
         </div>
       </div>
