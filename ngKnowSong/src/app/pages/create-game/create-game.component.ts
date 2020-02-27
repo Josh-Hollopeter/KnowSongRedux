@@ -64,7 +64,7 @@ export class CreateGameComponent implements OnInit {
 
 
   selectResults() {
-    this.data.storage = this.searchResult;
+    this.data.storage = this.getArtistAlbums(this.searchResult[0]);
     this.router.navigateByUrl('game/')
 
   }
@@ -214,8 +214,7 @@ export class CreateGameComponent implements OnInit {
           var album = album;
 
           var track: Track = new Track(
-            id, name, duration, popularity, previewUrl, explicit, album
-          );
+            id, name, duration, popularity, previewUrl, explicit, album);
 
           tracks.push(track);
         }
