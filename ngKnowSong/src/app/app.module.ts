@@ -1,3 +1,4 @@
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from './models/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -45,6 +46,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
