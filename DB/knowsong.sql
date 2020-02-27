@@ -223,7 +223,7 @@ USE `knowsong`;
 INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'admin', '$2a$10$ox9m7AtAzlIZBH9k9pPz0efNkMADYHVQVbZ..y0D08G2KIT43eJCe', 'admin', true, true, NULL, NULL, NULL);
 INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
 INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'admin', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'admin', true, false, 'BQAK89zpFGq785A85IkfpDxISGiEHgRyLb7ZQ5W80Dw_LC_Nx8vRaG3yY9Y77PHxDfE5bFc9LVJoFOWYO7X4ZKAucldys3zRe0gPTvSrIVMWJnaH7ePCYAAgVHTMlFkQN2sVupHeL1nMH6FXnCADYnAOw4yE1cMdM0NbcCSuRcH2aH1WNA', 'AQBtNWqDiXcn9d-MazhLrv7jmUqP5cjbb-4PLWwpqjdc8OpyQBJ_3yJ2chTZl2ytF42RkXJw9NX64Q_3U5aM_D0gJQezV1E4G-bayEQ3JAkCxqv9mtDTvODrk0CUZ6twon4', 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
 
 COMMIT;
 
@@ -264,6 +264,9 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 1);
+INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 2);
+INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 3);
+INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 4);
 
 COMMIT;
 
