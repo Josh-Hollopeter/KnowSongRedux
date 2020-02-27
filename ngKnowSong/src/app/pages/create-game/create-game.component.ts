@@ -1,3 +1,5 @@
+import { DataService } from './../../injectable/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from './../../spotifyJSON/models/artist';
 import { SongstreamService } from './../../spotifyJSON/services/songstream.service';
 import { Component, OnInit } from '@angular/core';
@@ -23,7 +25,9 @@ export class CreateGameComponent implements OnInit {
 
   constructor(
     private stream: SongstreamService,
-    private userSvc: UserService
+    private userSvc: UserService,
+    private aRoute: ActivatedRoute,
+    private router: Router,private data: DataService
   ) { }
 
 
@@ -43,6 +47,9 @@ export class CreateGameComponent implements OnInit {
         console.error(no);
       }
     )
+    var artistsStorage = [];
+artistsStorage.push(JSON.parse(localStorage.getItem('session')));
+localStorage.setItem('session', JSON.stringify(artistsStorage));
   }
 
   getTracksFromPlaylist(id: string){
@@ -54,7 +61,7 @@ export class CreateGameComponent implements OnInit {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.getUserPlaylists(authToken).subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
         var items = response["items"];
         this.userPlaylists = new Array();
         for (let x = 0; x < items.length; x++) {
@@ -95,6 +102,8 @@ export class CreateGameComponent implements OnInit {
           var name = item["name"];
           console.log(item);
 
+
+
           // get image
           if (item["images"].length < 1) {
             var img = null;
@@ -109,9 +118,15 @@ export class CreateGameComponent implements OnInit {
 
 
           this.searchResult.push(artist);
+
         }
       }
     )
+  }
+  selectResults(){
+    this.data.storage = this.searchResult;
+    this.router.navigateByUrl('game/')
+
   }
 
 }
