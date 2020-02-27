@@ -1,19 +1,19 @@
 export class Quizmodel {
   ID: number;
-  language: String;
+  category: String;
   question: String;
   anslistobj: any;
   answer:any;
 
   constructor(
-    ID: number,
-    language: String,
-    question: String,
-    anslistobj: any,
-    answer: any
+    ID?: number,
+    category?: String,
+    question?: String,
+    anslistobj?: any,
+    answer?: any
   ) {
     this.ID = ID;
-    this.language = language;
+    this.category = category;
     this.anslistobj = anslistobj;
     this.answer = answer;
   }

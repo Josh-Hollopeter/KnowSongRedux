@@ -43,6 +43,12 @@ export class CreateGameComponent implements OnInit {
         console.error(no);
       }
     )
+
+  }
+
+  getTracksFromPlaylist(id: string){
+    // this.stream.get
+
   }
 
   getUserPlaylists() {

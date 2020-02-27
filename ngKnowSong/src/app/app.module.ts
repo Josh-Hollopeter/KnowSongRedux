@@ -19,7 +19,9 @@ import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component'
 import { CallbackComponent } from './spotifyJSON/callback/callback.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { Httpinterceptor } from './services/interceptor/httpinterceptor';
+
 import { MatchHistoryComponent } from './game/match-history/match-history.component';
+
 
 import { CreateGameComponent } from './pages/create-game/create-game.component';
 import { SongstreamService } from './spotifyJSON/services/songstream.service';
@@ -41,8 +43,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AuthorizeComponent,
     CallbackComponent,
     ErrorComponent,
+
+    MatchHistoryComponent,
+
+    CreateGameComponent,
+
+
     MatchHistoryComponent,
     CreateGameComponent,
+
 
   ],
   imports: [
