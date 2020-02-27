@@ -2,6 +2,22 @@ import { Artist } from './artist';
 import { Track } from './track';
 
 export class Album {
+
+  id: number;
+}
+
+
+// @Injectable({
+//   providedIn: "root"
+// })
+
+// // Adapter allows us to parse the specific JSON Data into the model efficiently
+// export class AlbumAdapter implements AlbumInterface<Album>{
+//   adapt(item: any): Album {
+//     return null;
+//   }
+// }
+
   id: string;
   name: string;
   releaseDate: number;
@@ -34,6 +50,7 @@ export class Album {
     this.tracks = tracks;
   }
 }
+
 
 
 

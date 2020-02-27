@@ -71,6 +71,7 @@ export class SongstreamService {
         return throwError('Could not retrieve Playlists from current user');
       })
     )
+
   }
   getAlbumsFromArtist(artistId: string, authToken: string){
     let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums";
@@ -82,6 +83,7 @@ export class SongstreamService {
       })
     };
 
+
     return this.http.get(url, httpOptions).pipe(
       tap((res) => {
         return res;
@@ -91,6 +93,7 @@ export class SongstreamService {
         return throwError('Could not retrieve albums from artist');
       })
     )
+
   }
 
   getTracksFromAlbum(albumId: string, authToken: string){

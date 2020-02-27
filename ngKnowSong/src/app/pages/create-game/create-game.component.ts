@@ -54,13 +54,18 @@ export class CreateGameComponent implements OnInit {
         console.error(no);
       }
     )
+
+
+
     var artistsStorage = [];
 artistsStorage.push(JSON.parse(localStorage.getItem('session')));
 localStorage.setItem('session', JSON.stringify(artistsStorage));
+
   }
 
   getTracksFromPlaylist(id: string) {
     // this.stream.get
+
   }
 
   getUserPlaylists() {
