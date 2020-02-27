@@ -34,7 +34,7 @@ export class CreateGameComponent implements OnInit {
     private stream: SongstreamService,
     private userSvc: UserService,
     private aRoute: ActivatedRoute,
-    private router: Router,private data: DataService
+    private router: Router, private data: DataService
   ) { }
 
 
@@ -55,19 +55,22 @@ export class CreateGameComponent implements OnInit {
       }
     )
 
-
-
     var artistsStorage = [];
-artistsStorage.push(JSON.parse(localStorage.getItem('session')));
-localStorage.setItem('session', JSON.stringify(artistsStorage));
+    artistsStorage.push(JSON.parse(localStorage.getItem('session')));
+    localStorage.setItem('session', JSON.stringify(artistsStorage));
 
   }
 
-  getTracksFromPlaylist(id: string) {
-    // this.stream.get
+
+
+  selectResults() {
+    this.data.storage = this.searchResult;
+    this.router.navigateByUrl('game/')
 
   }
-
+  //-------------------------
+  //- User Playlist Methods -
+  //-------------------------
   getUserPlaylists() {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.getUserPlaylists(authToken).subscribe(
@@ -92,6 +95,19 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
     )
   }
 
+  getTracksFromPlaylist(playlistId: string) {
+    var authToken = this.userSvc.getUser().authToken;
+    this.stream.getTracksFromPlaylist(playlistId, authToken).subscribe(
+      response => {
+
+      }
+    )
+
+  }
+
+  //-------------------------
+  //- Artist Search Methods -
+  //-------------------------
   searchForArtist() {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.searchArtist(this.artistStr, authToken).subscribe(
@@ -113,8 +129,6 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
           var name = item["name"];
           console.log(item);
 
-
-
           // get image
           if (item["images"].length < 1) {
             var img = null;
@@ -127,18 +141,13 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
           // display artist array to user
           var artist: Artist = new Artist(id, name, img);
 
-
           this.searchResult.push(artist);
 
         }
       }
     )
   }
-  selectResults(){
-    this.data.storage = this.searchResult;
-    this.router.navigateByUrl('game/')
 
-  }
 
   getArtistAlbums(artist: Artist) {
     var authToken = this.userSvc.getUser().authToken;
@@ -170,7 +179,7 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
             id, name, releaseDate, null, albumPhoto,
             albumType, null, artist, null);
 
-            //run method below, heavy overhead on server
+          //run method below, heavy overhead on server
           var tracks: Track[] = this.getAlbumTracks(album);
           album.tracks = tracks;
 
@@ -193,7 +202,7 @@ localStorage.setItem('session', JSON.stringify(artistsStorage));
 
         var items = response["items"];
 
-        for(let x = 0; x < items.length; x++){
+        for (let x = 0; x < items.length; x++) {
           var item = items[x];
 
           var id = item["id"];
