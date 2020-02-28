@@ -56,14 +56,15 @@
 
 <!-- </div>
 </div> -->
+<div *ngIf="!roundOver">
 <div class="jumbotron">
 	<h1> KnowSong!</h1>
-	<div class="form-group">
+	<div *ngIf="!selectedvalue" class="form-group">
 		<label for="input3" class="col-sm-4 control-label">Select Category:</label>
 		<div class="col-sm-6">
 
-			<select [(ngModel)]="selectedvalue" (change)="gettingCategory()">
-    <option *ngFor="let g of languages" [value]="g">{{g}}</option>
+			<select  [(ngModel)]="selectedvalue" (change)="gettingCategory()">
+    <option *ngFor="let g of categories" [value]="g">{{g}}</option>
   </select>
 		</div>
 	</div>
@@ -71,6 +72,15 @@
 <div class="jumbotron">
   <ul>
 {{question}}
+<ng-container *ngIf="playdatclip">
+  <p>Name dat Song</p>
+  <br>
+<audio id="my-audio" controls>
+  <source src={{getQuestion()}}
+  type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+</ng-container>
 
   </ul>
   	<!-- <ul *ngFor="let opt of option">
@@ -99,16 +109,21 @@
     <br>
     <br>
   <button (click)="previous()"*ngIf="i>0" >previous</button>
+
      <button  (click)="check();next()" *ngIf="i<quizlength">next</button>
 
+</div>
 </div>
 
 
 
 	<button class="btn btn-info" (click)="submit()">submit</button>
 </div>
+<br>
+<br>
+<br>
 <div *ngIf = "roundOver">
 <p> Your score is  => {{marks}}</p>
 </div>
-<a routerLink="/home"><button class="btn btn-success" > Home </button></a>
 
+<a routerLink="/home"><button class="btn btn-success" > Home </button></a>

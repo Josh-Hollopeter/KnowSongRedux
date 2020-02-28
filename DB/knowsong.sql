@@ -194,6 +194,27 @@ CREATE TABLE IF NOT EXISTS `user_has_friend` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `game_history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `game_history` ;
+
+CREATE TABLE IF NOT EXISTS `game_history` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `marks` VARCHAR(45) NULL,
+  `num_questions` VARCHAR(45) NULL,
+  `date_played` DATETIME NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_game_history_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_game_history_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 SET SQL_MODE = '';
 DROP USER IF EXISTS knowsong@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -289,6 +310,17 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `trivia_game_question` (`id`, `trivia_game_id`, `trivia_id`, `correct`, `question_text`) VALUES (1, 1, 1, true, 'Beyonce album Lemonade was released in 2014.');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `game_history`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `knowsong`;
+INSERT INTO `game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (1, '7', '10', '2020-02-28', 1);
+INSERT INTO `game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (2, '6', '10', '2020-02-28', 2);
 
 COMMIT;
 
