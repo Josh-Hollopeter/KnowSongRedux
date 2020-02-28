@@ -63,6 +63,11 @@ export class CreateGameComponent implements OnInit {
 
 
 
+  selectResults() {
+    this.data.storage = this.getArtistAlbums(this.searchResult[0] );
+    this.router.navigateByUrl('game/')
+
+  }
   //-------------------------
   //- User Playlist Methods -
   //-------------------------
@@ -103,14 +108,6 @@ export class CreateGameComponent implements OnInit {
   //-------------------------
   //- Artist Search Methods -
   //-------------------------
-  //move to next page
-  nextPageWithArtist() {
-    console.log(this.albums);
-
-    this.data.storage = this.albums;
-    this.router.navigateByUrl('game/')
-
-  }
   searchForArtist() {
     var authToken = this.userSvc.getUser().authToken;
     this.stream.searchArtist(this.artistStr, authToken).subscribe(
@@ -130,6 +127,7 @@ export class CreateGameComponent implements OnInit {
 
           // get name
           var name = item["name"];
+          console.log(item);
 
           // get image
           if (item["images"].length < 1) {
@@ -188,16 +186,14 @@ export class CreateGameComponent implements OnInit {
 
           //push album to arraylist
           this.albums.push(album);
+          console.log(this.albums);
 
         }
-        // ====================
-        // ==   NEXT PAGE    ==
-        // ====================
-        this.nextPageWithArtist();
+        this.data.storage = this.albums;
+
+        this.router.navigateByUrl('game/')
       }
     )
-
-
   }
   //get simplified track object. NOT audio_features
   getAlbumTracks(album: Album): Track[] {
@@ -221,8 +217,7 @@ export class CreateGameComponent implements OnInit {
           var album = album;
 
           var track: Track = new Track(
-            id, name, duration, popularity, previewUrl, explicit, album
-          );
+            id, name, duration, popularity, previewUrl, explicit, album);
 
           tracks.push(track);
         }
