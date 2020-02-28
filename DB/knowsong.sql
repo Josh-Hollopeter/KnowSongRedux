@@ -194,27 +194,6 @@ CREATE TABLE IF NOT EXISTS `user_has_friend` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `game_history`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `game_history` ;
-
-CREATE TABLE IF NOT EXISTS `game_history` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `marks` VARCHAR(45) NULL,
-  `num_questions` VARCHAR(45) NULL,
-  `date_played` DATETIME NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_game_history_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_game_history_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
 SET SQL_MODE = '';
 DROP USER IF EXISTS knowsong@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -243,8 +222,8 @@ START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'admin', '$2a$10$ox9m7AtAzlIZBH9k9pPz0efNkMADYHVQVbZ..y0D08G2KIT43eJCe', 'admin', true, true, NULL, NULL, NULL);
 INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'admin', true, false, 'BQAK89zpFGq785A85IkfpDxISGiEHgRyLb7ZQ5W80Dw_LC_Nx8vRaG3yY9Y77PHxDfE5bFc9LVJoFOWYO7X4ZKAucldys3zRe0gPTvSrIVMWJnaH7ePCYAAgVHTMlFkQN2sVupHeL1nMH6FXnCADYnAOw4yE1cMdM0NbcCSuRcH2aH1WNA', 'AQBtNWqDiXcn9d-MazhLrv7jmUqP5cjbb-4PLWwpqjdc8OpyQBJ_3yJ2chTZl2ytF42RkXJw9NX64Q_3U5aM_D0gJQezV1E4G-bayEQ3JAkCxqv9mtDTvODrk0CUZ6twon4', 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://www.si.edu/sites/default/files/newsdesk/photos/a19730040000-nasm2018-02096.jpg');
+INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'admin', true, false, 'BQAK89zpFGq785A85IkfpDxISGiEHgRyLb7ZQ5W80Dw_LC_Nx8vRaG3yY9Y77PHxDfE5bFc9LVJoFOWYO7X4ZKAucldys3zRe0gPTvSrIVMWJnaH7ePCYAAgVHTMlFkQN2sVupHeL1nMH6FXnCADYnAOw4yE1cMdM0NbcCSuRcH2aH1WNA', 'AQBtNWqDiXcn9d-MazhLrv7jmUqP5cjbb-4PLWwpqjdc8OpyQBJ_3yJ2chTZl2ytF42RkXJw9NX64Q_3U5aM_D0gJQezV1E4G-bayEQ3JAkCxqv9mtDTvODrk0CUZ6twon4', 'https://www.si.edu/sites/default/files/newsdesk/photos/a19730040000-nasm2018-02096.jpg');
 
 COMMIT;
 
@@ -310,17 +289,6 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `trivia_game_question` (`id`, `trivia_game_id`, `trivia_id`, `correct`, `question_text`) VALUES (1, 1, 1, true, 'Beyonce album Lemonade was released in 2014.');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `game_history`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (1, '7', '10', '2020-02-28', 1);
-INSERT INTO `game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (2, '6', '10', '2020-02-28', 2);
 
 COMMIT;
 
