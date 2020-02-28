@@ -185,13 +185,17 @@ export class CreateGameComponent implements OnInit {
 
 
           //push album to arraylist
+
           this.albums.push(album);
-          console.log(this.albums);
+        console.log(this.albums);}
+          var putAlbum = () => {
+            this.data.storage = this.albums;
+            this.router.navigateByUrl('game/')
 
         }
-        this.data.storage = this.albums;
+        setTimeout(putAlbum , 2000);
 
-        this.router.navigateByUrl('game/')
+
       }
     )
   }
