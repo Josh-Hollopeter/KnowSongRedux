@@ -56,6 +56,7 @@ selected;
 
 questionBuilder(){
   var questionInfo = this.data.storage;
+  this.shuffle(questionInfo);
   console.log(questionInfo + "in game board");
   let j = 0;
   questionInfo.forEach(element => {
