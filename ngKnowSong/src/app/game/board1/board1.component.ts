@@ -19,7 +19,7 @@ export class Board1Component implements OnInit {
     // var questionInfo = this.data.storage;
     // console.log(questionInfo[0].name + "in game board");
 
-    console.log(this.data.storage);
+    console.log(this.data.storage +  "in board component");
 
 
     this.questionBuilder();
@@ -55,18 +55,19 @@ selected;
 
 
 questionBuilder(){
-  var questionInfo = this.data.storage[0];
+  var questionInfo = this.data.storage;
   console.log(questionInfo + "in game board");
   let j = 0;
   questionInfo.forEach(element => {
     // console.log(element.name);
-    let singer = element.name;
-  let singerQuestion = "What year was " + singer + " album " + this.album + " released?";
-  var year = element.releaseYear;
+    let singer = element.artist.name;
+  let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
+  element.releaseYear
+  var year = parseInt(element.releaseDate);
   console.log(element);
   var years =[year+1, year -1,year+2, year];
   years = this.shuffle(years);
-      this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:years,answer:this.year});
+      this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:years,answer:year});
   });
   j = 0;
   console.log(this.quizlist);
@@ -132,7 +133,9 @@ generatemark() {
   //   if (this.selected ==this.selectedCategories[this.i].answer) this.marks++;
   // }
   // alert("your score is "+JSON.stringify(this.marks));
-  if(this.selected === this.selectedCategories[this.i].answer){
+  console.log(this.selected + "***#*#*#*#*#*#*#*#");
+  console.log(this.selectedCategories[this.i] + "fdlkkjgkljljgflkgjfd");
+  if(this.selected == this.selectedCategories[this.i].answer){
     this.marks ++;
   }
 

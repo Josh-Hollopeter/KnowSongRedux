@@ -189,6 +189,9 @@ export class CreateGameComponent implements OnInit {
           console.log(this.albums);
 
         }
+        this.data.storage = this.albums;
+
+        this.router.navigateByUrl('game/')
       }
     )
   }
