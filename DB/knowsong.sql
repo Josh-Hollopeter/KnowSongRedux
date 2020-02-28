@@ -21,10 +21,11 @@ USE `knowsong` ;
 DROP TABLE IF EXISTS `rank` ;
 
 CREATE TABLE IF NOT EXISTS `rank` (
-  `id` INT NOT NULL,
-  `img_source` TEXT NULL,
+  `id` INT(11) NOT NULL,
+  `img_source` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -33,16 +34,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `user` ;
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `rank_id` INT NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `rank_id` INT(11) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(150) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
-  `enabled` TINYINT NULL DEFAULT 0,
-  `admin` TINYINT NULL DEFAULT 0,
-  `auth_token` VARCHAR(200) NULL,
-  `refresh_token` VARCHAR(200) NULL,
-  `img_source` TEXT NULL,
+  `enabled` TINYINT(4) NULL DEFAULT '0',
+  `admin` TINYINT(4) NULL DEFAULT '0',
+  `auth_token` VARCHAR(200) NULL DEFAULT NULL,
+  `refresh_token` VARCHAR(200) NULL DEFAULT NULL,
+  `img_source` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   INDEX `fk_user_rank1_idx` (`rank_id` ASC),
@@ -51,39 +52,32 @@ CREATE TABLE IF NOT EXISTS `user` (
     REFERENCES `rank` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `question_category`
+-- Table `game_history`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `question_category` ;
+DROP TABLE IF EXISTS `game_history` ;
 
-CREATE TABLE IF NOT EXISTS `question_category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `category` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `trivia`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `trivia` ;
-
-CREATE TABLE IF NOT EXISTS `trivia` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `question_category_id` INT NOT NULL,
-  `question` VARCHAR(500) NULL,
-  `point` INT NULL,
+CREATE TABLE IF NOT EXISTS `game_history` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `marks` VARCHAR(45) NULL DEFAULT NULL,
+  `num_questions` VARCHAR(45) NULL DEFAULT NULL,
+  `date_played` DATETIME NULL DEFAULT NULL,
+  `user_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_trivia_question_category1_idx` (`question_category_id` ASC),
-  CONSTRAINT `fk_trivia_question_category1`
-    FOREIGN KEY (`question_category_id`)
-    REFERENCES `question_category` (`id`)
+  INDEX `fk_game_history_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_game_history_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -92,36 +86,50 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `playlist` ;
 
 CREATE TABLE IF NOT EXISTS `playlist` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `spotify_id` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `description` VARCHAR(600) NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `description` VARCHAR(600) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `user_playlist`
+-- Table `question_category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_playlist` ;
+DROP TABLE IF EXISTS `question_category` ;
 
-CREATE TABLE IF NOT EXISTS `user_playlist` (
-  `playlist_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`playlist_id`, `user_id`),
-  INDEX `fk_playlist_has_user_user1_idx` (`user_id` ASC),
-  INDEX `fk_playlist_has_user_playlist_idx` (`playlist_id` ASC),
-  CONSTRAINT `fk_playlist_has_user_playlist`
-    FOREIGN KEY (`playlist_id`)
-    REFERENCES `playlist` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_playlist_has_user_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
+CREATE TABLE IF NOT EXISTS `question_category` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `category` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `trivia`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `trivia` ;
+
+CREATE TABLE IF NOT EXISTS `trivia` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `question_category_id` INT(11) NOT NULL,
+  `question` VARCHAR(500) NULL DEFAULT NULL,
+  `point` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_trivia_question_category1_idx` (`question_category_id` ASC),
+  CONSTRAINT `fk_trivia_question_category1`
+    FOREIGN KEY (`question_category_id`)
+    REFERENCES `question_category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -130,9 +138,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `trivia_game` ;
 
 CREATE TABLE IF NOT EXISTS `trivia_game` (
-  `id` INT NOT NULL,
-  `user_id` INT NOT NULL,
-  `date_played` DATETIME NULL,
+  `id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `date_played` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_trivia_game_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_trivia_game_user`
@@ -140,7 +148,8 @@ CREATE TABLE IF NOT EXISTS `trivia_game` (
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -149,25 +158,27 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `trivia_game_question` ;
 
 CREATE TABLE IF NOT EXISTS `trivia_game_question` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `trivia_game_id` INT NOT NULL,
-  `trivia_id` INT NOT NULL,
-  `correct` TINYINT NULL DEFAULT 0,
-  `question_text` VARCHAR(500) NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `trivia_game_id` INT(11) NOT NULL,
+  `trivia_id` INT(11) NOT NULL,
+  `correct` TINYINT(4) NULL DEFAULT '0',
+  `question_text` VARCHAR(500) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_trivia_game_has_trivia_trivia1_idx` (`trivia_id` ASC),
   INDEX `fk_trivia_game_has_trivia_trivia_game1_idx` (`trivia_game_id` ASC),
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_trivia_game_has_trivia_trivia_game1`
-    FOREIGN KEY (`trivia_game_id`)
-    REFERENCES `trivia_game` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_trivia_game_has_trivia_trivia1`
     FOREIGN KEY (`trivia_id`)
     REFERENCES `trivia` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_trivia_game_has_trivia_trivia_game1`
+    FOREIGN KEY (`trivia_game_id`)
+    REFERENCES `trivia_game` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -176,9 +187,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `user_has_friend` ;
 
 CREATE TABLE IF NOT EXISTS `user_has_friend` (
-  `user_id` INT NOT NULL,
-  `friend_id` INT NOT NULL,
-  `date_friended` DATETIME NULL,
+  `user_id` INT(11) NOT NULL,
+  `friend_id` INT(11) NOT NULL,
+  `date_friended` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`, `friend_id`),
   INDEX `fk_user_has_user_user2_idx` (`friend_id` ASC),
   INDEX `fk_user_has_user_user1_idx` (`user_id` ASC),
@@ -192,28 +203,33 @@ CREATE TABLE IF NOT EXISTS `user_has_friend` (
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `game_history`
+-- Table `user_playlist`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `game_history` ;
+DROP TABLE IF EXISTS `user_playlist` ;
 
-CREATE TABLE IF NOT EXISTS `game_history` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `marks` VARCHAR(45) NULL,
-  `num_questions` VARCHAR(45) NULL,
-  `date_played` DATETIME NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_game_history_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_game_history_user1`
+CREATE TABLE IF NOT EXISTS `user_playlist` (
+  `playlist_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  PRIMARY KEY (`playlist_id`, `user_id`),
+  INDEX `fk_playlist_has_user_user1_idx` (`user_id` ASC),
+  INDEX `fk_playlist_has_user_playlist_idx` (`playlist_id` ASC),
+  CONSTRAINT `fk_playlist_has_user_playlist`
+    FOREIGN KEY (`playlist_id`)
+    REFERENCES `playlist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_playlist_has_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 SET SQL_MODE = '';
 DROP USER IF EXISTS knowsong@localhost;
@@ -225,102 +241,3 @@ GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'knowsong'@'localhos
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `rank`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `rank` (`id`, `img_source`) VALUES (1, 'https://www.disneyclips.com/images/images/jiminy.png');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `user`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'admin', '$2a$10$ox9m7AtAzlIZBH9k9pPz0efNkMADYHVQVbZ..y0D08G2KIT43eJCe', 'admin', true, true, NULL, NULL, NULL);
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', '$2a$10$I7FfieVXCfUaTMB9UL20t.v/725ElTMKHOPSop1DtPNubwp7Ddr6y', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (3, 1, 'neal', '$2a$10$vfBYDhgCCte1CxLG5q/aZuatG4CSAUdSebH9VpY5Pz1W9dcnQA.Pa', 'standard', true, false, NULL, NULL, 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
-INSERT INTO `user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (4, 1, 'george', '$2a$10$sKWxXOgA1dAhMUMqD5HzAeoVug1ZvLyAuwQbswbuou1WXgl34A8Cu', 'admin', true, false, 'BQAK89zpFGq785A85IkfpDxISGiEHgRyLb7ZQ5W80Dw_LC_Nx8vRaG3yY9Y77PHxDfE5bFc9LVJoFOWYO7X4ZKAucldys3zRe0gPTvSrIVMWJnaH7ePCYAAgVHTMlFkQN2sVupHeL1nMH6FXnCADYnAOw4yE1cMdM0NbcCSuRcH2aH1WNA', 'AQBtNWqDiXcn9d-MazhLrv7jmUqP5cjbb-4PLWwpqjdc8OpyQBJ_3yJ2chTZl2ytF42RkXJw9NX64Q_3U5aM_D0gJQezV1E4G-bayEQ3JAkCxqv9mtDTvODrk0CUZ6twon4', 'https://static.parade.com/wp-content/uploads/2013/07/roller-coaster-ftr.jpg');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `question_category`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `question_category` (`id`, `category`) VALUES (1, 'year');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `trivia`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `trivia` (`id`, `question_category_id`, `question`, `point`) VALUES (1, 1, 'Artist album AlbumName was released in Year.', 1);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `playlist`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `playlist` (`id`, `spotify_id`, `name`, `description`) VALUES (1, '19PgP2QSGPcm6Ve8VhbtpG', '80\'s Smash HIt', '1980s hits and retro favorites by Michael Jackson, Toto & more!');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `user_playlist`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 1);
-INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 2);
-INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 3);
-INSERT INTO `user_playlist` (`playlist_id`, `user_id`) VALUES (1, 4);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `trivia_game`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `trivia_game` (`id`, `user_id`, `date_played`) VALUES (1, 2, '2020-02-21');
-INSERT INTO `trivia_game` (`id`, `user_id`, `date_played`) VALUES (2, 3, '2020-02-21');
-INSERT INTO `trivia_game` (`id`, `user_id`, `date_played`) VALUES (3, 4, '2020-02-21');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `trivia_game_question`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `trivia_game_question` (`id`, `trivia_game_id`, `trivia_id`, `correct`, `question_text`) VALUES (1, 1, 1, true, 'Beyonce album Lemonade was released in 2014.');
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `game_history`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `knowsong`;
-INSERT INTO `game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (1, '7', '10', '2020-02-28', 1);
-INSERT INTO `game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (2, '6', '10', '2020-02-28', 2);
-
-COMMIT;
-
