@@ -28,6 +28,7 @@ export class UserService {
     return this.http.get<User>(this.url, options).pipe(
       tap((res) => {
         this.setUser(res);
+        localStorage.setItem("AccessToken", res.authToken);
         return res;
       }),
       catchError((err: any) => {
