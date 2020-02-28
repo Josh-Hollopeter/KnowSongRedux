@@ -113,14 +113,28 @@
           <div class="card-footer">
 
             <button (click)="getAllUsers()">List Users</button>
-            <ul>
-              <li *ngFor="let user1 of allUsers">
-                {{user1.id}} {{user1.username}}
-                {{user1.enabled}} <button (click)="deactivateUser(user1.username)">Disable</button>
-                Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource">
-                <button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button>
-              </li>
-             </ul>
+            <table *ngIf="allUsers" class="table">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Enabled</th>
+                <th>Role</th>
+                <th>Profile Image</th>
+                <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
+              </tr>
+              <tr *ngFor="let user1 of allUsers">
+                <td>{{user1.id}}</td>
+                <td>{{user1.username}}</td>
+                <td>{{user1.enabled}}</td>
+                <td>{{user1.role}}</td>
+                <td><input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource"></td>
+                <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td>
+
+
+              </tr>
+            </table>
 
 
 
