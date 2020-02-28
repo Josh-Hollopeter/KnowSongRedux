@@ -1,3 +1,4 @@
+import { Track } from './../../spotifyJSON/models/track';
 import { DataService } from './../../injectable/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from './../../spotifyJSON/models/artist';
@@ -7,8 +8,6 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/models/user.service';
 import { Playlist } from 'src/app/spotifyJSON/models/playlist';
 import { Album } from 'src/app/spotifyJSON/models/album';
-import { Track } from 'src/app/spotifyJSON/models/track';
-import { timer } from 'rxjs';
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
@@ -60,11 +59,13 @@ export class CreateGameComponent implements OnInit {
     localStorage.setItem('session', JSON.stringify(artistsStorage));
 
   }
-
+  checkAuthToken() {
+    // if()
+  }
 
 
   selectResults() {
-    this.data.storage = this.getArtistAlbums(this.searchResult[0] );
+    this.data.storage = this.getArtistAlbums(this.searchResult[0]);
     this.router.navigateByUrl('game/')
 
   }
@@ -174,15 +175,16 @@ export class CreateGameComponent implements OnInit {
           var albumPhoto = albumPhotoObject["url"];
 
           var albumType = item["type"];
+          var tracks: Track[] = this.getAlbumTracks(id);
 
           var album: Album = new Album(
             id, name, releaseDate, null, albumPhoto,
-            albumType, null, artist, null);
+            albumType, null, artist, tracks);
 
-          //run method below, heavy overhead on server
-          var tracks: Track[] = this.getAlbumTracks(album);
+
+          console.log("Before get track stream");
+
           album.tracks = tracks;
-
 
           //push album to arraylist
 
@@ -200,11 +202,13 @@ export class CreateGameComponent implements OnInit {
     )
   }
   //get simplified track object. NOT audio_features
-  getAlbumTracks(album: Album): Track[] {
+  getAlbumTracks(albumId: string): Track[] {
     var authToken = this.userSvc.getUser().authToken;
     var tracks: Track[] = new Array();
 
-    this.stream.getTracksFromAlbum(album.id, authToken).subscribe(
+    console.log("Before get track stream");
+
+    this.stream.getTracksFromAlbum(albumId, authToken).subscribe(
       response => {
 
         var items = response["items"];
@@ -218,12 +222,14 @@ export class CreateGameComponent implements OnInit {
           var popularity = null;
           var previewUrl = item["preview_url"];
           var explicit = item["explicit"];
-          var album = album;
+          // var album = album;
 
           var track: Track = new Track(
-            id, name, duration, popularity, previewUrl, explicit, album);
+            id, name, duration, popularity, previewUrl, explicit, null);
 
           tracks.push(track);
+          console.log("In for loop : " + track);
+
         }
 
       }

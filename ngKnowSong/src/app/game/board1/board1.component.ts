@@ -1,11 +1,14 @@
 import { NgForm } from '@angular/forms';
 import { DataService } from './../../injectable/data.service';
 import { Artist } from './../../spotifyJSON/models/artist';
+import { Track } from 'src/app/spotifyJSON/models/track';
+import { Album } from 'src/app/spotifyJSON/models/album';
 import { Quizmodel } from './../quiz/quizmodel';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {get} from 'lodash';
 import { JsonPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-board1',
@@ -14,6 +17,10 @@ import { JsonPipe } from '@angular/common';
 })
 export class Board1Component implements OnInit {
 
+  //neal put fields
+  trackObject: Track;
+  albumObject: Album;
+  artistObject: Artist;
   constructor(private router: Router, private aroute: ActivatedRoute, private data: DataService) { }
 
   ngOnInit(): void {
@@ -21,7 +28,7 @@ export class Board1Component implements OnInit {
     // var questionInfo = this.data.storage;
     // console.log(questionInfo[0].name + "in game board");
 
-    console.log(this.data.storage +  "in board component");
+    console.log(this.data.storage + "in board component");
 
 
     this.questionBuilder();
@@ -135,7 +142,7 @@ getQuestion(){
 
   answerkey: AnswerKey[] = [];
 
-check() {
+  check() {
 
     console.log("..................."+this.selectedCategories[this.i].answer + " " + this.selected);
     this.correct = false;
@@ -161,6 +168,7 @@ generatemark() {
     this.marks ++;
     this.correct = true;
   }
+  ///////////////////////////////////
 
 }
 submit(){
@@ -168,54 +176,54 @@ submit(){
   this.roundOver = true;
 
 }
-nameDatClip(){
 
-}
+
+
 
   ///////////////////////////////////
 
-// recursivecheck() {
-//   var result1 = this.quizlist;
-//   var result2 = this.answerkey;
+  // recursivecheck() {
+  //   var result1 = this.quizlist;
+  //   var result2 = this.answerkey;
 
-//   var props = ['id', 'answer'];
+  //   var props = ['id', 'answer'];
 
-//   var result = result1.filter(function (o1) {
-//     // filter out (!) items in result2
-//     return result2.some(function (o2) {
-//       return o1.answer === o2.answer;
-//       // assumes unique id
-//     });
+  //   var result = result1.filter(function (o1) {
+  //     // filter out (!) items in result2
+  //     return result2.some(function (o2) {
+  //       return o1.answer === o2.answer;
+  //       // assumes unique id
+  //     });
 
-//   }).map(function (o) {
+  //   }).map(function (o) {
 
-//     // use reduce to make objects with only the required properties
-//     // and map to apply this to the filtered array as a whole
-//     return props.reduce(function (newo, ans) {
-//       newo[ans] = o[ans];
-//       return newo;
-//     }, {});
-//   });
-//   console.log("result:" + JSON.stringify(result));
-// }
-shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  //     // use reduce to make objects with only the required properties
+  //     // and map to apply this to the filtered array as a whole
+  //     return props.reduce(function (newo, ans) {
+  //       newo[ans] = o[ans];
+  //       return newo;
+  //     }, {});
+  //   });
+  //   console.log("result:" + JSON.stringify(result));
+  // }
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
   }
-
-  return array;
-}
 
 }
 

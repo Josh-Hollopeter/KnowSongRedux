@@ -25,8 +25,6 @@ export class LoginComponent implements OnInit {
   login(form: NgForm){
     this.authService.login(form.value.username, form.value.password).subscribe(
       success => {
-
-        console.log(this.user.userId);
         this.route.navigateByUrl('home');
       },
       fail => {

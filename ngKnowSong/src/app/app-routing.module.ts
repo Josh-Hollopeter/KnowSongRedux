@@ -1,3 +1,4 @@
+import { Album } from 'src/app/spotifyJSON/models/album';
 import { Board1Component } from './game/board1/board1.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: UserHomeComponent},
   {path: 'game/:artists' ,component: Board1Component },
+  // {path: 'game/' ,component: Board1Component },
+
   {path: 'game', component: Board1Component},
   {path: 'history', component: MatchHistoryComponent},
   {path: 'authorize', component: AuthorizeComponent},
