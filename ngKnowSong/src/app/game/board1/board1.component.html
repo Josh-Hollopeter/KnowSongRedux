@@ -99,9 +99,9 @@ Your browser does not support the audio element.
 
         <span class="class='col-xs-3'" *ngFor="let opt of option">
   <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
-    <button mat-fab  name="opt" (click)= "selected = opt"  >  {{opt}}</button>
+    <button mat-fab  name="opt" (click)= "selected = opt"  class="text-center">  {{opt}}</button>
     <span class="class='col-xs-3'" style="padding: 0.5in;"></span>
-
+    <br *ngIf="playdatclip">
 
 
 
