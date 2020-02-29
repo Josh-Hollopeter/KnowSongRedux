@@ -70,6 +70,13 @@ questionBuilder(){
   this.shuffle(questionInfo);
   console.log(questionInfo + "in game board");
   let j = 0;
+  let count = 0;
+  let trackNames = new Array;
+  let trackAnswers = new Array;
+  // questionInfo[count].tracks.forEach(element => {
+  //   trackNames.push(element);
+
+  // });
   questionInfo.forEach(element => {
     // console.log(element.name);
     let singer = element.artist.name;
@@ -79,8 +86,26 @@ questionBuilder(){
   console.log(element);
   var years =[year+1, year -1,year+2, year];
   years = this.shuffle(years);
+
+  console.log("***********" + JSON.stringify(element));
+  console.log(element.tracks);
+
   this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:years,answer:year});
-  this.quizlist.push({ID :j,category:"play clip",question:element.tracks[j].previewUrl,anslistobj:years,answer:singer});
+  if(element.tracks){
+    trackNames = trackNames.concat(element.tracks);
+    trackNames = this.shuffle(trackNames);
+    var ansArray = Object.assign([], trackNames);
+    console.log(trackNames)
+    let track = ansArray.pop();
+    if(!track.previewUrl){
+      return;
+    }
+    trackAnswers = [track.name,trackNames[j].name,trackNames[j+1].name,trackNames[j+2].name];
+    trackAnswers = this.shuffle(trackAnswers);
+    console.log(track.previewUrl);
+  this.quizlist.push({ID :j,category:"play clip",question:track.previewUrl,anslistobj:trackAnswers,answer:track.name});
+  trackNames = this.shuffle(trackNames);
+  }
   // console.log("***********" + element.tracks[0].name);
 
  var test = get(element, 'track');
@@ -147,7 +172,7 @@ getQuestion(){
     console.log("..................."+this.selectedCategories[this.i].answer + " " + this.selected);
     this.correct = false;
     this.generatemark();
-    this.answerkey.push(new AnswerKey(this.selectedCategories[this.i].answer, this.selected,this.question,this.correct));
+    this.answerkey.push(new AnswerKey( this.selected,this.selectedCategories[this.i].answer,this.question,this.correct));
 
 
   console.log(this.answerkey);
