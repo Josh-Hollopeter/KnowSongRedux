@@ -3,24 +3,27 @@ import { DataService } from './../../injectable/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from './../../spotifyJSON/models/artist';
 import { SongstreamService } from './../../spotifyJSON/services/songstream.service';
-import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/models/user.service';
 import { Playlist } from 'src/app/spotifyJSON/models/playlist';
 import { Album } from 'src/app/spotifyJSON/models/album';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
   styleUrls: ['./create-game.component.css']
 })
 export class CreateGameComponent implements OnInit {
-//part time solution
-private albumCounter: number;
-private trackCounter: number;
-//delete^^^
+
   // F I E L D S
 
-  artistStr: string;
+  public artistKeyword: string;  //search for artist keyword from user input
+  public keywordModelChanged: Subject<string> = new Subject<string>();
+  private keywordModelChangedSubscription: Subscription;
+
   searchResult: Artist[];
 
   userPlaylists: Playlist[];
@@ -37,35 +40,31 @@ private trackCounter: number;
     private stream: SongstreamService,
     private userSvc: UserService,
     private aRoute: ActivatedRoute,
-    private router: Router, private data: DataService
-  ) { }
+    private router: Router,
+    private data: DataService
+  ) {}
 
 
   // M E T H O D S
 
   ngOnInit(): void {
-
-    // this.userSvc.show().subscribe(
-
-    //   yes => {
-    //     this.user.authToken = yes["authToken"];
-    //     // this.user.rank
-    //     this.user.username = yes["username"];
-    //     this.userSvc.setUser(this.user);
-    //   },
-    //   no => {
-    //     console.error("in user home init")
-    //     console.error(no);
-    //   }
-    // )
-
-    // var artistsStorage = [];
-    // artistsStorage.push(JSON.parse(localStorage.getItem('session')));
-    // localStorage.setItem('session', JSON.stringify(artistsStorage));
-
+    this.checkAuthToken();
+    this.keywordModelChangedSubscription = this.keywordModelChanged
+    .pipe(
+      debounceTime(250),
+      distinctUntilChanged()
+    )
+    .subscribe(
+      text => this.searchForArtist(text)
+    );
   }
+  ngOnDestroy(){
+    this.keywordModelChangedSubscription.unsubscribe();
+  }
+
   checkAuthToken() {
-    // if()
+    console.log("Logic to check access token unimplemented");
+
   }
 
 
@@ -114,9 +113,9 @@ private trackCounter: number;
   //-------------------------
   //- Artist Search Methods -
   //-------------------------
-  searchForArtist() {
+  searchForArtist(keyword:string) {
     var authToken = this.authToken;
-    this.stream.searchArtist(this.artistStr, authToken).subscribe(
+    this.stream.searchArtist(keyword, authToken).subscribe(
       response => {
 
         var array = response["artists"];
@@ -181,7 +180,6 @@ private trackCounter: number;
 
           var albumType = item["type"];
           var tracks: Track[] = this.getAlbumTracks(id);
-          this.trackCounter++;
           var album: Album = new Album(
             id, name, releaseDate, null, albumPhoto,
             albumType, null, artist, tracks);

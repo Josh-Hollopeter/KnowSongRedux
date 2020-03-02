@@ -2,7 +2,7 @@
 <hr>
 <div id="findArtist">
   Search for Artist
-  <input type="text" name="artistStr" [(ngModel)]="artistStr" (keyup)="searchForArtist()" class="form-control"
+  <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)' class="form-control"
     placeholder="Search for artist....." /><br>
 </div>
 
