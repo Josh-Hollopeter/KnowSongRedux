@@ -56,8 +56,8 @@
 
 <!-- </div>
 </div> -->
-<div *ngIf="!roundOver">
-<div class="jumbotron">
+<div *ngIf="!roundOver" ><br><br><br>
+<div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
 	<h1> KnowSong!</h1>
 	<div *ngIf="!selectedvalue" class="form-group">
 		<label for="input3" class="col-sm-4 control-label">Select Category:</label>
@@ -69,7 +69,7 @@
 		</div>
 	</div>
 
-<div class="jumbotron">
+<div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
   <ul>
 {{question}}
 <ng-container *ngIf="playdatclip">
@@ -126,4 +126,12 @@ Your browser does not support the audio element.
 <p> Your score is  => {{marks}}</p>
 </div>
 
-<a routerLink="/home"><button class="btn btn-success" > Home </button></a>
+<a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
+
+<footer class="container">
+  <div class="container">
+    <!-- <p class="float-right"><a href="home">Back to top</a></p> -->
+  <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
+  </div>
+  <!-- /.container -->
+</footer>
