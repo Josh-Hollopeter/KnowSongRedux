@@ -198,6 +198,7 @@ private trackCounter: number;
             this.router.navigateByUrl('game/')
 
         }
+        setTimeout(putAlbum , 2500);
 
         // //part time solution
         // this.albumCounter = this.albums.length;
@@ -205,7 +206,7 @@ private trackCounter: number;
         // }
         // //delete^
         //   this.data.storage = this.albums;
-        setTimeout(putAlbum , 2000);
+
 
 
 

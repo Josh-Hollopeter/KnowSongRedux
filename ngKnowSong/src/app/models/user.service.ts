@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { AuthService } from './../services/auth.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpBackend } from '@angular/common/http';
@@ -9,7 +10,7 @@ import { User } from './user';
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'http://localhost:8085/' + 'api/user';
+  private url = environment.baseUrl + 'api/user';
   private user: User;
   // private http: HttpClient;
   constructor(private http: HttpClient) {
