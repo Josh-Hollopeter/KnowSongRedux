@@ -169,7 +169,14 @@ export class CreateGameComponent implements OnInit {
 
         //big overhead on server
         for (let x = 0; x < items.length; x++) {
+
           var item = items[x];
+          console.log(item);
+
+          //only get albums, ignore singles and compilations
+          if(item["album_type"] != 'album'){
+            continue;
+          }
           var id = item["id"];
           var name = item["name"];
           var releaseDate = item["release_date"];
@@ -198,17 +205,7 @@ export class CreateGameComponent implements OnInit {
             this.router.navigateByUrl('game/')
 
         }
-        setTimeout(putAlbum , 2500);
-
-        // //part time solution
-        // this.albumCounter = this.albums.length;
-        // while(this.trackCounter < this.albumCounter){
-        // }
-        // //delete^
-        //   this.data.storage = this.albums;
-
-
-
+        setTimeout(putAlbum , 1000);
 
       }
     )
