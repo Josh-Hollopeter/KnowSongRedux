@@ -14,7 +14,10 @@ import { Album } from 'src/app/spotifyJSON/models/album';
   styleUrls: ['./create-game.component.css']
 })
 export class CreateGameComponent implements OnInit {
-
+//part time solution
+private albumCounter: number;
+private trackCounter: number;
+//delete^^^
   // F I E L D S
 
   artistStr: string;
@@ -176,7 +179,7 @@ export class CreateGameComponent implements OnInit {
 
           var albumType = item["type"];
           var tracks: Track[] = this.getAlbumTracks(id);
-
+          this.trackCounter++;
           var album: Album = new Album(
             id, name, releaseDate, null, albumPhoto,
             albumType, null, artist, tracks);
@@ -196,6 +199,15 @@ export class CreateGameComponent implements OnInit {
 
         }
         setTimeout(putAlbum , 2500);
+
+        // //part time solution
+        // this.albumCounter = this.albums.length;
+        // while(this.trackCounter < this.albumCounter){
+        // }
+        // //delete^
+        //   this.data.storage = this.albums;
+
+
 
 
       }

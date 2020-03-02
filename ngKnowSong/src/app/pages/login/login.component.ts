@@ -25,6 +25,22 @@ export class LoginComponent implements OnInit {
   login(form: NgForm){
     this.authService.login(form.value.username, form.value.password).subscribe(
       success => {
+        this.usersvc.show().subscribe(
+          yes=>{
+            console.log(yes);
+            this.user.authToken = yes["authToken"];
+            this.user.rankImg = yes["rank"].imgSource;
+            this.user.username = yes["username"];
+            this.user.imgSource = yes["imgSource"];
+            this.user.enabled = yes["enabled"];
+            this.user.role = yes["role"];
+            this.usersvc.setUser(this.user);
+          },
+          no=>{
+            console.error("in user home init")
+            console.error(no);
+          }
+        )
         this.route.navigateByUrl('home');
       },
       fail => {
