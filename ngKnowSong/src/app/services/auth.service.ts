@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpBackend} from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
@@ -9,7 +10,7 @@ import { throwError, Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8085/';
+  private baseUrl = environment.baseUrl;
   private http: HttpClient;
   //authorization service go straight to backend
   //they ignore the interceptor

@@ -6,16 +6,16 @@
   <div class="collapse navbar-collapse" id="navbarCollapse" >
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a href="home" *ngIf="isLoggedIn()" class="nav-link" (click)="userHome()">User Home</a>
+        <a href="home" *ngIf="isLoggedIn()" class="nav-link" [routerLink]="['/home']">User Home</a>
       </li>
       <li class="nav-item">
         <a  href="logout" *ngIf="isLoggedIn()" class="nav-link" (click)="logout()">Logout</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="!isLoggedIn()" href="login">Login</a>
+        <a class="nav-link" *ngIf="!isLoggedIn()" [routerLink]="['/login']">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  *ngIf="!isLoggedIn()" href="register">Register</a>
+        <a class="nav-link"  *ngIf="!isLoggedIn()" [routerLink]="['/register']">Register</a>
       </li>
 
     </ul>
