@@ -127,6 +127,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('credentials');
     localStorage.removeItem('AccessToken');
+    localStorage.removeItem('Session');
   }
 
 }
