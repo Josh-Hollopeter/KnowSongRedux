@@ -1,6 +1,6 @@
 <h1>User Home Page</h1>
 <hr>
-<button (click)="createGame()">Create Game</button>
+<!-- <button (click)="createGame()">Create Game</button>
 <a routerLink="/game"><button class="btn btn-success" > temp game test </button></a>
 <button (click)="matchHistory()">Match History</button>
 
@@ -16,22 +16,153 @@
     </li>
    </ul>
 
-</div>
-
-<form>
-  <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
-  <br> <button (click)="updateUser()">Update</button>
-</form>
+</div> -->
 
 
 
-<div *ngIf = "user.rankImg">
+
+
+<!-- <div *ngIf = "user.rankImg">
   <img src={{user.rankImg}}>
 </div>
 
 <div *ngIf = "user.imgSource">
   <img src={{user.imgSource}}>
-</div>
+</div> -->
+
+<body>
 
 
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+      <div class="col-lg-7">
+        <p>
+          Rank: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.rankImg}}" alt="" width="160" height="160">
+       Profile Image: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
+      </p>
+      <form>
+        <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
+        <button (click)="updateUser()">Update</button>
+      </form>
+      </div>
+      <!-- /.col-lg-8 -->
+      <div class="col-lg-5">
+        <h1 class="font-weight-light">Create A New Game</h1>
+        <p>Create a new Game by selecting your favorite artist or playlist from spotify.</p>
+        <a class="btn btn-primary" (click)="createGame()" href="createGame">New Game</a>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Call to Action Well -->
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
+      <div class="card-body">
+        <p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p>
+      </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">New Game</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <button (click)="createGame()">New Game</button>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Match History</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+          </div>
+          <div class="card-footer">
+            <button (click)="matchHistory()">Match History</button>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Three</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+
+      <div  *ngIf = "user.role === 'admin'">
+
+            <h2 class="card-title">Admin Controls</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+
+            <button (click)="getAllUsers()">List Users</button>
+            <table *ngIf="allUsers" class="table">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Enabled</th>
+                <th>Role</th>
+                <th>Profile Image</th>
+                <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
+              </tr>
+              <tr *ngFor="let user1 of allUsers">
+                <td>{{user1.id}}</td>
+                <td>{{user1.username}}</td>
+                <td>{{user1.enabled}}</td>
+                <td>{{user1.role}}</td>
+                <td><input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource"></td>
+                <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td>
+
+
+              </tr>
+            </table>
+
+
+
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-2 bg-dark">
+    <div class="container">
+      <p class="float-right"><a href="home">Back to top</a></p>
+    <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
+    </div>
+    <!-- /.container -->
+ </footer>
+  <!-- <footer class="container ">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  </footer> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
 

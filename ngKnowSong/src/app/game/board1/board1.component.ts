@@ -6,6 +6,8 @@ import { Album } from 'src/app/spotifyJSON/models/album';
 import { Quizmodel } from './../quiz/quizmodel';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {get} from 'lodash';
+import { JsonPipe } from '@angular/common';
 
 
 @Component({
@@ -32,7 +34,7 @@ export class Board1Component implements OnInit {
   }
   myarray: String[] = [];
   i: number = 0;
-  languages: String[] = ["play clip", "Name the Albums", "Release Year"];
+  categories: String[] = ["play clip", "Name the Albums", "Release Year"];
   newstr: String
   //  singer = "Beyonce" + "'s";
   album = "Lemonade";
@@ -50,46 +52,81 @@ export class Board1Component implements OnInit {
   ];
 
   /******************************************************* */
-  quizlength: number;
-  selectedcategory: Quizmodel[] = [];
-  question: String;
-  selectedvalue: String;
-  option: any[];
-  selectedCategories: any[];
-  selected;
+quizlength: number;
+selectedcategory: Quizmodel[] = [];
+question: string;
+selectedvalue: String;
+option: any[];
+selectedCategories: any[];
+selected;
+playdatclip:boolean;
+correct:boolean;
 
 
 
-  questionBuilder() {
-    var questionInfo = this.data.storage;
-    this.shuffle(questionInfo);
-    console.log(questionInfo + "in game board");
-    let j = 0;
-    questionInfo.forEach(element => {
-      // console.log(element.name);
-      let singer = element.artist.name;
-      let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
-      element.releaseYear
-      var year = parseInt(element.releaseDate);
-      console.log(element);
-      let tracksArray: Track[] = element.tracks;
-      console.log("Tracks array: " +tracksArray);
+questionBuilder(){
+  var questionInfo = this.data.storage;
+  this.shuffle(questionInfo);
+  console.log(questionInfo + "in game board");
+  let j = 0;
+  let count = 0;
+  let trackNames = new Array;
+  let trackAnswers = new Array;
+  // questionInfo[count].tracks.forEach(element => {
+  //   trackNames.push(element);
 
-      let track: Track = tracksArray[1];
-      console.log("TRACK: " + track);
+  // });
+  questionInfo.forEach(element => {
+    // console.log(element.name);
+    let singer = element.artist.name;
+  let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
+  element.releaseYear
+  var year = parseInt(element.releaseDate);
+  console.log(element);
+  var years =[year+1, year -1,year+2, year];
+  years = this.shuffle(years);
 
+  console.log("***********" + JSON.stringify(element));
+  console.log(element.tracks);
 
-      var years = [year + 1, year - 1, year + 2, year];
-      years = this.shuffle(years);
-      this.quizlist.push({ ID: j, category: "Release Year", question: singerQuestion, anslistobj: years, answer: year });
-    });
-    j = 0;
-    console.log("Quiz List" + this.quizlist);
-    // this.gettingCategory();
+  this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:years,answer:year});
+  if(element.tracks){
+    trackNames = trackNames.concat(element.tracks);
+    trackNames = this.shuffle(trackNames);
+    var ansArray = Object.assign([], trackNames);
+    console.log(trackNames)
+    let track = ansArray.pop();
+    if(!track.previewUrl){
+      return;
+    }
+    trackAnswers = [track.name,trackNames[j].name,trackNames[j+1].name,trackNames[j+2].name];
+    trackAnswers = this.shuffle(trackAnswers);
+    console.log(track.previewUrl);
+  this.quizlist.push({ID :j,category:"play clip",question:track.previewUrl,anslistobj:trackAnswers,answer:track.name});
+  trackNames = this.shuffle(trackNames);
   }
+  // console.log("***********" + element.tracks[0].name);
 
+ var test = get(element, 'track');
+ console.log("***********" + JSON.stringify(element));
+
+});
+  j = 0;
+  console.log(this.quizlist);
+  // this.gettingCategory();
+}
+getQuestion(){
+  document.getElementById("my-audio").setAttribute('src', this.question);
+
+  return this.question;
+}
 
   gettingCategory() {
+    if(this.selectedvalue === "play clip" ){
+      this.playdatclip = true;
+    }else{
+      this.playdatclip = false;
+    }
 
     this.selectedCategories = this.quizlist.filter(d => (d.category == this.selectedvalue));
     console.log(this.selectedCategories[this.i].question)
@@ -131,33 +168,41 @@ export class Board1Component implements OnInit {
 
   check() {
 
-    console.log("..................." + this.selectedCategories[this.i].answer + " " + this.selected);
-    this.answerkey.push(new AnswerKey(this.selectedCategories[this.i].answer, this.selected));
-
-
-    console.log(this.answerkey);
-    // this.recursivecheck();
+    console.log("..................."+this.selectedCategories[this.i].answer + " " + this.selected);
+    this.correct = false;
     this.generatemark();
+    this.answerkey.push(new AnswerKey( this.selected,this.selectedCategories[this.i].answer,this.question,this.correct));
+
+
+  console.log(this.answerkey);
+  // this.recursivecheck();
+
+}
+///////////////////////////////////
+
+marks: number = 0;
+generatemark() {
+  // for (var i = this.i; i < this.answerkey.length; i++) {
+  //   if (this.selected ==this.selectedCategories[this.i].answer) this.marks++;
+  // }
+  // alert("your score is "+JSON.stringify(this.marks));
+  console.log(this.selected + "***#*#*#*#*#*#*#*#");
+  console.log(this.selectedCategories[this.i] + "fdlkkjgkljljgflkgjfd");
+  if(this.selected == this.selectedCategories[this.i].answer){
+    this.marks ++;
+    this.correct = true;
   }
   ///////////////////////////////////
 
-  marks: number = 0;
-  generatemark() {
-    // for (var i = this.i; i < this.answerkey.length; i++) {
-    //   if (this.selected ==this.selectedCategories[this.i].answer) this.marks++;
-    // }
-    // alert("your score is "+JSON.stringify(this.marks));
-    console.log(this.selected + "***#*#*#*#*#*#*#*#");
-    console.log(this.selectedCategories[this.i] + "fdlkkjgkljljgflkgjfd");
-    if (this.selected == this.selectedCategories[this.i].answer) {
-      this.marks++;
-    }
+}
+submit(){
+  // document.writeln("your score is " + this.marks);
+  this.roundOver = true;
 
-  }
-  submit() {
-    document.writeln("your score is " + this.marks);
+}
 
-  }
+
+
 
   ///////////////////////////////////
 
@@ -209,9 +254,13 @@ export class Board1Component implements OnInit {
 export class AnswerKey {
   chosen: any;
   answer: any;
-  constructor(chosen: any, answer: any) {
+  question:any;
+  correct:boolean;
+  constructor(chosen: any, answer: any,question:any,correct:boolean) {
     this.chosen = chosen;
     this.answer = answer;
+    this.question = question;
+    this.correct = correct;
   }
 
 

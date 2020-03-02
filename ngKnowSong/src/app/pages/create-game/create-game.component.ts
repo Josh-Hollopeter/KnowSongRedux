@@ -190,19 +190,25 @@ private trackCounter: number;
           album.tracks = tracks;
 
           //push album to arraylist
+
           this.albums.push(album);
-          console.log("Album.tracks" + album.tracks);
+        console.log(this.albums);}
+          var putAlbum = () => {
+            this.data.storage = this.albums;
+            this.router.navigateByUrl('game/')
 
         }
 
-        //part time solution
-        this.albumCounter = this.albums.length;
-        while(this.trackCounter < this.albumCounter){
-        }
-        //delete^
-          this.data.storage = this.albums;
+        // //part time solution
+        // this.albumCounter = this.albums.length;
+        // while(this.trackCounter < this.albumCounter){
+        // }
+        // //delete^
+        //   this.data.storage = this.albums;
+        setTimeout(putAlbum , 2000);
 
-          this.router.navigateByUrl('game/');
+
+
       }
     )
   }
