@@ -62,3 +62,9 @@
 </div>
 <hr>
 
+<form #lyricForm="ngForm" (submit)="getLyrics(lyricForm)">
+  <input type="text" ngModel name = "trackName" placeholder="name">
+  <input type="text" ngModel name = "artistName" placeholder="artist">
+  <button type="submit">Get Lyrics Stuff</button>
+</form>
+

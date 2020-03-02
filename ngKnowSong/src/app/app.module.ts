@@ -15,7 +15,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
 import { Board1Component } from './game/board1/board1.component';
 import { QuizComponent } from './game/quiz/quiz.component';
@@ -69,6 +69,8 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     A11yModule,
+    NgModule
+
 
   ],
   providers: [

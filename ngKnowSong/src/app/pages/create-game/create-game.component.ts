@@ -1,3 +1,5 @@
+import { NgForm } from '@angular/forms';
+import { MusixmatchService } from './../../services/musixmatch.service';
 import { Track } from './../../spotifyJSON/models/track';
 import { DataService } from './../../injectable/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -39,6 +41,7 @@ export class CreateGameComponent implements OnInit {
   constructor(
     private stream: SongstreamService,
     private userSvc: UserService,
+    private lyricService: MusixmatchService,
     private aRoute: ActivatedRoute,
     private router: Router,
     private data: DataService
@@ -51,7 +54,7 @@ export class CreateGameComponent implements OnInit {
     this.checkAuthToken();
     this.keywordModelChangedSubscription = this.keywordModelChanged
     .pipe(
-      debounceTime(250),
+      debounceTime(350),
       distinctUntilChanged()
     )
     .subscribe(
@@ -66,7 +69,6 @@ export class CreateGameComponent implements OnInit {
     console.log("Logic to check access token unimplemented");
 
   }
-
 
   selectResults() {
     this.data.storage = this.getArtistAlbums(this.searchResult[0]);
@@ -247,4 +249,21 @@ export class CreateGameComponent implements OnInit {
     return tracks;
   }
 
+
+  //quick test form for getting lyrics for a track
+
+
+  getLyrics(form: NgForm){
+    console.log("IM GONNA DO IT");
+    var trackName: string = form.value.trackName;
+    var artistName: string = form.value.artistName;
+
+
+    this.lyricService.getTrackId(trackName, artistName).subscribe(
+      response => {
+        console.log(response);
+
+      }
+    )
+  }
 }
