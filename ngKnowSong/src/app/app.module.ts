@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { MusixmatchService } from './services/musixmatch.service';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     UserService,
     SongstreamService,
     DataService,
+    MusixmatchService,
 
     {
       provide: HTTP_INTERCEPTORS,

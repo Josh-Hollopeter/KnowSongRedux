@@ -1,41 +1,12 @@
+<br><br>
 
-
-<!-- <button (click)="createGame()">Create Game</button>
-<a routerLink="/game"><button class="btn btn-success" > temp game test </button></a>
-<button (click)="matchHistory()">Match History</button>
-
-<div *ngIf = "user.role === 'admin'">
-  <p>{{user.enabled}}</p>
-  <button (click)="getAllUsers()">List Users</button>
-  <ul>
-    <li *ngFor="let user1 of allUsers">
-      {{user1.id}} {{user1.username}}
-      {{user1.enabled}} <button (click)="deactivateUser(user1.username)">Disable</button>
-      Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource">
-  <br> <button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button>
-    </li>
-   </ul>
-
-</div> -->
-
-
-
-
-
-<!-- <div *ngIf = "user.rankImg">
-  <img src={{user.rankImg}}>
-</div>
-
-<div *ngIf = "user.imgSource">
-  <img src={{user.imgSource}}>
-</div> -->
-
-<body style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+<html>
+<body class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover;">
 
 
 
   <!-- Page Content -->
-  <div class="container">
+  <div class="container text-black">
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
@@ -150,21 +121,15 @@
   <!-- /.container -->
 
   <!-- Footer -->
-  <footer class="container">
-    <div class="container">
-      <p class="float-right"><a href="home">Back to top</a></p>
-    <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
-    </div>
-    <!-- /.container -->
- </footer>
-  <!-- <footer class="container ">
+  <footer class="container" style="position:fixed; bottom:0; left:0;">
     <p class="float-right"><a href="#">Back to top</a></p>
     <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-  </footer> -->
+   </footer>
+
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
 </body>
-
+</html>
