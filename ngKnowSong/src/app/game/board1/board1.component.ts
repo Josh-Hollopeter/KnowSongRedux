@@ -30,7 +30,6 @@ export class Board1Component implements OnInit {
 
     console.log(this.data.storage + "in board component");
 
-
     this.questionBuilder();
   }
   myarray: String[] = [];
