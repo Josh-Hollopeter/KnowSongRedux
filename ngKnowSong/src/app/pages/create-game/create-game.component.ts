@@ -25,6 +25,7 @@ private trackCounter: number;
 
   userPlaylists: Playlist[];
   private user: User = new User();
+  private authToken: string = localStorage.getItem('AccessToken');
 
   displayedColumns = ['name', 'description'];
   dataSource = this.userPlaylists;
@@ -43,23 +44,24 @@ private trackCounter: number;
   // M E T H O D S
 
   ngOnInit(): void {
-    this.userSvc.show().subscribe(
 
-      yes => {
-        this.user.authToken = yes["authToken"];
-        // this.user.rank
-        this.user.username = yes["username"];
-        this.userSvc.setUser(this.user);
-      },
-      no => {
-        console.error("in user home init")
-        console.error(no);
-      }
-    )
+    // this.userSvc.show().subscribe(
 
-    var artistsStorage = [];
-    artistsStorage.push(JSON.parse(localStorage.getItem('session')));
-    localStorage.setItem('session', JSON.stringify(artistsStorage));
+    //   yes => {
+    //     this.user.authToken = yes["authToken"];
+    //     // this.user.rank
+    //     this.user.username = yes["username"];
+    //     this.userSvc.setUser(this.user);
+    //   },
+    //   no => {
+    //     console.error("in user home init")
+    //     console.error(no);
+    //   }
+    // )
+
+    // var artistsStorage = [];
+    // artistsStorage.push(JSON.parse(localStorage.getItem('session')));
+    // localStorage.setItem('session', JSON.stringify(artistsStorage));
 
   }
   checkAuthToken() {
@@ -76,7 +78,7 @@ private trackCounter: number;
   //- User Playlist Methods -
   //-------------------------
   getUserPlaylists() {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     this.stream.getUserPlaylists(authToken).subscribe(
       response => {
         // console.log(response);
@@ -100,7 +102,7 @@ private trackCounter: number;
   }
 
   getTracksFromPlaylist(playlistId: string) {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     this.stream.getTracksFromPlaylist(playlistId, authToken).subscribe(
       response => {
 
@@ -113,7 +115,7 @@ private trackCounter: number;
   //- Artist Search Methods -
   //-------------------------
   searchForArtist() {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     this.stream.searchArtist(this.artistStr, authToken).subscribe(
       response => {
 
@@ -154,7 +156,7 @@ private trackCounter: number;
 
 
   getArtistAlbums(artist: Artist) {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     //get albums into array
     this.albums = new Array();
     //this is a simplified object
@@ -215,7 +217,7 @@ private trackCounter: number;
   }
   //get simplified track object. NOT audio_features
   getAlbumTracks(albumId: string): Track[] {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     var tracks: Track[] = new Array();
 
     console.log("Before get track stream");
