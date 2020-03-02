@@ -1,5 +1,5 @@
-<h1>User Home Page</h1>
-<hr>
+
+
 <!-- <button (click)="createGame()">Create Game</button>
 <a routerLink="/game"><button class="btn btn-success" > temp game test </button></a>
 <button (click)="matchHistory()">Match History</button>
@@ -30,7 +30,7 @@
   <img src={{user.imgSource}}>
 </div> -->
 
-<body>
+<body style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
 
 
 
@@ -44,7 +44,9 @@
           Rank: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.rankImg}}" alt="" width="160" height="160">
        Profile Image: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
       </p>
-      <form>
+
+
+      <form id="profile">
         <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
         <button (click)="updateUser()">Update</button>
       </form>
@@ -144,11 +146,11 @@
     </div>
     <!-- /.row -->
 
-  </div>
+  </div><br><br><br>
   <!-- /.container -->
 
   <!-- Footer -->
-  <footer class="py-2 bg-dark">
+  <footer class="container">
     <div class="container">
       <p class="float-right"><a href="home">Back to top</a></p>
     <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
