@@ -3,28 +3,32 @@ import { DataService } from './../../injectable/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from './../../spotifyJSON/models/artist';
 import { SongstreamService } from './../../spotifyJSON/services/songstream.service';
-import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/models/user.service';
 import { Playlist } from 'src/app/spotifyJSON/models/playlist';
 import { Album } from 'src/app/spotifyJSON/models/album';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 @Component({
   selector: 'app-create-game',
   templateUrl: './create-game.component.html',
   styleUrls: ['./create-game.component.css']
 })
 export class CreateGameComponent implements OnInit {
-//part time solution
-private albumCounter: number;
-private trackCounter: number;
-//delete^^^
+
   // F I E L D S
 
-  artistStr: string;
+  public artistKeyword: string;  //search for artist keyword from user input
+  public keywordModelChanged: Subject<string> = new Subject<string>();
+  private keywordModelChangedSubscription: Subscription;
+
   searchResult: Artist[];
 
   userPlaylists: Playlist[];
   private user: User = new User();
+  private authToken: string = localStorage.getItem('AccessToken');
 
   displayedColumns = ['name', 'description'];
   dataSource = this.userPlaylists;
@@ -36,34 +40,31 @@ private trackCounter: number;
     private stream: SongstreamService,
     private userSvc: UserService,
     private aRoute: ActivatedRoute,
-    private router: Router, private data: DataService
-  ) { }
+    private router: Router,
+    private data: DataService
+  ) {}
 
 
   // M E T H O D S
 
   ngOnInit(): void {
-    this.userSvc.show().subscribe(
-
-      yes => {
-        this.user.authToken = yes["authToken"];
-        // this.user.rank
-        this.user.username = yes["username"];
-        this.userSvc.setUser(this.user);
-      },
-      no => {
-        console.error("in user home init")
-        console.error(no);
-      }
+    this.checkAuthToken();
+    this.keywordModelChangedSubscription = this.keywordModelChanged
+    .pipe(
+      debounceTime(250),
+      distinctUntilChanged()
     )
-
-    var artistsStorage = [];
-    artistsStorage.push(JSON.parse(localStorage.getItem('session')));
-    localStorage.setItem('session', JSON.stringify(artistsStorage));
-
+    .subscribe(
+      text => this.searchForArtist(text)
+    );
   }
+  ngOnDestroy(){
+    this.keywordModelChangedSubscription.unsubscribe();
+  }
+
   checkAuthToken() {
-    // if()
+    console.log("Logic to check access token unimplemented");
+
   }
 
 
@@ -76,7 +77,7 @@ private trackCounter: number;
   //- User Playlist Methods -
   //-------------------------
   getUserPlaylists() {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     this.stream.getUserPlaylists(authToken).subscribe(
       response => {
         // console.log(response);
@@ -100,7 +101,7 @@ private trackCounter: number;
   }
 
   getTracksFromPlaylist(playlistId: string) {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     this.stream.getTracksFromPlaylist(playlistId, authToken).subscribe(
       response => {
 
@@ -112,9 +113,9 @@ private trackCounter: number;
   //-------------------------
   //- Artist Search Methods -
   //-------------------------
-  searchForArtist() {
-    var authToken = this.userSvc.getUser().authToken;
-    this.stream.searchArtist(this.artistStr, authToken).subscribe(
+  searchForArtist(keyword:string) {
+    var authToken = this.authToken;
+    this.stream.searchArtist(keyword, authToken).subscribe(
       response => {
 
         var array = response["artists"];
@@ -154,7 +155,7 @@ private trackCounter: number;
 
 
   getArtistAlbums(artist: Artist) {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     //get albums into array
     this.albums = new Array();
     //this is a simplified object
@@ -168,7 +169,14 @@ private trackCounter: number;
 
         //big overhead on server
         for (let x = 0; x < items.length; x++) {
+
           var item = items[x];
+          console.log(item);
+
+          //only get albums, ignore singles and compilations
+          if(item["album_type"] != 'album'){
+            continue;
+          }
           var id = item["id"];
           var name = item["name"];
           var releaseDate = item["release_date"];
@@ -179,7 +187,6 @@ private trackCounter: number;
 
           var albumType = item["type"];
           var tracks: Track[] = this.getAlbumTracks(id);
-          this.trackCounter++;
           var album: Album = new Album(
             id, name, releaseDate, null, albumPhoto,
             albumType, null, artist, tracks);
@@ -198,24 +205,14 @@ private trackCounter: number;
             this.router.navigateByUrl('game/')
 
         }
-        setTimeout(putAlbum , 2500);
-
-        // //part time solution
-        // this.albumCounter = this.albums.length;
-        // while(this.trackCounter < this.albumCounter){
-        // }
-        // //delete^
-        //   this.data.storage = this.albums;
-
-
-
+        setTimeout(putAlbum , 1000);
 
       }
     )
   }
   //get simplified track object. NOT audio_features
   getAlbumTracks(albumId: string): Track[] {
-    var authToken = this.userSvc.getUser().authToken;
+    var authToken = this.authToken;
     var tracks: Track[] = new Array();
 
     console.log("Before get track stream");

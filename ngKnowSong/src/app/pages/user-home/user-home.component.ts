@@ -24,26 +24,26 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // let temp = localStorage.getItem('credentials');
-    // let username = atob(temp).split(":");
+    let temp = localStorage.getItem('credentials');
+    let username = atob(temp).split(":");
 
-    // console.log(username[0]);
-    // this.usersvc.show().subscribe(
-    //   yes=>{
-    //     console.log(yes);
-    //     this.user.authToken = yes["authToken"];
-    //     this.user.rankImg = yes["rank"].imgSource;
-    //     this.user.username = yes["username"];
-    //     this.user.imgSource = yes["imgSource"];
-    //     this.user.enabled = yes["enabled"];
-    //     this.user.role = yes["role"];
-    //     this.usersvc.setUser(this.user);
-    //   },
-    //   no=>{
-    //     console.error("in user home init")
-    //     console.error(no);
-    //   }
-    // )
+    console.log(username[0]);
+    this.usersvc.show().subscribe(
+      yes=>{
+        console.log(yes);
+        this.user.authToken = yes["authToken"];
+        this.user.rankImg = yes["rank"].imgSource;
+        this.user.username = yes["username"];
+        this.user.imgSource = yes["imgSource"];
+        this.user.enabled = yes["enabled"];
+        this.user.role = yes["role"];
+        this.usersvc.setUser(this.user);
+      },
+      no=>{
+        console.error("in user home init")
+        console.error(no);
+      }
+    )
 
   }
   createGame(){

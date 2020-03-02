@@ -23,7 +23,6 @@ import { AuthorizeComponent } from './spotifyJSON/authorize/authorize.component'
 import { CallbackComponent } from './spotifyJSON/callback/callback.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { Httpinterceptor } from './services/interceptor/httpinterceptor';
-
 import { MatchHistoryComponent } from './game/match-history/match-history.component';
 
 
@@ -48,7 +47,6 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     AuthorizeComponent,
     CallbackComponent,
     ErrorComponent,
-
     MatchHistoryComponent,
 
     CreateGameComponent,
