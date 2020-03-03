@@ -134,7 +134,7 @@ export class CreateGameComponent implements OnInit {
 
           // get name
           var name = item["name"];
-          console.log(item);
+          // console.log(item);
 
           // get image
           if (item["images"].length < 1) {
@@ -203,15 +203,16 @@ export class CreateGameComponent implements OnInit {
           this.albums.push(album);
         console.log(this.albums);}
           var putAlbum = () => {
+            console.log("****" +this.albums + "********in create game");
             this.data.storage = this.albums;
             this.router.navigateByUrl('game/')
 
-        }
-        setTimeout(putAlbum , 1000);
+          }
+          setTimeout(putAlbum , 2500);
 
       }
-    )
-  }
+      )
+    }
   //get simplified track object. NOT audio_features
   getAlbumTracks(albumId: string): Track[] {
     var authToken = this.authToken;
@@ -239,7 +240,7 @@ export class CreateGameComponent implements OnInit {
             id, name, duration, popularity, previewUrl, explicit, null);
 
           tracks.push(track);
-          console.log("In for loop : " + track);
+          // console.log("In for loop : " + track);
 
         }
 

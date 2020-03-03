@@ -1,102 +1,38 @@
-<!-- <div class="jumbotron">
-  <h1> KnowSong!</h1>
 
-  <div *ngIf="!roundOver">
-	<div class="form-group">
-		<label for="input3" class="col-sm-4 control-label">Select Category for Game</label>
+<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+
+
+
+<div *ngIf="!roundOver" ><br><br><br>
+<div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+	<h1> KnowSong!</h1>
+	<div *ngIf="!selectedvalue" class="form-group">
+		<label for="input3" class="col-sm-4 control-label">Select Category:</label>
 		<div class="col-sm-6">
 
-			<select [(ngModel)]="selectedvalue" (change)="gettingCategory()">
-    <option *ngFor="let g of languages" [value]="g">{{g}}</option>
+			<select  [(ngModel)]="selectedvalue" (change)="gettingCategory()">
+    <option *ngFor="let g of categories" [value]="g">{{g}}</option>
   </select>
 		</div>
 	</div>
 
- <div class="jumbotron">
+<div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
   <ul>
+    <span *ngIf="selectedvalue">Question: {{answerkey.length+1}}</span> <p *ngIf="!playdatclip">
 {{question}}
+</p>
+<ng-container *ngIf="playdatclip">
+  <p>Name dat Song</p>
+  <br>
+<audio id="my-audio" controls>
+  <source src={{getQuestion()}}
+  type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+</ng-container>
 
   </ul>
-  	<ng-container *ngFor="let opt of option">
-					<*ng-form>
-            <ul>
-            <li>
-						<label>
-             <input type="submit" value={{opt}} *ngIf="i<quizlength" name ={{i}} (click) = "(check(opt));next()" >
-           {{opt}} -->
-<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 
-
-<!-- </label>
-  </li>
-</ul> -->
-<!-- <div class="form" *ngFor="let opt of option">
-  <form #registerForm="ngForm" (submit)="check(registerForm)">
-     Email: <input ngModel type="text" placeholder="email" name="email"> -->
-<!-- {{opt}}
-
-
-    <br> <input type="button" value={{opt}}>
-  </form>
-
-</div>   -->
-
-
-
-<!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
-<!-- </div>
-</ng-container> -->
-<!-- <button  (click)="next();check($event,opt)" *ngIf="i<quizlength">next</button> -->
-
-
-
-
-
-<!-- <button class="btn btn-info" (click)="generatemark();roundOver = true" *ngIf="i>=0" >submit</button> -->
-
-<!-- </div>
-</div> -->
-<div *ngIf="!roundOver"><br><br><br>
-  <div class="jumbotron"
-    style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
-    <h1> KnowSong!</h1>
-    <div *ngIf="!selectedvalue" class="form-group">
-      <label for="input3" class="col-sm-4 control-label">Select Category:</label>
-      <div class="col-sm-6">
-
-        <select [(ngModel)]="selectedvalue" (change)="gettingCategory()">
-          <option *ngFor="let g of categories" [value]="g">{{g}}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="jumbotron"
-      style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
-      <ul>
-        {{question}}
-        <ng-container *ngIf="playdatclip">
-          <p>Name dat Song</p>
-          <br>
-          <audio id="my-audio" controls>
-            <source src={{getQuestion()}} type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </ng-container>
-
-      </ul>
-      <!-- <ul *ngFor="let opt of option">
-					<div class="checkbox">
-						<label>
-             <input type="checkbox" (click)="check($event,opt)">
-           {{opt}}
-   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-
-
-
-   Option one
-   </label>
-					</div>
-        </ul> -->
 
       <span class="class='col-xs-3'" *ngFor="let opt of option">
         <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
@@ -106,10 +42,10 @@
 
 
 
-      </span>
-      <br>
-      <br>
-      <button (click)="previous()" *ngIf="i>0">previous</button>
+  </span>
+    <br>
+    <br>
+  <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
 
       <button (click)="check();next()" *ngIf="i<quizlength">next</button>
 
