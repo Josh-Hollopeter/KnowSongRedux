@@ -81,6 +81,8 @@ export class Board1Component implements OnInit {
         count++
         if (count === this.trackNames.length - 2) {
           this.categories.shift();
+
+
           continue;
         }
         questionCounter++
@@ -94,6 +96,10 @@ export class Board1Component implements OnInit {
         this.trackNames = this.shuffle(this.trackNames);
       }
     }
+  }
+  getQuestion() {
+    document.getElementById("my-audio").setAttribute('src', this.question);
+    return this.question;
   }
 
   //CHOOSING GAME STYLE
