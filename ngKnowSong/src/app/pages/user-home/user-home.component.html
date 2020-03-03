@@ -15,7 +15,7 @@
           Rank: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.rankImg}}" alt="" width="160" height="160">
        Profile Image: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
       </p>
-
+        <p>{{user.gameHistories[0].marks}}</p>
 
       <form id="profile">
         <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">

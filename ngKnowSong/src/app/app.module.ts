@@ -57,13 +57,14 @@ import { NgModule } from '@angular/core';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    HttpClientJsonpModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    A11yModule
+    A11yModule,
+    HttpClientJsonpModule,
+
   ],
   providers: [
     AuthService,

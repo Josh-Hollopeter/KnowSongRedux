@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/models/user.service';
 import { GameHistory } from './../../models/game-history';
 import { NgForm } from '@angular/forms';
 import { DataService } from './../../injectable/data.service';
@@ -7,6 +8,7 @@ import { Album } from 'src/app/spotifyJSON/models/album';
 import { Quizmodel } from './../quiz/quizmodel';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 
 
@@ -21,7 +23,7 @@ export class Board1Component implements OnInit {
   trackObject: Track;
   albumObject: Album;
   artistObject: Artist;
-  constructor(private router: Router, private aroute: ActivatedRoute, private data: DataService) { }
+  constructor(private router: Router, private aroute: ActivatedRoute, private data: DataService, private userSvc: UserService) { }
   ngOnInit(): void {
     var artists = this.aroute.snapshot.paramMap.get("artists");
     this.questionBuilder();
@@ -124,7 +126,10 @@ getQuestion(){
     if (this.i === this.selectedCategories.length-1) {
       this.roundOver = true;
       this.gameHistory.marks = this.marks;
-      this.gameHistory.numQuestion = this.selectedCategories.length-1;
+      this.gameHistory.numQuestions = this.selectedCategories.length-1;
+      let user = new User();
+      user.gameHistory = this.gameHistory;
+      this.userSvc.updateUser(user).subscribe();
       console.log(this.answerkey);
       console.log(this.gameHistory);
 
