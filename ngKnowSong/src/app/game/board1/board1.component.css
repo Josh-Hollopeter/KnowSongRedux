@@ -1,0 +1,21 @@
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+  width: 75%
+  }
+
+  .nameClip { grid-area: 1 / 1 / 2 / 2; }
+  .knowLyrics { grid-area: 1 / 2 / 2 / 3; }
+  .guessYear { grid-area: 1 / 3 / 2 / 4; }
+
+  /* .contain-grid{
+    flex-wrap: wrap;
+    margin-left: 50px;
+    margin-right: 50px;
+  } */
+
+  /* @media only screen and (max-width:) */
