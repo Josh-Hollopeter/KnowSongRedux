@@ -13,18 +13,26 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
-        <h1>{{user.username}}</h1>
+        <div class="row">
+          <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
+          <div style="margin-left: 15px;">
+            <h1>{{user.username}}</h1>
+          </div>
+        </div>
         <!-- <p>{{user.gameHistories[0].marks}}</p> -->
+        <button (click)="toggleImgForm()" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-cog" aria-hidden="false"></span>Edit
+        </button><span class="glyphicon glyphicon-cog"></span>
 
-        <form id="profile">
+        <form id="profile" *ngIf="imgFormToggle">
           <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
           <button (click)="updateUser()">Update</button>
         </form>
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
-        <div class="card-body">
+        <div class="card-body" style="background: green;
+        border-radius: 5px;">
           <h1 class="font-weight-light">Create A New Game</h1>
           <p>Create a new game by selecting an artist from Spotify.</p>
           <a class="btn btn-primary" [routerLink]="['/createGame']">New Game</a>
@@ -35,6 +43,7 @@
     <!-- /.row -->
 
     <!-- Achievements -->
+    <hr>
     <div class="card text-white bg-secondary my-5 py-4 text-center">
       <div class="card-body">
         <p class="text-white m-0">
@@ -69,45 +78,7 @@
       </div>
     </div>
     <!-- end of game history div -->
-    <div class="row">
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">New Game</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam,
-              maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-          </div>
-          <div class="card-footer">
-            <button (click)="createGame()">New Game</button>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Match History</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at
-              dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi
-              labore.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Card Three</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam,
-              maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary btn-sm">More Info</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end of container -->
   </div>
   <!-- /.col-md-4 -->
 
@@ -154,6 +125,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </body>
 <!-- Footer -->
 <footer class="container" style=" bottom:0; left:0;">
