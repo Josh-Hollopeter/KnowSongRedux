@@ -1,19 +1,23 @@
+<br>
+<br>
+<br>
+<br>
 <h1>Create a Trivia Game</h1>
-<hr>
+<p>Choose an artist to test your knowledge!</p>
 <div id="findArtist">
-  Search for Artist
-  <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)' class="form-control"
-    placeholder="Search for artist....." /><br>
+  <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
+    class="form-control" placeholder="Search for artist....." /><br>
 </div>
 
 <div *ngIf="searchResult">
   <div class="card-block row">
     <div class="card col-sm-1.5" *ngFor="let result of searchResult; let i = index"
-  style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'" onmouseout="this.style.color='white'" (click)="getArtistAlbums(result)">
+      style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'"
+      onmouseout="this.style.color='white'" (click)="getArtistAlbums(result)">
       <div class="card-block">
         <div class="search-res well">
           <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
-          <h4 style="text-align: center;"><a >{{result.name}}</a></h4>
+          <h4 style="text-align: center;"><a>{{result.name}}</a></h4>
           <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
 
         </div>
@@ -22,13 +26,14 @@
   </div>
 </div>
 
+
+<!--
 <hr>
 <div id="userPlaylists">
   Retrieve your playlists: <button (click)="getUserPlaylists()">Get Playlists</button>
   <div id="playlist-container" class="playlist-container mat-elevation-z8">
     <table mat-table #table [dataSource]="userPlaylists">
 
-      <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
 
@@ -38,13 +43,6 @@
 
       </ng-container>
 
-      <!-- # of tracks column -->
-      <!-- <ng-container matColumnDef="numTracks">
-        <th mat-header-cell *matHeaderCellDef> # Of Tracks </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container> -->
-
-      <!-- description column-->
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef> Description </th>
         <td mat-cell *matCellDef="let element"> {{element.description}} </td>
@@ -55,11 +53,10 @@
     </table>
   </div>
 </div>
-<hr>
+<hr> -->
 
-<form #lyricForm="ngForm" (submit)="getLyrics(lyricForm)">
+<!-- <form #lyricForm="ngForm" (submit)="getLyrics(lyricForm)">
   <input type="text" ngModel name = "trackName" placeholder="name">
   <input type="text" ngModel name = "artistName" placeholder="artist">
   <button type="submit">Get Lyrics Stuff</button>
-</form>
-
+</form> -->
