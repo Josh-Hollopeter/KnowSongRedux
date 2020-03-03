@@ -1,3 +1,4 @@
+import { GameHistory } from './../../models/game-history';
 import { NgForm } from '@angular/forms';
 import { DataService } from './../../injectable/data.service';
 import { Artist } from './../../spotifyJSON/models/artist';
@@ -6,9 +7,7 @@ import { Album } from 'src/app/spotifyJSON/models/album';
 import { Quizmodel } from './../quiz/quizmodel';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {get} from 'lodash';
-import { JsonPipe } from '@angular/common';
-import { mapTo } from 'rxjs/operators';
+
 
 
 @Component({
@@ -51,13 +50,12 @@ marks: number = 0;
 answerkey: AnswerKey[] = [];
 trackNames = new Array;
 trackAnswers = new Array;
+gameHistory = new GameHistory();
 
 questionBuilder(){
   var questionInfo = this.data.storage;
   this.shuffle(questionInfo);
   let j = 0;
-  let count = 0;
-
   questionInfo.forEach(element => {
   let singer = element.artist.name;
   let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
@@ -69,21 +67,16 @@ questionBuilder(){
     this.trackNames = this.trackNames.concat(element.tracks);
     this.trackNames = this.shuffle(this.trackNames);
   }
-  var test = get(element, 'track');
-
-
 });
-this.makeDatClip();
-  j = 0;
+this.makeDatClipBuilder();
 }
 
-makeDatClip(){
+makeDatClipBuilder(){
   var ansArray = Object.assign([], this.trackNames);
   let count = 0;
   let questionCounter =0;
   for(let i =0; i < this.trackNames.length;i++){
   let track = ansArray.pop();
-  console.log(track.previewUrl);
   if(!track.previewUrl){
     count++
     if(count === this.trackNames.length-2){
@@ -96,8 +89,6 @@ makeDatClip(){
   if(questionCounter == 7){
     break;
   }
-
-
   this.trackAnswers = [track.name,this.trackNames[0].name,this.trackNames[0+1].name,this.trackNames[0+2].name];
   this.quizlist.push({ID :0,category:"play clip",question:track.previewUrl,anslistobj:this.trackAnswers,answer:track.name});
 
@@ -132,6 +123,11 @@ getQuestion(){
     }
     if (this.i === this.selectedCategories.length-1) {
       this.roundOver = true;
+      this.gameHistory.marks = this.marks;
+      this.gameHistory.numQuestion = this.selectedCategories.length-1;
+      console.log(this.answerkey);
+      console.log(this.gameHistory);
+
     }
     this.question = this.selectedCategories[this.i].question;
     this.option = this.selectedCategories[this.i].anslistobj;
@@ -191,9 +187,6 @@ export class AnswerKey {
     this.question = question;
     this.correct = correct;
   }
-
-
-
 }
 
 
