@@ -71,7 +71,9 @@
 
 <div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
   <ul>
+    <span *ngIf="selectedvalue">Question: {{answerkey.length+1}}</span> <p *ngIf="!playdatclip">
 {{question}}
+</p>
 <ng-container *ngIf="playdatclip">
   <p>Name dat Song</p>
   <br>
@@ -108,7 +110,7 @@ Your browser does not support the audio element.
   </span>
     <br>
     <br>
-  <button (click)="previous()"*ngIf="i>0" >previous</button>
+  <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
 
      <button  (click)="check();next()" *ngIf="i<quizlength">next</button>
 
