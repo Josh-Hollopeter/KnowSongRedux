@@ -207,7 +207,7 @@ export class CreateGameComponent implements OnInit {
             this.router.navigateByUrl('game/')
 
         }
-        setTimeout(putAlbum , 1000);
+        setTimeout(putAlbum , 2500);
 
       }
     )

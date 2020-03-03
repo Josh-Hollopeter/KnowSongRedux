@@ -56,35 +56,36 @@
 
 <!-- </div>
 </div> -->
-<div *ngIf="!roundOver"><br><br><br>
-  <div class="jumbotron"
-    style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
-    <h1> KnowSong!</h1>
-    <div *ngIf="!selectedvalue" class="form-group">
-      <label for="input3" class="col-sm-4 control-label">Select Category:</label>
-      <div class="col-sm-6">
+<div *ngIf="!roundOver" ><br><br><br>
+<div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+	<h1> KnowSong!</h1>
+	<div *ngIf="!selectedvalue" class="form-group">
+		<label for="input3" class="col-sm-4 control-label">Select Category:</label>
+		<div class="col-sm-6">
 
-        <select [(ngModel)]="selectedvalue" (change)="gettingCategory()">
-          <option *ngFor="let g of categories" [value]="g">{{g}}</option>
-        </select>
-      </div>
-    </div>
+			<select  [(ngModel)]="selectedvalue" (change)="gettingCategory()">
+    <option *ngFor="let g of categories" [value]="g">{{g}}</option>
+  </select>
+		</div>
+	</div>
 
-    <div class="jumbotron"
-      style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
-      <ul>
-        {{question}}
-        <ng-container *ngIf="playdatclip">
-          <p>Name dat Song</p>
-          <br>
-          <audio id="my-audio" controls>
-            <source src={{getQuestion()}} type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </ng-container>
+<div class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+  <ul>
+    <span *ngIf="selectedvalue">Question: {{answerkey.length+1}}</span> <p *ngIf="!playdatclip">
+{{question}}
+</p>
+<ng-container *ngIf="playdatclip">
+  <p>Name dat Song</p>
+  <br>
+<audio id="my-audio" controls>
+  <source src={{getQuestion()}}
+  type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+</ng-container>
 
-      </ul>
-      <!-- <ul *ngFor="let opt of option">
+  </ul>
+  	<!-- <ul *ngFor="let opt of option">
 					<div class="checkbox">
 						<label>
              <input type="checkbox" (click)="check($event,opt)">
@@ -106,10 +107,10 @@
 
 
 
-      </span>
-      <br>
-      <br>
-      <button (click)="previous()" *ngIf="i>0">previous</button>
+  </span>
+    <br>
+    <br>
+  <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
 
       <button (click)="check();next()" *ngIf="i<quizlength">next</button>
 
