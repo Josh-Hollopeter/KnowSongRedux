@@ -1,3 +1,4 @@
+import { GameHistory } from './game-history';
 import { Rank } from '../spotifyJSON/models/rank.model';
 
 export class User {
@@ -9,11 +10,12 @@ export class User {
   public imgSource : string;
   public enabled : boolean;
   public role : string;
+  public gameHistory: GameHistory;
 
 
 
 
-  constructor(userId?: number, username?: string, password?: string,authToken?:string, rankImg?: string, imgSource?: string, enabled?: boolean, role?: string){
+  constructor(userId?: number, username?: string, password?: string,authToken?:string, rankImg?: string, imgSource?: string, enabled?: boolean, role?: string,gameHistory?:GameHistory){
     this.userId = userId;
     this.username = username;
     this.password = password;
