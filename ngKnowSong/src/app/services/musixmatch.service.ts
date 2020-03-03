@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpBackend, HttpClient, HttpClientJsonpModule } from '@angular/common/http';
+import { HttpHeaders, HttpBackend, HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -7,29 +7,16 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class MusixmatchService {
+  constructor(private http: HttpClient) {}
 
-  private http: HttpClient;
-  constructor(private handler: HttpBackend) {
-    this.http = new HttpClient(handler);
+  private apiKey: string = '&apikey=e3535a8ffb533420e0497434ea273e67';
 
-  }
+  getLyrics(trackName: string, artistName: string) {
+    var getNameUrl = 'https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track='
+      + trackName + '&q_artist='
+      + artistName + this.apiKey;
 
-  private apiKey:string = '&apikey=e3535a8ffb533420e0497434ea273e67';
-  // api key: e3535a8ffb533420e0497434ea273e67
-  // http://api.musixmatch.com/ws/1.1/track.search?q_name=
-
-  getTrackId(trackName: string, artistName: string){
-    var getNameUrl = 'https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=callback&q_track='
-    + trackName + '&q_artist='
-    + artistName + this.apiKey;
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-         'Accept': 'application/json'
-      })
-    };
-
-    return this.http.get(getNameUrl).pipe(
+    return this.http.jsonp(getNameUrl, 'callback').pipe(
       tap((res) => {
         return res;
       }),
@@ -38,11 +25,5 @@ export class MusixmatchService {
         return throwError('Could not retrieve lyric for /"' + trackName + '/"');
       })
     )
-
-
-  }
-
-  getTrackLyrics(trackId: string){
-
   }
 }

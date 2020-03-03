@@ -259,7 +259,7 @@ export class CreateGameComponent implements OnInit {
     var artistName: string = form.value.artistName;
 
 
-    this.lyricService.getTrackId(trackName, artistName).subscribe(
+    this.lyricService.getLyrics(trackName, artistName).subscribe(
       response => {
         console.log(response);
 
