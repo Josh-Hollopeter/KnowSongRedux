@@ -1,12 +1,12 @@
 export class GameHistory {
 
   public marks:number;
-  public numQuestion; number;
+  public numQuestions; number;
 
 
-  constructor(marks?:number,numQuestion?:number){
+  constructor(marks?:number,numQuestions?:number){
     this.marks = marks;
-    this.numQuestion = numQuestion;
+    this.numQuestions = numQuestions;
   }
 
 

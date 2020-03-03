@@ -11,11 +11,12 @@ export class User {
   public enabled : boolean;
   public role : string;
   public gameHistory: GameHistory;
+  public gameHistories: GameHistory[];
 
 
 
 
-  constructor(userId?: number, username?: string, password?: string,authToken?:string, rankImg?: string, imgSource?: string, enabled?: boolean, role?: string,gameHistory?:GameHistory){
+  constructor(userId?: number, username?: string, password?: string,authToken?:string, rankImg?: string, imgSource?: string, enabled?: boolean, role?: string,gameHistory?:GameHistory,gameHistories?:[]){
     this.userId = userId;
     this.username = username;
     this.password = password;
@@ -24,5 +25,6 @@ export class User {
     this.imgSource = imgSource;
     this.enabled = enabled;
     this.role = role;
+    this.gameHistories = gameHistories;
   }
 }

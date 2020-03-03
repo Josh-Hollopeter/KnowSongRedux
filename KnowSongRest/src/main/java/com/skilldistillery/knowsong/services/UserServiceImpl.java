@@ -58,9 +58,15 @@ public class UserServiceImpl implements UserService {
 	public User update(Principal principal, User user) {
 
 		User managedUser = userRepo.findByUsername(principal.getName());
-		managedUser.setUsername(user.getUsername());
+		if(user.getImgSource() !=null) {
 		managedUser.setImgSource(user.getImgSource());
-
+		}
+		if(user.getGameHistory() != null) {
+			user.getGameHistory().setUserId(managedUser.getId());
+		managedUser.addGameHistory(user.getGameHistory());
+		
+		}
+		
 		userRepo.saveAndFlush(managedUser);
 
 		return user;

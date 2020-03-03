@@ -15,6 +15,7 @@
       <div class="col-lg-7">
         <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
         <h1>{{user.username}}</h1>
+        <p>{{user.gameHistories[0].marks}}</p>
 
         <form id="profile">
           <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">

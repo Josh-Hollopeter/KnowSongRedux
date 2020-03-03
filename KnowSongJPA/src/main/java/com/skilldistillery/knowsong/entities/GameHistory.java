@@ -24,6 +24,9 @@ public class GameHistory {
 	
 	@Column(name="date_played")
 	private LocalDateTime datePlayed;
+	
+	@Column(name="user_id")
+	private Integer userId;
 
 	public int getId() {
 		return id;
@@ -55,6 +58,14 @@ public class GameHistory {
 
 	public void setDatePlayed(LocalDateTime datePlayed) {
 		this.datePlayed = datePlayed;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }
