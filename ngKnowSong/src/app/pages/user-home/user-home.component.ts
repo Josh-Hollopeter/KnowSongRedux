@@ -65,6 +65,17 @@ export class UserHomeComponent implements OnInit {
     this.user.username = username;
   }
 
+  //form control for image update
+  public imgFormToggle:boolean;
+  toggleImgForm(){
+    if(this.imgFormToggle == true){
+      this.imgFormToggle = false;
+    } else{
+      this.imgFormToggle = true;
+    }
+  }
+
+  //
 
   //-----------
   //-ADMIN TOOLS
