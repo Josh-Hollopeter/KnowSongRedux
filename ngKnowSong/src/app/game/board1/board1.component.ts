@@ -35,8 +35,7 @@ export class Board1Component implements OnInit {
   myarray: String[] = [];
   i: number = 0;
   categories: String[] = ["play clip", "Name the Albums", "Release Year"];
-  newstr: String
-  //  singer = "Beyonce" + "'s";
+  newstr: String;
   album = "Lemonade";
   year = 2014;
   roundOver: boolean;
@@ -61,40 +60,29 @@ selectedCategories: any[];
 selected;
 playdatclip:boolean;
 correct:boolean;
-
-
+marks: number = 0;
+answerkey: AnswerKey[] = [];
 
 questionBuilder(){
   var questionInfo = this.data.storage;
   this.shuffle(questionInfo);
-  // console.log(questionInfo + "in game board");
   let j = 0;
   let count = 0;
   let trackNames = new Array;
   let trackAnswers = new Array;
-  // questionInfo[count].tracks.forEach(element => {
-  //   trackNames.push(element);
-
-  // });
+  console.log(questionInfo);
   questionInfo.forEach(element => {
-    // console.log(element.name);
-    let singer = element.artist.name;
+  let singer = element.artist.name;
   let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
   element.releaseYear
   var year = parseInt(element.releaseDate);
-  // console.log(element);
   var years =[year+1, year -1,year+2, year];
   years = this.shuffle(years);
-
-  // console.log("***********" + JSON.stringify(element));
-  // console.log(element.tracks);
-
   this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:years,answer:year});
   if(element.tracks){
     trackNames = trackNames.concat(element.tracks);
     trackNames = this.shuffle(trackNames);
     var ansArray = Object.assign([], trackNames);
-    console.log("*****ooeowpeowep" + trackNames)
     let track = ansArray.pop();
     if(!track.previewUrl){
       return;
@@ -105,19 +93,14 @@ questionBuilder(){
   this.quizlist.push({ID :j,category:"play clip",question:track.previewUrl,anslistobj:trackAnswers,answer:track.name});
   trackNames = this.shuffle(trackNames);
   }
-  // console.log("***********" + element.tracks[0].name);
+  var test = get(element, 'track');
 
- var test = get(element, 'track');
-//  console.log("***********" + JSON.stringify(element));
 
 });
   j = 0;
-  console.log(this.quizlist);
-  // this.gettingCategory();
 }
 getQuestion(){
   document.getElementById("my-audio").setAttribute('src', this.question);
-
   return this.question;
 }
 
@@ -129,22 +112,18 @@ getQuestion(){
     }
 
     this.selectedCategories = this.quizlist.filter(d => (d.category == this.selectedvalue));
-    // console.log(this.selectedCategories[this.i].question)
-    // console.log(this.selectedCategories[this.i].question)
     this.i = 0;
     this.question = this.selectedCategories[this.i].question;
     this.option = this.selectedCategories[this.i].anslistobj;
-    // this.i = 0;
     this.quizlength = this.selectedCategories.length - 1;
   }
 
-  /******************************************************** */
+
   next() {
 
 
     if (this.i < this.selectedCategories.length - 1) {
       ++this.i;
-      // console.log(this.i);
     }
     console.log(this.selectedCategories.length);
     if (this.i === this.selectedCategories.length-1) {
@@ -154,40 +133,27 @@ getQuestion(){
     this.question = this.selectedCategories[this.i].question;
     this.option = this.selectedCategories[this.i].anslistobj;
   }
-  previous() {
-    --this.i;
-    this.question = this.selectedCategories[this.i].question;
-    this.option = this.selectedCategories[this.i].anslistobj;
-  }
+  // previous() {
+  //   --this.i;
+  //   this.question = this.selectedCategories[this.i].question;
+  //   this.option = this.selectedCategories[this.i].anslistobj;
+  // }
 
-  /********************************************************* */
 
-  answerkey: AnswerKey[] = [];
 
   check() {
-
-    // console.log("..................."+this.selectedCategories[this.i].answer + " " + this.selected);
     this.correct = false;
     this.generatemark();
     this.answerkey.push(new AnswerKey( this.selected,this.selectedCategories[this.i].answer,this.question,this.correct));
-
-
-  // console.log(this.answerkey);
-  // this.recursivecheck();
-
 }
-///////////////////////////////////
 
-marks: number = 0;
+
+
 generatemark() {
-
-  // console.log(this.selected + "***#*#*#*#*#*#*#*#");
-  // console.log(this.selectedCategories[this.i] + "fdlkkjgkljljgflkgjfd");
   if(this.selected == this.selectedCategories[this.i].answer){
     this.marks ++;
     this.correct = true;
   }
-  ///////////////////////////////////
 
 }
 submit(){
