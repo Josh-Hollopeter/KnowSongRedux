@@ -26,7 +26,6 @@ export class UserHomeComponent implements OnInit {
 
     let temp = localStorage.getItem('credentials');
     let username = atob(temp).split(":");
-
     console.log(username[0]);
     this.usersvc.show().subscribe(
       yes=>{
@@ -37,7 +36,9 @@ export class UserHomeComponent implements OnInit {
         this.user.imgSource = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
+        this.user.gameHistories=yes["gameHistories"];
         this.usersvc.setUser(this.user);
+        console.log(this.user.gameHistories);
       },
       no=>{
         console.error("in user home init")

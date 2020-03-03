@@ -1,7 +1,9 @@
 package com.skilldistillery.knowsong.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class User {
@@ -42,6 +46,13 @@ public class User {
 	
 	@Column(name = "img_source")
 	private String imgSource;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id")
+	private List<GameHistory> gameHistories;
+	
+	@Transient
+	private GameHistory gameHistory;
 	
 //	@OneToMany(mappedBy="user")
 //	private List <TriviaGame> games;
@@ -139,6 +150,22 @@ public class User {
 	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
+	
+	public void addGameHistory(GameHistory gh) {
+		if(this.gameHistories == null) {
+			this.gameHistories = new ArrayList<>();
+		}
+		
+		this.gameHistories.add(gh);
+	}
+
+	public GameHistory getGameHistory() {
+		return this.gameHistory;
+	}
+
+	public void setGameHistory(GameHistory gameHistory) {
+		this.gameHistory = gameHistory;
+	}
 
 	@Override
 	public int hashCode() {
@@ -160,6 +187,14 @@ public class User {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public List<GameHistory> getGameHistories() {
+		return gameHistories;
+	}
+
+	public void setGameHistories(List<GameHistory> gameHistories) {
+		this.gameHistories = gameHistories;
 	}
 	
 
