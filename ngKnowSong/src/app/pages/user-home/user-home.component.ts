@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { GameHistory } from 'src/app/models/game-history';
 
 @Component({
   selector: 'app-user-home',
@@ -13,6 +14,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserHomeComponent implements OnInit {
   user = new User();
   allUsers : any;
+
+  //displaying match history
+  displayedColumns = ['name', 'description'];
+  public gameHistories: GameHistory[];
+  dataSource = this.gameHistories;
+  //
 
   public isAdmin: boolean;
 
@@ -51,6 +58,9 @@ export class UserHomeComponent implements OnInit {
       }
     )
 
+    //game history
+    this.gameHistories = this.user.gameHistories;
+
   }
   createGame(){
     this.route.navigateByUrl('createGame');
@@ -58,9 +68,7 @@ export class UserHomeComponent implements OnInit {
   setUsername(username:string){
     this.user.username = username;
   }
-  matchHistory(){
-    this.route.navigateByUrl('history');
-  }
+
   getAllUsers(){
     this.usersvc.getAll().subscribe(
       yes=>{
