@@ -2,7 +2,7 @@
 
 
 
-<div *ngIf="!roundOver">
+<div *ngIf="!roundOver && quizlist.length > 0">
   <br>
   <br>
   <br>
@@ -11,19 +11,19 @@
     style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
     <h1> Choose Your Game Type!</h1>
     <div class="contain-grid">
-      <div class="grid-container">
-        <div class="nameClip">
-          <button mat-stroked-button>Name That Clip</button>
+      <div class="grid-container" *ngIf="!selectedvalue">
+        <div class="nameClip" *ngIf="categories[0] == 'Name That Clip'">
+          <button mat-stroked-button (click)="selectedvalue='Name That Clip';gettingCategory()">Name That Clip</button>
         </div>
         <div class="knowLyrics">
-          <button mat-stroked-button>Know Those Lyrics</button>
+          <button mat-stroked-button (click)="selectedvalue='Lyric Match';gettingCategory()">Know Those Lyrics</button>
         </div>
         <div class="guessYear">
-          <button mat-stroked-button>Guess That Year</button>
+          <button mat-stroked-button (click)="selectedvalue='Release Year';gettingCategory()">Guess That Year</button>
         </div>
       </div>
     </div>
-    <div *ngIf="!selectedvalue" class="form-group">
+    <!-- <div *ngIf="!selectedvalue" class="form-group">
       <label for="input3" class="col-sm-4 control-label">Select Category:</label>
       <div class="col-sm-6">
 
@@ -31,7 +31,7 @@
           <option *ngFor="let g of categories" [value]="g">{{g}}</option>
         </select>
       </div>
-    </div>
+    </div> -->
 
     <div class="jumbotron"
       style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
@@ -67,8 +67,9 @@
 
     </div>
   </div>
-
+  <p *ngIf="selectedvalue">
   <button class="btn btn-info" (click)="submit()">submit</button>
+</p>
 </div>
 <!-- round over break -->
 

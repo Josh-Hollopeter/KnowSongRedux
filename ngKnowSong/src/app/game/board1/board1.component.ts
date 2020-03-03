@@ -30,7 +30,7 @@ export class Board1Component implements OnInit {
   // F I E L D S
   myarray: String[] = [];
   i: number = 0;
-  categories: String[] = ["play clip", "Name the Lyrics", "Release Year"];
+  categories: String[] = ["Name That Clip", "Name the Lyrics", "Release Year"];
   newstr: String;
   album = "Lemonade";
   year = 2014;
@@ -83,24 +83,26 @@ export class Board1Component implements OnInit {
         count++
         if (count === this.trackNames.length - 2) {
           this.categories.shift();
-
-
-          continue;
         }
-        questionCounter++
-        if (questionCounter == 7) {
-          break;
-        }
+        continue;
+      }
+      questionCounter++
+      if (questionCounter == 7) {
+        break;
+      }
+        console.log("in builder " + track.previewUrl);
         this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
-        this.quizlist.push({ ID: 0, category: "play clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
+        this.quizlist.push({ ID: 0, category: "Name That Clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
 
         this.trackAnswers = this.shuffle(this.trackAnswers);
         this.trackNames = this.shuffle(this.trackNames);
-      }
+
     }
   }
   getQuestion() {
     document.getElementById("my-audio").setAttribute('src', this.question);
+    console.log("in get question" + this.question);
+    console.log(this.selectedCategories)
     return this.question;
   }
 
@@ -108,7 +110,7 @@ export class Board1Component implements OnInit {
   //--------------------
 
   gettingCategory() {
-    if (this.selectedvalue === "play clip") {
+    if (this.selectedvalue === "Name That Clip") {
       this.playdatclip = true;
     } else {
       this.playdatclip = false;
