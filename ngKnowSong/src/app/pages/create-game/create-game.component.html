@@ -1,33 +1,31 @@
-<br>
-<br>
+
 <!-- This is a funny looking margin-top. . . -->
-<br>
-<br>
-<h1>Create a Trivia Game</h1>
-<p>Choose an artist to test your knowledge!</p>
-<div id="findArtist">
-  <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
-    class="form-control" placeholder="Search for artist....." /><br>
-</div>
+<div class="body" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover; height: 100vh; padding-top:75px;">
+  <h1>Create a Trivia Game</h1>
+  <p>Choose an artist to test your knowledge!</p>
+  <div id="findArtist">
+    <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
+      class="form-control" placeholder="Search for artist....." /><br>
+  </div>
 
-<div *ngIf="searchResult">
-  <div class="card-block row">
-    <div class="card col-sm-1.5" *ngFor="let result of searchResult; let i = index"
-      style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'"
-      onmouseout="this.style.color='white'" (click)="getArtistAlbums(result)">
-      <div class="card-block">
-        <div class="search-res well">
-          <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
-          <h4 style="text-align: center;"><a>{{result.name}}</a></h4>
-          <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
+  <div *ngIf="searchResult">
+    <div class="card-block row">
+      <div class="card col-sm-1.5" *ngFor="let result of searchResult; let i = index"
+        style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'"
+        onmouseout="this.style.color='white'" (click)="getArtistAlbums(result)">
+        <div class="card-block">
+          <div class="search-res well">
+            <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
+            <h4 style="text-align: center;"><a>{{result.name}}</a></h4>
+            <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
 
+          </div>
         </div>
       </div>
     </div>
   </div>
+
 </div>
-
-
 <!--
 <hr>
 <div id="userPlaylists">
