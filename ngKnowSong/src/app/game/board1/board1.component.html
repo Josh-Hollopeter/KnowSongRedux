@@ -1,5 +1,7 @@
 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 
+<!-- Called of font style  file -->
+
 
 
 <div *ngIf="!roundOver && quizlist.length > 0">
@@ -9,7 +11,7 @@
 
   <div class="jumbotron"
     style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
-    <h1> Choose Your Game Type!</h1>
+    <h1 *ngIf="!selectedvalue"> Choose Your Game Type!</h1>
     <div class="contain-grid">
       <div class="grid-container" *ngIf="!selectedvalue">
         <div class="nameClip" *ngIf="categories[0] == 'Name That Clip'">
@@ -32,41 +34,122 @@
         </select>
       </div>
     </div> -->
-
+    <div class="bg-success boxed">
     <div class="jumbotron"
       style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
       <ul>
-        <span *ngIf="selectedvalue">Question: {{answerkey.length+1}}</span>
-        <p *ngIf="!playdatclip">
+        <h1 *ngIf="selectedvalue">Question: {{answerkey.length+1}}</h1>
+        <h2 *ngIf="!playdatclip" >
           {{question}}
-        </p>
+        </h2>
+
+        <div class="row-fluid">
+          <div class="span12 text-center">
         <ng-container *ngIf="playdatclip">
-          <p>Name dat Song</p>
-          <br>
-          <audio id="my-audio" controls>
-            <source src={{getQuestion()}} type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
+
+  <h2>Guess the Track!</h2>
+  <div class="container-audio">
+      <audio id="my-audio" controls  loop>
+                 <source src={{getQuestion()}} type="audio/mpeg">
+                 Your browser dose not Support the audio Tag
+             </audio>
+  </div>
+  <div class="container-audio">
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+      <div class="colum1">
+          <div class="row"></div>
+      </div>
+  </div>
         </ng-container>
+      </div>
+    </div>
 
       </ul>
 
-
-      <span class="class='col-xs-3'" *ngFor="let opt of option">
+        <div class="row-fluid">
+      <div class="span12 text-center" *ngFor="let opt of option">
         <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
-        <button mat-fab name="opt" (click)="selected = opt" class="text-center"> {{opt}}</button>
+          <button type="button"  (click)="selected = opt" class="btn btn-success btn-lg btn-block">{{opt}}</button>
+        <!-- <button mat-fab name="opt" (click)="selected = opt" class="text-center"> {{opt}}</button> -->
         <span class="class='col-xs-3'" style="padding: 0.5in;"></span>
         <br *ngIf="playdatclip">
 
-      </span>
+        </div>
+      </div>
       <br>
       <br>
       <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
 
-      <button (click)="check();next()" *ngIf="i<quizlength">next</button>
+      <button class="btn btn-success btn-lg" (click)="check();next()" *ngIf="i<quizlength">next</button>
 
     </div>
   </div>
+</div>
   <p *ngIf="selectedvalue">
   <button class="btn btn-info" (click)="submit()">submit</button>
 </p>
