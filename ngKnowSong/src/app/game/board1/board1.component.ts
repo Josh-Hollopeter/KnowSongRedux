@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
 
 
-
 @Component({
   selector: 'app-board1',
   templateUrl: './board1.component.html',
@@ -19,18 +18,19 @@ import { User } from 'src/app/models/user';
 })
 export class Board1Component implements OnInit {
 
-  //neal put fields bad neal
-  trackObject: Track;
-  albumObject: Album;
-  artistObject: Artist;
-  constructor(private router: Router, private aroute: ActivatedRoute, private data: DataService, private userSvc: UserService) { }
+  constructor(
+    private router: Router,
+    private aroute: ActivatedRoute,
+    private data: DataService,private userSvc:UserService) { }
+
   ngOnInit(): void {
     var artists = this.aroute.snapshot.paramMap.get("artists");
     this.questionBuilder();
   }
+  // F I E L D S
   myarray: String[] = [];
   i: number = 0;
-  categories: String[] = ["play clip", "Name the Albums", "Release Year"];
+  categories: String[] = ["play clip", "Name the Lyrics", "Release Year"];
   newstr: String;
   album = "Lemonade";
   year = 2014;
@@ -39,76 +39,78 @@ export class Board1Component implements OnInit {
   quizlist: Quizmodel[] = [
   ];
 
-quizlength: number;
-selectedcategory: Quizmodel[] = [];
-question: string;
-selectedvalue: String;
-option: any[];
-selectedCategories: any[];
-selected;
-playdatclip:boolean;
-correct:boolean;
-marks: number = 0;
-answerkey: AnswerKey[] = [];
-trackNames = new Array;
-trackAnswers = new Array;
-gameHistory = new GameHistory();
+  quizlength: number;
+  selectedcategory: Quizmodel[] = [];
+  question: string;
+  selectedvalue: String;
+  option: any[];
+  selectedCategories: any[];
+  selected;
+  playdatclip: boolean;
+  correct: boolean;
+  marks: number = 0;
+  answerkey: AnswerKey[] = [];
+  trackNames = new Array;
+  trackAnswers = new Array;
+  gameHistory = new GameHistory();
 
-questionBuilder(){
-  var questionInfo = this.data.storage;
-  this.shuffle(questionInfo);
-  let j = 0;
-  questionInfo.forEach(element => {
-  let singer = element.artist.name;
-  let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
-  var year = parseInt(element.releaseDate);
-  var years =[year+1, year -1,year+2, year];
-  years = this.shuffle(years);
-  this.quizlist.push({ID :j,category:"Release Year",question: singerQuestion,anslistobj:years,answer:year});
-  if(element.tracks){
-    this.trackNames = this.trackNames.concat(element.tracks);
-    this.trackNames = this.shuffle(this.trackNames);
+  questionBuilder() {
+    var questionInfo = this.data.storage;
+    this.shuffle(questionInfo);
+    let j = 0;
+    questionInfo.forEach(element => {
+      let singer = element.artist.name;
+      let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
+      var year = parseInt(element.releaseDate);
+      var years = [year + 1, year - 1, year + 2, year];
+      years = this.shuffle(years);
+      this.quizlist.push({ ID: j, category: "Release Year", question: singerQuestion, anslistobj: years, answer: year });
+      if (element.tracks) {
+        this.trackNames = this.trackNames.concat(element.tracks);
+        this.trackNames = this.shuffle(this.trackNames);
+      }
+    });
+    this.makeDatClipBuilder();
   }
-});
-this.makeDatClipBuilder();
-}
 
-makeDatClipBuilder(){
-  var ansArray = Object.assign([], this.trackNames);
-  let count = 0;
-  let questionCounter =0;
-  for(let i =0; i < this.trackNames.length;i++){
-  let track = ansArray.pop();
-  if(!track.previewUrl){
-    count++
-    if(count === this.trackNames.length-2){
-      this.categories.shift();
+  makeDatClipBuilder() {
+    var ansArray = Object.assign([], this.trackNames);
+    let count = 0;
+    let questionCounter = 0;
+    for (let i = 0; i < this.trackNames.length; i++) {
+      let track = ansArray.pop();
+      if (!track.previewUrl) {
+        count++
+        if (count === this.trackNames.length - 2) {
+          this.categories.shift();
 
+
+          continue;
+        }
+        questionCounter++
+        if (questionCounter == 7) {
+          break;
+        }
+        this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
+        this.quizlist.push({ ID: 0, category: "play clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
+
+        this.trackAnswers = this.shuffle(this.trackAnswers);
+        this.trackNames = this.shuffle(this.trackNames);
+      }
     }
-    continue;
   }
-  questionCounter++
-  if(questionCounter == 7){
-    break;
+  getQuestion() {
+    document.getElementById("my-audio").setAttribute('src', this.question);
+    return this.question;
   }
-  this.trackAnswers = [track.name,this.trackNames[0].name,this.trackNames[0+1].name,this.trackNames[0+2].name];
-  this.quizlist.push({ID :0,category:"play clip",question:track.previewUrl,anslistobj:this.trackAnswers,answer:track.name});
 
-  this.trackAnswers = this.shuffle(this.trackAnswers);
-  this.trackNames = this.shuffle(this.trackNames);
-}
-
-}
-
-getQuestion(){
-  document.getElementById("my-audio").setAttribute('src', this.question);
-  return this.question;
-}
+  //CHOOSING GAME STYLE
+  //--------------------
 
   gettingCategory() {
-    if(this.selectedvalue === "play clip" ){
+    if (this.selectedvalue === "play clip") {
       this.playdatclip = true;
-    }else{
+    } else {
       this.playdatclip = false;
     }
 
@@ -123,7 +125,7 @@ getQuestion(){
     if (this.i < this.selectedCategories.length - 1) {
       ++this.i;
     }
-    if (this.i === this.selectedCategories.length-1) {
+    if (this.i === this.selectedCategories.length - 1) {
       this.roundOver = true;
       this.gameHistory.marks = this.marks;
       this.gameHistory.numQuestions = this.selectedCategories.length-1;
@@ -146,19 +148,19 @@ getQuestion(){
   check() {
     this.correct = false;
     this.generatemark();
-    this.answerkey.push(new AnswerKey( this.selected,this.selectedCategories[this.i].answer,this.question,this.correct));
-}
-
-generatemark() {
-  if(this.selected == this.selectedCategories[this.i].answer){
-    this.marks ++;
-    this.correct = true;
+    this.answerkey.push(new AnswerKey(this.selected, this.selectedCategories[this.i].answer, this.question, this.correct));
   }
 
-}
-submit(){
-  this.roundOver = true;
-}
+  generatemark() {
+    if (this.selected == this.selectedCategories[this.i].answer) {
+      this.marks++;
+      this.correct = true;
+    }
+
+  }
+  submit() {
+    this.roundOver = true;
+  }
 
   shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -184,9 +186,9 @@ submit(){
 export class AnswerKey {
   chosen: any;
   answer: any;
-  question:any;
-  correct:boolean;
-  constructor(chosen: any, answer: any,question:any,correct:boolean) {
+  question: any;
+  correct: boolean;
+  constructor(chosen: any, answer: any, question: any, correct: boolean) {
     this.chosen = chosen;
     this.answer = answer;
     this.question = question;
