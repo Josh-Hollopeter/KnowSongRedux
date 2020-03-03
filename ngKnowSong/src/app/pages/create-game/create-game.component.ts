@@ -261,7 +261,14 @@ export class CreateGameComponent implements OnInit {
 
     this.lyricService.getLyrics(trackName, artistName).subscribe(
       response => {
-        console.log(response);
+        console.log("LYRICS" + response);
+
+        let message = response["message"];
+        let body = message["body"];
+        let lyrics = body["lyrics"];
+        let lyricsBody = lyrics["lyrics_body"];
+        console.log(lyricsBody);
+
 
       }
     )
