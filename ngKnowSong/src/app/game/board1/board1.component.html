@@ -24,7 +24,7 @@
 						<label>
              <input type="submit" value={{opt}} *ngIf="i<quizlength" name ={{i}} (click) = "(check(opt));next()" >
            {{opt}} -->
-   <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 
 
 <!-- </label>
@@ -33,7 +33,7 @@
 <!-- <div class="form" *ngFor="let opt of option">
   <form #registerForm="ngForm" (submit)="check(registerForm)">
      Email: <input ngModel type="text" placeholder="email" name="email"> -->
-    <!-- {{opt}}
+<!-- {{opt}}
 
 
     <br> <input type="button" value={{opt}}>
@@ -43,8 +43,8 @@
 
 
 
-   <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
-  <!-- </div>
+<!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
+<!-- </div>
 </ng-container> -->
 <!-- <button  (click)="next();check($event,opt)" *ngIf="i<quizlength">next</button> -->
 
@@ -52,7 +52,7 @@
 
 
 
-	<!-- <button class="btn btn-info" (click)="generatemark();roundOver = true" *ngIf="i>=0" >submit</button> -->
+<!-- <button class="btn btn-info" (click)="generatemark();roundOver = true" *ngIf="i>=0" >submit</button> -->
 
 <!-- </div>
 </div> -->
@@ -99,11 +99,11 @@ Your browser does not support the audio element.
 					</div>
         </ul> -->
 
-        <span class="class='col-xs-3'" *ngFor="let opt of option">
-  <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
-    <button mat-fab  name="opt" (click)= "selected = opt"  class="text-center">  {{opt}}</button>
-    <span class="class='col-xs-3'" style="padding: 0.5in;"></span>
-    <br *ngIf="playdatclip">
+      <span class="class='col-xs-3'" *ngFor="let opt of option">
+        <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
+        <button mat-fab name="opt" (click)="selected = opt" class="text-center"> {{opt}}</button>
+        <span class="class='col-xs-3'" style="padding: 0.5in;"></span>
+        <br *ngIf="playdatclip">
 
 
 
@@ -112,28 +112,28 @@ Your browser does not support the audio element.
     <br>
   <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
 
-     <button  (click)="check();next()" *ngIf="i<quizlength">next</button>
+      <button (click)="check();next()" *ngIf="i<quizlength">next</button>
 
-</div>
-</div>
+    </div>
+  </div>
 
 
 
-	<button class="btn btn-info" (click)="submit()">submit</button>
+  <button class="btn btn-info" (click)="submit()">submit</button>
 </div>
 <br>
 <br>
 <br>
 <div *ngIf = "roundOver">
 <p> Your score is  => {{marks}}</p>
+<a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
 </div>
 
-<a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
 
 <footer class="container">
   <div class="container">
     <!-- <p class="float-right"><a href="home">Back to top</a></p> -->
-  <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
+    <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
   </div>
   <!-- /.container -->
 </footer>
