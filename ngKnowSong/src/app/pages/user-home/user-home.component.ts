@@ -14,8 +14,10 @@ export class UserHomeComponent implements OnInit {
   user = new User();
   allUsers : any;
 
+  public isAdmin: boolean;
 
   loggedUser:User;
+
   constructor(
     private route: Router,
     private auth: AuthService,
@@ -37,6 +39,9 @@ export class UserHomeComponent implements OnInit {
         this.user.imgSource = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
+        if(this.user.role === "admin"){
+          this.isAdmin = true;
+        }
         this.usersvc.setUser(this.user);
       },
       no=>{
@@ -78,6 +83,7 @@ export class UserHomeComponent implements OnInit {
       }
     );
   }
+
 
   updateUser(){
     this.usersvc.updateUser(this.user).subscribe(
