@@ -63,7 +63,7 @@ public class AuthController {
 	private static final String clientId = "a2398fd3acd54cf8b645af6884251a55";
 	private static final String clientSecret = "e8c8ceef3b064187ada929c80caaca17";
 	private static final URI redirectUri = SpotifyHttpManager.makeUri("https://joshhollopeter.com/KnowSongRest/callback");
-	private static final String scope = "user-read-private user-read-email";
+	private static final String scope = "";
 
 	// STEP 1 : GET AUTHORIZED BROH
 
