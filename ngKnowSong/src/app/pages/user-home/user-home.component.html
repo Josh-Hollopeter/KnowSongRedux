@@ -9,12 +9,12 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <h1>User: {{user.username}}</h1>
+        <h1>User : {{user.username}}</h1>
         <div class="row">
           <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
           <div style="margin-left: 15px;">
           </div>
-        </div>
+        </div><br>
         <!-- <p>{{user.gameHistories[0].marks}}</p> -->
         <button (click)="toggleImgForm()" type="button" class="btn btn-primary btn-sm" aria-label="Left Align">
           <span class="glyphicon glyphicon-cog" aria-hidden="false"></span>Edit
@@ -86,12 +86,12 @@
       </div> -->
       <!-- /.col-md-4 -->
 
-      <div  *ngIf = "user.role === 'admin'">
+      <div *ngIf="isAdmin">
 
             <h2 class="card-title">Admin Controls</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+            <p class="card-text">Update user profile picture and disable user account.</p>
           </div>
-          <div class="card-footer">
+          <div class="card-footer" *ngIf="isAdmin">
 
             <button class="card" (click)="getAllUsers()">List Users</button>
             <table *ngIf="allUsers" class="table">
@@ -172,7 +172,7 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <footer class="container" style=" bottom:0; left:0;">
-    <p class="float-right"><a href="#">Back to top</a></p>
+    <p class="float-right"></p>
     <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
   </footer>
 <!-- Footer -->
