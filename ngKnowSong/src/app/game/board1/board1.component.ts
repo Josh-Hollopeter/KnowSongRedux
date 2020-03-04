@@ -262,38 +262,6 @@ export class Board1Component implements OnInit {
 
   //------------
 
-//
-//
-//
-//
-//
-// visualizer
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// visualizer
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// visualizer
-//
-//
-//
-//
-
-
 }
 
 
