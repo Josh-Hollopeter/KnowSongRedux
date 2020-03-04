@@ -155,6 +155,22 @@
 </div>
 <!-- round over break -->
 
+  <button class="btn btn-info" (click)="submit()">submit</button>
+  <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
+
+<br>
+<br>
+<br>
+<div *ngIf = "roundOver">
+  <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
+<p> Your score is  => {{marks}}</p>
+</div>
+
+
+<footer class="container" style="position:fixed; bottom:0; left:0;">
+  <p class="float-right"></p>
+  <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+ </footer>
 <div *ngIf="roundOver">
   <p> Your score is => {{marks}}</p>
   <a routerLink="/home"><button class="btn btn-success float-right"> Home </button></a>

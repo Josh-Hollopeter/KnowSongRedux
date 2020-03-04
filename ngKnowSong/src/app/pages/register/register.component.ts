@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   private newUser: User
+  userExists: any;
 
   constructor(
     private route: Router,
@@ -26,7 +27,9 @@ export class RegisterComponent implements OnInit {
     // verify password
     if(!(form.value.password === form.value.verifyPassword)){
       window.alert("Password did not match.");
+
     }
+
 
     this.newUser = new User();
     this.newUser.password = form.value.password;
@@ -48,6 +51,7 @@ export class RegisterComponent implements OnInit {
       err => {
         console.error('RegisterComponent.register(): error registering.');
         console.error(err);
+        this.userExists = "exists";
       }
     );
   }
