@@ -72,6 +72,59 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
+<<<<<<< HEAD
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Three</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+
+      <div  *ngIf = "user.role === 'admin'">
+
+            <h2 class="card-title">Admin Controls</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+
+            <button class="card" (click)="getAllUsers()">List Users</button>
+            <table *ngIf="allUsers" class="table">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Enabled</th>
+                <th>Role</th>
+                <th>Profile Image</th>
+                <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
+              </tr>
+              <tr *ngFor="let user1 of allUsers">
+                <td>{{user1.id}}</td>
+                <td>{{user1.username}}</td>
+                <td>{{user1.enabled}}</td>
+                <td>{{user1.role}}</td>
+                <td><input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource"></td>
+                <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td>
+
+
+              </tr>
+            </table>
+
+
+
+
+      </div>
+
+=======
+>>>>>>> master
     </div>
     <!-- end of game history div -->
 
