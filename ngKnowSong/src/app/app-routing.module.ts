@@ -1,3 +1,4 @@
+import { LocationStrategy,HashLocationStrategy } from '@angular/common';
 import { Album } from 'src/app/spotifyJSON/models/album';
 import { Board1Component } from './game/board1/board1.component';
 import { UserHomeComponent } from './pages/user-home/user-home.component';
@@ -30,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

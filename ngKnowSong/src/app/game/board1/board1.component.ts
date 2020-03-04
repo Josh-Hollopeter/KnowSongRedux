@@ -46,7 +46,7 @@ export class Board1Component implements OnInit {
   // F I E L D S
   myarray: String[] = [];
   i: number = 0;
-  categories: string[] = ["Name That Clip", "Name the Lyrics", "Release Year"];
+  categories: string[] = ["Name That Clip", "Lyric Match", "Release Year"];
   newstr: String;
   album = "Lemonade";
   year = 2014;
@@ -68,13 +68,14 @@ export class Board1Component implements OnInit {
   trackNames = new Array;
   trackAnswers = new Array;
   gameHistory = new GameHistory();
-
+  artistName;
   questionBuilder() {
     var questionInfo = this.data.storage;
     let j = 0;
     this.shuffle(questionInfo);
     questionInfo.forEach(element => {
       let singer = element.artist.name;
+      this.artistName = singer;
       let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
       var year = parseInt(element.releaseDate);
       var years = [year -3 , year - 1, year + 1, year];
@@ -92,6 +93,7 @@ export class Board1Component implements OnInit {
       return index === self.indexOf(elem);
   })
     this.makeDatClipBuilder();
+    this.getLyricsFromMixer();
 
   }
   removeDuplicates(myArr, prop) {
@@ -137,13 +139,24 @@ export class Board1Component implements OnInit {
   //--------------------
 
   gettingCategory() {
+      console.log("__________________________________________")
     if (this.selectedvalue === "Name That Clip") {
       this.playdatclip = true;
     } else {
       this.playdatclip = false;
+    }if(this.selectedvalue === 'Lyric Match'){
+      console.log("+++++++++++++++++++++++++++++++++")
+
+
     }
 
     this.selectedCategories = this.quizlist.filter(d => (d.category == this.selectedvalue));
+    if(this.selectedCategories.length === 0){
+      this.router.navigateByUrl("createGame");
+      }
+
+    console.log("*********************************");
+    console.log(this.selectedCategories);
     this.i = 0;
     this.question = this.selectedCategories[this.i].question;
     this.option = this.selectedCategories[this.i].anslistobj;
@@ -229,11 +242,12 @@ export class Board1Component implements OnInit {
 
     //get tracks array and apply track.lyrics to each track model
     var nullLyricCounter = 0;
+
     for (let x = 0; x < tracks.length; x++) {
 
 
       var trackName: string = tracks[x].name;
-      var artistName: string = tracks[x].album.artist.name;  //possibly pulling multiple artist names
+      var artistName: string = this.artistName;  //possibly pulling multiple artist names
 
       this.lyricService.getLyrics(trackName, artistName).subscribe(
         response => {
@@ -245,6 +259,7 @@ export class Board1Component implements OnInit {
           let length = body["length"];
           if (length == 0) {
             nullLyricCounter++;
+            console.log("return not working")
             return; // go to next song (top of for loop)
             //get a new song
           }
@@ -266,6 +281,15 @@ export class Board1Component implements OnInit {
               }
             }
             //put lyrics into corresponding track on the array
+            let answers =[this.trackNames[0].name,this.trackNames[1].name,this.trackNames[2].name,trackName];
+            this.shuffle(answers);
+            if(!finishedLyrics){
+              return;
+            }
+            this.quizlist.push({ ID: 0, category: "Lyric Match", question: finishedLyrics, anslistobj:answers , answer: trackName });
+            this.shuffle(this.trackNames);
+            console.log("*******************************************")
+            console.log(this.quizlist)
             tracks[x].lyrics = finishedLyrics;
             console.log(finishedLyrics);
           }
@@ -274,9 +298,13 @@ export class Board1Component implements OnInit {
       )
     }//end for loop
 
+
+<<<<<<< HEAD
+  //------------
+=======
   }
 
-  //------------
+>>>>>>> e43eb88a0485233631ec9d103eeb621aeb60e264
 
 }
 

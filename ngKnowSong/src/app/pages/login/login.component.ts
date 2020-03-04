@@ -12,10 +12,11 @@ import { UserService } from 'src/app/models/user.service';
 })
 export class LoginComponent implements OnInit {
   user:User = new User();
+  loggedIn: string;
   constructor(
     private authService:AuthService,
     private route:Router,
-    private usersvc: UserService
+    private usersvc: UserService,
     ) { }
 
   ngOnInit(): void {
@@ -45,6 +46,8 @@ export class LoginComponent implements OnInit {
       },
       fail => {
         console.error('Error logging in');
+        this.loggedIn = "fail";
+
       }
     )
 
