@@ -9,7 +9,20 @@ import { Quizmodel } from './../quiz/quizmodel';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { MusixmatchService } from 'src/app/services/musixmatch.service';
 
+export class AnswerKey {
+  chosen: any;
+  answer: any;
+  question: any;
+  correct: boolean;
+  constructor(chosen: any, answer: any, question: any, correct: boolean) {
+    this.chosen = chosen;
+    this.answer = answer;
+    this.question = question;
+    this.correct = correct;
+  }
+}
 
 @Component({
   selector: 'app-board1',
@@ -21,7 +34,10 @@ export class Board1Component implements OnInit {
   constructor(
     private router: Router,
     private aroute: ActivatedRoute,
-    private data: DataService,private userSvc:UserService) { }
+    private data: DataService,
+    private userSvc: UserService,
+    private lyricService: MusixmatchService
+  ) { }
 
   ngOnInit(): void {
     var artists = this.aroute.snapshot.paramMap.get("artists");
@@ -101,12 +117,12 @@ export class Board1Component implements OnInit {
       if (questionCounter == 7) {
         break;
       }
-        console.log("in builder " + track.previewUrl);
-        this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
-        this.quizlist.push({ ID: 0, category: "Name That Clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
+      console.log("in builder " + track.previewUrl);
+      this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
+      this.quizlist.push({ ID: 0, category: "Name That Clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
 
-        this.trackAnswers = this.shuffle(this.trackAnswers);
-        this.trackNames = this.shuffle(this.trackNames);
+      this.trackAnswers = this.shuffle(this.trackAnswers);
+      this.trackNames = this.shuffle(this.trackNames);
 
     }
   }
@@ -199,20 +215,102 @@ export class Board1Component implements OnInit {
     return array;
   }
 
+  //-----------
+  // GET LYRICS : 2,000 API calls per day. Be careful :)
+  //-----------
 
-}
+  getLyricsFromMixer() {
+    //get ALL TRACKS FROM ARTIST
 
-export class AnswerKey {
-  chosen: any;
-  answer: any;
-  question: any;
-  correct: boolean;
-  constructor(chosen: any, answer: any, question: any, correct: boolean) {
-    this.chosen = chosen;
-    this.answer = answer;
-    this.question = question;
-    this.correct = correct;
+    //MUST SHUFFLE THIS LIST
+
+    //GET FIRST 7 SONGS FROM SHUFFLED LIST
+    var tracks: Track[] = this.trackNames.splice(0,6);
+
+    //get tracks array and apply track.lyrics to each track model
+    var nullLyricCounter = 0;
+    for (let x = 0; x < tracks.length; x++) {
+
+
+      var trackName: string = tracks[x].name;
+      var artistName: string = tracks[x].album.artist.name;  //possibly pulling multiple artist names
+
+      this.lyricService.getLyrics(trackName, artistName).subscribe(
+        response => {
+          console.log("LYRICS" + response);
+          let message = response["message"];
+          let body = message["body"];
+
+          // check if the lyrics are not available
+          let length = body["length"];
+          if (length == 0) {
+            nullLyricCounter++;
+            return; // go to next song (top of for loop)
+            //get a new song
+          }
+          else {
+            let message = response["message"];
+            let body = message["body"];
+            let lyrics = body["lyrics"];
+            let lyricsBody = lyrics["lyrics_body"];
+
+            //regex to get first 7 lines
+            let lyricLines = lyricsBody.split('\n', 10);
+            var finishedLyrics = "";
+            for (let y = 0; y < lyricLines.length; y++) {
+              if (y == 0) {
+                finishedLyrics += lyricLines[y];
+              } else {
+                finishedLyrics += "\n";
+                finishedLyrics += lyricLines[y];
+              }
+            }
+            //put lyrics into corresponding track on the array
+            tracks[x].lyrics = finishedLyrics;
+            console.log(finishedLyrics);
+          }
+
+        }
+      )
+    }//end for loop
+
   }
+
+  //------------
+
+//
+//
+//
+//
+//
+// visualizer
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// visualizer
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// visualizer
+//
+//
+//
+//
+
+
 }
+
 
 

@@ -45,7 +45,7 @@ export class CreateGameComponent implements OnInit {
     private aRoute: ActivatedRoute,
     private router: Router,
     private data: DataService
-  ) {}
+  ) { }
 
 
   // M E T H O D S
@@ -53,15 +53,15 @@ export class CreateGameComponent implements OnInit {
   ngOnInit(): void {
     this.checkAuthToken();
     this.keywordModelChangedSubscription = this.keywordModelChanged
-    .pipe(
-      debounceTime(350),
-      distinctUntilChanged()
-    )
-    .subscribe(
-      text => this.searchForArtist(text)
-    );
+      .pipe(
+        debounceTime(350),
+        distinctUntilChanged()
+      )
+      .subscribe(
+        text => this.searchForArtist(text)
+      );
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.keywordModelChangedSubscription.unsubscribe();
   }
 
@@ -115,7 +115,7 @@ export class CreateGameComponent implements OnInit {
   //-------------------------
   //- Artist Search Methods -
   //-------------------------
-  searchForArtist(keyword:string) {
+  searchForArtist(keyword: string) {
     var authToken = this.authToken;
     this.stream.searchArtist(keyword, authToken).subscribe(
       response => {
@@ -176,7 +176,7 @@ export class CreateGameComponent implements OnInit {
           console.log(item);
 
           //only get albums, ignore singles and compilations
-          if(item["album_type"] != 'album'){
+          if (item["album_type"] != 'album') {
             continue;
           }
           var id = item["id"];
@@ -201,18 +201,19 @@ export class CreateGameComponent implements OnInit {
           //push album to arraylist
 
           this.albums.push(album);
-        console.log(this.albums);}
-          var putAlbum = () => {
-            console.log("****" +this.albums + "********in create game");
-            this.data.storage = this.albums;
-            this.router.navigateByUrl('game/')
+          console.log(this.albums);
+        }
+        var putAlbum = () => {
+          console.log("****" + this.albums + "********in create game");
+          this.data.storage = this.albums;
+          this.router.navigateByUrl('game/')
 
-          }
-          setTimeout(putAlbum , 2500);
+        }
+        setTimeout(putAlbum, 2500);
 
       }
-      )
-    }
+    )
+  }
   //get simplified track object. NOT audio_features
   getAlbumTracks(albumId: string): Track[] {
     var authToken = this.authToken;
@@ -254,7 +255,7 @@ export class CreateGameComponent implements OnInit {
   //quick test form for getting lyrics for a track
 
 
-  getLyrics(form: NgForm){
+  getLyrics(form: NgForm) {
     console.log("IM GONNA DO IT");
     var trackName: string = form.value.trackName;
     var artistName: string = form.value.artistName;
@@ -262,13 +263,38 @@ export class CreateGameComponent implements OnInit {
 
     this.lyricService.getLyrics(trackName, artistName).subscribe(
       response => {
-        console.log("LYRICS" + response);
+        console.log(response);
 
         let message = response["message"];
         let body = message["body"];
+        //check if no lyrics matched
+        let length = body["length"];
+        if(length == 0){
+          console.log("No lyrics");
+        }
+
         let lyrics = body["lyrics"];
         let lyricsBody = lyrics["lyrics_body"];
         console.log(lyricsBody);
+
+        //regex to get first 7 lines
+        let lyricLines = lyricsBody.split('\n', 10);
+        var finishedLyrics = "";
+        for (let y = 0; y < lyricLines.length; y++) {
+          if(y == 0){
+            finishedLyrics += lyricLines[y];
+          } else{
+            finishedLyrics += "\n";
+            finishedLyrics += lyricLines[y];
+          }
+        }
+        console.log(finishedLyrics);
+
+
+
+
+
+        // tracks[x].lyrics = lyricsBody;
 
 
       }

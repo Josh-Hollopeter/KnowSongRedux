@@ -2,6 +2,7 @@ export class GameHistory {
 
   public marks:number;
   public numQuestions: number;
+  public gameType: string;
   public datePlayed : string;
   public chosenText: string;
   public questionText: string;
