@@ -8,6 +8,7 @@ export class Track {
   previewUrl: string;
   explicit: boolean;
   album: Album;
+  lyrics: string;
 
   constructor(
     id?: string,
@@ -16,7 +17,8 @@ export class Track {
     popularity?: number,
     previewUrl?: string,
     explicit?: boolean,
-    album?: Album
+    album?: Album,
+    lyrics?: string
   ) {
     this.id = id;
     this.name = name;
@@ -25,5 +27,6 @@ export class Track {
     this.previewUrl = previewUrl;
     this.explicit = explicit;
     this.album = album;
+    this.lyrics = lyrics;
   }
 }
