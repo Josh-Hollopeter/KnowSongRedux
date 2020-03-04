@@ -71,6 +71,9 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`game_history` (
   `num_questions` VARCHAR(45) NULL DEFAULT NULL,
   `date_played` DATETIME NULL DEFAULT NULL,
   `user_id` INT(11) NOT NULL,
+  `question_text` VARCHAR(5000) NULL,
+  `answer_text` VARCHAR(5000) NULL,
+  `chosen_text` VARCHAR(5000) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_game_history_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_game_history_user1`
@@ -255,6 +258,7 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'test', 'test', 'standard', 1, 0, NULL, NULL, NULL);
+INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', 'josh', 'admin', 1, 1, NULL, 'AQB6QtBZc0C7dSsu0ngVcIVh5DGvWjTgJKk2_7nmrTEZXHUv7hjNt-am8hwltAwSDImFp-vXfwgYHeIrI8zORI9Qk78hzAU79_xn9FFxMrEDq1tTdWYUhFCyduSRpVt9yCk', NULL);
 
 COMMIT;
 
@@ -264,7 +268,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `knowsong`;
-INSERT INTO `knowsong`.`game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`) VALUES (1, '7', '10', '2020-01-01', 1);
+INSERT INTO `knowsong`.`game_history` (`id`, `marks`, `num_questions`, `date_played`, `user_id`, `question_text`, `answer_text`, `chosen_text`) VALUES (1, '7', '10', '2020-01-01', 1, NULL, NULL, NULL);
 
 COMMIT;
 

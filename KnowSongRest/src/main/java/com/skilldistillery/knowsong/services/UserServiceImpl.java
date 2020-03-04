@@ -1,6 +1,7 @@
 package com.skilldistillery.knowsong.services;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class UserServiceImpl implements UserService {
 		}
 		if(user.getGameHistory() != null) {
 			user.getGameHistory().setUserId(managedUser.getId());
+			user.getGameHistory().setDatePlayed(LocalDateTime.now());
 		managedUser.addGameHistory(user.getGameHistory());
 		
 		}

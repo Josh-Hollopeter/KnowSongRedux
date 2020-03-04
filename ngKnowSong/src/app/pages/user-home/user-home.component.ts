@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { GameHistory } from 'src/app/models/game-history';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-user-home',
@@ -117,6 +118,12 @@ export class UserHomeComponent implements OnInit {
         console.log("InUpdateUser");
       }
     );
+  }
+  dateConvert(date){
+    if(date!=null){
+  date =  date.replace(/T/,' Time:');
+  return date;
+    }
   }
 
   adminUpdateUser(username: string, imgSource: string) {
