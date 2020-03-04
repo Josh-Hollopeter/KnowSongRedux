@@ -299,8 +299,12 @@ export class Board1Component implements OnInit {
     // }//end for loop
 
 
+<<<<<<< HEAD
+  //------------
+=======
   }
 
+>>>>>>> e43eb88a0485233631ec9d103eeb621aeb60e264
 
 }
 
