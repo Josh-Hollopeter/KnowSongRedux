@@ -117,21 +117,20 @@ Your browser does not support the audio element.
 
 
 
-	<button class="btn btn-info" (click)="submit()">submit</button>
+  <button class="btn btn-info" (click)="submit()">submit</button>
+  <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
+
 </div>
 <br>
 <br>
 <br>
 <div *ngIf = "roundOver">
+  <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
 <p> Your score is  => {{marks}}</p>
-<a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a>
 </div>
 
 
-<footer class="container">
-  <div class="container">
-    <!-- <p class="float-right"><a href="home">Back to top</a></p> -->
-  <p>Est. 2020 Know Song · <a href="home">Privacy</a> · <a href="home">Terms</a></p>
-  </div>
-  <!-- /.container -->
-</footer>
+<footer class="container" style="position:fixed; bottom:0; left:0;">
+  <p class="float-right"></p>
+  <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+ </footer>

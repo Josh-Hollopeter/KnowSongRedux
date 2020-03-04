@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 -- MySQL dump 10.13  Distrib 8.0.18, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: knowsong
@@ -306,7 +306,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-03-01 14:40:48
-=======
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -503,4 +503,4 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
->>>>>>> master
+

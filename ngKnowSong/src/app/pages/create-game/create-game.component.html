@@ -1,5 +1,7 @@
 <h1>Create a Trivia Game</h1>
 <hr>
+<body class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover;">
+
 <div id="findArtist">
   Search for Artist
   <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)' class="form-control"
@@ -54,6 +56,10 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-</div>
+</div></body>
 <hr>
+<footer class="container" style="position:fixed; bottom:0; left:0;">
+  <p class="float-right"></p>
+  <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+ </footer>
 
