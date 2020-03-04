@@ -30,7 +30,7 @@ export class Board1Component implements OnInit {
   // F I E L D S
   myarray: String[] = [];
   i: number = 0;
-  categories: String[] = ["Name That Clip", "Name the Lyrics", "Release Year"];
+  categories: string[] = ["Name That Clip", "Name the Lyrics", "Release Year"];
   newstr: String;
   album = "Lemonade";
   year = 2014;
@@ -41,7 +41,7 @@ export class Board1Component implements OnInit {
   quizlength: number;
   selectedcategory: Quizmodel[] = [];
   question: string;
-  selectedvalue: String;
+  selectedvalue: string;
   option: any[];
   selectedCategories: any[];
   selected;
@@ -55,22 +55,34 @@ export class Board1Component implements OnInit {
 
   questionBuilder() {
     var questionInfo = this.data.storage;
-    this.shuffle(questionInfo);
     let j = 0;
+    this.shuffle(questionInfo);
     questionInfo.forEach(element => {
       let singer = element.artist.name;
       let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
       var year = parseInt(element.releaseDate);
-      var years = [year + 1, year - 1, year + 2, year];
+      var years = [year -3 , year - 1, year + 1, year];
       years = this.shuffle(years);
-      this.quizlist.push({ ID: j, category: "Release Year", question: singerQuestion, anslistobj: years, answer: year });
+      if(this.quizlist.length <= 5){
+        this.quizlist.push({ ID: j, category: "Release Year", question: singerQuestion, anslistobj: years, answer: year });
+       this.quizlist=  this.removeDuplicates(this.quizlist,"question");
+      }
       if (element.tracks) {
         this.trackNames = this.trackNames.concat(element.tracks);
         this.trackNames = this.shuffle(this.trackNames);
       }
     });
+     this.quizlist = this.quizlist.filter(function(elem, index, self) {
+      return index === self.indexOf(elem);
+  })
     this.makeDatClipBuilder();
+
   }
+  removeDuplicates(myArr, prop) {
+    return myArr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+    });
+}
 
   makeDatClipBuilder() {
     var ansArray = Object.assign([], this.trackNames);
@@ -130,6 +142,11 @@ export class Board1Component implements OnInit {
       this.roundOver = true;
       this.gameHistory.marks = this.marks;
       this.gameHistory.numQuestions = this.selectedCategories.length-1;
+      for(var i =0;i < this.answerkey.length; i ++){
+      this.gameHistory.chosenText += this.answerkey[i].chosen + "!!@";
+      this.gameHistory.answerText += this.answerkey[i].answer + "!!@";;
+      this.gameHistory.questionText += this.answerkey[i].question + "!!@";;
+      }
       let user = new User();
       user.gameHistory = this.gameHistory;
       this.userSvc.updateUser(user).subscribe();
