@@ -1,7 +1,5 @@
-<br><br>
-
-<html>
-<body class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover;">
+<section class="jumbotron"
+  style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover; min-height: 100vh; padding-top:75px;">
 
 
 
@@ -11,59 +9,70 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <p>
-          Rank: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.rankImg}}" alt="" width="160" height="160">
-       Profile Image: <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
-      </p>
+        <div class="row">
+          <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
+          <div style="margin-left: 15px;">
+            <h1>{{user.username}}</h1>
+          </div>
+        </div>
+        <!-- <p>{{user.gameHistories[0].marks}}</p> -->
+        <button (click)="toggleImgForm()" type="button" class="btn btn-default" aria-label="Left Align">
+          <span class="glyphicon glyphicon-cog" aria-hidden="false"></span>Edit
+        </button><span class="glyphicon glyphicon-cog"></span>
 
-
-      <form id="profile">
-        <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
-        <button (click)="updateUser()">Update</button>
-      </form>
+        <form id="profile" *ngIf="imgFormToggle">
+          <br> Profile Image: <input ngModel type="text" name="imgSource" [(ngModel)]="user.imgSource">
+          <button (click)="updateUser()">Update</button>
+        </form>
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
-        <h1 class="font-weight-light">Create A New Game</h1>
-        <p>Create a new Game by selecting your favorite artist or playlist from spotify.</p>
-        <a class="btn btn-primary"  [routerLink]="['/createGame']">New Game</a>
+        <div class="card-body" style="background: #6c757d; color: #fff;
+        border-radius: 5px;">
+          <h1 class="font-weight-light">Create A New Game</h1>
+          <p>Create a new game by selecting an artist from Spotify.</p>
+          <a class="btn btn-primary" [routerLink]="['/createGame']">New Game</a>
+        </div>
       </div>
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
-    <!-- Call to Action Well -->
+    <!-- Achievements -->
+    <hr>
     <div class="card text-white bg-secondary my-5 py-4 text-center">
       <div class="card-body">
-        <p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p>
+        <p class="text-white m-0">
+          <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.rankImg}}" alt="" width="100" height="100">
+          Achievements == Rank, display photos here that can be unlocked</p>
       </div>
     </div>
 
-    <!-- Content Row -->
-    <div class="row">
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">New Game</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-          </div>
-          <div class="card-footer">
-            <button (click)="createGame()">New Game</button>
-          </div>
-        </div>
+    <hr>
+    <div id="gameHistory">
+      Game History
+      <div id="playlist-container" class="playlist-container mat-elevation-z8">
+        <table mat-table #table [dataSource]="this.user.gameHistories">
+
+          <ng-container matColumnDef="marks">
+            <th mat-header-cell *matHeaderCellDef> Correct Answers </th>
+            <td mat-cell *matCellDef="let element"> {{element.marks}} </td>
+          </ng-container>
+          <ng-container matColumnDef="numQuestions">
+            <th mat-header-cell *matHeaderCellDef> Total Questions </th>
+            <td mat-cell *matCellDef="let element"> {{element.numQuestions}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="datePlayed">
+            <th mat-header-cell *matHeaderCellDef> Date Played </th>
+            <td mat-cell *matCellDef="let element"> {{dateConvert(element.datePlayed)}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </div>
-      <!-- /.col-md-4 -->
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <div class="card-body">
-            <h2 class="card-title">Match History</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
-          </div>
-          <div class="card-footer">
-            <button (click)="matchHistory()">Match History</button>
-          </div>
-        </div>
-      </div>
+<<<<<<< HEAD
       <!-- /.col-md-4 -->
       <div class="col-md-4 mb-5">
         <div class="card h-100">
@@ -114,22 +123,60 @@
 
       </div>
 
+=======
+>>>>>>> master
     </div>
-    <!-- /.row -->
+    <!-- end of game history div -->
 
-  </div><br><br><br>
+  </div>
+  <!-- /.col-md-4 -->
+
+  <div *ngIf="isAdmin">
+
+    <h2 class="card-title">Admin Controls</h2>
+    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime
+      minus quam molestias corporis quod, ea minima accusamus.</p>
+  </div>
+
+  <!-- admin functions -->
+
+  <div class="card-footer" *ngIf="isAdmin">
+    <hr>
+    <h3>Admin Tools</h3>
+    <button (click)="getAllUsers()">List Users</button>
+    <table *ngIf="allUsers" class="table">
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Enabled</th>
+        <th>Role</th>
+        <th>Profile Image</th>
+        <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
+      </tr>
+      <tr *ngFor="let user1 of allUsers">
+        <td>{{user1.id}}</td>
+        <td>{{user1.username}}</td>
+        <td>{{user1.enabled}}</td>
+        <td>{{user1.role}}</td>
+        <td><input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource"></td>
+        <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+        <td><button (click)="deactivateUser(user1.username)">Disable</button></td>
+
+
+      </tr>
+    </table>
+  </div>
+  <!-- /.row -->
+
+  <br><br><br>
   <!-- /.container -->
-
-  <!-- Footer -->
-  <footer class="container" style="position:fixed; bottom:0; left:0;">
-    <p class="float-right"><a href="#">Back to top</a></p>
-    <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-   </footer>
-
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-</body>
-</html>
+  <footer class="container" style=" bottom:0; left:0;">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  </footer>
+<!-- Footer -->
+</section>

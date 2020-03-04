@@ -24,6 +24,18 @@ public class GameHistory {
 	
 	@Column(name="date_played")
 	private LocalDateTime datePlayed;
+	
+	@Column(name="user_id")
+	private Integer userId;
+	
+	@Column(name="chosen_text")
+	private String chosenText;
+	
+	@Column(name="question_text")
+	private String questionText;
+	
+	@Column(name="answer_text")
+	private String answerText;
 
 	public int getId() {
 		return id;
@@ -55,6 +67,38 @@ public class GameHistory {
 
 	public void setDatePlayed(LocalDateTime datePlayed) {
 		this.datePlayed = datePlayed;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getChosenText() {
+		return chosenText;
+	}
+
+	public void setChosenText(String chosenText) {
+		this.chosenText = chosenText;
+	}
+
+	public String getQuestionText() {
+		return questionText;
+	}
+
+	public void setQuestionText(String questionText) {
+		this.questionText = questionText;
+	}
+
+	public String getAnswerText() {
+		return answerText;
+	}
+
+	public void setAnswerText(String answerText) {
+		this.answerText = answerText;
 	}
 
 }

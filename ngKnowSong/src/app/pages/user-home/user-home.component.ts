@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { GameHistory } from 'src/app/models/game-history';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-user-home',
@@ -12,24 +14,30 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserHomeComponent implements OnInit {
   user = new User();
-  allUsers : any;
+  allUsers: any;
 
+  //displaying match history
+  displayedColumns = ['marks', 'numQuestions', 'datePlayed'];
+  // public gameHistories: GameHistory[] = this.user.gameHistories;
+  dataSource = this.user.gameHistories;
+  //
 
-  loggedUser:User;
+  public isAdmin: boolean;
+  loggedUser: User;
+
   constructor(
     private route: Router,
     private auth: AuthService,
     private usersvc: UserService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
 
     let temp = localStorage.getItem('credentials');
     let username = atob(temp).split(":");
-
     console.log(username[0]);
     this.usersvc.show().subscribe(
-      yes=>{
+      yes => {
         console.log(yes);
         this.user.authToken = yes["authToken"];
         this.user.rankImg = yes["rank"].imgSource;
@@ -37,70 +45,95 @@ export class UserHomeComponent implements OnInit {
         this.user.imgSource = yes["imgSource"];
         this.user.enabled = yes["enabled"];
         this.user.role = yes["role"];
+        if (this.user.role === "admin") {
+          this.isAdmin = true;
+        }
+        this.user.gameHistories = yes["gameHistories"];
         this.usersvc.setUser(this.user);
+        console.log(this.user.gameHistories);
       },
-      no=>{
+      no => {
         console.error("in user home init")
         console.error(no);
       }
     )
 
   }
-  createGame(){
+  createGame() {
     this.route.navigateByUrl('createGame');
   }
-  setUsername(username:string){
+  setUsername(username: string) {
     this.user.username = username;
   }
-  matchHistory(){
-    this.route.navigateByUrl('history');
+
+  //form control for image update
+  public imgFormToggle:boolean;
+  toggleImgForm(){
+    if(this.imgFormToggle == true){
+      this.imgFormToggle = false;
+    } else{
+      this.imgFormToggle = true;
+    }
   }
-  getAllUsers(){
+
+  //
+
+  //-----------
+  //-ADMIN TOOLS
+  //-----------
+  getAllUsers() {
     this.usersvc.getAll().subscribe(
-      yes=>{
+      yes => {
         this.allUsers = yes;
         console.log(yes);
       },
-      no=>{
+      no => {
         console.log(no);
       }
     );
   }
-  deactivateUser(username : string){
+  deactivateUser(username: string) {
     this.usersvc.deleteUser(username).subscribe(
-      yes=>{
+      yes => {
         this.getAllUsers();
         console.log(yes);
       },
-      no=>{
+      no => {
         console.log(no);
         console.log("InDeactivateUser");
       }
     );
   }
 
-  updateUser(){
+
+  updateUser() {
     this.usersvc.updateUser(this.user).subscribe(
-      yes=>{
+      yes => {
         // this.getAllUsers();
         console.log(yes);
 
       },
-      no=>{
+      no => {
         console.log(no);
         console.log("InUpdateUser");
       }
     );
   }
+  dateConvert(date){
+    if(date!=null){
+  date =  date.replace(/T/,' Time:');
+  return date;
+    }
+  }
 
-  adminUpdateUser(username : string, imgSource : string){
+  adminUpdateUser(username: string, imgSource: string) {
     this.usersvc.adminUpdateUser(username, imgSource).subscribe(
-      yes=>{
+      yes => {
         // this.getAllUsers();
         console.log(yes);
 
       },
-      no=>{
+      no => {
         console.log(no);
         console.log("InUpdateUser");
       }

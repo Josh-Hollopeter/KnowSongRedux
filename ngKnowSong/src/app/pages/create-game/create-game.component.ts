@@ -1,3 +1,5 @@
+import { NgForm } from '@angular/forms';
+import { MusixmatchService } from './../../services/musixmatch.service';
 import { Track } from './../../spotifyJSON/models/track';
 import { DataService } from './../../injectable/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -39,10 +41,11 @@ export class CreateGameComponent implements OnInit {
   constructor(
     private stream: SongstreamService,
     private userSvc: UserService,
+    private lyricService: MusixmatchService,
     private aRoute: ActivatedRoute,
     private router: Router,
     private data: DataService
-  ) {}
+  ) { }
 
 
   // M E T H O D S
@@ -50,15 +53,15 @@ export class CreateGameComponent implements OnInit {
   ngOnInit(): void {
     this.checkAuthToken();
     this.keywordModelChangedSubscription = this.keywordModelChanged
-    .pipe(
-      debounceTime(250),
-      distinctUntilChanged()
-    )
-    .subscribe(
-      text => this.searchForArtist(text)
-    );
+      .pipe(
+        debounceTime(350),
+        distinctUntilChanged()
+      )
+      .subscribe(
+        text => this.searchForArtist(text)
+      );
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.keywordModelChangedSubscription.unsubscribe();
   }
 
@@ -66,7 +69,6 @@ export class CreateGameComponent implements OnInit {
     console.log("Logic to check access token unimplemented");
 
   }
-
 
   selectResults() {
     this.data.storage = this.getArtistAlbums(this.searchResult[0]);
@@ -113,7 +115,7 @@ export class CreateGameComponent implements OnInit {
   //-------------------------
   //- Artist Search Methods -
   //-------------------------
-  searchForArtist(keyword:string) {
+  searchForArtist(keyword: string) {
     var authToken = this.authToken;
     this.stream.searchArtist(keyword, authToken).subscribe(
       response => {
@@ -132,7 +134,7 @@ export class CreateGameComponent implements OnInit {
 
           // get name
           var name = item["name"];
-          console.log(item);
+          // console.log(item);
 
           // get image
           if (item["images"].length < 1) {
@@ -174,7 +176,7 @@ export class CreateGameComponent implements OnInit {
           console.log(item);
 
           //only get albums, ignore singles and compilations
-          if(item["album_type"] != 'album'){
+          if (item["album_type"] != 'album') {
             continue;
           }
           var id = item["id"];
@@ -199,13 +201,15 @@ export class CreateGameComponent implements OnInit {
           //push album to arraylist
 
           this.albums.push(album);
-        console.log(this.albums);}
-          var putAlbum = () => {
-            this.data.storage = this.albums;
-            this.router.navigateByUrl('game/')
+          console.log(this.albums);
+        }
+        var putAlbum = () => {
+          console.log("****" + this.albums + "********in create game");
+          this.data.storage = this.albums;
+          this.router.navigateByUrl('game/')
 
         }
-        setTimeout(putAlbum , 1000);
+        setTimeout(putAlbum, 2500);
 
       }
     )
@@ -237,7 +241,7 @@ export class CreateGameComponent implements OnInit {
             id, name, duration, popularity, previewUrl, explicit, null);
 
           tracks.push(track);
-          console.log("In for loop : " + track);
+          // console.log("In for loop : " + track);
 
         }
 
@@ -247,4 +251,53 @@ export class CreateGameComponent implements OnInit {
     return tracks;
   }
 
+
+  //quick test form for getting lyrics for a track
+
+
+  getLyrics(form: NgForm) {
+    console.log("IM GONNA DO IT");
+    var trackName: string = form.value.trackName;
+    var artistName: string = form.value.artistName;
+
+
+    this.lyricService.getLyrics(trackName, artistName).subscribe(
+      response => {
+        console.log(response);
+
+        let message = response["message"];
+        let body = message["body"];
+        //check if no lyrics matched
+        let length = body["length"];
+        if(length == 0){
+          console.log("No lyrics");
+        }
+
+        let lyrics = body["lyrics"];
+        let lyricsBody = lyrics["lyrics_body"];
+        console.log(lyricsBody);
+
+        //regex to get first 7 lines
+        let lyricLines = lyricsBody.split('\n', 10);
+        var finishedLyrics = "";
+        for (let y = 0; y < lyricLines.length; y++) {
+          if(y == 0){
+            finishedLyrics += lyricLines[y];
+          } else{
+            finishedLyrics += "\n";
+            finishedLyrics += lyricLines[y];
+          }
+        }
+        console.log(finishedLyrics);
+
+
+
+
+
+        // tracks[x].lyrics = lyricsBody;
+
+
+      }
+    )
+  }
 }
