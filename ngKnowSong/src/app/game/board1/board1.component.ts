@@ -36,8 +36,7 @@ export class Board1Component implements OnInit {
   year = 2014;
   roundOver: boolean;
   // quizQuestion = new Quizmodel(6, "Release Year", this.singerQuestion, [this.year, this.year +1, this.year +2, this.year -1], this.year )
-  quizlist: Quizmodel[] = [
-  ];
+  quizlist: Quizmodel[] = [];
 
   quizlength: number;
   selectedcategory: Quizmodel[] = [];

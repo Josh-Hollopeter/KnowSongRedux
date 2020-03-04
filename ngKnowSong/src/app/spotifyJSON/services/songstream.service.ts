@@ -1,11 +1,11 @@
-import { Artist } from './../models/artist';
+// import { Artist } from './../models/artist';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/models/user.service';
+// import { AuthService } from 'src/app/services/auth.service';
+// import { UserService } from 'src/app/models/user.service';
 
 @Injectable({
   providedIn: 'root'
