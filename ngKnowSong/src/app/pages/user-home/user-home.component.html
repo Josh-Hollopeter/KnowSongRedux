@@ -9,14 +9,14 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
+        <h1>User: {{user.username}}</h1>
         <div class="row">
           <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
           <div style="margin-left: 15px;">
-            <h1>{{user.username}}</h1>
           </div>
         </div>
         <!-- <p>{{user.gameHistories[0].marks}}</p> -->
-        <button (click)="toggleImgForm()" type="button" class="btn btn-default" aria-label="Left Align">
+        <button (click)="toggleImgForm()" type="button" class="btn btn-primary btn-sm" aria-label="Left Align">
           <span class="glyphicon glyphicon-cog" aria-hidden="false"></span>Edit
         </button><span class="glyphicon glyphicon-cog"></span>
 
@@ -71,10 +71,9 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-      </div>
-<<<<<<< HEAD
+      </div><br><br><br>
       <!-- /.col-md-4 -->
-      <div class="col-md-4 mb-5">
+      <!-- <div class="col-md-4 mb-5">
         <div class="card h-100">
           <div class="card-body">
             <h2 class="card-title">Card Three</h2>
@@ -84,7 +83,7 @@
             <a href="#" class="btn btn-primary btn-sm">More Info</a>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- /.col-md-4 -->
 
       <div  *ngIf = "user.role === 'admin'">
@@ -123,24 +122,22 @@
 
       </div>
 
-=======
->>>>>>> master
     </div>
     <!-- end of game history div -->
 
   </div>
   <!-- /.col-md-4 -->
 
-  <div *ngIf="isAdmin">
+  <!-- <div *ngIf="isAdmin">
 
     <h2 class="card-title">Admin Controls</h2>
     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime
       minus quam molestias corporis quod, ea minima accusamus.</p>
-  </div>
+  </div> -->
 
   <!-- admin functions -->
 
-  <div class="card-footer" *ngIf="isAdmin">
+  <!-- <div class="card-footer" *ngIf="isAdmin">
     <hr>
     <h3>Admin Tools</h3>
     <button (click)="getAllUsers()">List Users</button>
@@ -150,10 +147,10 @@
         <th>Username</th>
         <th>Enabled</th>
         <th>Role</th>
-        <th>Profile Image</th>
+        <th>Profile Image</th> -->
         <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
                 <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
-      </tr>
+      <!-- </tr>
       <tr *ngFor="let user1 of allUsers">
         <td>{{user1.id}}</td>
         <td>{{user1.username}}</td>
@@ -165,8 +162,8 @@
 
 
       </tr>
-    </table>
-  </div>
+    </table> -->
+  <!-- </div> -->
   <!-- /.row -->
 
   <br><br><br>
