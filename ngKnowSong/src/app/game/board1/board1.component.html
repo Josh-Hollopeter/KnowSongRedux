@@ -2,7 +2,7 @@
 
 <!-- Called of font style  file -->
 
-<div *ngIf="!roundOver && quizlist.length > 0" >
+<div *ngIf="!roundOver && quizlist.length > 0">
 
   <div
     style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; height: 100vh; padding-top: 75px; background-size: cover; text-align: center;">
@@ -11,15 +11,18 @@
       <div class="column-container" *ngIf="!selectedvalue" style="text-align: center;">
         <div class="nameClip" *ngIf="categories[0] == 'Name That Clip'">
           <button class="btn btn-success btn-lg btn-block" onmouseover="this.style.color='black'"
-          onmouseout="this.style.color='white'" (click)="selectedvalue='Name That Clip';gettingCategory()">Name That Clip</button><br>
+            onmouseout="this.style.color='white'" (click)="selectedvalue='Name That Clip';gettingCategory()">Name That
+            Clip</button><br>
         </div>
         <div class="knowLyrics">
           <button class="btn btn-success btn-lg btn-block" onmouseover="this.style.color='black'"
-          onmouseout="this.style.color='white'" (click)="selectedvalue='Lyric Match';gettingCategory()">Know Those Lyrics</button><br>
+            onmouseout="this.style.color='white'" (click)="selectedvalue='Lyric Match';gettingCategory()">Know Those
+            Lyrics</button><br>
         </div>
         <div class="guessYear">
           <button class="btn btn-success btn-lg btn-block" onmouseover="this.style.color='black'"
-          onmouseout="this.style.color='white'" (click)="selectedvalue='Release Year';gettingCategory()">Guess That Year</button><br>
+            onmouseout="this.style.color='white'" (click)="selectedvalue='Release Year';gettingCategory()">Guess That
+            Year</button><br>
         </div>
       </div>
     </div>
@@ -33,8 +36,7 @@
       </div>
     </div> -->
     <div *ngIf="selectedvalue" class="bg boxed">
-      <div class="jumbotron"
-        style="background-color: transparent">
+      <div class="jumbotron" style="background-color: transparent; padding-bottom: 0;">
         <ul>
           <h1 *ngIf="selectedvalue">Question: {{answerkey.length+1}}</h1>
           <h2 *ngIf="!playdatclip">
@@ -133,7 +135,7 @@
           <div class="span12 text-center" *ngFor="let opt of option">
 
             <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
-            <button type="submit" (click)="selected = opt" class="btn btn-success btn-lg btn-block" >{{opt}}</button>
+            <button type="submit" (click)="selected = opt" class="btn btn-success btn-lg btn-block" [ngClass]="opt === selected ? 'selected' : ''">{{opt}}</button>
             <!-- <button mat-fab name="opt" (click)="selected = opt" class="text-center"> {{opt}}</button> -->
             <span class="class='col-xs-3'" style="padding: 0.1in;"></span>
             <br *ngIf="playdatclip">
@@ -145,8 +147,9 @@
         <br>
         <!-- <button (click)="previous()"*ngIf="i>0" >previous</button> -->
 
-        <button class="btn btn-info btn-lg" onmouseover="this.style.color='black'"
-        onmouseout="this.style.color='white'" style="background-color:#aa0055; display: block; margin: 0 auto;" (click)="check();next()" *ngIf="i<quizlength">Next</button>
+        <button class="btn btn-info btn-lg" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'"
+          style="background-color:#aa0055; display: block; margin: 0 auto;" (click)="check();next()"
+          *ngIf="i<quizlength">Next</button>
 
       </div>
       <!-- <p *ngIf="selectedvalue" style="text-align: center;">
@@ -161,17 +164,17 @@
 </div>
 <!-- round over break -->
 
-  <!-- <button class="btn btn-info" (click)="submit()">submit</button> -->
-  <!-- <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a> -->
+<!-- <button class="btn btn-info" (click)="submit()">submit</button> -->
+<!-- <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a> -->
 
-<br>
-<br>
-<div *ngIf = "roundOver">
+<!-- <br>
+<br> -->
+<div *ngIf="roundOver">
   <div class="jumbotron"
-  style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; height: 100vh; padding-top: 75px; background-size: cover;">
-  <a routerLink="/createGame"><button class="btn btn-success float-left" > New Game </button></a>
-  <h2 style="text-align: center;">{{artistName}} {{selectedvalue}} Quiz</h2>
-    <table class="table" >
+    style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; height: 100vh; padding-top: 75px; background-size: cover; padding-bottom: 0;">
+    <a routerLink="/createGame"><button class="btn btn-success float-left"> New Game </button></a>
+    <h2 style="text-align: center;">{{artistName}} {{selectedvalue}} Quiz</h2>
+    <table class="table">
       <tr>
         <th>Question Number </th>
         <th>Question</th>
@@ -179,26 +182,21 @@
         <th>Correct </th>
       </tr>
       <tr *ngFor="let answer of answerkey; let i = index">
-          <td>{{i + 1}}</td>
-          <td *ngIf="selectedvalue != 'Name That Clip'">{{answer.question}}</td>
-          <td *ngIf="selectedvalue == 'Name That Clip'"><audio  controls>
+        <td>{{i + 1}}</td>
+        <td *ngIf="selectedvalue != 'Name That Clip'">{{answer.question}}</td>
+        <td *ngIf="selectedvalue == 'Name That Clip'"><audio controls>
             <source src={{answer.question}} type="audio/mpeg">
             Your browser dose not Support the audio Tag
           </audio></td>
-          <td>{{answer.answer}}</td>
-          <td>{{answer.correct}}</td>
+        <td>{{answer.answer}}</td>
+        <td>{{answer.correct}}</td>
       </tr>
-
-
     </table>
-</div>
+  </div>
 </div>
 
 
-<footer class="container" style="position:fixed; bottom:0; left:0;">
-  <p class="float-right"></p>
-  <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
- </footer>
+
 <!-- <div *ngIf="roundOver">
   <p> Your score is => {{marks}}</p>
   <a routerLink="/home"><button class="btn btn-success float-right"> Home </button></a>

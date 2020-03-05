@@ -303,3 +303,7 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
     }
 }
 
+.selected {
+  background-color: #aa0055;
+}
+
