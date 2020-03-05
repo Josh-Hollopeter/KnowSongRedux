@@ -12,6 +12,7 @@ html, body { height: 100%; }
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
+  padding: 0;
 }
 .basic-container {
   padding: 30px;
@@ -20,6 +21,10 @@ body {
 .playlist-container {
   height: 400px;
   overflow: auto;
+}
+
+.jumbotron {
+  margin: 0;
 }
 
 table {

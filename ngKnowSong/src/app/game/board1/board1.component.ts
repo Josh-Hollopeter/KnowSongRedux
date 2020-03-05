@@ -1,3 +1,4 @@
+import { SongstreamService } from './../../spotifyJSON/services/songstream.service';
 import { UserService } from 'src/app/models/user.service';
 import { GameHistory } from './../../models/game-history';
 import { NgForm } from '@angular/forms';
@@ -36,10 +37,14 @@ export class Board1Component implements OnInit {
     private aroute: ActivatedRoute,
     private data: DataService,
     private userSvc: UserService,
-    private lyricService: MusixmatchService
+    private spotifySvc: SongstreamService,
+    public lyricService: MusixmatchService
   ) { }
 
   ngOnInit(): void {
+    if(!this.data.storage){
+      this.router.navigateByUrl('createGame');
+    }
     var artists = this.aroute.snapshot.paramMap.get("artists");
     this.questionBuilder();
   }
@@ -78,35 +83,39 @@ export class Board1Component implements OnInit {
       this.artistName = singer;
       let singerQuestion = "What year was " + singer + " album " + element.name + " released?";
       var year = parseInt(element.releaseDate);
-      var years = [year -3 , year - 1, year + 1, year];
+      var years = [year - 3, year - 1, year + 1, year];
       years = this.shuffle(years);
-      if(this.quizlist.length <= 5){
+      if (this.quizlist.length <= 5) {
         this.quizlist.push({ ID: j, category: "Release Year", question: singerQuestion, anslistobj: years, answer: year });
-       this.quizlist=  this.removeDuplicates(this.quizlist,"question");
+        this.quizlist = this.removeDuplicates(this.quizlist, "question");
       }
       if (element.tracks) {
         this.trackNames = this.trackNames.concat(element.tracks);
         this.trackNames = this.shuffle(this.trackNames);
       }
     });
-     this.quizlist = this.quizlist.filter(function(elem, index, self) {
+    this.quizlist = this.quizlist.filter(function (elem, index, self) {
       return index === self.indexOf(elem);
-  })
-    this.getLyricsFromMixer();
+    })
     this.makeDatClipBuilder();
+    this.getLyricsFromMixer();
+
 
   }
   removeDuplicates(myArr, prop) {
     return myArr.filter((obj, pos, arr) => {
-        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+      return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
     });
-}
+  }
 
   makeDatClipBuilder() {
     var ansArray = Object.assign([], this.trackNames);
     let count = 0;
     let questionCounter = 0;
     for (let i = 0; i < this.trackNames.length; i++) {
+      //remove duplicate from answer array and other
+      this.trackNames = this.removeDuplicates(this.trackNames, "name");
+      ansArray = this.removeDuplicates(ansArray, "name");
       let track = ansArray.pop();
       if (!track.previewUrl) {
         count++
@@ -119,7 +128,6 @@ export class Board1Component implements OnInit {
       if (questionCounter == 7) {
         break;
       }
-      console.log("in builder " + track.previewUrl);
       this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
       this.quizlist.push({ ID: 0, category: "Name That Clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
 
@@ -139,24 +147,18 @@ export class Board1Component implements OnInit {
   //--------------------
 
   gettingCategory() {
-      console.log("__________________________________________")
     if (this.selectedvalue === "Name That Clip") {
       this.playdatclip = true;
     } else {
       this.playdatclip = false;
-    }if(this.selectedvalue === 'Lyric Match'){
-      console.log("+++++++++++++++++++++++++++++++++")
-
-
+    } if (this.selectedvalue === 'Lyric Match') {
     }
 
     this.selectedCategories = this.quizlist.filter(d => (d.category == this.selectedvalue));
-    if(this.selectedCategories.length === 0){
+    if (this.selectedCategories.length === 0) {
       this.router.navigateByUrl("createGame");
-      }
+    }
 
-    console.log("*********************************");
-    console.log(this.selectedCategories);
     this.i = 0;
     this.question = this.selectedCategories[this.i].question;
     this.option = this.selectedCategories[this.i].anslistobj;
@@ -165,22 +167,21 @@ export class Board1Component implements OnInit {
 
   next() {
     if (this.i < this.selectedCategories.length - 1) {
+      this.selected = null;
       ++this.i;
     }
     if (this.i === this.selectedCategories.length - 1) {
       this.roundOver = true;
       this.gameHistory.marks = this.marks;
-      this.gameHistory.numQuestions = this.selectedCategories.length-1;
-      for(var i =0;i < this.answerkey.length; i ++){
-      this.gameHistory.chosenText += this.answerkey[i].chosen + "!!@";
-      this.gameHistory.answerText += this.answerkey[i].answer + "!!@";;
-      this.gameHistory.questionText += this.answerkey[i].question + "!!@";;
+      this.gameHistory.numQuestions = this.selectedCategories.length - 1;
+      for (var i = 0; i < this.answerkey.length; i++) {
+        this.gameHistory.chosenText += this.answerkey[i].chosen + "!!@";
+        this.gameHistory.answerText += this.answerkey[i].answer + "!!@";;
+        this.gameHistory.questionText += this.answerkey[i].question + "!!@";;
       }
       let user = new User();
       user.gameHistory = this.gameHistory;
       this.userSvc.updateUser(user).subscribe();
-      console.log(this.answerkey);
-      console.log(this.gameHistory);
 
     }
     this.question = this.selectedCategories[this.i].question;
@@ -233,34 +234,92 @@ export class Board1Component implements OnInit {
   //-----------
 
   getLyricsFromMixer() {
-    //get ALL TRACKS FROM ARTIST
+    //get 100 tracks from shuffled track list
 
-    //MUST SHUFFLE THIS LIST
+    var test: Track[] = this.trackNames;
+    var hundredTracks = test.slice(0, 100); //100 max , works with less tracks
+
 
     //GET FIRST 7 SONGS FROM SHUFFLED LIST
-    var tracks: Track[] = this.trackNames.splice(0,6);
+    // var tracks: Track[] = this.trackNames.splice(0,6);
 
     //get tracks array and apply track.lyrics to each track model
-    var nullLyricCounter = 0;
+    // var nullLyricCounter = 0;
 
-    for (let x = 0; x < tracks.length; x++) {
+    // for (let x = 0; x < tracks.length; x++) {
+
+    //get spotify ID of songs
+    var commaSeperatedTrackIds = "";
+    for (let x = 0; x < hundredTracks.length; x++) {
+      if (x == hundredTracks.length - 1) {
+        // last track no comma
+        commaSeperatedTrackIds += hundredTracks[x].id;
+      } else {
+        commaSeperatedTrackIds += hundredTracks[x].id + ",";
+      }
+    }
+
+    //GET audio features from spotify api
+    this.spotifySvc.getAudioFeaturesTracks(commaSeperatedTrackIds, localStorage.getItem('AccessToken')).subscribe(
+      response => {
+        var featuresArray = response["audio_features"];
+        console.log(featuresArray);
+
+        for (let x = hundredTracks.length - 1; x >= 0; --x) {
+          let item = featuresArray[x];
+          let lyrical = item["speechiness"];
+          if (lyrical < .15) {
+            //remove all tracks that are probably instrumental
+            hundredTracks.splice(x, 1)
+          }
 
 
-      var trackName: string = tracks[x].name;
-      var artistName: string = this.artistName;  //possibly pulling multiple artist names
+        }
+      }
+    )
+
+
+    //   var trackName: string = tracks[x].name;
+    //   var artistName: string = this.artistName;  //possibly pulling multiple artist names
+
+      // this.lyricService.getLyrics(trackName, artistName).subscribe(
+      //   response => {
+      //     console.log("LYRICS" + response);
+      //     let message = response["message"];
+      //     let body = message["body"];
+
+          // check if the lyrics are not available
+          // let length = body["length"];
+          // if (length == 0) {
+          //   nullLyricCounter++;
+          //   console.log("return not working")
+          //   return; // go to next song (top of for loop)
+
+    //get tracks array and apply track.lyrics to each track model
+    //generate 5 questions for  now
+    // setTimeout(function () {
+    var tracks = hundredTracks;
+    //choose 5 tracks
+    var lyricsToQuizOn = tracks.slice(0, 5);
+    console.log(lyricsToQuizOn);
+
+    for (let x = 0; x < lyricsToQuizOn.length; x++) {
+      //get name and artist to pass to lyric matcher api
+      var trackName: string = lyricsToQuizOn[x].name;
+      var artistName: string = this.artistName;  //possibly pulling multiple artist names fixed by using this artist name not track.album.artist.name
 
       this.lyricService.getLyrics(trackName, artistName).subscribe(
         response => {
-          console.log("LYRICS" + response);
+          console.log(response);
           let message = response["message"];
           let body = message["body"];
 
-          // check if the lyrics are not available
+          // check if the lyrics are not available  *Deprecated
           let length = body["length"];
           if (length == 0) {
-            nullLyricCounter++;
             console.log("return not working")
             return; // go to next song (top of for loop)
+
             //get a new song
           }
           else {
@@ -270,23 +329,26 @@ export class Board1Component implements OnInit {
             let lyricsBody = lyrics["lyrics_body"];
 
             //regex to get first 7 lines
+
             let lyricLines = lyricsBody.split('\n', 10);
             var finishedLyrics = "";
             for (let y = 0; y < lyricLines.length; y++) {
-              if (y == 0) {
-                finishedLyrics += lyricLines[y];
-              } else {
-                finishedLyrics += "\n";
-                finishedLyrics += lyricLines[y];
+              if (!lyricLines[y].includes("**")) {
+                if (y == 0) {
+                  finishedLyrics += lyricLines[y];
+                } else {
+                  finishedLyrics += "\n";
+                  finishedLyrics += lyricLines[y];
+                }
               }
             }
             //put lyrics into corresponding track on the array
-            let answers =[this.trackNames[0].name,this.trackNames[1].name,this.trackNames[2].name,trackName];
+            let answers = [this.trackNames[0].name, this.trackNames[1].name, this.trackNames[2].name, trackName];
             this.shuffle(answers);
-            if(!finishedLyrics){
+            if (!finishedLyrics) {
               return;
             }
-            this.quizlist.push({ ID: 0, category: "Lyric Match", question: finishedLyrics, anslistobj:answers , answer: trackName });
+            this.quizlist.push({ ID: 0, category: "Lyric Match", question: finishedLyrics, anslistobj: answers, answer: trackName });
             this.shuffle(this.trackNames);
             console.log("*******************************************")
             console.log(this.quizlist)
@@ -297,6 +359,8 @@ export class Board1Component implements OnInit {
         }
       )
     }//end for loop
+    // }, 750);
+
 
 
   }

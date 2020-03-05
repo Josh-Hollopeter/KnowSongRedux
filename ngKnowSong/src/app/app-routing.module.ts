@@ -14,7 +14,7 @@ import { CreateGameComponent } from './pages/create-game/create-game.component';
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'index'},
+  // {path: '', pathMatch: 'full', redirectTo: 'index'},
   {path: 'index', component: IndexComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},

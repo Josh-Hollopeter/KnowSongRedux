@@ -138,6 +138,26 @@ export class SongstreamService {
   }
 
 
+  getAudioFeaturesTracks(csv: string, authToken: string){
+    let url = "https://api.spotify.com/v1/audio-features/?ids=" + csv;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${authToken}`,
+        // 'Accept': 'text/plain'
+      })
+    };
+
+    return this.http.get(url, httpOptions).pipe(
+      tap((res) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('could not get tracks from album');
+      })
+    )
+  }
 
 }
 

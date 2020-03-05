@@ -21,6 +21,7 @@ export class CallbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     //get credentials from URL Parameters
     console.log("incllback");
     this.urlRouter.queryParams.subscribe(params => {

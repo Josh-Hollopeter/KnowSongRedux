@@ -9,14 +9,14 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
+        <h1>User : {{user.username}}</h1>
         <div class="row">
           <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.imgSource}}" alt="" width="160" height="160">
           <div style="margin-left: 15px;">
-            <h1>{{user.username}}</h1>
           </div>
-        </div>
+        </div><br>
         <!-- <p>{{user.gameHistories[0].marks}}</p> -->
-        <button (click)="toggleImgForm()" type="button" class="btn btn-default" aria-label="Left Align">
+        <button (click)="toggleImgForm()" type="button" class="btn btn-primary btn-sm" aria-label="Left Align">
           <span class="glyphicon glyphicon-cog" aria-hidden="false"></span>Edit
         </button><span class="glyphicon glyphicon-cog"></span>
 
@@ -39,20 +39,20 @@
     <!-- /.row -->
 
     <!-- Achievements -->
-    <hr>
+    <!-- <hr>
     <div class="card text-white bg-secondary my-5 py-4 text-center">
       <div class="card-body">
         <p class="text-white m-0">
           <img class="img-fluid rounded mb-4 mb-lg-0" src="{{user.rankImg}}" alt="" width="100" height="100">
           Achievements == Rank, display photos here that can be unlocked</p>
       </div>
-    </div>
+    </div> -->
 
     <hr>
-    <div id="gameHistory">
-      Game History
+    <div id="gameHistory" *ngIf="this.user.gameHistories">
+      <h3 style="align-content: center;">Game History</h3>
       <div id="playlist-container" class="playlist-container mat-elevation-z8">
-        <table mat-table #table [dataSource]="this.user.gameHistories">
+        <table mat-sort-asc mat-table #table [dataSource]="this.user.gameHistories">
 
           <ng-container matColumnDef="marks">
             <th mat-header-cell *matHeaderCellDef> Correct Answers </th>
@@ -71,23 +71,73 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+      </div><br><br><br>
+      <!-- /.col-md-4 -->
+      <!-- <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Three</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div> -->
+      <!-- /.col-md-4 -->
+
+      <div *ngIf="isAdmin">
+
+            <h2 class="card-title">Admin Controls</h2>
+            <p class="card-text">Update user profile picture and disable user account.</p>
+          </div>
+          <div class="card-footer" *ngIf="isAdmin">
+
+            <button class="card" (click)="getAllUsers()">List Users</button>
+            <table *ngIf="allUsers" class="table">
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Enabled</th>
+                <th>Role</th>
+                <th>Profile Image</th>
+                <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
+              </tr>
+              <tr *ngFor="let user1 of allUsers">
+                <td>{{user1.id}}</td>
+                <td>{{user1.username}}</td>
+                <td>{{user1.enabled}}</td>
+                <td>{{user1.role}}</td>
+                <td><input ngModel type="text" name="imgSource" [(ngModel)]="user1.imgSource"></td>
+                <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
+                <td><button (click)="deactivateUser(user1.username)">Disable</button></td>
+
+
+              </tr>
+            </table>
+
+
+
+
       </div>
+
     </div>
     <!-- end of game history div -->
 
   </div>
   <!-- /.col-md-4 -->
 
-  <div *ngIf="isAdmin">
+  <!-- <div *ngIf="isAdmin">
 
     <h2 class="card-title">Admin Controls</h2>
     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime
       minus quam molestias corporis quod, ea minima accusamus.</p>
-  </div>
+  </div> -->
 
   <!-- admin functions -->
 
-  <div class="card-footer" *ngIf="isAdmin">
+  <!-- <div class="card-footer" *ngIf="isAdmin">
     <hr>
     <h3>Admin Tools</h3>
     <button (click)="getAllUsers()">List Users</button>
@@ -97,10 +147,10 @@
         <th>Username</th>
         <th>Enabled</th>
         <th>Role</th>
-        <th>Profile Image</th>
+        <th>Profile Image</th> -->
         <!-- <td><button (click)="adminUpdateUser(user1.username, user1.imgSource)">Update</button></td>
                 <td><button (click)="deactivateUser(user1.username)">Disable</button></td> -->
-      </tr>
+      <!-- </tr>
       <tr *ngFor="let user1 of allUsers">
         <td>{{user1.id}}</td>
         <td>{{user1.username}}</td>
@@ -112,8 +162,8 @@
 
 
       </tr>
-    </table>
-  </div>
+    </table> -->
+  <!-- </div> -->
   <!-- /.row -->
 
   <br><br><br>
@@ -121,9 +171,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <footer class="container" style=" bottom:0; left:0;">
-    <p class="float-right"><a href="#">Back to top</a></p>
+  <!-- <footer class="container" style=" bottom:0; left:0;">
+    <p class="float-right"></p>
     <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
-  </footer>
+  </footer> -->
 <!-- Footer -->
 </section>
