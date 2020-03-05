@@ -14,7 +14,7 @@ import { CreateGameComponent } from './pages/create-game/create-game.component';
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'index'},
+  // {path: '', pathMatch: 'full', redirectTo: 'index'},
   {path: 'index', component: IndexComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -31,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash: true})],
+  imports: [RouterModule.forRoot(routes,{useHash: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
