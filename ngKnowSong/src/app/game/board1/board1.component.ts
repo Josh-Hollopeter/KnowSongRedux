@@ -241,6 +241,14 @@ export class Board1Component implements OnInit {
     var hundredTracks = test.slice(0, 100); //100 max , works with less tracks
 
 
+    //GET FIRST 7 SONGS FROM SHUFFLED LIST
+    // var tracks: Track[] = this.trackNames.splice(0,6);
+
+    //get tracks array and apply track.lyrics to each track model
+    // var nullLyricCounter = 0;
+
+    // for (let x = 0; x < tracks.length; x++) {
+
     //get spotify ID of songs
     var commaSeperatedTrackIds = "";
     for (let x = 0; x < hundredTracks.length; x++) {
@@ -266,9 +274,27 @@ export class Board1Component implements OnInit {
             hundredTracks.splice(x, 1)
           }
 
+
         }
       }
     )
+
+
+    //   var trackName: string = tracks[x].name;
+    //   var artistName: string = this.artistName;  //possibly pulling multiple artist names
+
+      // this.lyricService.getLyrics(trackName, artistName).subscribe(
+      //   response => {
+      //     console.log("LYRICS" + response);
+      //     let message = response["message"];
+      //     let body = message["body"];
+
+          // check if the lyrics are not available
+          // let length = body["length"];
+          // if (length == 0) {
+          //   nullLyricCounter++;
+          //   console.log("return not working")
+          //   return; // go to next song (top of for loop)
 
     //get tracks array and apply track.lyrics to each track model
     //generate 5 questions for  now
@@ -294,15 +320,45 @@ export class Board1Component implements OnInit {
           if (length == 0) {
             console.log("return not working")
             return; // go to next song (top of for loop)
+
             //get a new song
-          }
-          else {
-            let message = response["message"];
-            let body = message["body"];
-            let lyrics = body["lyrics"];
-            let lyricsBody = lyrics["lyrics_body"];
+          // }
+          // else {
+          //   let message = response["message"];
+          //   let body = message["body"];
+          //   let lyrics = body["lyrics"];
+          //   let lyricsBody = lyrics["lyrics_body"];
 
             //regex to get first 7 lines
+
+            // let lyricLines = lyricsBody.split('\n', 10);
+            // var finishedLyrics = "";
+            // for (let y = 0; y < lyricLines.length; y++) {
+            //   if (y == 0) {
+            //     finishedLyrics += lyricLines[y];
+            //   } else {
+            //     finishedLyrics += "\n";
+            //     finishedLyrics += lyricLines[y];
+            //   }
+            // }
+            //put lyrics into corresponding track on the array
+      //       let answers =[this.trackNames[0].name,this.trackNames[1].name,this.trackNames[2].name,trackName];
+      //       this.shuffle(answers);
+      //       if(!finishedLyrics){
+      //         return;
+      //       }
+      //       this.quizlist.push({ ID: 0, category: "Lyric Match", question: finishedLyrics, anslistobj:answers , answer: trackName });
+      //       this.shuffle(this.trackNames);
+      //       console.log("*******************************************")
+      //       console.log(this.quizlist)
+      //       tracks[x].lyrics = finishedLyrics;
+      //       console.log(finishedLyrics);
+      //     }
+
+      //   }
+      // )
+    // }//end for loop
+
             let lyricLines = lyricsBody.split('\n', 10);
             var finishedLyrics = "";
             for (let y = 0; y < lyricLines.length; y++) {
@@ -333,6 +389,7 @@ export class Board1Component implements OnInit {
       )
     }//end for loop
     // }, 750);
+
 
 
   }
