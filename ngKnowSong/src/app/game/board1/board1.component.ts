@@ -92,8 +92,8 @@ export class Board1Component implements OnInit {
      this.quizlist = this.quizlist.filter(function(elem, index, self) {
       return index === self.indexOf(elem);
   })
-    this.makeDatClipBuilder();
     this.getLyricsFromMixer();
+    this.makeDatClipBuilder();
 
   }
   removeDuplicates(myArr, prop) {
