@@ -97,13 +97,20 @@ export class Board1Component implements OnInit {
     this.quizlist = this.quizlist.filter(function (elem, index, self) {
       return index === self.indexOf(elem);
     })
+
+    for(let i =0 ; i < this.trackNames.length; i ++){
+      this.trackNames= this.removeDuplicates(this.trackNames,"name");
+    }
     this.makeDatClipBuilder();
     this.getLyricsFromMixer();
 
 
   }
+
+
+
   removeDuplicates(myArr, prop) {
-    return myArr.filter((obj, pos, arr) => {
+      return myArr.filter((obj, pos, arr) => {
       return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
     });
   }
@@ -129,17 +136,15 @@ export class Board1Component implements OnInit {
         break;
       }
       this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
+      this.trackAnswers = this.shuffle(this.trackAnswers);
       this.quizlist.push({ ID: 0, category: "Name That Clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
 
-      this.trackAnswers = this.shuffle(this.trackAnswers);
       this.trackNames = this.shuffle(this.trackNames);
 
     }
   }
   getQuestion() {
     document.getElementById("my-audio").setAttribute('src', this.question);
-    console.log("in get question" + this.question);
-    console.log(this.selectedCategories)
     return this.question;
   }
 
@@ -239,16 +244,6 @@ export class Board1Component implements OnInit {
     var test: Track[] = this.trackNames;
     var hundredTracks = test.slice(0, 100); //100 max , works with less tracks
 
-
-    //GET FIRST 7 SONGS FROM SHUFFLED LIST
-    // var tracks: Track[] = this.trackNames.splice(0,6);
-
-    //get tracks array and apply track.lyrics to each track model
-    // var nullLyricCounter = 0;
-
-    // for (let x = 0; x < tracks.length; x++) {
-
-    //get spotify ID of songs
     var commaSeperatedTrackIds = "";
     for (let x = 0; x < hundredTracks.length; x++) {
       if (x == hundredTracks.length - 1) {
@@ -263,7 +258,6 @@ export class Board1Component implements OnInit {
     this.spotifySvc.getAudioFeaturesTracks(commaSeperatedTrackIds, localStorage.getItem('AccessToken')).subscribe(
       response => {
         var featuresArray = response["audio_features"];
-        console.log(featuresArray);
 
         for (let x = hundredTracks.length - 1; x >= 0; --x) {
           let item = featuresArray[x];
@@ -278,30 +272,10 @@ export class Board1Component implements OnInit {
       }
     )
 
-
-    //   var trackName: string = tracks[x].name;
-    //   var artistName: string = this.artistName;  //possibly pulling multiple artist names
-
-      // this.lyricService.getLyrics(trackName, artistName).subscribe(
-      //   response => {
-      //     console.log("LYRICS" + response);
-      //     let message = response["message"];
-      //     let body = message["body"];
-
-          // check if the lyrics are not available
-          // let length = body["length"];
-          // if (length == 0) {
-          //   nullLyricCounter++;
-          //   console.log("return not working")
-          //   return; // go to next song (top of for loop)
-
-    //get tracks array and apply track.lyrics to each track model
-    //generate 5 questions for  now
-    // setTimeout(function () {
     var tracks = hundredTracks;
     //choose 5 tracks
     var lyricsToQuizOn = tracks.slice(0, 5);
-    console.log(lyricsToQuizOn);
+
 
     for (let x = 0; x < lyricsToQuizOn.length; x++) {
       //get name and artist to pass to lyric matcher api
@@ -310,14 +284,12 @@ export class Board1Component implements OnInit {
 
       this.lyricService.getLyrics(trackName, artistName).subscribe(
         response => {
-          console.log(response);
           let message = response["message"];
           let body = message["body"];
 
           // check if the lyrics are not available  *Deprecated
           let length = body["length"];
           if (length == 0) {
-            console.log("return not working")
             return; // go to next song (top of for loop)
 
             //get a new song
@@ -350,10 +322,7 @@ export class Board1Component implements OnInit {
             }
             this.quizlist.push({ ID: 0, category: "Lyric Match", question: finishedLyrics, anslistobj: answers, answer: trackName });
             this.shuffle(this.trackNames);
-            console.log("*******************************************")
-            console.log(this.quizlist)
             tracks[x].lyrics = finishedLyrics;
-            console.log(finishedLyrics);
           }
 
         }

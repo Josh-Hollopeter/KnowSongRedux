@@ -36,7 +36,6 @@ export class CallbackComponent implements OnInit {
     this.auth.authorizeUser(this.code, this.state).subscribe(
       good => {
         console.log(good)
-        setTimeout(this.goHome,1000);
 
       },
       err => {
@@ -45,7 +44,5 @@ export class CallbackComponent implements OnInit {
     );
   }
 
-  goHome(){
-    this.route.navigateByUrl('#home')
-  }
+
 }

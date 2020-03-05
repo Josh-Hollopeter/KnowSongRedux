@@ -45,15 +45,16 @@
 
           <div class="row-fluid">
             <div class="span12 text-center">
+
               <ng-container *ngIf="playdatclip">
 
                 <h2>Guess the Track!</h2>
                 <div class="container-audio">
-                  <audio id="my-audio" controls autoplay>
+                  <audio id="my-audio" controls >
                     <source src={{getQuestion()}} type="audio/mpeg">
-                    Your browser dose not Support the audio Tag
-                  </audio>
-                </div>
+                      Your browser dose not Support the audio Tag
+                    </audio>
+                  </div>
                 <div class="container-audio">
                   <div class="colum1">
                     <div class="row"></div>
