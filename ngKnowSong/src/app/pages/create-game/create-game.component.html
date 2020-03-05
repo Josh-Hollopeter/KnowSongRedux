@@ -3,11 +3,11 @@
 
   <div style="text-align: center;">
     <h1>Create a Trivia Game</h1>
-  <p>Choose an artist to test your knowledge!</p>
+  <p>Choose an artist to test your knowledge!</p><br>
 </div>
-  <div id="findArtist">
+  <div class="card-block row justify-content-center" id="findArtist">
     <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
-      class="form-control" placeholder="Search for artist....." /><br>
+      class="form-control col-sm-8" placeholder="Search for artist....." /><br>
   </div>
 
   <div *ngIf="searchResult">

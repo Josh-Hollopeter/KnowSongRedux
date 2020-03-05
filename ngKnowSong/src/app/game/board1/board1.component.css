@@ -1,4 +1,3 @@
-
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -19,9 +18,14 @@
   } */
 
   /* @media only screen and (max-width:) */
-  .boxed {
-    border: 1px solid green ;
-  }
+  /* .boxed {
+    border: 1px solid grey ;
+  } */
+  .btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: black;
+}
   * {
     font-family: 'Allerta', arial, Tahoma;
     box-sizing: border-box;
