@@ -50,9 +50,9 @@
 
     <hr>
     <div id="gameHistory">
-      Game History
+      <h3>Game History</h3>
       <div id="playlist-container" class="playlist-container mat-elevation-z8">
-        <table mat-table #table [dataSource]="this.user.gameHistories">
+        <table mat-sort-asc mat-table #table [dataSource]="this.user.gameHistories">
 
           <ng-container matColumnDef="marks">
             <th mat-header-cell *matHeaderCellDef> Correct Answers </th>
