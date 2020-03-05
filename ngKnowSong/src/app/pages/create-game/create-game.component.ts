@@ -256,7 +256,6 @@ export class CreateGameComponent implements OnInit {
 
 
   getLyrics(form: NgForm) {
-    console.log("IM GONNA DO IT");
     var trackName: string = form.value.trackName;
     var artistName: string = form.value.artistName;
 

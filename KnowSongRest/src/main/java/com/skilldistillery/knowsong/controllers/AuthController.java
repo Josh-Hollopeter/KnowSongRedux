@@ -62,8 +62,12 @@ public class AuthController {
 	// ------------------------------------------
 	private static final String clientId = "a2398fd3acd54cf8b645af6884251a55";
 	private static final String clientSecret = "e8c8ceef3b064187ada929c80caaca17";
-	private static final URI redirectUri = SpotifyHttpManager.makeUri("https://joshhollopeter.com/KnowSongRest/#/callback");
-	private static final String scope = "user-read-private user-read-email";
+	private static final URI redirectUri = SpotifyHttpManager.makeUri("https://joshhollopeter.com/KnowSongRest/callback");
+	
+
+//	"https://joshhollopeter.com/KnowSongRest/callback"
+	private static final String scope = "";
+
 
 	// STEP 1 : GET AUTHORIZED BROH
 
@@ -78,7 +82,7 @@ public class AuthController {
 		this.stateKey = state;
 		System.out.println("local state" + state);
 		System.out.println("global state: " +this.stateKey);
-		authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().scope(scope).show_dialog(true).state(state)
+		authorizationCodeUriRequest = spotifyApi.authorizationCodeUri().scope("").show_dialog(true).state(state)
 				.build();
 		final URI uri = authorizationCodeUriRequest.execute();
 		System.out.println("URI : " + uri.toString());
@@ -114,6 +118,7 @@ public class AuthController {
 				          .build();
 				final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
 				User user = authService.findUser(username);
+				System.err.println(user+"(((((((((((((((((((((((((((((((((((((((((((((");
 				spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
 				spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
 				user.setAuthToken(spotifyApi.getAccessToken());

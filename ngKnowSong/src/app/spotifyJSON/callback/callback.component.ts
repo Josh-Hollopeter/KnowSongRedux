@@ -21,10 +21,13 @@ export class CallbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     //get credentials from URL Parameters
+    console.log("incllback");
     this.urlRouter.queryParams.subscribe(params => {
       this.code = params['code'];
       this.state = params['state'];
+      console.log(params);
     })
     this.authorizeUser();
   }
@@ -33,12 +36,13 @@ export class CallbackComponent implements OnInit {
     this.auth.authorizeUser(this.code, this.state).subscribe(
       good => {
         console.log(good)
-        this.route.navigateByUrl('home');
+
       },
       err => {
         console.log(err);
       }
     );
   }
+
 
 }

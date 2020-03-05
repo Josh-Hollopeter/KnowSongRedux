@@ -14,7 +14,7 @@ import { CreateGameComponent } from './pages/create-game/create-game.component';
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: 'index'},
+  // {path: '', pathMatch: 'full', redirectTo: 'index'},
   {path: 'index', component: IndexComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -26,12 +26,13 @@ const routes: Routes = [
   {path: 'history', component: MatchHistoryComponent},
   {path: 'authorize', component: AuthorizeComponent},
   {path: 'callback', component: CallbackComponent},
+  {path: 'callback/:code/:state', component: CallbackComponent},
   {path: 'createGame', component: CreateGameComponent},
   {path: '**', component: IndexComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash: true})],
+  imports: [RouterModule.forRoot(routes,{useHash: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

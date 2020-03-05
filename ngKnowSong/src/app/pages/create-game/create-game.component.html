@@ -1,39 +1,20 @@
-<<<<<<< HEAD
-<h1>Create a Trivia Game</h1>
-<hr>
-<body class="jumbotron" style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover;">
-
-<div id="findArtist">
-  Search for Artist
-  <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)' class="form-control"
-    placeholder="Search for artist....." /><br>
-</div>
-
-<div *ngIf="searchResult">
-  <div class="card-block row">
-    <div class="card col-sm-1.5" *ngFor="let result of searchResult; let i = index"
-  style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'" onmouseout="this.style.color='white'" (click)="getArtistAlbums(result)">
-      <div class="card-block">
-        <div class="search-res well">
-          <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
-          <h4 style="text-align: center;"><a >{{result.name}}</a></h4>
-          <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
-=======
 <div class="body"
   style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat;  background-position: center center; background-attachment: fixed; background-size: cover; height: 100vh; padding-top:75px;">
-  <h1>Create a Trivia Game</h1>
-  <p>Choose an artist to test your knowledge!</p>
-  <div id="findArtist">
+
+  <div style="text-align: center;">
+    <h1>Create a Trivia Game</h1>
+  <h3>Choose an artist to test your knowledge!</h3><br>
+</div>
+  <div class="card-block row justify-content-center" id="findArtist">
     <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
-      class="form-control" placeholder="Search for artist....." /><br>
+      class="form-control col-sm-8" placeholder="Search for artist....." /><br>
   </div>
->>>>>>> master
 
   <div *ngIf="searchResult">
-    <div class="card-block row">
+    <div class="card-block row justify-content-center">
       <div class="card col-sm-1.5" *ngFor="let result of searchResult; let i = index"
         style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'"
-        onmouseout="this.style.color='white'" (click)="getArtistAlbums(result)">
+        onmouseout="this.style.color='black'" (click)="getArtistAlbums(result)">
         <div class="card-block">
           <div class="search-res well">
             <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
@@ -72,15 +53,6 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-<<<<<<< HEAD
-</div></body>
-<hr>
-<footer class="container" style="position:fixed; bottom:0; left:0;">
-  <p class="float-right"></p>
-  <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
- </footer>
-
-=======
 -->
 <!--
   <form #lyricForm="ngForm" (submit)="getLyrics(lyricForm)">
@@ -90,4 +62,9 @@
 </form>
 </div>
  -->
->>>>>>> master
+
+ <!-- <footer class="container" style=" bottom:0; left:0;">
+  <p class="float-right"><a href="#">Back to top</a></p>
+  <p>Est. 2020 Know Song · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+</footer> -->
+
