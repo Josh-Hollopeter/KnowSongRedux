@@ -322,42 +322,14 @@ export class Board1Component implements OnInit {
             return; // go to next song (top of for loop)
 
             //get a new song
-          // }
-          // else {
-          //   let message = response["message"];
-          //   let body = message["body"];
-          //   let lyrics = body["lyrics"];
-          //   let lyricsBody = lyrics["lyrics_body"];
+          }
+          else {
+            let message = response["message"];
+            let body = message["body"];
+            let lyrics = body["lyrics"];
+            let lyricsBody = lyrics["lyrics_body"];
 
             //regex to get first 7 lines
-
-            // let lyricLines = lyricsBody.split('\n', 10);
-            // var finishedLyrics = "";
-            // for (let y = 0; y < lyricLines.length; y++) {
-            //   if (y == 0) {
-            //     finishedLyrics += lyricLines[y];
-            //   } else {
-            //     finishedLyrics += "\n";
-            //     finishedLyrics += lyricLines[y];
-            //   }
-            // }
-            //put lyrics into corresponding track on the array
-      //       let answers =[this.trackNames[0].name,this.trackNames[1].name,this.trackNames[2].name,trackName];
-      //       this.shuffle(answers);
-      //       if(!finishedLyrics){
-      //         return;
-      //       }
-      //       this.quizlist.push({ ID: 0, category: "Lyric Match", question: finishedLyrics, anslistobj:answers , answer: trackName });
-      //       this.shuffle(this.trackNames);
-      //       console.log("*******************************************")
-      //       console.log(this.quizlist)
-      //       tracks[x].lyrics = finishedLyrics;
-      //       console.log(finishedLyrics);
-      //     }
-
-      //   }
-      // )
-    // }//end for loop
 
             let lyricLines = lyricsBody.split('\n', 10);
             var finishedLyrics = "";

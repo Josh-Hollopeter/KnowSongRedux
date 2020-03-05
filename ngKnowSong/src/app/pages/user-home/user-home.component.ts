@@ -49,8 +49,9 @@ export class UserHomeComponent implements OnInit {
           this.isAdmin = true;
         }
         this.user.gameHistories = yes["gameHistories"];
+        this.user.gameHistories.reverse();
         this.usersvc.setUser(this.user);
-        console.log(this.user.gameHistories);
+
       },
       no => {
         console.error("in user home init")

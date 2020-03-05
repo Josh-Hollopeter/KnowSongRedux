@@ -49,11 +49,15 @@
     </div>
 
     <hr>
-    <div id="gameHistory">
-      Game History
+    <div id="gameHistory" *ngIf="this.user.gameHistories">
+      <h3 style="align-content: center;">Game History</h3>
       <div id="playlist-container" class="playlist-container mat-elevation-z8">
         <table mat-table #table [dataSource]="this.user.gameHistories">
 
+          <ng-container matColumnDef="gameType">
+            <th mat-header-cell *matHeaderCellDef> Game Type </th>
+            <td mat-cell *matCellDef="let element">  </td>
+          </ng-container>
           <ng-container matColumnDef="marks">
             <th mat-header-cell *matHeaderCellDef> Correct Answers </th>
             <td mat-cell *matCellDef="let element"> {{element.marks}} </td>
