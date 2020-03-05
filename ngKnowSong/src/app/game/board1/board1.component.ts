@@ -42,6 +42,9 @@ export class Board1Component implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(!this.data.storage){
+      this.router.navigateByUrl('createGame');
+    }
     var artists = this.aroute.snapshot.paramMap.get("artists");
     this.questionBuilder();
   }
@@ -109,6 +112,9 @@ export class Board1Component implements OnInit {
     let count = 0;
     let questionCounter = 0;
     for (let i = 0; i < this.trackNames.length; i++) {
+      //remove duplicate from answer array and other
+      this.trackNames = this.removeDuplicates(this.trackNames, "name");
+      ansArray = this.removeDuplicates(ansArray, "name");
       let track = ansArray.pop();
       if (!track.previewUrl) {
         count++
@@ -121,7 +127,6 @@ export class Board1Component implements OnInit {
       if (questionCounter == 7) {
         break;
       }
-      console.log("in builder " + track.previewUrl);
       this.trackAnswers = [track.name, this.trackNames[0].name, this.trackNames[0 + 1].name, this.trackNames[0 + 2].name];
       this.quizlist.push({ ID: 0, category: "Name That Clip", question: track.previewUrl, anslistobj: this.trackAnswers, answer: track.name });
 
@@ -141,15 +146,11 @@ export class Board1Component implements OnInit {
   //--------------------
 
   gettingCategory() {
-    console.log("__________________________________________")
     if (this.selectedvalue === "Name That Clip") {
       this.playdatclip = true;
     } else {
       this.playdatclip = false;
     } if (this.selectedvalue === 'Lyric Match') {
-      console.log("+++++++++++++++++++++++++++++++++")
-
-
     }
 
     this.selectedCategories = this.quizlist.filter(d => (d.category == this.selectedvalue));
@@ -157,8 +158,6 @@ export class Board1Component implements OnInit {
       this.router.navigateByUrl("createGame");
     }
 
-    console.log("*********************************");
-    console.log(this.selectedCategories);
     this.i = 0;
     this.question = this.selectedCategories[this.i].question;
     this.option = this.selectedCategories[this.i].anslistobj;
@@ -167,6 +166,7 @@ export class Board1Component implements OnInit {
 
   next() {
     if (this.i < this.selectedCategories.length - 1) {
+      this.selected = null;
       ++this.i;
     }
     if (this.i === this.selectedCategories.length - 1) {
@@ -181,8 +181,6 @@ export class Board1Component implements OnInit {
       let user = new User();
       user.gameHistory = this.gameHistory;
       this.userSvc.updateUser(user).subscribe();
-      console.log(this.answerkey);
-      console.log(this.gameHistory);
 
     }
     this.question = this.selectedCategories[this.i].question;

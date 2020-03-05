@@ -307,3 +307,11 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
   background-color: #aa0055;
 }
 
+.correct {
+  background-color: green;
+}
+
+.wrong {
+  background-color: red;
+}
+

@@ -49,7 +49,7 @@
 
                 <h2>Guess the Track!</h2>
                 <div class="container-audio">
-                  <audio id="my-audio" controls loop autoplay>
+                  <audio id="my-audio" controls autoplay>
                     <source src={{getQuestion()}} type="audio/mpeg">
                     Your browser dose not Support the audio Tag
                   </audio>
@@ -181,7 +181,7 @@
         <th>Answer</th>
         <th>Correct </th>
       </tr>
-      <tr *ngFor="let answer of answerkey; let i = index">
+      <tr *ngFor="let answer of answerkey; let i = index" [ngClass]="answer.correct ? 'correct' : 'wrong'">
         <td>{{i + 1}}</td>
         <td *ngIf="selectedvalue != 'Name That Clip'">{{answer.question}}</td>
         <td *ngIf="selectedvalue == 'Name That Clip'"><audio controls>
