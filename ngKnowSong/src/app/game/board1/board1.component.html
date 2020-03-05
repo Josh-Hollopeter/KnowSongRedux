@@ -2,7 +2,7 @@
 
 <!-- Called of font style  file -->
 
-<div *ngIf="!roundOver && quizlist.length > 0">
+<div *ngIf="!roundOver && quizlist.length > 0" >
 
   <div
     style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; height: 100vh; padding-top: 75px; background-size: cover; text-align: center;">
@@ -32,9 +32,9 @@
         </select>
       </div>
     </div> -->
-    <div *ngIf="selectedvalue" class="bg-success boxed">
+    <div *ngIf="selectedvalue" class="bg boxed">
       <div class="jumbotron"
-        style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+        style="background-color: transparent">
         <ul>
           <h1 *ngIf="selectedvalue">Question: {{answerkey.length+1}}</h1>
           <h2 *ngIf="!playdatclip">
@@ -131,6 +131,7 @@
 
         <div class="row-fluid">
           <div class="span12 text-center" *ngFor="let opt of option">
+
             <!-- <form #registerForm="ngForm" (submit)="check(registerForm)"> -->
             <button type="submit" (click)="selected = opt" class="btn btn-success btn-lg btn-block" >{{opt}}</button>
             <!-- <button mat-fab name="opt" (click)="selected = opt" class="text-center"> {{opt}}</button> -->
@@ -165,12 +166,11 @@
 
 <br>
 <br>
-<br>
 <div *ngIf = "roundOver">
-  <!-- <a routerLink="/home"><button class="btn btn-success float-right" > Home </button></a> -->
   <div class="jumbotron"
   style="background-image: url('https://image.freepik.com/free-vector/abstract-geometric-shape-connection-with-3d-cubes-background_42705-105.jpg'); background-repeat: no-repeat; background-attachment: fixed; height: 100vh; padding-top: 75px; background-size: cover;">
-  <h2 style="text-align: center;">{{artistName}} + Quiz</h2>
+  <a routerLink="/createGame"><button class="btn btn-success float-left" > New Game </button></a>
+  <h2 style="text-align: center;">{{artistName}} {{selectedvalue}} Quiz</h2>
     <table class="table" >
       <tr>
         <th>Question Number </th>
@@ -180,7 +180,11 @@
       </tr>
       <tr *ngFor="let answer of answerkey; let i = index">
           <td>{{i + 1}}</td>
-          <td>{{answer.question}}</td>
+          <td *ngIf="selectedvalue != 'Name That Clip'">{{answer.question}}</td>
+          <td *ngIf="selectedvalue == 'Name That Clip'"><audio  controls>
+            <source src={{answer.question}} type="audio/mpeg">
+            Your browser dose not Support the audio Tag
+          </audio></td>
           <td>{{answer.answer}}</td>
           <td>{{answer.correct}}</td>
       </tr>
