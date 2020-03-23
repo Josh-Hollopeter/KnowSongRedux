@@ -17,7 +17,7 @@ Game modes include:
 - Guess the release year of an album
 
 ### Technologies and Development Techniques
-- Java 
+- Java 8
 - TypeScript 
 - Javascript
 - Angular 9 
@@ -26,8 +26,7 @@ Game modes include:
 - Java Persistence API (JPA)
 - SQL 
 - OAuth2
-- HTML 
-- CSS 
+- HTML / CSS 
 - Gradle 
 - Postman: API Testing
 - JUnit 5: Test Driven Java Development
@@ -35,4 +34,11 @@ Game modes include:
 - AWS EC2
 - Github/Git: Version Control
 - Agile Development
-- 
+
+### Future Versions
+
+- Web Socket Application Layer Protocol
+  - Multiplayer Trivia
+- Clean up and overhaul CSS
+- Achievements and Statistics
+- Game logic improvements
