@@ -10,8 +10,8 @@ A RESTful web application using Musixmatch and Spotify API to generate trivia qu
 
 Game modes include: 
 
--identify song from 30 second audio segment 
+- Identify song from 30 second audio segment 
 
--identify song from lyrics
+- Identify song from lyrics
 
--guess the release year of an album
+- Guess the release year of an album
