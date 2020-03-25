@@ -22,6 +22,7 @@ Game modes include:
 - Javascript
 - Angular 9 
 - Spring REST
+- Spring Boot
 - Spring Security
 - Java Persistence API (JPA)
 - SQL 
@@ -30,7 +31,7 @@ Game modes include:
 - Gradle 
 - Postman: API Testing
 - JUnit 5: Test Driven Java Development
-- Tomcat
+- Apache Tomcat
 - AWS EC2
 - Github/Git: Version Control
 - Agile Development
