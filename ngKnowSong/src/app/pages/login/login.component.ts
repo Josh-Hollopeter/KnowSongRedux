@@ -13,6 +13,7 @@ import { UserService } from 'src/app/models/user.service';
 export class LoginComponent implements OnInit {
   user:User = new User();
   loggedIn: string;
+  display  = true;
   constructor(
     private authService:AuthService,
     private route:Router,
@@ -36,6 +37,8 @@ export class LoginComponent implements OnInit {
             this.user.enabled = yes["enabled"];
             this.user.role = yes["role"];
             this.usersvc.setUser(this.user);
+            this.display = false;
+
           },
           no=>{
             console.error("in user home init")
@@ -51,6 +54,9 @@ export class LoginComponent implements OnInit {
       }
     )
 
+  }
+  isLoggedIn(): boolean{
+    return this.authService.checkLogin();
   }
 
 }
