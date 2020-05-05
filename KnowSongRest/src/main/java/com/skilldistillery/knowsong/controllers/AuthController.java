@@ -47,7 +47,7 @@ public class AuthController {
 		return user;
 	}
 
-	@GetMapping("/authenticate")
+	@RequestMapping(path = "/authenticate", method = RequestMethod.GET)
 	public Principal authenticate(Principal principal) {
 		//gives user a new auth token valid for 3600 seconds
 		exchangeRefreshToken(authService.findUser(principal.getName()));
