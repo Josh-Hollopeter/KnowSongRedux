@@ -1,8 +1,6 @@
 ## Know Song | A Spotify Trivia Web Application
-### Final Project for Skill Distillery 2020
 
 - Josh Hollopeter
-- George Moore
 - Neal Savant
 
 ### Overview
