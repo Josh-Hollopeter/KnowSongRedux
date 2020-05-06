@@ -3,4 +3,8 @@ export class User {
     //comment
     //kiling it with the commits
     //bring on the green boys
+    //this is where user info goes :)
+    //comment
+    //kiling it with the commits
+    //bring on the green boys
 }
