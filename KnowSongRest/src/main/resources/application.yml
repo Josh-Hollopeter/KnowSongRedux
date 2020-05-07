@@ -1,0 +1,46 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE
+      springframework:
+        web: DEBUG
+    root: WARN
+server:
+  port: 8085
+spring:
+  datasource:
+    dbcp2:
+      max-idle: 8
+      max-wait-millis: 10000
+      min-evictable-idle-time-millis: 1000
+      min-idle: 8
+      time-between-eviction-runs-millis: 1
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: knowsong
+    tomcat:
+      max-active: 10
+    url: jdbc:mysql://localhost:3306/knowsong?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=MST
+    username: knowsong
+  jmx:
+    default-domain: knowsong
+  jpa:
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        provider:
+          spotify:
+            authorization-uri: https://accounts.spotify.com/authorize
+            token-uri: https://accounts.spotify.com/api/token
+            user-info-uri: https://api.spotify.com/v1/me
+            user-name-attribute: id
+        registration:
+          spotify:
+            authorization-grant-type: authorization_code
+            client-id: a2398fd3acd54cf8b645af6884251a55
+            client-name: Spotify
+            client-secret: e8c8ceef3b064187ada929c80caaca17
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: user-read-private

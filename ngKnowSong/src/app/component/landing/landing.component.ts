@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 // landing page where users can login through spotify
+
   constructor() { }
 
   ngOnInit(): void {
@@ -14,6 +15,6 @@ export class LandingComponent implements OnInit {
 
   login(){
     console.log("logging in and stuff");
-    
+    // window.location.href = 'http://localhost:8085/'
   }
 }
