@@ -29,17 +29,13 @@ public class User {
 	private Rank rank;
 	
 	private String username;
-	
-	private String password;
+
 	
 	private String role;
 	
 	private Boolean enabled;
 	
 	private Boolean admin;
-	
-	@Column(name = "auth_token")
-	private String authToken;
 		
 	@Column(name = "refresh_token")
 	private String refreshToken;
@@ -87,13 +83,6 @@ public class User {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getRole() {
 		return role;
@@ -117,14 +106,6 @@ public class User {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
-	}
-
-	public String getAuthToken() {
-		return authToken;
-	}
-
-	public void setAuthToken(String authToken) {
-		this.authToken = authToken;
 	}
 
 	public String getRefreshToken() {
