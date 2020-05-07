@@ -18,7 +18,9 @@ repositories {
 }
 
 dependencies {
-compile project(':KnowSongJPA')
+    compile project(':KnowSongJPA')
+    compile("org.springframework.security.oauth:spring-security-oauth2:2.0.8.RELEASE")
+
 	compile 'se.michaelthelin.spotify:spotify-web-api-java:4.2.1'
 	//compile 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
 	implementation ('org.springframework.boot:spring-boot-starter-tomcat')
