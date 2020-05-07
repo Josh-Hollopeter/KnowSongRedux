@@ -40,11 +40,9 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`user` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `rank_id` INT(11) NOT NULL,
   `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(150) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
   `enabled` TINYINT(4) NULL DEFAULT '0',
   `admin` TINYINT(4) NULL DEFAULT '0',
-  `auth_token` VARCHAR(200) NULL DEFAULT NULL,
   `refresh_token` VARCHAR(200) NULL DEFAULT NULL,
   `img_source` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -237,6 +235,13 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`user_playlist` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+SET SQL_MODE = '';
+DROP USER IF EXISTS knowsong;
+SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE USER 'knowsong' IDENTIFIED BY 'knowsong';
+
+GRANT ALL ON `mydb`.* TO 'knowsong';
+GRANT ALL ON `knowsong`.* TO 'knowsong';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -257,8 +262,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `knowsong`;
-INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (1, 1, 'test', 'test', 'standard', 1, 0, NULL, NULL, NULL);
-INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `password`, `role`, `enabled`, `admin`, `auth_token`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', 'josh', 'admin', 1, 1, NULL, 'AQB6QtBZc0C7dSsu0ngVcIVh5DGvWjTgJKk2_7nmrTEZXHUv7hjNt-am8hwltAwSDImFp-vXfwgYHeIrI8zORI9Qk78hzAU79_xn9FFxMrEDq1tTdWYUhFCyduSRpVt9yCk', NULL);
+INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `role`, `enabled`, `admin`, `refresh_token`, `img_source`) VALUES (1, 1, 'test', 'standard', 1, 0, NULL, NULL);
+INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `role`, `enabled`, `admin`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', 'admin', 1, 1, 'AQB6QtBZc0C7dSsu0ngVcIVh5DGvWjTgJKk2_7nmrTEZXHUv7hjNt-am8hwltAwSDImFp-vXfwgYHeIrI8zORI9Qk78hzAU79_xn9FFxMrEDq1tTdWYUhFCyduSRpVt9yCk', NULL);
 
 COMMIT;
 
@@ -339,3 +344,6 @@ COMMIT;
 START TRANSACTION;
 USE `knowsong`;
 INSERT INTO `knowsong`.`user_playlist` (`playlist_id`, `user_id`) VALUES (1, 1);
+
+COMMIT;
+

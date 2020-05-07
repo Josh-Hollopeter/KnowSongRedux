@@ -21,23 +21,23 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	private RankRepository rankRepo;
 
-	@Override
-	public User register(User user) {
-		String encodedPW = encoder.encode(user.getPassword());
-
-		Rank rank = rankRepo.findById(1).get();
-		System.err.println("**************" + rank + "******************");
-
-		user.setRank(rank);
-		user.setPassword(encodedPW); // only persist encoded password
-
-		// set other fields to default values
-		user.setEnabled(true);
-			user.setRole("standard");
-
-		userRepo.saveAndFlush(user);
-		return user;
-	}
+//	@Override
+//	public User register(User user) {
+//		String encodedPW = encoder.encode(user.getPassword());
+//
+//		Rank rank = rankRepo.findById(1).get();
+//		System.err.println("**************" + rank + "******************");
+//
+//		user.setRank(rank);
+//		user.setPassword(encodedPW); // only persist encoded password
+//
+//		// set other fields to default values
+//		user.setEnabled(true);
+//			user.setRole("standard");
+//
+//		userRepo.saveAndFlush(user);
+//		return user;
+//	}
 
 	@Override
 	public User findUser(String username) {

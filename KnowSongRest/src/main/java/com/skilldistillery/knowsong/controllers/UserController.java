@@ -36,33 +36,33 @@ public class UserController {
 //
 //	}
 
-	@GetMapping("/users")
-	public List<User> allUsers(HttpServletResponse resp, Principal principal) {
-		try {
-			System.out.println(uSvc.listAllUsers());
-
-			resp.setStatus(200);
-			return uSvc.listAllUsers();
-		} catch (Exception e) {
-			resp.setStatus(404);
-			return null;
-		}
-
-	}
-
-	@GetMapping("user")
-	public User getUser(HttpServletResponse resp, Principal principal) {
-
-		try {
-			User user = svc.findUser(principal.getName());
-			resp.setStatus(200);
-			return user;
-		} catch (Exception e) {
-			resp.setStatus(404);
-			return null;
-		}
-
-	}
+//	@GetMapping("/users")
+//	public List<User> allUsers(HttpServletResponse resp, Principal principal) {
+//		try {
+//			System.out.println(uSvc.listAllUsers());
+//
+//			resp.setStatus(200);
+//			return uSvc.listAllUsers();
+//		} catch (Exception e) {
+//			resp.setStatus(404);
+//			return null;
+//		}
+//
+//	}
+//
+//	@GetMapping("user")
+//	public User getUser(HttpServletResponse resp, Principal principal) {
+//
+//		try {
+//			User user = svc.findUser(principal.getName());
+//			resp.setStatus(200);
+//			return user;
+//		} catch (Exception e) {
+//			resp.setStatus(404);
+//			return null;
+//		}
+//
+//	}
 
 	@DeleteMapping("user{username}")
 	public void deleteUser(HttpServletResponse resp, Principal principal, @PathVariable String username) {
