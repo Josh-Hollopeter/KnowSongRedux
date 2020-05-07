@@ -13,7 +13,5 @@ public interface UserService {
 	
 	public User update(Principal principal, User user);
 
-	public User changeUserImage(String username, String imgSource);
-
 
 }

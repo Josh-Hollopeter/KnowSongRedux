@@ -39,21 +39,6 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	@Override
-	public User changeUserImage(String username, String imgSource) {
-
-		User user = null;
-		user = userRepo.findByUsername(username);
-		if (user != null) {
-			user.setImgSource(imgSource);
-			userRepo.save(user);
-			return user;
-		} else {
-			return user;
-
-		}
-
-	}
 
 	@Override
 	public User update(Principal principal, User user) {
