@@ -73,16 +73,16 @@ public class UserController {
 		}
 	}
 	
-	@PutMapping("user/{username}")
-	public void adminUpdateUser(HttpServletResponse resp, Principal principal, @PathVariable String username, @RequestBody String imgSource) {
-		System.out.println("********************* " + imgSource + " ****************************");
-		User managedUser = uSvc.changeUserImage(username, imgSource);
-		if (managedUser != null) {
-			resp.setStatus(200);
-		} else {
-			resp.setStatus(404);
-		}
-	}
+//	@PutMapping("user/{username}")
+//	public void adminUpdateUser(HttpServletResponse resp, Principal principal, @PathVariable String username, @RequestBody String imgSource) {
+//		System.out.println("********************* " + imgSource + " ****************************");
+//		User managedUser = uSvc.changeUserImage(username, imgSource);
+//		if (managedUser != null) {
+//			resp.setStatus(200);
+//		} else {
+//			resp.setStatus(404);
+//		}
+//	}
 	
 
 	@PutMapping("user")
