@@ -12,4 +12,8 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  login(){
+    console.log("logging in and stuff");
+    
+  }
 }
