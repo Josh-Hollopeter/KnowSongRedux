@@ -1,28 +1,29 @@
-package com.skilldistillery.knowsong.security;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    // this you get for free when you configure the db connection in application.properties file
+//package com.skilldistillery.knowsong.security;
+//
+//import javax.sql.DataSource;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.http.HttpMethod;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//import org.springframework.security.config.http.SessionCreationPolicy;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//
+//@Configuration
+//@EnableWebSecurity
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//    // this you get for free when you configure the db connection in application.properties file
 //    @Autowired
 //    private DataSource dataSource;
-
-    // this bean is created in the application starter class if you're looking for it
+//
+//    // this bean is created in the application starter class if you're looking for it
 //    @Autowired
 //    private PasswordEncoder encoder;
-
+//
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
@@ -39,21 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        .sessionManagement()
 //        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //    }
-	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors()
-            .and()
-              .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/user/info", "/api/foos/**")	//username and profile photo!
-                  .hasAuthority("SCOPE_read")
-                .antMatchers(HttpMethod.POST, "/api/foos")
-                  .hasAuthority("SCOPE_write")
-                .anyRequest()
-                  .authenticated()
-            .and()
-              .oauth2ResourceServer()
-                .jwt();
-    }
-
-
-}
+//
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        String userQuery = "SELECT username, password, enabled FROM User WHERE username=?";
+//        String authQuery = "SELECT username, role FROM User WHERE username=?";
+//        auth
+//        .jdbcAuthentication()
+//        .dataSource(dataSource)
+//        .usersByUsernameQuery(userQuery)
+//        .authoritiesByUsernameQuery(authQuery)
+//        .passwordEncoder(encoder);
+//    }
+//}
