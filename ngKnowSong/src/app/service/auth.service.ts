@@ -12,18 +12,15 @@ export class AuthService {
   private baseUrl = environment.baseUrl;
   private http: HttpClient;
 
-  constructor() {
-    const settings ={
-      authority: "http://localhost:8085/oauth2/",
-      redirecturi: "http://localhost:8085/login/oauth2/code/spotify"
-    }
-   }
+  constructor() {}
 
 
 // |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 // |~~~~~~~~~~~~~~~~~~~~~~~~ OAuth2 Authorization ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 // |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-
+  login(){
+    return this.http.get(this.baseUrl + 'oauth2/authorization/spotify',)
+  }
 
   /********************************************************************************
   * Request Authorization:
