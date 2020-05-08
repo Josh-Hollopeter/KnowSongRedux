@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseurl: '/'
+  // temp so we can test in production environment
+  baseUrl: 'http://localhost:8085/'
 };
