@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
+import { HttpClient } from '@angular/common/http';
 
 // landing page where users can login through spotify
 @Component({
@@ -16,7 +17,7 @@ export class LandingComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
