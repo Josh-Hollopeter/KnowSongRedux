@@ -21,39 +21,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-public class KnowSongRestApplication extends WebSecurityConfigurerAdapter{
-	
-	 @Override
-	    protected void configure(HttpSecurity http) throws Exception {
-	    	// @formatter:off
-	        http
-	            .authorizeRequests(a -> a
-	                .antMatchers("/", "/error", "/webjars/**").permitAll()
-	                .anyRequest().authenticated()
-	            )
-	            .exceptionHandling(e -> e
-	                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-	            )
-	            .logout(l -> l
-	                    .logoutSuccessUrl("/").permitAll()
-	            )
-	            .csrf(c -> c
-	                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-	                    )
-	            .oauth2Login();
-	        // @formatter:on
-	    }
-	 
-	 
-//	 @Override
-//	    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//	        return application.sources(KnowSongRestApplication.class);
-//	    }
+public class KnowSongRestApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(KnowSongRestApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(KnowSongRestApplication.class, args);
-		
-		
+
 	}
 //	@Bean
 //	public PasswordEncoder configurePasswordEncoder() {
