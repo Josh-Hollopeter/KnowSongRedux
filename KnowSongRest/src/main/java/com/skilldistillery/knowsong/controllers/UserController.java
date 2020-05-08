@@ -15,6 +15,8 @@ public class UserController {
 
 	@GetMapping("/user")
     public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
-        return Collections.singletonMap("spotifyId", principal.getAttribute("id"));
+        return Collections.singletonMap("username", principal.getAttribute("id"));
     }
+	
+	
 }
