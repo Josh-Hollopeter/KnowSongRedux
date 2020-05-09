@@ -29,15 +29,15 @@ public class UserController {
 		return oauth2User;
 	}
 
-//	@GetMapping("/")
-//	public OAuth2AccessToken accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-//		return authorizedClient.getAccessToken();
-//	}
-
-	@GetMapping("/")
-	public OAuth2AuthorizedClient accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-		return authorizedClient;
+	@GetMapping("/getAccessToken")
+	public OAuth2AccessToken accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+		return authorizedClient.getAccessToken();
 	}
+
+//	@GetMapping("/")
+//	public OAuth2AuthorizedClient accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+//		return authorizedClient;
+//	}
 //	public OAuth2User getCurrentUser() {
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		return ((OAuth2AuthenticationToken)auth).getPrincipal();
