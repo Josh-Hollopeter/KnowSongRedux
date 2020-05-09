@@ -21,13 +21,15 @@ dependencies {
     compile project(':KnowSongJPA')
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.2.6.RELEASE'
-    
+  
 	// https://mvnrepository.com/artifact/org.webjars/jquery
 	compile group: 'org.webjars', name: 'jquery', version: '3.5.0'
 	// https://mvnrepository.com/artifact/org.webjars/bootstrap
 	compile group: 'org.webjars', name: 'bootstrap', version: '4.4.1-1'
 	// https://mvnrepository.com/artifact/org.webjars/webjars-locator-core
 	compile group: 'org.webjars', name: 'webjars-locator-core', version: '0.45'
+	
+	
 	
 	// https://mvnrepository.com/artifact/org.webjars/js-cookie
 	compile group: 'org.webjars', name: 'js-cookie', version: '2.0.2'
