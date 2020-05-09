@@ -10,11 +10,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.skilldistillery.knowsong.entities.User;
 import com.skilldistillery.knowsong.repositories.UserRepository;
+import com.skilldistillery.knowsong.services.CustomOAuth2UserService;
 import com.skilldistillery.knowsong.services.MyUserDetailsService;
 
 @Configuration
@@ -23,13 +29,7 @@ import com.skilldistillery.knowsong.services.MyUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private MyUserDetailsService myUserDetailsService;
-	
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-    	auth.userDetailsService(myUserDetailsService);
-    	
-    }
+	private CustomOAuth2UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,6 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     )
             .oauth2Login()
+            	.userInfoEndpoint()
+            			.userService(userService)
+            	.and()
+            			 // store information into User Entity and persist into database
+//            		.
+//            		.customUserType(new User(), clientRegistrationId)
 //            	.redirectionEndpoint()
 //            		.baseUri("")
 //            	.and()
