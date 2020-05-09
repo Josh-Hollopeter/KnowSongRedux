@@ -10,7 +10,9 @@ export class HomeComponent implements OnInit {
 
   // public userInfo: String = new String();
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -22,7 +24,7 @@ export class HomeComponent implements OnInit {
         // this.userInfo = success;
       },
       fail => {
-        console.error('data not retrieved my man');
+        console.error(fail);
         // this.userInfo = fail;
       }
     )
