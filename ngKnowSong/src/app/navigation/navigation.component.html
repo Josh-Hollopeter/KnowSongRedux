@@ -1,28 +1,27 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav [ngClass]="{'hidden': !(isHandset$ | async)}" #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>KnowSong</span>
-    </mat-toolbar>
-    <!-- Add Content Here -->
-    <ng-content></ng-content>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<html>
+
+<head>
+    <title>HTML, CSS and JavaScript demo</title>
+</head>
+
+<body>
+
+    <!-- Start your code here -->
+<div class="wrapper">
+
+
+<div>
+<p class="lw">Know Song</p>
+    <h1 class="header">New Game</h1>
+    <div class="flex-container">
+        <div style="cursor: pointer;" class="box" onclick="window.location='http://google.com'"><span class="link"> The <br> Lyric <br> Matcher </span></div>
+        <div  style="cursor: pointer;" class="box" onclick="window.location='http://google.com'"><span class="link">Name <br> the <br > Song</span></div>
+     <div  style="cursor: pointer;" class="box" onclick="window.location='http://google.com'"><span class="link">Album <br > Release <br > Year</span></div>
+  </div>
+  </div>
+  </div>
+        <!-- End your code here -->
+</body>
+
+</html>
+        <
