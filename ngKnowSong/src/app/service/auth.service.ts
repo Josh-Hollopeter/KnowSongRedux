@@ -22,11 +22,15 @@ export class AuthService {
 
   getUserData(): any{
     const credentials = localStorage.getItem('credentials');
-    const headers = new HttpHeaders();
-     headers.set('Authorization', `credentials ${credentials}`);
-     headers.set('Content-Type', 'text/plain; charset=utf-8');
-  
-     return this.http.get(this.baseUrl + 'user', {headers, responseType: 'text'}).pipe(
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `credentials ${credentials}`,
+        'Content-Type': 'text/plain; charset=utf-8'
+      })
+    };
+console.log(credentials);
+
+     return this.http.get(this.baseUrl + 'user', httpOptions).pipe(       
       tap((res: any) => {
         console.log(res);
         return res;
