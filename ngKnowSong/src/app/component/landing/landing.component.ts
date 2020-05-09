@@ -31,6 +31,7 @@ export class LandingComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // this function authenticates the client with the server and registers the user into database
   requestAuth(){
     window.location.replace(this.baseUrl +'oauth2/authorization/spotify');
   }
