@@ -10,9 +10,11 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
 
   private baseUrl = environment.baseUrl;
-  private http: HttpClient;
+  
 
-  constructor() {}
+  constructor(
+    private http: HttpClient
+    ) {}
 
 
 
@@ -38,7 +40,7 @@ export class AuthService {
       }),
       catchError((err: any) => {
         console.log(err);
-        return throwError('Error getting redirect user info');
+        return throwError('Error getting user info');
       })
   );
 
