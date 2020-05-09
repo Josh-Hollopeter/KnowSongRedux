@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            	.redirectionEndpoint()
 //            		.baseUri("")
 //            	.and()
-            	.defaultSuccessUrl("http://localhost:4200/");
+            	.defaultSuccessUrl("http://localhost:4200/home");
         // @formatter:on
     }
 
