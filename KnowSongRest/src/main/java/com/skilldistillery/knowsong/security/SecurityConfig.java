@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	// @formatter:off
         http
             .authorizeRequests(a -> a
-                .antMatchers("#", "/error", "/webjars/**").permitAll()
+                .antMatchers("/", "/error", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
             )
             .exceptionHandling(e -> e
@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            	.redirectionEndpoint()
 //            		.baseUri("")
 //            	.and()
-            	.defaultSuccessUrl("http://localhost:4200/home");
+            	.defaultSuccessUrl("http://localhost:4200/home")
+            	.failureUrl("http://localhost:4200");
         // @formatter:on
     }
 

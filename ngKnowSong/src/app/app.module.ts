@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
 import { LandingComponent } from './component/landing/landing.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +21,6 @@ import { XhrInterceptorService } from './interceptor/xhr-interceptor.service';
     AppComponent,
     LandingComponent,
     HomeComponent,
-    NavigationComponent
   ],
   imports: [
     BrowserModule,
