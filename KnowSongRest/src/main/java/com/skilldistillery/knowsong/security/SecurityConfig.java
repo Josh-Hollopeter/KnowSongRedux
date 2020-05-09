@@ -49,7 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf(c -> c
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     )
-            .oauth2Login();
+            .oauth2Login()
+//            	.redirectionEndpoint()
+//            		.baseUri("")
+//            	.and()
+            	.defaultSuccessUrl("http://localhost:4200/home");
         // @formatter:on
     }
 

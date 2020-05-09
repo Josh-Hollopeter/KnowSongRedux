@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 // landing page where users can login through spotify
 @Component({
@@ -15,17 +16,25 @@ export class LandingComponent implements OnInit {
 
   user: User = new User();
 
+  private baseUrl = environment.baseUrl;
+
   constructor(
     private authService: AuthService,
     private http: HttpClient
-  ) { }
+  ) { 
+    // check if user is authenticated with spotify by cookie in storage or somethign
+
+
+
+  }
 
   ngOnInit(): void {
   }
 
   requestAuth(){
-    window.open('http://localhost:8085/oauth2/authorization/spotify');
+    window.location.replace(this.baseUrl +'oauth2/authorization/spotify');
   }
+
   login(){
     console.log("logging in and stuff");
     this.authService.login().subscribe(
