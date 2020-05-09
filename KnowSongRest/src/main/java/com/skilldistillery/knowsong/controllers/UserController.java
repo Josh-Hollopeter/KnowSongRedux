@@ -26,6 +26,7 @@ public class UserController {
 
 	@GetMapping("/user")
 	public OAuth2User user(@AuthenticationPrincipal OAuth2User oauth2User) {
+		System.out.println(oauth2User);
 		return oauth2User;
 	}
 
