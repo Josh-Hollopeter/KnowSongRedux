@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
@@ -21,7 +21,7 @@ export class LandingComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private http: HttpClient
-  ) { 
+  ) {
     // check if user is authenticated with spotify by cookie in storage or somethign
 
 
@@ -29,6 +29,7 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    ViewEncapsulation.ShadowDom
   }
 
   // this function authenticates the client with the server and registers the user into database
