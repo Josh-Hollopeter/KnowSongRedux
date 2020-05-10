@@ -47,9 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     )
             .oauth2Login()
             	.userInfoEndpoint()
-            			.userService(userService)
+            			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
-            			 // store information into User Entity and persist into database
+            			
 //            		.
 //            		.customUserType(new User(), clientRegistrationId)
 //            	.redirectionEndpoint()

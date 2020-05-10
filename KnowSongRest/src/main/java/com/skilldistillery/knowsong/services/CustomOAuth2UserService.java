@@ -1,5 +1,7 @@
 package com.skilldistillery.knowsong.services;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		OAuth2User oAuth2User = super.loadUser(userRequest);
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 		System.out.println(attributes);
+
+		// grab username
+		String username = (String) attributes.get("id");
+		
+		// grab image
+		// Map -> ArrayList -> LinkedHashMap -> String
+		
+		@SuppressWarnings("unchecked")
+		String imgSource = ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url");	// get first image for your spotify account..
+
 		
 		return oAuth2User;
 	}
