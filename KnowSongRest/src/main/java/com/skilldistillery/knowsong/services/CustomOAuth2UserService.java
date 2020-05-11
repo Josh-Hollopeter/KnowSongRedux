@@ -49,7 +49,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		
 		@SuppressWarnings("unchecked")
 		String imgSource = ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url");	// get first image for your spotify account..
-
 		System.out.println(oAuth2User.getAuthorities());
 		
 		System.out.println(oAuth2User.getName());

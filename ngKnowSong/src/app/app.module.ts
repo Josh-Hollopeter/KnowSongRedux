@@ -14,7 +14,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule} from '@angular/common/http';
 import { AuthService } from './service/auth.service';
-import { XhrInterceptorService } from './interceptor/xhr-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,7 @@ import { XhrInterceptorService } from './interceptor/xhr-interceptor.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN'}),
+    // HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN'}),
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
@@ -36,8 +35,7 @@ import { XhrInterceptorService } from './interceptor/xhr-interceptor.service';
     MatListModule
   ],
   providers: [
-    AuthService,
-    {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptorService, multi: true}
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
