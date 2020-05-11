@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -46,8 +47,12 @@ public class UserController {
 
 	@GetMapping("/getAccessToken")
 	public OAuth2AccessToken accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+		System.out.println(authorizedClient.getRefreshToken().getTokenValue());
 		return authorizedClient.getAccessToken();
 	}
+	
+//	@GetMapping("/refreshAccess")
+//	public void refreshAccess(@)
 
 //	@GetMapping("/")
 //	public OAuth2AuthorizedClient accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
