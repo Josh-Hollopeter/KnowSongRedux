@@ -26,7 +26,7 @@ export class AuthService {
     const credentials = localStorage.getItem('credentials');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': `credentials ${credentials}`,
+        'credentials': `${credentials}`,
         'Content-Type': 'text/plain; charset=utf-8'
       })
     };
