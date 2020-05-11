@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpXhrBackend, HttpRequest} from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -13,41 +13,60 @@ export class AuthService {
   
 
   constructor(
-    private http: HttpClient
+    private backend: HttpXhrBackend
     ) {}
 
 
 
   login(){
-    return this.http.get(this.baseUrl + 'oauth2/authorization/spotify',)
+    const request = new HttpRequest('GET', this.baseUrl + 'oauth2/authorization/spotify');
+    return this.backend.handle(request);
   }
 
   getUserData(): any{
-    const credentials = localStorage.getItem('credentials');
+    const credentials = localStorage.getItem('credentials');   
     const httpOptions = {
       headers: new HttpHeaders({
         'credentials': `${credentials}`,
-        'Content-Type': 'text/plain; charset=utf-8'
-      })
+        'Content-Type': 'application/x-www-form-urlencoded',
+        // 'Access-control-Allow-Origin': 'true'
+        // 'Cookie': `${xsrf}`
+      }),
+      withCredentials: true
     };
    
-     console.log(credentials);
-
-     return this.http.get(this.baseUrl + 'user', httpOptions).pipe(       
+     const request = new HttpRequest('GET', this.baseUrl + 'user', httpOptions);
+     return this.backend.handle(request).pipe(       
       tap((res: any) => {
-        console.log(res);
         return res;
       }),
       catchError((err: any) => {
-        console.log(err);
         return throwError('Error getting user info');
       })
   );
 
   }
 
-getCredentials() {
-  return localStorage.getItem('credentials');
-}
+  getAccessToken(){
+    const credentials = localStorage.getItem('credentials');   
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'credentials': `${credentials}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }),
+      withCredentials: true
+    };
+   
+     const request = new HttpRequest('GET', this.baseUrl + 'getAccessToken', httpOptions);
+     return this.backend.handle(request).pipe(       
+      tap((res: any) => {
+        return res;
+      }),
+      catchError((err: any) => {
+        return throwError('Error getting user info');
+      })
+  );
+  }
+
 
 }
