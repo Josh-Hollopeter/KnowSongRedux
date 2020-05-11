@@ -28,7 +28,7 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
         'credentials': `${credentials}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         // 'Access-control-Allow-Origin': 'true'
         // 'Cookie': `${xsrf}`
       }),
