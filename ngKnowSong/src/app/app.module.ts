@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule} from '@angular/common/http';
 import { AuthService } from './service/auth.service';
 import { XhrInterceptorService } from './interceptor/xhr-interceptor.service';
 
@@ -27,6 +27,7 @@ import { XhrInterceptorService } from './interceptor/xhr-interceptor.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN'}),
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
