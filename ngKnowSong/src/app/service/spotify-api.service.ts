@@ -9,6 +9,7 @@ import { throwError } from 'rxjs';
 export class SpotifyAPIService {
 
   private accessToken: string;
+  
   private httpOptions = {
     headers: new HttpHeaders({
       'Authorization': `Bearer ${this.accessToken}`
