@@ -5,8 +5,9 @@ import { HomeComponent } from './component/home/home.component';
 
 
 const routes: Routes = [
-  
+
   { path: 'home', component: HomeComponent},
+  { path: 'landing', component: LandingComponent},
   { path: '**', component: LandingComponent}
 ];
 
