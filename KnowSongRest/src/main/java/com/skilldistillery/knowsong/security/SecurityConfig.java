@@ -56,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.userInfoEndpoint()
             			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
-            	.defaultSuccessUrl("http://localhost:4200/home")
-            	.failureUrl("http://localhost:4200");
+            	.defaultSuccessUrl("https://knowsong.life/home")
+            	.failureUrl("https://knowsong.life/landing");
    
     }
     
