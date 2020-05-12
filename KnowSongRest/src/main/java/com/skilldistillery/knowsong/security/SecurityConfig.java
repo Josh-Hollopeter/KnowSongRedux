@@ -42,7 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests(a -> a
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
-                
             )
             .exceptionHandling(e -> e
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
@@ -56,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.userInfoEndpoint()
             			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
-            	.defaultSuccessUrl("http://localhost:4200/home")
-            	.failureUrl("http://localhost:4200");
+            	.defaultSuccessUrl("http://knowsong.life/home")
+            	.failureUrl("http://knowsong.life/");
    
     }
     
@@ -83,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
     	CorsConfiguration configuration = new CorsConfiguration();
-    	configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+    	configuration.setAllowedOrigins(Arrays.asList("http://knowsong.life"));
     	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
     	configuration.setAllowedHeaders(Arrays.asList("Content-Type", "credentials"));
     	configuration.setAllowCredentials(true);
