@@ -10,11 +10,21 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
 
   private baseUrl = environment.baseUrl;
-  
+  private credentials: String;
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'credentials': `${this.credentials}`,
+      'Content-Type': 'application/json'
+    }),
+    withCredentials: true
+  };
 
   constructor(
     private backend: HttpXhrBackend
-    ) {}
+    ) {
+      this.credentials = localStorage.getItem('credentials'); 
+    }
 
 
 
@@ -24,18 +34,9 @@ export class AuthService {
   }
 
   getUserData(): any{
-    const credentials = localStorage.getItem('credentials');   
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'credentials': `${credentials}`,
-        'Content-Type': 'application/json',
-        // 'Access-control-Allow-Origin': 'true'
-        // 'Cookie': `${xsrf}`
-      }),
-      withCredentials: true
-    };
-   
-     const request = new HttpRequest('GET', this.baseUrl + 'user', httpOptions);
+      
+     const request = new HttpRequest('GET', this.baseUrl + 'user', this.httpOptions);
+
      return this.backend.handle(request).pipe(       
       tap((res: any) => {
         return res;
@@ -48,16 +49,9 @@ export class AuthService {
   }
 
   getAccessToken(){
-    const credentials = localStorage.getItem('credentials');   
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'credentials': `${credentials}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }),
-      withCredentials: true
-    };
    
-     const request = new HttpRequest('GET', this.baseUrl + 'getAccessToken', httpOptions);
+     const request = new HttpRequest('GET', this.baseUrl + 'getAccessToken', this.httpOptions);
+
      return this.backend.handle(request).pipe(       
       tap((res: any) => {
         return res;
