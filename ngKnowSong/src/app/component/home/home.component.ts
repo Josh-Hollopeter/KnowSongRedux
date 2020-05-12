@@ -15,10 +15,23 @@ export class HomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    
   }
 
   getUserDetail(){
     this.authService.getUserData().subscribe(
+      success => {
+        console.log(success);
+        // this.userInfo = success;
+      },
+      fail => {
+        console.error(fail);
+        // this.userInfo = fail;
+      }
+    )
+  }
+  getAccessToken(){
+    this.authService.getAccessToken().subscribe(
       success => {
         console.log(success);
         // this.userInfo = success;
