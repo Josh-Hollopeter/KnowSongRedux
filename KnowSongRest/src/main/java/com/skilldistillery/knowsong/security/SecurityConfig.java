@@ -47,14 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling(e -> e
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             )
+//            .oauth2ResourceServer().authenticationManagerResolver(authenticationManagerResolver)
             .cors().and()
             .csrf(c -> c
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                     )
             .oauth2Login()
-//            	.tokenEndpoint()
-//            		.accessTokenResponseClient(accessTokenResponseClient())
-//            	.and()
             	.userInfoEndpoint()
             			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
