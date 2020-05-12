@@ -29,6 +29,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.webjars/webjars-locator-core
 	compile group: 'org.webjars', name: 'webjars-locator-core', version: '0.45'
 	
+	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 	
 	
 	// https://mvnrepository.com/artifact/org.webjars/js-cookie
