@@ -47,7 +47,8 @@ public class UserController {
 
 	@GetMapping("/getAccessToken")
 	public OAuth2AccessToken accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-		System.out.println(authorizedClient.getRefreshToken().getTokenValue());
+		System.out.println("Refresh Token: " + authorizedClient.getRefreshToken().getTokenValue());
+		System.out.println("Access Token: " + authorizedClient.getAccessToken().getTokenValue());
 		return authorizedClient.getAccessToken();
 	}
 	
