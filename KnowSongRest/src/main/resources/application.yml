@@ -42,5 +42,5 @@ spring:
             client-id: a2398fd3acd54cf8b645af6884251a55
             client-name: Spotify
             client-secret: e8c8ceef3b064187ada929c80caaca17
-            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            redirect-uri: 'https://knowsong.life/login/oauth2/code/{registrationId}'
             scope: user-read-private
