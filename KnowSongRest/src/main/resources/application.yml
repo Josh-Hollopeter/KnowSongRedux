@@ -39,8 +39,8 @@ spring:
         registration:
           spotify:
             authorization-grant-type: authorization_code
-            client-id: a2398fd3acd54cf8b645af6884251a55
+            client-id: 3c5d78e34c9940dea2f07eb726799087
             client-name: Spotify
-            client-secret: e8c8ceef3b064187ada929c80caaca17
-            redirect-uri: 'https://knowsong.life/login/oauth2/code/{registrationId}'
+            client-secret: b1e6b2d94c6a47a69a19c2b2f8be9e76
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: user-read-private
