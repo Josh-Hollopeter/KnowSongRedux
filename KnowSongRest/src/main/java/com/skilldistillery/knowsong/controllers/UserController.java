@@ -35,7 +35,11 @@ public class UserController {
 		Map<String, Object> attributes = principal.getAttributes();
 		Map<String, String> userPacket = new HashMap<>();
 		userPacket.put("username", (String) attributes.get("id"));
+		try {
 		userPacket.put("imgSource", ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url"));
+		}catch(Exception e) {
+			
+		}
         return userPacket;
     }
 
