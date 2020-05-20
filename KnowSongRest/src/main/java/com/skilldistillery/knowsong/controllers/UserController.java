@@ -38,12 +38,6 @@ public class UserController {
         return userPacket;
     }
 
-//	@GetMapping("/user")
-//	public OAuth2User user(@AuthenticationPrincipal OAuth2User principal) {
-////		System.out.println(oauth2User.);
-//		return principal.getAttribute("id");
-//	}
-
 	@GetMapping("/getAccessToken")
 	public OAuth2AccessToken accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
 		System.out.println("Refresh Token: " + authorizedClient.getRefreshToken().getTokenValue());
@@ -53,9 +47,6 @@ public class UserController {
 	
 	@GetMapping("/refreshAccessToken")
 	public OAuth2AccessToken refreshAccessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-		System.out.println("registration: " + authorizedClient.getClientRegistration());
-		System.out.println("access : " + authorizedClient.getAccessToken());
-		System.out.println("refresh : " + authorizedClient.getRefreshToken());
 		
 		OAuth2RefreshTokenGrantRequest grantRequest = new OAuth2RefreshTokenGrantRequest(
 				authorizedClient.getClientRegistration(), 
@@ -67,15 +58,4 @@ public class UserController {
 		return refreshResponseClient.getTokenResponse(grantRequest).getAccessToken();
 	}
 	
-//	@GetMapping("/refreshAccess")
-//	public void refreshAccess(@)
-
-//	@GetMapping("/")
-//	public OAuth2AuthorizedClient accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-//		return authorizedClient;
-//	}
-//	public OAuth2User getCurrentUser() {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		return ((OAuth2AuthenticationToken)auth).getPrincipal();
-//	}
 }
