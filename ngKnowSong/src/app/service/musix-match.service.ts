@@ -19,8 +19,8 @@ export class MusixMatchService {
       + artistName + this.apiKey;
 
     return this.http.jsonp(getNameUrl, 'callback').pipe(
-      tap((res) => {
-        return res;
+      map((event: HttpResponse<any>)=> {
+        return event; 
       }),
       catchError((err: any) => {
         console.log(err);
