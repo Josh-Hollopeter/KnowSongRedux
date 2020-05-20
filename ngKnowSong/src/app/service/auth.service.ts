@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpXhrBackend, HttpRequest} from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpXhrBackend, HttpRequest, HttpEventType, HttpResponse} from '@angular/common/http'
 import { environment } from 'src/environments/environment';
-import { throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+import { catchError, tap, map, filter, takeWhile } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,10 +37,11 @@ export class AuthService {
       
      const request = new HttpRequest('GET', this.baseUrl + 'user', this.httpOptions);
 
-     return this.backend.handle(request).pipe(       
-      tap((res: any) => {
-        return res;
-      }),
+     return this.backend.handle(request).pipe(     
+       map((event: HttpResponse<any>)=> {
+         return event;
+       })  ,
+      // map(res => {return res;}),
       catchError((err: any) => {
         return throwError('Error getting user info');
       })
@@ -52,12 +53,12 @@ export class AuthService {
    
      const request = new HttpRequest('GET', this.baseUrl + 'getAccessToken', this.httpOptions);
 
-     return this.backend.handle(request).pipe(       
-      tap((res: any) => {
-        return res;
+     return this.backend.handle(request).pipe(      
+      map((event: HttpResponse<any>)=> {
+          return event; 
       }),
       catchError((err: any) => {
-        return throwError('Error getting user info');
+        return throwError('Error getting access token');
       })
   );
   }
