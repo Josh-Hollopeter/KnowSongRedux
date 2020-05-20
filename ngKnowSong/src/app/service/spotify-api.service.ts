@@ -7,21 +7,16 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class SpotifyAPIService {
-
-  private accessToken: string;
   
   private httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.accessToken}`
+      'Authorization': `Bearer ${localStorage.getItem('access')}`
     })
   };
 
   constructor(
     private http: HttpClient
-  ) { 
-    this.accessToken = localStorage.getItem('access');
-    
-  }
+  ) {}
 
 
   //---------------------
@@ -62,7 +57,7 @@ export class SpotifyAPIService {
   searchArtist(artistName: string) {
 
     let url = "https://api.spotify.com/v1/search?q=" + artistName + "&type=artist&limit=5";
-
+    
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
         return event; 
