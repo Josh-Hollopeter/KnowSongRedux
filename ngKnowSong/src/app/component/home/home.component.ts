@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-   public username: String = new String();
-   public userimg;
+   public username: String;
+   public userimg: String;
 
   constructor(
     private authService: AuthService,
@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    // this.getAccessToken();
-    // this.getUserDetail();
+    this.getAccessToken();
+    this.getUserDetail();
   }
 
   getUserDetail(){
@@ -32,17 +32,10 @@ export class HomeComponent implements OnInit {
           this.username = body["username"];
           this.userimg = body["imgSource"];
         }
-        // let body = JSON.stringify(res);
-        // console.log(body);
-        // var body = success["body"];
-        // console.log(body["username"]);
-        
-        // this.username = body["username"];
-        // this.userInfo = success;
       },
       fail => {
-        // console.error(fail);
-        // this.userInfo = fail;
+        console.error(fail);
+
       }
     )
   }
@@ -59,10 +52,6 @@ export class HomeComponent implements OnInit {
       fail => {
         console.error(fail);
         // this.userInfo = fail;
-      },
-      () => {
-        console.log("complete notification");
-        
       }
     )
   }
