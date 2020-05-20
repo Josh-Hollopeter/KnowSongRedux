@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class SpotifyAPIService {
   constructor(
     private http: HttpClient
   ) { 
-    this.accessToken = localStorage.getItem('AccessToken');
+    this.accessToken = localStorage.getItem('access');
     
   }
 
@@ -64,10 +64,9 @@ export class SpotifyAPIService {
     let url = "https://api.spotify.com/v1/search?q=" + artistName + "&type=artist&limit=5";
 
     return this.http.get(url, this.httpOptions).pipe(
-      tap((res) => {
-
-        return res;
-      }),
+      map((event: HttpResponse<any>)=> {
+        return event; 
+    }),
       catchError((err: any) => {
         console.log(err);
         return throwError('Could not retrieve artist from spotify API');
