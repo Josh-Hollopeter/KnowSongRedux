@@ -33,35 +33,49 @@ export class AuthService {
     return this.backend.handle(request);
   }
 
-  getUserData(): any{
-      
-     const request = new HttpRequest('GET', this.baseUrl + 'user', this.httpOptions);
+  getUserData(): any{ 
+    const request = new HttpRequest('GET', this.baseUrl + 'user', this.httpOptions);
 
-     return this.backend.handle(request).pipe(     
-       map((event: HttpResponse<any>)=> {
-         return event;
-       })  ,
+    return this.backend.handle(request).pipe(     
+      map((event: HttpResponse<any>)=> {
+        return event;
+       }),
       // map(res => {return res;}),
       catchError((err: any) => {
         return throwError('Error getting user info');
       })
-  );
+    );
 
   }
 
   getAccessToken(){
-   
-     const request = new HttpRequest('GET', this.baseUrl + 'getAccessToken', this.httpOptions);
+    const request = new HttpRequest('GET', this.baseUrl + 'getAccessToken', this.httpOptions);
 
-     return this.backend.handle(request).pipe(      
+    return this.backend.handle(request).pipe(      
       map((event: HttpResponse<any>)=> {
           return event; 
       }),
       catchError((err: any) => {
         return throwError('Error getting access token');
       })
-  );
+    );
   }
 
+  refreshAccessToken(){
+    const request = new HttpRequest('GET', this.baseUrl + 'refreshAccessToken', this.httpOptions);
+
+    return this.backend.handle(request).pipe(      
+      map((event: HttpResponse<any>)=> {
+        if(event.status == 200){
+          let body = event["body"];
+          localStorage.removeItem('access');
+          localStorage.setItem('access', body["tokenValue"]);
+        }
+      }),
+      catchError((err: any) => {
+        return throwError('Error refreshing access token');
+      })
+    );
+  }
 
 }

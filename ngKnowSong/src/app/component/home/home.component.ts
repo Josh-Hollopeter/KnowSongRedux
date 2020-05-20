@@ -55,4 +55,12 @@ export class HomeComponent implements OnInit {
       }
     )
   }
+  refreshAccessToken(){
+    this.authService.refreshAccessToken().subscribe(
+      res => {
+        console.log(res);
+        
+      }
+    )
+  }
 }
