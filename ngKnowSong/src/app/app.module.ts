@@ -14,12 +14,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HttpClientModule} from '@angular/common/http';
 import { AuthService } from './service/auth.service';
+import { CreateGameComponent } from './component/create-game/create-game.component';
+import { SpotifyAPIService } from './service/spotify-api.service';
+import { MusixMatchService } from './service/musix-match.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     HomeComponent,
+    CreateGameComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,10 +36,13 @@ import { AuthService } from './service/auth.service';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    FormsModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    SpotifyAPIService,
+    MusixMatchService
   ],
   bootstrap: [AppComponent]
 })
