@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -31,8 +31,8 @@ export class SpotifyAPIService {
     let url = "https://api.spotify.com/v1/me/playlists?limit=50&offset=0";
 
     return this.http.get(url, this.httpOptions).pipe(
-      tap((res) => {
-        return res;
+      map((event: HttpResponse<any>)=> {
+        return event; 
       }),
       catchError((err: any) => {
         console.log(err);
@@ -46,8 +46,8 @@ export class SpotifyAPIService {
     let url = "https://api.spotify.com/v1/playlists/"+ playlistId +"/tracks";
 
     return this.http.get(url, this.httpOptions).pipe(
-      tap((res) => {
-        return res;
+      map((event: HttpResponse<any>)=> {
+        return event; 
       }),
       catchError((err: any) => {
         console.log(err);
@@ -66,7 +66,7 @@ export class SpotifyAPIService {
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
         return event; 
-    }),
+      }),
       catchError((err: any) => {
         console.log(err);
         return throwError('Could not retrieve artist from spotify API');
@@ -78,8 +78,8 @@ export class SpotifyAPIService {
     let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums";
 
     return this.http.get(url, this.httpOptions).pipe(
-      tap((res) => {
-        return res;
+      map((event: HttpResponse<any>)=> {
+        return event; 
       }),
       catchError((err: any) => {
         console.log(err);
@@ -93,8 +93,8 @@ export class SpotifyAPIService {
     let url = "https://api.spotify.com/v1/albums/" + albumId + "/tracks?limit=50";
 
     return this.http.get(url, this.httpOptions).pipe(
-      tap((res) => {
-        return res;
+      map((event: HttpResponse<any>)=> {
+        return event; 
       }),
       catchError((err: any) => {
         console.log(err);
@@ -108,8 +108,8 @@ export class SpotifyAPIService {
     let url = "https://api.spotify.com/v1/audio-features/?ids=" + csv;
 
     return this.http.get(url, this.httpOptions).pipe(
-      tap((res) => {
-        return res;
+      map((event: HttpResponse<any>)=> {
+        return event; 
       }),
       catchError((err: any) => {
         console.log(err);
