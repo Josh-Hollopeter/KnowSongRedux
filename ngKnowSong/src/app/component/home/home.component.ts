@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  // public userInfo: String = new String();
+   public username: String = new String();
+   public userimg;
 
   constructor(
     private authService: AuthService,
@@ -17,30 +18,51 @@ export class HomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    
+    // this.getAccessToken();
+    // this.getUserDetail();
   }
 
   getUserDetail(){
     this.authService.getUserData().subscribe(
-      success => {
-        console.log(success);
+      res => {
+        if(res.status == 200){
+          console.log(res);
+          
+          let body = res["body"];
+          this.username = body["username"];
+          this.userimg = body["imgSource"];
+        }
+        // let body = JSON.stringify(res);
+        // console.log(body);
+        // var body = success["body"];
+        // console.log(body["username"]);
+        
+        // this.username = body["username"];
         // this.userInfo = success;
       },
       fail => {
-        console.error(fail);
+        // console.error(fail);
         // this.userInfo = fail;
       }
     )
   }
   getAccessToken(){
     this.authService.getAccessToken().subscribe(
-      success => {
-        console.log(success);
-        // this.userInfo = success;
+      res => {
+        // checks status to avoid picking up the {type: 0} .Sent response
+        if(res.status == 200){
+          let body = res["body"];
+          let expiration = body["expiresAt"];
+          localStorage.setItem('access', body["tokenValue"]);
+        }
       },
       fail => {
         console.error(fail);
         // this.userInfo = fail;
+      },
+      () => {
+        console.log("complete notification");
+        
       }
     )
   }
