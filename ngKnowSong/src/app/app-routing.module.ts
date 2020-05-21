@@ -3,12 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { LandingComponent } from './component/landing/landing.component';
 import { HomeComponent } from './component/home/home.component';
 import { CreateGameComponent } from './component/create-game/create-game.component';
+import { AdminGuard } from './admin/admin.guard';
+import { CallbackComponent } from './component/callback/callback.component';
 
 
 const routes: Routes = [
   
-  { path: 'home', component: HomeComponent},
-  { path: 'creategame', component: CreateGameComponent},
+  { path: 'home', component: HomeComponent, canActivate: [AdminGuard]},
+  { path: 'creategame', component: CreateGameComponent, canActivate: [AdminGuard]},
+  { path: 'loggedInCallback', component: CallbackComponent},
   { path: '**', component: LandingComponent}
 ];
 

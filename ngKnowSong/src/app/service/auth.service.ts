@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpXhrBackend, HttpRequest, HttpEventType, Ht
 import { environment } from 'src/environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap, map, filter, takeWhile } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +15,37 @@ export class AuthService {
 
   private httpOptions = {
     headers: new HttpHeaders({
-      'credentials': `${this.credentials}`,
       'Content-Type': 'application/json'
     }),
     withCredentials: true
   };
 
   constructor(
-    private backend: HttpXhrBackend
-    ) {
-      this.credentials = localStorage.getItem('credentials'); 
-    }
+    private backend: HttpXhrBackend,
+    private router: Router
+    ) {}
 
 
 
   login(){
     const request = new HttpRequest('GET', this.baseUrl + 'oauth2/authorization/spotify');
     return this.backend.handle(request);
+  }
+  
+  isLoggedIn(): any{
+    const request = new HttpRequest('GET', this.baseUrl + 'isLoggedIn', this.httpOptions);
+    return this.backend.handle(request).pipe(     
+      map((event: HttpResponse<any>)=> {
+        if(event.body == true){
+          sessionStorage.setItem("logged in", "Rock on dude! You are now free to move about the app!");
+          this.router.navigate(['home']);
+        }
+        else if(event.body == false){
+          this.router.navigate(['login']);  //just sends them to login/landing page but with a helpful URI
+        }
+       })
+    );
+
   }
 
   getUserData(): any{ 
