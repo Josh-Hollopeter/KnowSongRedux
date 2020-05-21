@@ -18,6 +18,7 @@ import { CreateGameComponent } from './component/create-game/create-game.compone
 import { SpotifyAPIService } from './service/spotify-api.service';
 import { MusixMatchService } from './service/musix-match.service';
 import { FormsModule } from '@angular/forms';
+import { CallbackComponent } from './component/callback/callback.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     LandingComponent,
     HomeComponent,
     CreateGameComponent,
+    CallbackComponent,
   ],
   imports: [
     BrowserModule,
