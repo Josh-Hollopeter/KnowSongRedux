@@ -6,19 +6,15 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import com.skilldistillery.knowsong.entities.Rank;
 import com.skilldistillery.knowsong.entities.User;
+import com.skilldistillery.knowsong.repositories.RankRepository;
 import com.skilldistillery.knowsong.repositories.UserRepository;
 
 @Component
@@ -28,63 +24,41 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	UserRepository userRepo;
 	
 	@Autowired
-	OAuth2AuthorizedClientRepository authorizedClientRepo;
+	RankRepository rankRepo;
 	
-	// user must go through this method every time they load the application
+	// user must go through this method every time they authenticate with the server (login / use the app)
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
 		//create new user object and get the attributes
-		OAuth2User oAuth2User = super.loadUser(userRequest);
-		Map<String, Object> attributes = oAuth2User.getAttributes();
-		System.out.println(attributes);
+		OAuth2User user = super.loadUser(userRequest);
+		Map<String, Object> attributes = user.getAttributes();
 
 		// grab username
-		String username = (String) attributes.get("id");
-//		if(!username.equals(oAuth2User.getName())) {
-//			// new username logic
-//		}
-//		
-		// grab image
-		// Map -> ArrayList -> LinkedHashMap -> String
-		
-		@SuppressWarnings("unchecked")
-		String imgSource = ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url");	// get first image for your spotify account..
-		System.out.println(oAuth2User.getAuthorities());
-		
-		System.out.println(oAuth2User.getName());
-//		System.out.println(authorizedClient.getPrincipalName());
-//		System.out.println(authorizedClient.toString());
-//		System.out.println(authorizedClient.getAccessToken().getTokenValue());
-		OAuth2AuthorizedClient authorizedClient = new OAuth2AuthorizedClient(userRequest.getClientRegistration(), username, userRequest.getAccessToken());
-//		System.out.println(authorizedClient.getRefreshToken().getIssuedAt());
-		System.out.println( authorizedClient.getAccessToken().getTokenValue());
-		//check if user is in database
-		if(isUserInDb(username)) {
-			
-			// check and replace refresh token
-			
-			// check and replace img url
-			
-		}else {
-			//put user into db
-			registerNewUser(username, imgSource, null);
-			
+		String username = user.getName();
+		String imgSource = null;
+		try {
+			// Map -> ArrayList -> LinkedHashMap -> String
+			imgSource = ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url");	// get first image for your spotify account..
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-		return oAuth2User;
-	}
-	
-	private User registerNewUser(String username, String imgSource, String refreshToken) {
-		return null;
-	}
-	
-	private boolean isUserInDb(String username) {
+
 		Optional<User> optionalUser = userRepo.findByUsername(username);
-		
+		User newUser = new User();
+		//check if user is in database, register new user or update image
 		if(optionalUser.isPresent()) {
-			return true;
+			newUser.setImgSource(imgSource);	
+			userRepo.saveAndFlush(newUser);
+		}else {
+			newUser.setEnabled(true);
+			newUser.setRole("standard");
+			newUser.setImgSource(imgSource);
+			newUser.setUsername(username);
+			Rank rank = rankRepo.findById(1).get();
+			newUser.setRank(rank);
+			userRepo.saveAndFlush(newUser);
 		}
-		else {
-			return false;
-		}
+		return user;
 	}
+	
 }
