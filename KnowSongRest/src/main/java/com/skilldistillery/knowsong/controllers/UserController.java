@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,31 +24,25 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.knowsong.entities.User;
+import com.skilldistillery.knowsong.repositories.UserRepository;
 import com.skilldistillery.knowsong.services.CustomOAuth2UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
-	@SuppressWarnings("unchecked")
+	@Autowired
+	UserRepository userRepo;
+	
 	@GetMapping("/user")
-    public Map<String, String> user(@AuthenticationPrincipal OAuth2User principal) {
-		Map<String, Object> attributes = principal.getAttributes();
-		Map<String, String> userPacket = new HashMap<>();
-		userPacket.put("username", (String) attributes.get("id"));
-		try {
-			userPacket.put("imgSource", ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url"));
-		} catch(Exception e) {
-			System.out.println("user has no profile photo, not sure what error will look like. feel free to delete this ");
-			e.printStackTrace();
-		}
-        return userPacket;
+    public User user(@AuthenticationPrincipal OAuth2User principal) {
+		User user = userRepo.findByUsername(principal.getName());		
+        return user;
     }
 
 	@GetMapping("/getAccessToken")
 	public OAuth2AccessToken accessToken(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
-		System.out.println("Refresh Token: " + authorizedClient.getRefreshToken().getTokenValue());
-		System.out.println("Access Token: " + authorizedClient.getAccessToken().getTokenValue());
 		return authorizedClient.getAccessToken();
 	}
 	
