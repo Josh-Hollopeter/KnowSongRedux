@@ -30,26 +30,28 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
 		//create new user object and get the attributes
-		OAuth2User user = super.loadUser(userRequest);
-		Map<String, Object> attributes = user.getAttributes();
+		OAuth2User oauthUser = super.loadUser(userRequest);
+		Map<String, Object> attributes = oauthUser.getAttributes();
+		System.out.println(attributes);
 
-		// grab username
-		String username = user.getName();
+		String username = oauthUser.getName();
 		String imgSource = null;
 		try {
 			// Map -> ArrayList -> LinkedHashMap -> String
 			imgSource = ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url");	// get first image for your spotify account..
 		}catch(Exception e) {
+			System.err.println("user has no profile photo, not sure what error will look like. feel free to delete this ");
 			e.printStackTrace();
 		}
 
-		Optional<User> optionalUser = userRepo.findByUsername(username);
-		User newUser = new User();
+		User user = userRepo.findByUsername(username);
+		
 		//check if user is in database, register new user or update image
-		if(optionalUser.isPresent()) {
-			newUser.setImgSource(imgSource);	
-			userRepo.saveAndFlush(newUser);
+		if(user != null) {
+			user.setImgSource(imgSource);	
+			userRepo.saveAndFlush(user);
 		}else {
+			User newUser = new User();
 			newUser.setEnabled(true);
 			newUser.setRole("standard");
 			newUser.setImgSource(imgSource);
@@ -58,7 +60,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 			newUser.setRank(rank);
 			userRepo.saveAndFlush(newUser);
 		}
-		return user;
+		return oauthUser;
 	}
 	
 }
