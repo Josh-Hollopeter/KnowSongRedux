@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`user` (
   `role` VARCHAR(45) NOT NULL,
   `enabled` TINYINT(4) NULL DEFAULT '0',
   `admin` TINYINT(4) NULL DEFAULT '0',
-  `refresh_token` VARCHAR(200) NULL DEFAULT NULL,
   `img_source` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
@@ -262,8 +261,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `knowsong`;
-INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `role`, `enabled`, `admin`, `refresh_token`, `img_source`) VALUES (1, 1, 'test', 'standard', 1, 0, NULL, NULL);
-INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `role`, `enabled`, `admin`, `refresh_token`, `img_source`) VALUES (2, 1, 'josh', 'admin', 1, 1, 'AQB6QtBZc0C7dSsu0ngVcIVh5DGvWjTgJKk2_7nmrTEZXHUv7hjNt-am8hwltAwSDImFp-vXfwgYHeIrI8zORI9Qk78hzAU79_xn9FFxMrEDq1tTdWYUhFCyduSRpVt9yCk', NULL);
+INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `role`, `enabled`, `admin`, `img_source`) VALUES (1, 1, 'test', 'standard', 1, 0, NULL);
+INSERT INTO `knowsong`.`user` (`id`, `rank_id`, `username`, `role`, `enabled`, `admin`, `img_source`) VALUES (2, 1, 'josh', 'admin', 1, 1, NULL);
 
 COMMIT;
 
