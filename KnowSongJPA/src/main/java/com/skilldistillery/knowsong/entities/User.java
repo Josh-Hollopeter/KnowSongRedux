@@ -37,8 +37,6 @@ public class User {
 	
 	private Boolean admin;
 		
-	@Column(name = "refresh_token")
-	private String refreshToken;
 	
 	@Column(name = "img_source")
 	private String imgSource;
@@ -106,14 +104,6 @@ public class User {
 
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
-	}
-
-	public String getRefreshToken() {
-		return refreshToken;
-	}
-
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
 	}
 
 	public String getImgSource() {
