@@ -34,7 +34,12 @@ public class UserController {
 		Map<String, Object> attributes = principal.getAttributes();
 		Map<String, String> userPacket = new HashMap<>();
 		userPacket.put("username", (String) attributes.get("id"));
-		userPacket.put("imgSource", ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url"));
+		try {
+			userPacket.put("imgSource", ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url"));
+		} catch(Exception e) {
+			System.out.println("user has no profile photo, not sure what error will look like. feel free to delete this ");
+			e.printStackTrace();
+		}
         return userPacket;
     }
 
@@ -56,6 +61,14 @@ public class UserController {
 		DefaultRefreshTokenTokenResponseClient refreshResponseClient = new DefaultRefreshTokenTokenResponseClient();
 		
 		return refreshResponseClient.getTokenResponse(grantRequest).getAccessToken();
+	}
+	
+	@GetMapping("/isLoggedIn")
+	public Boolean isLoggedIn(@AuthenticationPrincipal OAuth2User principal) {
+		if(principal != null)
+			return true;
+		else
+			return false;
 	}
 	
 }
