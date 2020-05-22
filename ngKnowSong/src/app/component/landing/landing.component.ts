@@ -20,7 +20,8 @@ export class LandingComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     // check if user is authenticated with spotify by cookie in storage or somethign
 
@@ -29,7 +30,9 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    ViewEncapsulation.ShadowDom
+    ViewEncapsulation.ShadowDom;
+    this.authService.isLoggedIn().subscribe();  // in case session storage 'logged in' token is not reliable. remakes the request to server for the authentication status.
+
   }
 
   // this function authenticates the client with the server and registers the user into database
