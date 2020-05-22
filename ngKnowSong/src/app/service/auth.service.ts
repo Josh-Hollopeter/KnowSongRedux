@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap, map, filter, takeWhile } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class AuthService {
 
   constructor(
     private backend: HttpXhrBackend,
-    private router: Router
+    private router: Router,
+    private userService: UserService
     ) {}
 
 
@@ -55,6 +57,14 @@ export class AuthService {
 
     return this.backend.handle(request).pipe(     
       map((event: HttpResponse<any>)=> {
+        if(event.status == 200){
+          let body = event["body"];
+          let username = body["username"];
+          let userimg = body["imgSource"];
+          let gameHistories:[] = body["gameHistories"];
+
+          this.userService.setUser(username, userimg, gameHistories);
+        }
         return event;
        }),
       // map(res => {return res;}),
@@ -70,6 +80,17 @@ export class AuthService {
 
     return this.backend.handle(request).pipe(      
       map((event: HttpResponse<any>)=> {
+        // checks status to avoid picking up the {type: 0} .Sent response
+        if(event.status == 200){
+          let body = event["body"];
+          let expiration: number = body["expiresAt"];
+          if(expiration < 240){
+            // we only got 4 minutes to save the world -JT... https://www.youtube.com/watch?v=aAQZPBwz2CI
+
+          }
+          localStorage.setItem('access', body["tokenValue"]);
+        }
+          console.log(event);
           return event; 
       }),
       catchError((err: any) => {
