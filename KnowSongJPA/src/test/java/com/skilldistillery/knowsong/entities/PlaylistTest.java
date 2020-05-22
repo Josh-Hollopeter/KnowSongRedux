@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import life.knowsong.entities.Playlist;
+
 class PlaylistTest {
 
 	private static EntityManagerFactory emf;
