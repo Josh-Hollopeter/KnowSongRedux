@@ -9,7 +9,7 @@ war {
   archiveName = "${baseName}.war"     // Our app name, as defined in settings.gradle
   destinationDir = file("./")         // Project root directory
 }
-group = 'com.example'
+group = 'life.KnowSong'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 

@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.entities;
+package life.knowsong.entities;
 
 import java.util.ArrayList;
 import java.util.List;

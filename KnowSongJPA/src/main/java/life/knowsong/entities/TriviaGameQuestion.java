@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.entities;
+package life.knowsong.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

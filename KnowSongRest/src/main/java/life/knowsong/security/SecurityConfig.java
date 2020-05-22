@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.security;
+package life.knowsong.security;
 
 import java.util.Arrays;
 
@@ -25,8 +25,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.skilldistillery.knowsong.repositories.UserRepository;
-import com.skilldistillery.knowsong.services.CustomOAuth2UserService;
+import life.knowsong.repositories.UserRepository;
+import life.knowsong.services.CustomOAuth2UserService;
 
 @Configuration
 @EnableWebSecurity

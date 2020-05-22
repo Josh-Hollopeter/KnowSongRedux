@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.services;
+package life.knowsong.services;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,10 +12,10 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
-import com.skilldistillery.knowsong.entities.Rank;
-import com.skilldistillery.knowsong.entities.User;
-import com.skilldistillery.knowsong.repositories.RankRepository;
-import com.skilldistillery.knowsong.repositories.UserRepository;
+import life.knowsong.entities.Rank;
+import life.knowsong.entities.User;
+import life.knowsong.repositories.RankRepository;
+import life.knowsong.repositories.UserRepository;
 
 @Component
 public class CustomOAuth2UserService extends DefaultOAuth2UserService{
