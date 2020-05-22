@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,13 @@ export class SpotifyAPIService {
   };
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
+  refreshAccessToken(){
+    this.authService.refreshAccessToken().subscribe();
+  }
 
   //---------------------
   //-  Playlist Methods -
@@ -27,11 +32,10 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
+        if(event.status == 401){
+          this.refreshAccessToken();
+        }
         return event; 
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Could not retrieve Playlists from current user');
       })
     )
 
@@ -42,11 +46,10 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
+        if(event.status == 401){
+          this.refreshAccessToken();
+        }
         return event; 
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Could not retrieve tracks from playlist');
       })
     )
   }
@@ -60,11 +63,10 @@ export class SpotifyAPIService {
     
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
+        if(event.status == 401){
+          this.refreshAccessToken();
+        }
         return event; 
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Could not retrieve artist from spotify API');
       })
     )
   }
@@ -74,14 +76,12 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
+        if(event.status == 401){
+          this.refreshAccessToken();
+        }
         return event; 
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('Could not retrieve albums from artist');
       })
     )
-
   }
 
   getTracksFromAlbum(albumId: string) {
@@ -89,11 +89,10 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
+        if(event.status == 401){
+          this.refreshAccessToken();
+        }
         return event; 
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('could not get tracks from album');
       })
     )
   }
@@ -104,11 +103,10 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
+        if(event.status == 401){
+          this.refreshAccessToken();
+        }
         return event; 
-      }),
-      catchError((err: any) => {
-        console.log(err);
-        return throwError('could not get tracks from album');
       })
     )
   }
