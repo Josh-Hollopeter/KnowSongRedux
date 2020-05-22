@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/service/user.service';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-home',
@@ -9,53 +11,22 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-   public username: String;
-   public userimg: String;
+  user: User;
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private route: Router
     ) { }
 
   ngOnInit(): void {
-    this.getAccessToken();
-    this.getUserDetail();
+    this.user = this.userService.getUser();  
+    
   }
 
-  getUserDetail(){
-    this.authService.getUserData().subscribe(
-      res => {
-        if(res.status == 200){
-          console.log(res);
-          
-          let body = res["body"];
-          this.username = body["username"];
-          this.userimg = body["imgSource"];
-        }
-      },
-      fail => {
-        console.error(fail);
-
-      }
-    )
-  }
   getAccessToken(){
-    this.authService.getAccessToken().subscribe(
-      res => {
-        // checks status to avoid picking up the {type: 0} .Sent response
-        if(res.status == 200){
-          let body = res["body"];
-          let expiration = body["expiresAt"];
-          localStorage.setItem('access', body["tokenValue"]);
-        }
-      },
-      fail => {
-        console.error(fail);
-        // this.userInfo = fail;
-      }
-    )
+    this.authService.getAccessToken().subscribe();
   }
-  refreshAccessToken(){
-    this.authService.refreshAccessToken().subscribe();
-  }
+
+  
 }
