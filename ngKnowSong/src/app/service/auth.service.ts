@@ -39,9 +39,11 @@ export class AuthService {
         if(event.body == true){
           sessionStorage.setItem("logged in", "Rock on dude! You are now free to move about the app!");
           this.router.navigate(['home']);
+          return true;
         }
         else if(event.body == false){
           this.router.navigate(['login']);  //just sends them to login/landing page but with a helpful URI
+          return false;
         }
        })
     );
