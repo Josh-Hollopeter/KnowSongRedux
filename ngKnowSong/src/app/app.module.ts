@@ -19,6 +19,8 @@ import { SpotifyAPIService } from './service/spotify-api.service';
 import { MusixMatchService } from './service/musix-match.service';
 import { FormsModule } from '@angular/forms';
 import { CallbackComponent } from './component/callback/callback.component';
+import { LyricMatchComponent } from './game/lyric-match/lyric-match.component';
+import { ReleaseYearComponent } from './game/release-year/release-year.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { CallbackComponent } from './component/callback/callback.component';
     HomeComponent,
     CreateGameComponent,
     CallbackComponent,
+    LyricMatchComponent,
+    ReleaseYearComponent,
   ],
   imports: [
     BrowserModule,
