@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong;
+package life.knowsong;
 
 import java.util.Collections;
 import java.util.Map;
