@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.controllers;
+package life.knowsong.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

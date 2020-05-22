@@ -1,37 +1,46 @@
-package com.skilldistillery.knowsong.entities;
+package life.knowsong.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "question_category")
-public class QuestionCategory {
+public class Rank {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String category;
+	
+	@Column(name = "img_source")
+	private String imgSource;
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getCategory() {
-		return category;
+
+	public String getImgSource() {
+		return imgSource;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+
+	public void setImgSource(String imgSource) {
+		this.imgSource = imgSource;
 	}
-	
+
+
+	public Rank() {
+		super();
+	}
 	
 	
 

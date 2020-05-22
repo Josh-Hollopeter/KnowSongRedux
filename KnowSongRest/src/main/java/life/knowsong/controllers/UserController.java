@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.controllers;
+package life.knowsong.controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.knowsong.entities.User;
-import com.skilldistillery.knowsong.repositories.UserRepository;
-import com.skilldistillery.knowsong.services.CustomOAuth2UserService;
+import life.knowsong.entities.User;
+import life.knowsong.repositories.UserRepository;
+import life.knowsong.services.CustomOAuth2UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
