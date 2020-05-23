@@ -26,18 +26,19 @@ export class HomeComponent implements OnInit {
   }
 
   private loadUser(){
-    
-    if(this.userService.getUser() === undefined){
-      console.log("hello?");
-      this.user = this.authService.getUserData().subscribe();
-      this.user = this.authService.getUserData().pipe(map((response: User) => {
-        return response;
-      }));
-      this.authService.getAccessToken().subscribe();
 
-    } else{
-      this.user = this.userService.getUser();  
-    }
-  }
-  
+  //   if(this.userService.getUser() === undefined){
+  //     console.log("hello?");
+  //     this.user = this.authService.getUserData().subscribe();
+  //     this.user = this.authService.getUserData().pipe(map((response: User) => {
+  //       return response;
+  //     }));
+  //     this.authService.getAccessToken().subscribe();
+
+  //   } else{
+  //     this.user = this.userService.getUser();
+  //   }
+   }
+
+
 }
