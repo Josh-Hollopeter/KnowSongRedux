@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { CallbackComponent } from './component/callback/callback.component';
 import { LyricMatchComponent } from './game/lyric-match/lyric-match.component';
 import { ReleaseYearComponent } from './game/release-year/release-year.component';
+import { NameSongComponent } from './game/name-song/name-song.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ReleaseYearComponent } from './game/release-year/release-year.component
     CallbackComponent,
     LyricMatchComponent,
     ReleaseYearComponent,
+    NameSongComponent,
   ],
   imports: [
     BrowserModule,
