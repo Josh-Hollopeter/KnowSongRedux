@@ -18,32 +18,9 @@ export class CallbackComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.isLoggedIn().subscribe();
-    // if not redirected by above^
     this.authService.getUserData().subscribe();
     this.authService.getAccessToken().subscribe();
-  }
-
-  getUserDetail(){
-    this.authService.getUserData().subscribe(
-      res => {
-        if(res.status == 200){
-          let body = res["body"];
-          let username = body["username"];
-          let userimg = body["imgSource"];
-          let gameHistories:[] = body["gameHistories"];
-
-          this.userService.setUser(username, userimg, gameHistories);
-        }
-      },
-      fail => {
-        console.error(fail);
-      }
-    )
-  }
-
-  getAccessToken(){
-    this.authService.getAccessToken().subscribe();
+    this.router.navigate(['home']);
   }
 
 }
