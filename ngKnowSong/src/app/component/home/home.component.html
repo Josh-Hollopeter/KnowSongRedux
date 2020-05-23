@@ -5,15 +5,11 @@
 </head>
 
 <body>
-
-    <button (click)='getUserDetail()'>Display User Info in console</button>
-    <button (click)='getAccessToken()'>Display AccessToken in console</button>
-    <button (click)='refreshAccessToken()'>Refresh Access Token</button>
 <div class="wrapper">
 
     <div>
-        <p>{{username}}</p>
-        <img src="{{userimg}}">
+        <p>{{user.username}}</p>
+        <img src="{{user.imgSource}}">
     </div><br>
 
     <div>

@@ -9,13 +9,13 @@ import { CallbackComponent } from './component/callback/callback.component';
 
 
 const routes: Routes = [
-
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '', component: LandingComponent },
   { path: 'home', component: HomeComponent, canActivate: [AdminGuard]},
   { path: 'creategame', component: CreateGameComponent, canActivate: [AdminGuard]},
-  { path: 'landing', component: LandingComponent },
-  { path: 'loggedInCallback', component: CallbackComponent},
-  { path: 'LyricMatch', component: LyricMatchComponent},
-  { path: '**', component: LandingComponent}
+  { path: 'loggingIn', component: CallbackComponent, canActivate: [AdminGuard]},
+  { path: 'LyricMatch', component: LyricMatchComponent, canActivate: [AdminGuard]},
+  
 ];
 
 @NgModule({
