@@ -53,9 +53,9 @@ export class AuthService {
           let username = body["username"];
           let userimg = body["imgSource"];
           let gameHistories:[] = body["gameHistories"];
+          
           let newUser = new User(username, userimg, gameHistories);
           this.userService.setUser(newUser);
-          console.log(newUser);
           
           return newUser;
         }
