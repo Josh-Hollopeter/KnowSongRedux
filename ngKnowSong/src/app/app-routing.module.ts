@@ -6,6 +6,8 @@ import { HomeComponent } from './component/home/home.component';
 import { CreateGameComponent } from './component/create-game/create-game.component';
 import { AdminGuard } from './admin/admin.guard';
 import { CallbackComponent } from './component/callback/callback.component';
+import { ReleaseYearComponent } from './game/release-year/release-year.component';
+import { NameSongComponent } from './game/name-song/name-song.component';
 
 
 const routes: Routes = [
@@ -15,7 +17,9 @@ const routes: Routes = [
   { path: 'creategame', component: CreateGameComponent, canActivate: [AdminGuard]},
   { path: 'loggingIn', component: CallbackComponent, canActivate: [AdminGuard]},
   { path: 'LyricMatch', component: LyricMatchComponent, canActivate: [AdminGuard]},
-  
+  { path: 'ReleaseYear' , component: ReleaseYearComponent, canActivate:[AdminGuard]},
+  { path: 'NameSong', component: NameSongComponent, canActivate:[AdminGuard]}
+
 ];
 
 @NgModule({
