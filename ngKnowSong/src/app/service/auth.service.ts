@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpXhrBackend, HttpRequest, HttpEventType, HttpResponse} from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 import { throwError, Observable } from 'rxjs';
-import { catchError, tap, map, filter, takeWhile } from 'rxjs/operators';
+import { catchError, tap, map, filter, takeWhile, skip } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,47 +28,38 @@ export class AuthService {
     private userService: UserService
     ) {}
 
-
-
-  login(){
-    const request = new HttpRequest('GET', this.baseUrl + 'oauth2/authorization/spotify');
-    return this.backend.handle(request);
-  }
   
-  isLoggedIn(): any{
+  isLoggedIn(): Observable<boolean>{
     const request = new HttpRequest('GET', this.baseUrl + 'isLoggedIn', this.httpOptions);
     return this.backend.handle(request).pipe(     
-      map((event: HttpResponse<any>)=> {
-        if(event.body == true){
-          sessionStorage.setItem("logged in", "Rock on dude! You are now free to move about the app!");
-          this.router.navigate(['home']);
+      map((event: HttpResponse<any>): boolean => {
+        if(event.body == true)
           return true;
-        }
-        else if(event.body == false){
-          this.router.navigate(['login']);  //just sends them to login/landing page but with a helpful URI
+        else if(event.body == false)
           return false;
-        }
-       })
+       }),skip(1) //skip the success packet
     );
 
   }
 
-  getUserData(): any{ 
+  getUserData(): Observable<User>{ 
     const request = new HttpRequest('GET', this.baseUrl + 'user', this.httpOptions);
 
     return this.backend.handle(request).pipe(     
-      map((event: HttpResponse<any>)=> {
+      map((event: HttpResponse<any>) => {
+        
         if(event.status == 200){
           let body = event["body"];
           let username = body["username"];
           let userimg = body["imgSource"];
           let gameHistories:[] = body["gameHistories"];
-
-          this.userService.setUser(username, userimg, gameHistories);
+          let newUser = new User(username, userimg, gameHistories);
+          this.userService.setUser(newUser);
+          console.log(newUser);
+          
+          return newUser;
         }
-        return event;
-       }),
-      // map(res => {return res;}),
+       }),skip(1), //skip the success packet
       catchError((err: any) => {
         return throwError('Error getting user info');
       })
@@ -83,19 +75,9 @@ export class AuthService {
         // checks status to avoid picking up the {type: 0} .Sent response
         if(event.status == 200){
           let body = event["body"];
-          let expiration: number = body["expiresAt"];
-          if(expiration < 240){
-            // we only got 4 minutes to save the world -JT... https://www.youtube.com/watch?v=aAQZPBwz2CI
-
-          }
           localStorage.setItem('access', body["tokenValue"]);
         }
-          console.log(event);
-          return event; 
-      }),
-      catchError((err: any) => {
-        return throwError('Error getting access token');
-      })
+      }),skip(1)
     );
   }
 

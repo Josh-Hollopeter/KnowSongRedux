@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling(e -> e
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             )
-//            .oauth2ResourceServer().authenticationManagerResolver(authenticationManagerResolver)
             .cors().and()
             .csrf(c -> c
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -56,29 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.userInfoEndpoint()
             			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
-            	.defaultSuccessUrl("http://localhost:4200/loggedInCallback")
+            	.defaultSuccessUrl("http://localhost:4200/home")
             	.failureUrl("http://localhost:4200");
    
     }
-    
-//    @Bean
-//    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient(){
-//    	DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient = 
-//    	          new DefaultAuthorizationCodeTokenResponseClient(); 
-//    	        accessTokenResponseClient.setRequestEntityConverter(new CustomRequestEntityConverter()); 
-//    	 
-//    	        OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter = 
-//    	          new OAuth2AccessTokenResponseHttpMessageConverter(); 
-//    	        tokenResponseHttpMessageConverter.setTokenResponseConverter(new CustomTokenResponseConverter()); 
-//    	        RestTemplate restTemplate = new RestTemplate(Arrays.asList(
-//    	          new FormHttpMessageConverter(), tokenResponseHttpMessageConverter)); 
-//    	        restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler()); 
-//    	         
-//    	        accessTokenResponseClient.setRestOperations(restTemplate); 
-//    	
-//    	
-//    	return accessTokenResponseClient;
-//    }
     
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
