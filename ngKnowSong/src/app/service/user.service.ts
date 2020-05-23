@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
+import { AuthService } from './auth.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -7,21 +9,14 @@ import { User } from '../model/user.model';
 export class UserService {
 
   user: User;
-  constructor() { }
+  constructor(
+  ) { }
 
-  setUser(username: string, imgSource: string, gameHistories: []){
-    this.user = new User(
-      username,
-      imgSource,
-      gameHistories
-    );
+  setUser(user: User){
+    this.user = user;
   }
 
   getUser(): User{
-    return this.user;
-  }
-
-  removeUser(){
-    this.user = null;
+    return this.user; 
   }
 }
