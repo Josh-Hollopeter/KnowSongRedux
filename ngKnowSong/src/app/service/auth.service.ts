@@ -33,8 +33,6 @@ export class AuthService {
     const request = new HttpRequest('GET', this.baseUrl + 'isLoggedIn', this.httpOptions);
     return this.backend.handle(request).pipe(     
       map((event: HttpResponse<any>): boolean => {
-        console.log(event);
-        
         if(event.body == true)
           return true;
         else if(event.body == false)
