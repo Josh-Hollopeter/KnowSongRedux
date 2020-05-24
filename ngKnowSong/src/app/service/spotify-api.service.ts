@@ -20,14 +20,10 @@ export class SpotifyAPIService {
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) {
-    this.accessToken = sessionStorage.getItem('access');
-  }
+  ) {}
 
   refreshAccessToken(){
-    console.log("in refresh");
     this.authService.refreshAccessToken().subscribe(response => { 
-     console.log(response);
      this.accessToken = <string>response;
      this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
     });
@@ -97,5 +93,5 @@ export class SpotifyAPIService {
 
     return this.hitSpotify(url);
   }
-  
+
 }
