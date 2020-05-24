@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/service/user.service';
+import { User } from 'src/app/model/user.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -8,38 +12,21 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  // public userInfo: String = new String();
+  user: User;
 
   constructor(
-    private authService: AuthService
-    ) { }
+    private authService: AuthService,
+    private userService: UserService,
+    private route: Router,
+    private activatedRoute: ActivatedRoute
+    ) {  }
 
   ngOnInit(): void {
-    
+    // using activated route and a resolver, the user data is loaded before page is viewed
+    // this will be handy when retrieving user data from server after games are played..
+    this.activatedRoute.data.subscribe((data: { user: User}) => {
+      this.user = data.user;
+    })
   }
-
-  getUserDetail(){
-    this.authService.getUserData().subscribe(
-      success => {
-        console.log(success);
-        // this.userInfo = success;
-      },
-      fail => {
-        console.error(fail);
-        // this.userInfo = fail;
-      }
-    )
-  }
-  getAccessToken(){
-    this.authService.getAccessToken().subscribe(
-      success => {
-        console.log(success);
-        // this.userInfo = success;
-      },
-      fail => {
-        console.error(fail);
-        // this.userInfo = fail;
-      }
-    )
-  }
+  
 }
