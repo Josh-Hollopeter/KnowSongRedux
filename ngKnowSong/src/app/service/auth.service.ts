@@ -95,10 +95,7 @@ export class AuthService {
           
           return tokenValue;
         }
-      }),
-      catchError((err: any) => {
-        return throwError('Error refreshing access token');
-      })
+      }),skip(1)
     );
   }
 

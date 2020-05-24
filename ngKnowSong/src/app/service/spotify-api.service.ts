@@ -43,6 +43,8 @@ export class SpotifyAPIService {
         return event;
       }),
       catchError(err => {
+        console.log(err);
+        
         if(err.status == 401){
           this.refreshAccessToken();
         }
