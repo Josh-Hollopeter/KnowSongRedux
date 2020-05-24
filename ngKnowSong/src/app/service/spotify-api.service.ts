@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class SpotifyAPIService {
 
-  private accessToken: string;
+  private accessToken: string = sessionStorage.getItem('access');
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -21,16 +21,23 @@ export class SpotifyAPIService {
     private http: HttpClient,
     private authService: AuthService
   ) {
-    this.accessToken = localStorage.getItem('access');
+    this.accessToken = sessionStorage.getItem('access');
   }
 
   refreshAccessToken(){
     console.log("in refresh");
-    
-    this.authService.refreshAccessToken().pipe(map((response) => {
-      this.accessToken = <string>response;
-      this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
-    }));
+    this.authService.refreshAccessToken().subscribe(response => { 
+     console.log(response);
+     this.accessToken = <string>response;
+     this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
+    });
+    // this.authService.refreshAccessToken().pipe(map( (response) => {
+    //   console.log(response);
+      
+    //   this.accessToken = <string>response;
+    //   this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
+    // }));
+    //keeping this here because, for some reason. i couldnt figure out why this pipe would not work, yet a subscribe DID... hnngg
   }
 
   //---------------------

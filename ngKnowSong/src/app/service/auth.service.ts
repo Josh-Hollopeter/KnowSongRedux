@@ -75,7 +75,7 @@ export class AuthService {
         // checks status to avoid picking up the {type: 0} .Sent response
         if(event.status == 200){
           let body = event["body"];
-          localStorage.setItem('access', body["tokenValue"]);
+          sessionStorage.setItem('access', body["tokenValue"]);
         }
       }),skip(1)
     );
@@ -88,9 +88,11 @@ export class AuthService {
       map((event: HttpResponse<any>)=> {
         if(event.status == 200){
           let body = event["body"];
-          localStorage.removeItem('access');
           let tokenValue: string = body["tokenValue"];
-          localStorage.setItem('access', tokenValue);
+
+          sessionStorage.removeItem('access');
+          sessionStorage.setItem('access', tokenValue);
+          
           return tokenValue;
         }
       }),
