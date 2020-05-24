@@ -52,8 +52,16 @@ export class SpotifyAPIService {
           this.refreshAccessToken();
         }
         return event; 
+      }),
+      catchError(err => {
+        if(err.status == 401){
+          this.refreshAccessToken();
+        }
+        console.log(err);
+        
+        return [];
       })
-    )
+    );
 
   }
 
@@ -62,12 +70,17 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
-        if(event.status == 401){
+        return event; 
+      }),
+      catchError(err => {
+        if(err.status == 401){
           this.refreshAccessToken();
         }
-        return event; 
+        console.log(err);
+        
+        return [];
       })
-    )
+    );
   }
   //---------------------
   //-   Artist Methods  -
@@ -89,7 +102,7 @@ export class SpotifyAPIService {
         
         return [];
       })
-    )
+    );
   }
 
   getAlbumsFromArtist(artistId: string) {
@@ -97,12 +110,17 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
-        if(event.status == 401){
+        return event; 
+      }),
+      catchError(err => {
+        if(err.status == 401){
           this.refreshAccessToken();
         }
-        return event; 
+        console.log(err);
+        
+        return [];
       })
-    )
+    );
   }
 
   getTracksFromAlbum(albumId: string) {
@@ -114,8 +132,16 @@ export class SpotifyAPIService {
           this.refreshAccessToken();
         }
         return event; 
+      }),
+      catchError(err => {
+        if(err.status == 401){
+          this.refreshAccessToken();
+        }
+        console.log(err);
+        
+        return [];
       })
-    )
+    );
   }
 
 
@@ -124,11 +150,16 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
-        if(event.status == 401){
+        return event; 
+      }),
+      catchError(err => {
+        if(err.status == 401){
           this.refreshAccessToken();
         }
-        return event; 
+        console.log(err);
+        
+        return [];
       })
-    )
+    );
   }
 }
