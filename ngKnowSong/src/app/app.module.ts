@@ -18,7 +18,6 @@ import { CreateGameComponent } from './component/create-game/create-game.compone
 import { SpotifyAPIService } from './service/spotify-api.service';
 import { MusixMatchService } from './service/musix-match.service';
 import { FormsModule } from '@angular/forms';
-import { CallbackComponent } from './component/callback/callback.component';
 import { LyricMatchComponent } from './game/lyric-match/lyric-match.component';
 import { ReleaseYearComponent } from './game/release-year/release-year.component';
 import { NameSongComponent } from './game/name-song/name-song.component';
@@ -29,7 +28,6 @@ import { NameSongComponent } from './game/name-song/name-song.component';
     LandingComponent,
     HomeComponent,
     CreateGameComponent,
-    CallbackComponent,
     LyricMatchComponent,
     ReleaseYearComponent,
     NameSongComponent,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -8,20 +8,29 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class SpotifyAPIService {
-  
+
+  private accessToken: string;
+
   private httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('access')}`
+      'Authorization': `Bearer ${this.accessToken}`
     })
   };
 
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) {}
+  ) {
+    this.accessToken = localStorage.getItem('access');
+  }
 
   refreshAccessToken(){
-    this.authService.refreshAccessToken().subscribe();
+    console.log("in refresh");
+    
+    this.authService.refreshAccessToken().pipe(map((response) => {
+      this.accessToken = <string>response;
+      this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
+    }));
   }
 
   //---------------------
@@ -63,10 +72,15 @@ export class SpotifyAPIService {
     
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
-        if(event.status == 401){
+        return event; 
+      }),
+      catchError(err => {
+        if(err.status == 401){
           this.refreshAccessToken();
         }
-        return event; 
+        console.log(err);
+        
+        return [];
       })
     )
   }

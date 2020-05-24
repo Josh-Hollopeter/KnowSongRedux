@@ -33,6 +33,8 @@ export class AuthService {
     const request = new HttpRequest('GET', this.baseUrl + 'isLoggedIn', this.httpOptions);
     return this.backend.handle(request).pipe(     
       map((event: HttpResponse<any>): boolean => {
+        console.log(event);
+        
         if(event.body == true)
           return true;
         else if(event.body == false)
@@ -81,7 +83,7 @@ export class AuthService {
     );
   }
 
-  refreshAccessToken(){
+  refreshAccessToken(): Observable<string>{
     const request = new HttpRequest('GET', this.baseUrl + 'refreshAccessToken', this.httpOptions);
 
     return this.backend.handle(request).pipe(      
@@ -89,7 +91,9 @@ export class AuthService {
         if(event.status == 200){
           let body = event["body"];
           localStorage.removeItem('access');
-          localStorage.setItem('access', body["tokenValue"]);
+          let tokenValue: string = body["tokenValue"];
+          localStorage.setItem('access', tokenValue);
+          return tokenValue;
         }
       }),
       catchError((err: any) => {
