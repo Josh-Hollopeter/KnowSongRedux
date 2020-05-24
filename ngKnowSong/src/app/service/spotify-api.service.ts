@@ -23,13 +23,13 @@ export class SpotifyAPIService {
   ) {}
 
   refreshAccessToken(){
-    this.authService.refreshAccessToken().subscribe(response => { 
+    this.authService.refreshAccessToken().subscribe(response => {
      this.accessToken = <string>response;
      this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
     });
     // this.authService.refreshAccessToken().pipe(map( (response) => {
     //   console.log(response);
-      
+
     //   this.accessToken = <string>response;
     //   this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
     // }));
@@ -40,13 +40,13 @@ export class SpotifyAPIService {
 
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
-        return event; 
+        return event;
       }),
       catchError(err => {
         if(err.status == 401){
           this.refreshAccessToken();
         }
-        return null;
+        return [];
       })
     );
 
@@ -71,7 +71,7 @@ export class SpotifyAPIService {
 
   searchArtist(artistName: string) {
     let url = "https://api.spotify.com/v1/search?q=" + artistName + "&type=artist&limit=5";
-    
+
     return this.hitSpotify(url);
   }
 
