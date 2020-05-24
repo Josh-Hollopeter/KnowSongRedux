@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyAPIService } from 'src/app/service/spotify-api.service';
 import { MusixMatchService } from 'src/app/service/musix-match.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Album } from 'src/app/model/album';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject, Subscription, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { Playlist } from 'src/app/model/playlist';
 import { Artist } from 'src/app/model/artist';
 import { Track } from 'src/app/model/track';
@@ -17,6 +17,7 @@ import { NgForm } from '@angular/forms';
 })
 export class CreateGameComponent implements OnInit {
 
+  public gameType: string;
   public albums: Album[];
   public userPlaylists: Playlist[];
   public searchArtist: Artist[];
@@ -30,11 +31,17 @@ export class CreateGameComponent implements OnInit {
     private spotifyData: SpotifyAPIService,
     private lyricService: MusixMatchService,
     private router: Router,
+    private activatedRouter: ActivatedRoute
 
 
   ) { }
 
   ngOnInit(): void {
+    this.activatedRouter.paramMap.subscribe(param => {
+      this.gameType = param.get('gameType');
+    });
+
+
     this.keywordModelChangedSubscription = this.keywordModelChanged
       .pipe(
         debounceTime(350),
@@ -43,17 +50,13 @@ export class CreateGameComponent implements OnInit {
       .subscribe(
         text => this.searchForArtist(text)
       );
+      console.log(this.gameType);
+      
   }
 
   ngOnDestroy() {
     this.keywordModelChangedSubscription.unsubscribe();
   }
-
-  // selectResults() {
-  //   this.data.storage = this.getArtistAlbums(this.searchResult[0]);
-  //   this.router.navigateByUrl('game/')
-
-  // }
 
 
   //-------------------------
