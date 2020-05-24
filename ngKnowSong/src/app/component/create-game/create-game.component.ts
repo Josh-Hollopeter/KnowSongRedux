@@ -57,6 +57,16 @@ export class CreateGameComponent implements OnInit {
   ngOnDestroy() {
     this.keywordModelChangedSubscription.unsubscribe();
   }
+  
+  //---------------------------------
+  //- KNOWSONG REDUX OFFICIAL CODE  -
+  //---------------------------------
+
+  createGameForArtist(artist: Artist){
+    console.log(artist.name);
+
+  }
+
 
 
   //-------------------------
