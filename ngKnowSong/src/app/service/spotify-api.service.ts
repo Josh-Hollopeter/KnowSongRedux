@@ -24,7 +24,7 @@ export class SpotifyAPIService {
 
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => { 
-     this.accessToken = sessionStorage.getItem('access')
+     this.accessToken = <string>response;
      this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
     });
     // this.authService.refreshAccessToken().pipe(map( (response) => {

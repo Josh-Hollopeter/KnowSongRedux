@@ -6,8 +6,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.endpoint.DefaultRefreshTokenTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2RefreshTokenGrantRequest;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
@@ -26,15 +31,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 	@Autowired
 	RankRepository rankRepo;
 	
+	@Autowired
+	OAuth2AuthorizedClientService clientService;
+	
 	// user must go through this method every time they authenticate with the server (login / use the app)
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
 		//create new user object and get the attributes
 		OAuth2User oauthUser = super.loadUser(userRequest);
 		Map<String, Object> attributes = oauthUser.getAttributes();
-		System.out.println(attributes);
 
+//		String clientRegistrationId = userRequest.getClientRegistration()
 		String username = oauthUser.getName();
+//		refreshAccessToken(clientRegistrationId, username);
 		String imgSource = null;
 		try {
 			// Map -> ArrayList -> LinkedHashMap -> String
@@ -62,5 +71,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		}
 		return oauthUser;
 	}
-	
+//	
+//	private void refreshAccessToken(String id, String username){
+//		System.out.println(id);
+//		System.out.println(username);
+//		OAuth2AuthorizedClient authorizedClient = clientService.loadAuthorizedClient(id, username);
+//		System.out.println("After: " + authorizedClient.getAccessToken());
+//		OAuth2RefreshTokenGrantRequest grantRequest = new OAuth2RefreshTokenGrantRequest(
+//				authorizedClient.getClientRegistration(), 
+//				authorizedClient.getAccessToken(), 
+//				authorizedClient.getRefreshToken());
+//		
+//		DefaultRefreshTokenTokenResponseClient refreshResponseClient = new DefaultRefreshTokenTokenResponseClient();
+//		refreshResponseClient.getTokenResponse(grantRequest).getAccessToken();
+//		System.out.println("After: " + authorizedClient.getAccessToken());
+//	}
 }
