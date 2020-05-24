@@ -103,7 +103,8 @@ export class CreateGameComponent implements OnInit {
 
     this.spotifyData.searchArtist(keyword).subscribe(
       response => {
-
+        console.log(response);
+        
         var array = response["artists"];
         var items = array["items"];
         // instantiate artist array to length of result
