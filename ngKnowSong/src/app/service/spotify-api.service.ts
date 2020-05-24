@@ -24,7 +24,7 @@ export class SpotifyAPIService {
 
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => { 
-     this.accessToken = <string>response;
+     this.accessToken = sessionStorage.getItem('access')
      this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
     });
     // this.authService.refreshAccessToken().pipe(map( (response) => {
@@ -43,10 +43,12 @@ export class SpotifyAPIService {
         return event; 
       }),
       catchError(err => {
+        console.log(err);
+        
         if(err.status == 401){
           this.refreshAccessToken();
         }
-        return null;
+        return [];
       })
     );
 
