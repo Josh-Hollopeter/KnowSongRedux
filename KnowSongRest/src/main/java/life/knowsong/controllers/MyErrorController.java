@@ -9,7 +9,7 @@ public class MyErrorController implements ErrorController {
 
     @RequestMapping("/error")
     public String handleError() {
-        return "#landing";
+        return "#error";
     }
  
     @Override
