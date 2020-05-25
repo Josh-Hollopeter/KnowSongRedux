@@ -11,7 +11,6 @@ export class Album {
   albumPhoto: string;
   albumType: string;
   albumGenre: string[];
-  artist: Artist;
   tracks: Track[];
 
   constructor(
@@ -22,7 +21,6 @@ export class Album {
     albumPhoto?: string,
     albumType?: string,
     albumGenre?: string[],
-    artist?: Artist,
     tracks?: Track[]
   ) {
     this.id = id;
@@ -32,7 +30,6 @@ export class Album {
     this.albumPhoto = albumPhoto;
     this.albumType = albumType;
     this.albumGenre = albumGenre;
-    this.artist = artist;
     this.tracks = tracks;
   }
 }
