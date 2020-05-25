@@ -1,8 +1,9 @@
 package life.knowsong.security;
 
-
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import life.knowsong.repositories.UserRepository;
 import life.knowsong.services.CustomOAuth2UserService;
@@ -42,57 +46,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.userInfoEndpoint()
             			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
-            	.defaultSuccessUrl("/home")
-            	.failureUrl("/landing");
+            	.defaultSuccessUrl("https://www.knowsong.life/home")
+            	.failureUrl("https://www.knowsong.life");
    
     }
     
-//    @Bean
-//    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient(){
-//    	DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient = 
-//    	          new DefaultAuthorizationCodeTokenResponseClient(); 
-//    	        accessTokenResponseClient.setRequestEntityConverter(new CustomRequestEntityConverter()); 
-//    	 
-//    	        OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter = 
-//    	          new OAuth2AccessTokenResponseHttpMessageConverter(); 
-//    	        tokenResponseHttpMessageConverter.setTokenResponseConverter(new CustomTokenResponseConverter()); 
-//    	        RestTemplate restTemplate = new RestTemplate(Arrays.asList(
-//    	          new FormHttpMessageConverter(), tokenResponseHttpMessageConverter)); 
-//    	        restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler()); 
-//    	         
-//    	        accessTokenResponseClient.setRestOperations(restTemplate); 
-//    	
-//    	
-//    	return accessTokenResponseClient;
-//    }
-    
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//    	CorsConfiguration configuration = new CorsConfiguration();
-//    	configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-//    	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
-//    	configuration.setAllowedHeaders(Arrays.asList("Content-Type", "credentials"));
-//    	configuration.setAllowCredentials(true);
-//    	
-//    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//    	source.registerCorsConfiguration("/**", configuration);
-//    	
-//    	return source;
-//    }
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+    	CorsConfiguration configuration = new CorsConfiguration();
+    	configuration.setAllowedOrigins(Arrays.asList("https://www.knowsong.life","https://knowsong.life"));
+    	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
+    	configuration.setAllowedHeaders(Arrays.asList("Content-Type", "credentials"));
+    	configuration.setAllowCredentials(true);
+    	
+    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    	source.registerCorsConfiguration("/**", configuration);
+    	
+    	return source;
+    }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//    	CorsConfiguration configuration = new CorsConfiguration();
-//    	configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-//    	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
-//    	configuration.setAllowedHeaders(Arrays.asList("Content-Type", "credentials"));
-//    	configuration.setAllowCredentials(true);
-//    	
-//    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//    	source.registerCorsConfiguration("/**", configuration);
-//    	
-//    	return source;
-//    }
+   
 
    
 }
