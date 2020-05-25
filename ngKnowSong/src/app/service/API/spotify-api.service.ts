@@ -24,20 +24,16 @@ export class SpotifyAPIService {
 
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => {
-     this.accessToken = <string>response;
-     this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
+      console.log(response);
+      
+     this.accessToken = response;
+     this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
     });
-    // this.authService.refreshAccessToken().pipe(map( (response) => {
-    //   console.log(response);
-
-    //   this.accessToken = <string>response;
-    //   this.httpOptions.headers.set('Authorization', `Bearer ${this.accessToken}`);
-    // }));
-    //keeping this here because, for some reason. i couldnt figure out why this pipe would not even be called, yet a subscribe DID... hnngg
   }
 
   hitSpotify(url: string) {
-
+    console.log(this.accessToken);
+    
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
         return event;

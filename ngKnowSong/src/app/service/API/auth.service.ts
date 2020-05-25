@@ -4,8 +4,8 @@ import { environment } from 'src/environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap, map, filter, takeWhile, skip } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
-import { User } from '../model/user.model';
+import { UserService } from '../Data/user.service';
+import { User } from '../../model/user.model';
 
 @Injectable({
   providedIn: 'root'
