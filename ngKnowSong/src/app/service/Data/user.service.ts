@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class UserService {
 
-  user: User;
+  public user: User;
   constructor(
   ) { }
 

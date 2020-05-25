@@ -22,6 +22,8 @@ import { ErrorComponent } from './error/error.component';
 import { LyricMatcherComponent } from './game/lyric-matcher/lyric-matcher.component';
 import { ReleaseYearComponent } from './game/release-year/release-year.component';
 import { KnowSongComponent } from './game/know-song/know-song.component';
+import { MusicDataService } from './game/data/music-data.service';
+import { UserService } from './service/Data/user.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { KnowSongComponent } from './game/know-song/know-song.component';
   providers: [
     AuthService,
     SpotifyAPIService,
-    MusixMatchService
+    MusixMatchService,
+    MusicDataService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
