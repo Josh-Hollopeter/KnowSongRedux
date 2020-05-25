@@ -65,9 +65,10 @@ export class CreateGameComponent implements OnInit {
   createGameForArtist(artist: Artist){
     this.musicDataService.removeArtist(); // by default we assume you are choosing a new artist, this can be changed later to check if same artist, which will save us from doing unnecessary api calls. and just generating a new game!
     this.musicDataService.setArtist(artist);
-    
+
     switch(this.gameType) {
       case 'audio': {
+        console.log("in create game");
         this.router.navigate(['audio']);
         break;
       }
@@ -111,7 +112,7 @@ export class CreateGameComponent implements OnInit {
           }
 
           let emptyAlbums = new Array<Album>();
-          
+
           // display artist array to user
           let artist: Artist = new Artist(id, name, img, emptyAlbums);
           this.searchArtist.push(artist);
