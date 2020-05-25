@@ -76,7 +76,7 @@ export class CreateGameComponent implements OnInit {
         break;
       }
       case 'lyrics': {
-        console.log('lyric');
+        console.log('lyrics');
         break;
       }
       case 'year': {
