@@ -9,11 +9,9 @@ import { AuthService } from './auth.service';
 })
 export class SpotifyAPIService {
 
-  private accessToken: string;
-
   private httpOptions = {
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.accessToken}`
+      'Authorization': `Bearer ${sessionStorage.getItem('access')}`
     })
   };
 
@@ -23,8 +21,6 @@ export class SpotifyAPIService {
   ) {
     if(sessionStorage.getItem('access') == null){
       this.getAccessToken();
-    }else{
-      this.accessToken = sessionStorage.getItem('access');
     }
   }
 
@@ -33,14 +29,12 @@ export class SpotifyAPIService {
   //------------------------------
   getAccessToken(){
     this.authService.getAccessToken().subscribe(response => {
-      this.accessToken = response;
       this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
     })
   }
 
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => {
-     this.accessToken = response;
      this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
     });
   }
