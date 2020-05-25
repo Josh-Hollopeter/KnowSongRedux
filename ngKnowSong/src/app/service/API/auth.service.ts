@@ -76,6 +76,7 @@ export class AuthService {
         if(event.status == 200){
           let body = event["body"];
           sessionStorage.setItem('access', body["tokenValue"]);
+          return body["tokenValue"];
         }
       }),skip(1)
     );
