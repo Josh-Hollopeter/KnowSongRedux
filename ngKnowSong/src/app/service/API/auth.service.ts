@@ -89,8 +89,8 @@ export class AuthService {
         if(event.status == 200){
           let body = event["body"];
           let tokenValue: string = body["tokenValue"];
-
-          sessionStorage.removeItem('access');
+          if(sessionStorage.getItem('access') != null)
+            sessionStorage.removeItem('access');
           sessionStorage.setItem('access', tokenValue);
           
           return tokenValue;
