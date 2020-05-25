@@ -9,6 +9,8 @@ import { Playlist } from 'src/app/model/playlist';
 import { Artist } from 'src/app/model/artist';
 import { Track } from 'src/app/model/track';
 import { NgForm } from '@angular/forms';
+import { MusicDataService } from 'src/app/game/data/music-data.service';
+import { newArray } from '@angular/compiler/src/util';
 
 
 @Component({
@@ -32,7 +34,8 @@ export class CreateGameComponent implements OnInit {
     private spotifyData: SpotifyAPIService,
     private lyricService: MusixMatchService,
     private router: Router,
-    private activatedRouter: ActivatedRoute
+    private activatedRouter: ActivatedRoute,
+    private musicDataService: MusicDataService
 
   ) { }
 
@@ -60,27 +63,72 @@ export class CreateGameComponent implements OnInit {
   //---------------------------------
 
   createGameForArtist(artist: Artist){
+    this.musicDataService.removeArtist(); // by default we assume you are choosing a new artist, this can be changed later to check if same artist, which will save us from doing unnecessary api calls. and just generating a new game!
+    this.musicDataService.setArtist(artist);
+    
     switch(this.gameType) {
       case 'audio': {
-        console.log('audio');
-        this.router.navigateByUrl('audio');
+        this.router.navigate(['audio']);
         break;
       }
       case 'lyrics': {
-        console.log('lyrics game for ' + artist.name);
-        this.router.navigateByUrl('lyric');
+        this.router.navigate(['lyric']);
         break;
       }
       case 'year': {
-        console.log('year game for ' + artist.name);
-        this.router.navigateByUrl('year');
+        this.router.navigate(['year']);
         break;
       }
     }
   }
 
+  //-------------------------
+  //- Artist Search Method -
+  //-------------------------
+  searchForArtist(keyword: string) {
+    this.spotifyData.searchArtist(keyword).subscribe(
+      response => {
+        let array = response["artists"];
+        let items = array["items"];
+        // instantiate artist array to length of result
+        this.searchArtist = new Array();
+
+        //get individual artist
+        for (let x = 0; x < items.length; x++) {
+          let item = items[x];
+
+          let id = item["id"];
+          let name = item["name"];
+
+          // get image
+          let img: string;
+          if (item["images"].length < 1) {
+            img = null;
+          } else {
+            let imgs: any[] = item["images"];
+            let firstImg = imgs[0];
+            img = firstImg["url"];
+          }
+
+          let emptyAlbums = new Array<Album>();
+          
+          // display artist array to user
+          let artist: Artist = new Artist(id, name, img, emptyAlbums);
+          this.searchArtist.push(artist);
+        }
+      }
+    );
+  }
 
 
+
+
+
+
+
+
+
+  //------------------------------------------------------------------------------------
   //-------------------------
   //- User Playlist Methods -
   //-------------------------
@@ -109,56 +157,13 @@ export class CreateGameComponent implements OnInit {
   }
 
   getTracksFromPlaylist(playlistId: string) {
-
     this.spotifyData.getTracksFromPlaylist(playlistId).subscribe(
       response => {
-
       }
-    )
-
+    );
   }
 
-  //-------------------------
-  //- Artist Search Methods -
-  //-------------------------
-  searchForArtist(keyword: string) {
 
-    this.spotifyData.searchArtist(keyword).subscribe(
-      response => {
-        var array = response["artists"];
-        var items = array["items"];
-        // instantiate artist array to length of result
-        this.searchArtist = new Array();
-
-        //get individual artist
-        for (let x = 0; x < items.length; x++) {
-          var item = items[x];
-
-          //get artist ID
-          var id = item["id"];
-
-          // get name
-          var name = item["name"];
-          // console.log(item);
-
-          // get image
-          if (item["images"].length < 1) {
-            var img = null;
-          } else {
-            let imgs: any[] = item["images"];
-            let firstImg = imgs[0];
-            var img = firstImg["url"];
-          }
-
-          // display artist array to user
-          var artist: Artist = new Artist(id, name, img);
-
-          this.searchArtist.push(artist);
-
-        }
-      }
-    )
-  }
 
 
   getArtistAlbums(artist: Artist) {
@@ -196,7 +201,7 @@ export class CreateGameComponent implements OnInit {
           var tracks: Track[] = this.getAlbumTracks(id);
           var album: Album = new Album(
             id, name, releaseDate, null, albumPhoto,
-            albumType, null, artist, tracks);
+            albumType, null, tracks);
 
 
           console.log("Before get track stream");
