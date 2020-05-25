@@ -19,6 +19,9 @@ import { SpotifyAPIService } from './service/API/spotify-api.service';
 import { MusixMatchService } from './service/API/musix-match.service';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
+import { LyricMatcherComponent } from './game/lyric-matcher/lyric-matcher.component';
+import { ReleaseYearComponent } from './game/release-year/release-year.component';
+import { KnowSongComponent } from './game/know-song/know-song.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { ErrorComponent } from './error/error.component';
     HomeComponent,
     CreateGameComponent,
     ErrorComponent,
+    LyricMatcherComponent,
+    ReleaseYearComponent,
+    KnowSongComponent,
   ],
   imports: [
     BrowserModule,
