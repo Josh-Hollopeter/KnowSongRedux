@@ -29,7 +29,7 @@ export class CreateGameComponent implements OnInit {
   public keywordModelChanged: Subject<string> = new Subject<string>();
   private keywordModelChangedSubscription: Subscription;
   // private displayedColumns = ['name', 'description'];  // for playlists
-  
+
   constructor(
     private spotifyData: SpotifyAPIService,
     private lyricService: MusixMatchService,
@@ -56,13 +56,13 @@ export class CreateGameComponent implements OnInit {
         text => this.searchForArtist(text)
       );
       console.log(this.gameType);
-      
+
   }
 
   ngOnDestroy() {
     this.keywordModelChangedSubscription.unsubscribe();
   }
-  
+
   //---------------------------------
   //- KNOWSONG REDUX OFFICIAL CODE  -
   //---------------------------------
@@ -73,6 +73,7 @@ export class CreateGameComponent implements OnInit {
     switch(this.gameType) {
       case 'audio': {
         console.log('audio');
+        this.router.navigateByUrl('#audio')
         break;
       }
       case 'lyrics': {
@@ -133,7 +134,7 @@ export class CreateGameComponent implements OnInit {
     this.spotifyData.searchArtist(keyword).subscribe(
       response => {
         console.log(response);
-        
+
         var array = response["artists"];
         var items = array["items"];
         // instantiate artist array to length of result
