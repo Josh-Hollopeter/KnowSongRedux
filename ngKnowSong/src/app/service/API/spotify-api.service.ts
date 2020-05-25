@@ -21,28 +21,39 @@ export class SpotifyAPIService {
     private http: HttpClient,
     private authService: AuthService
   ) {
-    this.accessToken = sessionStorage.getItem('access');
+    if(sessionStorage.getItem('access') == null){
+      this.getAccessToken();
+    }else{
+      this.accessToken = sessionStorage.getItem('access');
+    }
+  }
+
+  //------------------------------
+  //-  Automatic Token Retrieval -
+  //------------------------------
+  getAccessToken(){
+    this.authService.getAccessToken().subscribe(response => {
+      this.accessToken = response;
+      this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
+    })
   }
 
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => {
-      console.log(response);
-      
      this.accessToken = response;
      this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
     });
   }
 
+  //----------------------
+  //-  Spotify API Call  -
+  //----------------------
   hitSpotify(url: string) {
-    console.log(this.accessToken);
-    
     return this.http.get(url, this.httpOptions).pipe(
       map((event: HttpResponse<any>)=> {
         return event;
       }),
       catchError(err => {
-        console.log(err);
-        
         if(err.status == 401){
           this.refreshAccessToken();
         }
@@ -51,6 +62,7 @@ export class SpotifyAPIService {
     );
 
   }
+
   //---------------------
   //-  Playlist Methods -
   //---------------------
@@ -65,10 +77,10 @@ export class SpotifyAPIService {
 
     return this.hitSpotify(url);
   }
+
   //---------------------
   //-   Artist Methods  -
   //---------------------
-
   searchArtist(artistName: string) {
     let url = "https://api.spotify.com/v1/search?q=" + artistName + "&type=artist&limit=5";
 
