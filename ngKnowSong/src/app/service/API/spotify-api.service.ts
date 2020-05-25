@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class SpotifyAPIService {
 
-  private accessToken: string = sessionStorage.getItem('access');
+  private accessToken: string;
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -20,7 +20,9 @@ export class SpotifyAPIService {
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) {}
+  ) {
+    this.accessToken = sessionStorage.getItem('access');
+  }
 
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => {
