@@ -9,9 +9,7 @@ import { Playlist } from 'src/app/model/playlist';
 import { Artist } from 'src/app/model/artist';
 import { Track } from 'src/app/model/track';
 import { NgForm } from '@angular/forms';
-import { YearCreatorService } from 'src/app/service/Game/year-creator.service';
-import { LyricCreatorService } from 'src/app/service/Game/lyric-creator.service';
-import { AudioCreatorService } from 'src/app/service/Game/audio-creator.service';
+
 
 @Component({
   selector: 'app-create-game',
@@ -34,10 +32,7 @@ export class CreateGameComponent implements OnInit {
     private spotifyData: SpotifyAPIService,
     private lyricService: MusixMatchService,
     private router: Router,
-    private activatedRouter: ActivatedRoute,
-    private yearCreator: YearCreatorService,
-    private lyricCreator: LyricCreatorService,
-    private audioCreator: AudioCreatorService
+    private activatedRouter: ActivatedRoute
 
   ) { }
 
@@ -45,7 +40,6 @@ export class CreateGameComponent implements OnInit {
     this.activatedRouter.paramMap.subscribe(param => {
       this.gameType = param.get('gameType');
     });
-
 
     this.keywordModelChangedSubscription = this.keywordModelChanged
       .pipe(
@@ -55,8 +49,6 @@ export class CreateGameComponent implements OnInit {
       .subscribe(
         text => this.searchForArtist(text)
       );
-      console.log(this.gameType);
-      
   }
 
   ngOnDestroy() {
@@ -68,19 +60,17 @@ export class CreateGameComponent implements OnInit {
   //---------------------------------
 
   createGameForArtist(artist: Artist){
-    console.log(artist.name);
-
     switch(this.gameType) {
       case 'audio': {
-        console.log('audio');
+        console.log('audio game for ' + artist.name);
         break;
       }
       case 'lyrics': {
-        console.log('lyrics');
+        console.log('lyrics game for ' + artist.name);
         break;
       }
       case 'year': {
-        console.log('year');
+        console.log('year game for ' + artist.name);
         break;
       }
     }
@@ -132,8 +122,6 @@ export class CreateGameComponent implements OnInit {
 
     this.spotifyData.searchArtist(keyword).subscribe(
       response => {
-        console.log(response);
-        
         var array = response["artists"];
         var items = array["items"];
         // instantiate artist array to length of result

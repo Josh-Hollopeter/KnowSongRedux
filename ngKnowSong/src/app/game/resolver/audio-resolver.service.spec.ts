@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { YearCreatorService } from './year-creator.service';
+import { AudioResolverService } from './audio-resolver.service';
 
-describe('YearCreatorService', () => {
-  let service: YearCreatorService;
+describe('AudioResolverService', () => {
+  let service: AudioResolverService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(YearCreatorService);
+    service = TestBed.inject(AudioResolverService);
   });
 
   it('should be created', () => {
