@@ -27,12 +27,14 @@ export class SpotifyAPIService {
   //------------------------------
   //-  Automatic Token Retrieval -
   //------------------------------
+  // if session storage token removed by user or other errors
   getAccessToken(){
     this.authService.getAccessToken().subscribe(response => {
       this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
     })
   }
 
+  // if 401 (expired or invalid)
   refreshAccessToken(){
     this.authService.refreshAccessToken().subscribe(response => {
      this.httpOptions.headers.set('Authorization', `Bearer ${response}`);
@@ -42,15 +44,21 @@ export class SpotifyAPIService {
   //----------------------
   //-  Spotify API Call  -
   //----------------------
-  hitSpotify(url: string) {
+  hitSpotify(url: string) {    
+    console.log("hit spotify");
+    
     return this.http.get(url, this.httpOptions).pipe(
-      map((event: HttpResponse<any>)=> {
+      map( (event: HttpResponse<any>) => {
+        console.log(event);
+        
         return event;
       }),
       catchError(err => {
         if(err.status == 401){
           this.refreshAccessToken();
         }
+        console.log(err);
+        
         return [];
       })
     );
@@ -82,9 +90,25 @@ export class SpotifyAPIService {
   }
 
   getAlbumsFromArtist(artistId: string) {
-    let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums";
-
-    return this.hitSpotify(url);
+    let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums?market=US&include_groups=album,single&limit=50";;
+    // if(next == undefined){
+    //   url = "https://api.spotify.com/v1/artists/" + artistId + "/albums?market=US&include_groups=album,single&limit=50";
+    // } else{
+    //   url = next;
+    // }
+    
+    return this.hitSpotify(url); //.subscribe(
+      // response  => {
+      //   // let next: string = response["next"];
+        
+      //   // if(next != null){
+      //   //   console.log("going recurisve babyy");
+          
+      //   //   return this.getAlbumsFromArtist(artistId, next);  // epic recursion to get all albums!
+      //   console.log(response);
+        
+      //   return response;
+      // });
   }
 
   getTracksFromAlbum(albumId: string) {

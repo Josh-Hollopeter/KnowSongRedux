@@ -8,6 +8,6 @@ export class LyricResolverService implements Resolve<any>{
 
   constructor() { }
   resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot) {
-    throw new Error("Method not implemented.");
+    throw null;
   }
 }
