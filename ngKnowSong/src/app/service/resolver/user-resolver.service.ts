@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { AuthService } from '../API/auth.service';
-import { UserService } from '../Data/user.service';
 import { catchError } from 'rxjs/operators';
 import { empty } from 'rxjs';
 
