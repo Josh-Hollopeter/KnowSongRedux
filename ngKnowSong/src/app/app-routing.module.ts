@@ -1,3 +1,4 @@
+import { KnowSongComponent } from './game/know-song/know-song.component';
 import { NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LandingComponent } from './component/landing/landing.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'home', component: HomeComponent, resolve: {user: UserResolverService}, canActivate: [AdminGuard]},
   { path: 'creategame/:gameType', component: CreateGameComponent, canActivate: [AdminGuard]},
+  { path: 'audio', component: KnowSongComponent, canActivate:[AdminGuard]},
   { path: 'error', component: ErrorComponent},
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
