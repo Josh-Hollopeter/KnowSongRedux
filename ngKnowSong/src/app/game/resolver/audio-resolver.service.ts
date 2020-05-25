@@ -21,7 +21,7 @@ export class AudioResolverService implements Resolve<any>{
     private spotifyData: SpotifyAPIService
   ) {}
   resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot) {
-    
+
 
     // 1st. Populate Music Data
     const observeDataRetrieval = new Observable((observer) =>{
@@ -29,9 +29,9 @@ export class AudioResolverService implements Resolve<any>{
       observer.next(console.log(this.musicDataService.getArtist()));
       observer.complete();
     });
-    observeDataRetrieval.subscribe();
+    return observeDataRetrieval.subscribe();
 
-    return empty();
+    // return empty();
   }
 
   getArtistAlbums() {
@@ -39,10 +39,10 @@ export class AudioResolverService implements Resolve<any>{
     //get albums into array
     let artist: Artist = this.musicDataService.getArtist();
     console.log("hlelo?");
-    return this.spotifyData.getAlbumsFromArtist(artist.id).pipe( map( 
+    return this.spotifyData.getAlbumsFromArtist(artist.id).subscribe(
       (response) => {
         console.log(response);
-        
+
         let items = response["items"];
         // let next: string = response["next"];  // there are more than 50 albums/singles
         // if(next != null){
@@ -66,32 +66,32 @@ export class AudioResolverService implements Resolve<any>{
           let albumPhotoObject = artSizesArray[1];
           let albumPhoto = albumPhotoObject["url"];
           let albumType = item["album_type"];
-          
+
           // get all tracks
-          this.getAlbumTracks(albumId).subscribe( 
-            response => { 
-            
+          this.getAlbumTracks(albumId).subscribe(
+            response => {
+
             let tracks = response;
             let album: Album = new Album(
               albumId, name, releaseDate, null, albumPhoto,
               albumType, null, tracks);
-  
+
             album.tracks = tracks;
             //push album to arraylist
-  
+
             this.musicDataService.addAlbum(album);
             console.log(this.musicDataService.getArtist());
           });
         }
     })
-    );
+
   }
 
   //get simplified track object. NOT audio_features
   getAlbumTracks(albumId: string): Observable<Track[]> {
     return this.spotifyData.getTracksFromAlbum(albumId).pipe(
       map( (response) => {
-        
+
         let tracks = new Array<Track>();
         let items = response["items"];
         //get all track models parsed from JSON object
@@ -106,12 +106,12 @@ export class AudioResolverService implements Resolve<any>{
 
           let track: Track = new Track(
             id, name, duration, null, previewUrl, explicit, null);
-          
+
           tracks.push(track);
         }
         return tracks;
       })
     );
   }
-  
+
 }
