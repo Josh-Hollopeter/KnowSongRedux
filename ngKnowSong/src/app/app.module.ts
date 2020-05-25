@@ -13,10 +13,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HttpClientModule} from '@angular/common/http';
-import { AuthService } from './service/auth.service';
+import { AuthService } from './service/API/auth.service';
 import { CreateGameComponent } from './component/create-game/create-game.component';
-import { SpotifyAPIService } from './service/spotify-api.service';
-import { MusixMatchService } from './service/musix-match.service';
+import { SpotifyAPIService } from './service/API/spotify-api.service';
+import { MusixMatchService } from './service/API/musix-match.service';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
 

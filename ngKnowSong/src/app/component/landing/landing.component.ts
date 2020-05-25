@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/API/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
 import { HttpClient } from '@angular/common/http';

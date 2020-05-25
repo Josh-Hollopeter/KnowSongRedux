@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SpotifyAPIService } from 'src/app/service/spotify-api.service';
-import { MusixMatchService } from 'src/app/service/musix-match.service';
+import { SpotifyAPIService } from 'src/app/service/API/spotify-api.service';
+import { MusixMatchService } from 'src/app/service/API/musix-match.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Album } from 'src/app/model/album';
 import { Subject, Subscription, Observable } from 'rxjs';
@@ -9,6 +9,9 @@ import { Playlist } from 'src/app/model/playlist';
 import { Artist } from 'src/app/model/artist';
 import { Track } from 'src/app/model/track';
 import { NgForm } from '@angular/forms';
+import { YearCreatorService } from 'src/app/service/Game/year-creator.service';
+import { LyricCreatorService } from 'src/app/service/Game/lyric-creator.service';
+import { AudioCreatorService } from 'src/app/service/Game/audio-creator.service';
 
 @Component({
   selector: 'app-create-game',
@@ -31,8 +34,10 @@ export class CreateGameComponent implements OnInit {
     private spotifyData: SpotifyAPIService,
     private lyricService: MusixMatchService,
     private router: Router,
-    private activatedRouter: ActivatedRoute
-
+    private activatedRouter: ActivatedRoute,
+    private yearCreator: YearCreatorService,
+    private lyricCreator: LyricCreatorService,
+    private audioCreator: AudioCreatorService
 
   ) { }
 
@@ -65,6 +70,20 @@ export class CreateGameComponent implements OnInit {
   createGameForArtist(artist: Artist){
     console.log(artist.name);
 
+    switch(this.gameType) {
+      case 'audio': {
+        console.log('audio');
+        break;
+      }
+      case 'lyrics': {
+        console.log('lyric');
+        break;
+      }
+      case 'year': {
+        console.log('year');
+        break;
+      }
+    }
   }
 
 
