@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LyricCreatorService } from './lyric-creator.service';
+import { LyricResolverService } from './lyric-resolver.service';
 
-describe('LyricCreatorService', () => {
-  let service: LyricCreatorService;
+describe('LyricResolverService', () => {
+  let service: LyricResolverService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LyricCreatorService);
+    service = TestBed.inject(LyricResolverService);
   });
 
   it('should be created', () => {
