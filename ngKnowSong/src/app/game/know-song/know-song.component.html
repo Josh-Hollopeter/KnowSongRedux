@@ -1,4 +1,14 @@
-<p>{{artist.name}}</p>
+<!-- <p>{{artist.name}}</p>
  <div *ngFor="let album of artist.albums; let i = index">
     <p>{{album.name}}</p>
-</div>
+</div> -->
+<div *ngIf="!artist" class="loader"></div>
+<figure *ngIf="artist">
+  <figcaption>{{artist.name}}</figcaption>
+  <audio
+      controls
+      src={{artist.albums[0].tracks[0].previewUrl}}>
+          Your browser does not support the
+          <code>audio</code> element.
+  </audio>
+</figure>
