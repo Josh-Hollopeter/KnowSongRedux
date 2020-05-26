@@ -1,3 +1,4 @@
+import { AudioResolverService } from './../resolver/audio-resolver.service';
 import { Component, OnInit } from '@angular/core';
 import { MusicDataService } from '../data/music-data.service';
 import { Album } from 'src/app/model/album';
@@ -13,17 +14,35 @@ export class KnowSongComponent implements OnInit {
 
   public artist: Artist;
   public question;
+  private answer;
+  public tracks;
   constructor(
     private musicData: MusicDataService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private audioService: AudioResolverService,
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe((questions: { question}) => {
-      this.question = questions.question;
-    })
+    this.artist = this.musicData.artist;
+    this.buildQuestion();
+
+    // this.activatedRoute.data.subscribe((questions: { question}) => {
+    //   this.question = questions.question;
+    //   console.log(this.artist.name);
+
+
+    // })
     // console.log(this.musicData.getArtist());
-    
+
   }
+
+  buildQuestion(){
+    this.artist.albums.forEach(element => {
+      this.tracks.push(element.tracks)
+      console.log(this.tracks);
+    });
+
+  }
+
 
 }
