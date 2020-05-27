@@ -16,6 +16,7 @@ export class KnowSongComponent implements OnInit {
   public question;
   private answer;
   public tracks;
+  
   constructor(
     private musicData: MusicDataService,
     private activatedRoute: ActivatedRoute,
@@ -32,7 +33,7 @@ export class KnowSongComponent implements OnInit {
 
 
     // })
-    // console.log(this.musicData.getArtist());
+    console.log(this.musicData.getArtist());
 
   }
 
