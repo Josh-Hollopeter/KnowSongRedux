@@ -35,6 +35,7 @@ import { UserService } from './service/Data/user.service';
     LyricMatcherComponent,
     ReleaseYearComponent,
     KnowSongComponent,
+    HttpClientModule
   ],
   imports: [
     BrowserModule,
