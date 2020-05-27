@@ -22,4 +22,8 @@ describe('LandingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it("should have 'KnowSong' as title") , () =>{
+    component = fixture.debugElement.componentInstance;
+    expect(component.title).toEqual('KnowSong');
+  }
 });
