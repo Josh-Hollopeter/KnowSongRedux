@@ -32,7 +32,8 @@ describe('CreateGameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateGameComponent ]
+      declarations: [ CreateGameComponent ],
+      imports:[ HttpClientModule,AppRoutingModule]
     })
     .compileComponents();
   }));
