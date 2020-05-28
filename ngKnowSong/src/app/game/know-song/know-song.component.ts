@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { MusicDataService } from '../data/music-data.service';
 import { Album } from 'src/app/model/album';
 import { Artist } from 'src/app/model/artist';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-know-song',
@@ -16,10 +15,9 @@ export class KnowSongComponent implements OnInit {
   public question;
   private answer;
   public tracks;
-  
+
   constructor(
     private musicData: MusicDataService,
-    private activatedRoute: ActivatedRoute,
     private audioService: AudioResolverService,
   ) { }
 

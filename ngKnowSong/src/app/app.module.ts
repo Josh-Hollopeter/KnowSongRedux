@@ -1,3 +1,4 @@
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -12,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HttpXhrBackend } from '@angular/common/http';
 import { AuthService } from './service/API/auth.service';
 import { CreateGameComponent } from './component/create-game/create-game.component';
 import { SpotifyAPIService } from './service/API/spotify-api.service';
@@ -48,14 +49,18 @@ import { UserService } from './service/Data/user.service';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FormsModule
+    FormsModule,
+
+
   ],
   providers: [
     AuthService,
     SpotifyAPIService,
     MusixMatchService,
     MusicDataService,
-    UserService
+    UserService,
+
+
   ],
   bootstrap: [AppComponent]
 })
