@@ -23,7 +23,7 @@ export class KnowSongComponent implements OnInit {
 
   ngOnInit(): void {
     this.artist = this.musicData.artist;
-    this.buildQuestion();
+    // this.buildQuestion();
 
     // this.activatedRoute.data.subscribe((questions: { question}) => {
     //   this.question = questions.question;
