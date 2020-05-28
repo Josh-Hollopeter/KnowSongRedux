@@ -32,7 +32,8 @@ describe('LyricMatcherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LyricMatcherComponent ]
+      declarations: [ LyricMatcherComponent ],
+      imports:[ HttpClientModule,AppRoutingModule]
     })
     .compileComponents();
   }));

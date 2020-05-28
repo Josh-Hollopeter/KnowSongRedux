@@ -32,7 +32,8 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ HomeComponent ],
+      imports:[ HttpClientModule,AppRoutingModule]
     })
     .compileComponents();
   }));
