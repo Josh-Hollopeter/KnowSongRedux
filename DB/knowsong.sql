@@ -181,19 +181,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `knowsong`.`genres`
+-- Table `knowsong`.`genre`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `knowsong`.`genres` ;
+DROP TABLE IF EXISTS `knowsong`.`genre` ;
 
-CREATE TABLE IF NOT EXISTS `knowsong`.`genres` (
+CREATE TABLE IF NOT EXISTS `knowsong`.`genre` (
   `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`name`),
-  UNIQUE INDEX `id_UNIQUE` (`name` ASC),
-  CONSTRAINT `artist_id`
-    FOREIGN KEY (`name`)
-    REFERENCES `knowsong`.`artist` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `id_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 
@@ -205,12 +200,7 @@ DROP TABLE IF EXISTS `knowsong`.`available_markets` ;
 CREATE TABLE IF NOT EXISTS `knowsong`.`available_markets` (
   `market` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`market`),
-  UNIQUE INDEX `market_UNIQUE` (`market` ASC),
-  CONSTRAINT `album_has_market`
-    FOREIGN KEY (`market`)
-    REFERENCES `knowsong`.`album` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `market_UNIQUE` (`market` ASC))
 ENGINE = InnoDB;
 
 
@@ -299,6 +289,52 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_question` (
   CONSTRAINT `fk_singleplayer_game_id`
     FOREIGN KEY (`fk_singeplayer_game_id`)
     REFERENCES `knowsong`.`singleplayer_game` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `knowsong`.`artist_genre`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `knowsong`.`artist_genre` ;
+
+CREATE TABLE IF NOT EXISTS `knowsong`.`artist_genre` (
+  `artist_id` VARCHAR(255) NOT NULL,
+  `genre_name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`artist_id`, `genre_name`),
+  INDEX `artist_has_genre_idx` (`genre_name` ASC),
+  CONSTRAINT `artist_has_genre`
+    FOREIGN KEY (`genre_name`)
+    REFERENCES `knowsong`.`genre` (`name`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `genre_has_artist`
+    FOREIGN KEY (`artist_id`)
+    REFERENCES `knowsong`.`artist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `knowsong`.`album_market`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `knowsong`.`album_market` ;
+
+CREATE TABLE IF NOT EXISTS `knowsong`.`album_market` (
+  `album_id` VARCHAR(255) NOT NULL,
+  `available_market_market` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`album_id`, `available_market_market`),
+  INDEX `album_has_market_idx` (`available_market_market` ASC),
+  CONSTRAINT `album_has_market`
+    FOREIGN KEY (`available_market_market`)
+    REFERENCES `knowsong`.`available_markets` (`market`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `market_has_album`
+    FOREIGN KEY (`album_id`)
+    REFERENCES `knowsong`.`album` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
