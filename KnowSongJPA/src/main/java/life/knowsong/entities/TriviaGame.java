@@ -26,6 +26,9 @@ public class TriviaGame {
 	@Column(name = "date_played")
 	private LocalDateTime datePlayed;
 
+	
+	
+	
 	public int getId() {
 		return id;
 	}
