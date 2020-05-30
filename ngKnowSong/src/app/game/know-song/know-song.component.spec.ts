@@ -7,7 +7,7 @@ import { KnowSongComponent } from './know-song.component';
 
 import { AppRoutingModule } from './../../app-routing.module';
 
-import { HttpClientModule, HttpXhrBackend } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 
 describe('KnowSongComponent', () => {
