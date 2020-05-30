@@ -25,14 +25,11 @@ public class User {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "rank_id")
+	@JoinColumn(name = "fk_rank_id")
 	private Rank rank;
 	
 	private String username;
 
-	
-	private String role;
-	
 	private Boolean enabled;
 	
 	private Boolean admin;
@@ -45,11 +42,6 @@ public class User {
 	@JoinColumn(name="user_id")
 	private List<GameHistory> gameHistories;
 	
-	@Transient
-	private GameHistory gameHistory;
-	
-//	@OneToMany(mappedBy="user")
-//	private List <TriviaGame> games;
 	
 	@ManyToMany
 	@JoinTable(name="user_playlist",
@@ -79,15 +71,6 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	public Boolean getEnabled() {
@@ -130,13 +113,6 @@ public class User {
 		this.gameHistories.add(gh);
 	}
 
-	public GameHistory getGameHistory() {
-		return this.gameHistory;
-	}
-
-	public void setGameHistory(GameHistory gameHistory) {
-		this.gameHistory = gameHistory;
-	}
 
 	@Override
 	public int hashCode() {
