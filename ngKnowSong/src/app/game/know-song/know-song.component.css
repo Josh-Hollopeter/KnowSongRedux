@@ -1,3 +1,8 @@
+@import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Mr+Dafoe);
+
+
 .loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
@@ -36,12 +41,27 @@
 .audio {
   padding: 10px;
 }
-
+button {
+  height: fit-content;
+  width: 400px;
+  background: black;
+  color: white;
+  font-size: xx-large;
+  display: block;
+  width: 100%;
+  font-family: 'Mr Dafoe', cursive;
+  word-spacing: 7px;
+  color: green;
+  font-size: larger;
+}
+figcaption {
+  font-family: cursive;
+}
 
 .context {
   width: 100%;
   position: absolute;
-  top:50vh;
+  top:25vh;
   text-align: center;
   color: #fff;
   font-size: 50px;
