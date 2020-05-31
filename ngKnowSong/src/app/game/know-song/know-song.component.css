@@ -53,6 +53,9 @@ button {
   word-spacing: 7px;
   color: green;
   font-size: larger;
+  border: inset;
+  border-color: green;
+  margin-bottom: 10px;
 }
 figcaption {
   font-family: cursive;
