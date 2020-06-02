@@ -1,7 +1,7 @@
 package life.knowsong.entities;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
@@ -39,14 +40,15 @@ public class User {
 	private String imgSource;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private List<GameHistory> gameHistories;
+	@JoinColumn(name="fk_user_id")
+	private Set<SingleplayerGame> singleplayerGames;
 	
-	
+	// not implemented
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="user_playlist",
-	joinColumns=@JoinColumn(name="user_id"),
-	inverseJoinColumns=@JoinColumn(name="playlist_id"))
+		joinColumns=@JoinColumn(name="user_id"),
+		inverseJoinColumns=@JoinColumn(name="playlist_id"))
 	private List<Playlist> playlists;
 
 	public int getId() {
@@ -105,14 +107,13 @@ public class User {
 		this.playlists = playlists;
 	}
 	
-	public void addGameHistory(GameHistory gh) {
-		if(this.gameHistories == null) {
-			this.gameHistories = new ArrayList<>();
-		}
-		
-		this.gameHistories.add(gh);
+	public Set<SingleplayerGame> getSingleplayerGames() {
+		return singleplayerGames;
 	}
 
+	public void setSingleplayerGames(Set<SingleplayerGame> singleplayerGames) {
+		this.singleplayerGames = singleplayerGames;
+	}
 
 	@Override
 	public int hashCode() {
@@ -136,14 +137,7 @@ public class User {
 		return true;
 	}
 
-	public List<GameHistory> getGameHistories() {
-		return gameHistories;
-	}
 
-	public void setGameHistories(List<GameHistory> gameHistories) {
-		this.gameHistories = gameHistories;
-	}
-	
 
 
 }
