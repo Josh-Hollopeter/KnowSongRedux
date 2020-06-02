@@ -228,29 +228,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `knowsong`.`track_artist`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `knowsong`.`track_artist` ;
-
-CREATE TABLE IF NOT EXISTS `knowsong`.`track_artist` (
-  `artist_id` VARCHAR(255) NOT NULL,
-  `track_id` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`artist_id`, `track_id`),
-  INDEX `artist_id_idx` (`artist_id` ASC),
-  CONSTRAINT `artist_has_track`
-    FOREIGN KEY (`track_id`)
-    REFERENCES `knowsong`.`track` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `track_has_artist`
-    FOREIGN KEY (`artist_id`)
-    REFERENCES `knowsong`.`artist` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `knowsong`.`singleplayer_game`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `knowsong`.`singleplayer_game` ;
