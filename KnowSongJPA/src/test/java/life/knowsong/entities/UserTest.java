@@ -1,5 +1,6 @@
-package com.skilldistillery.knowsong.entities;
+package life.knowsong.entities;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.persistence.EntityManager;
@@ -12,13 +13,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import life.knowsong.entities.Rank;
+import life.knowsong.entities.User;
 
-class RankTest {
+class UserTest {
+	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Rank rank;
-	
+	private User user;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,7 +33,8 @@ class RankTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		rank = em.find(Rank.class, 1);
+		user = em.find(User.class, 1);
+		
 	}
 
 	@AfterEach
@@ -41,7 +43,12 @@ class RankTest {
 
 	@Test
 	void test() {
-		assertNotNull(rank);
+		assertNotNull(user);
+		assertNotNull(user.getRank());
+		assertNotEquals(0, user.getPlaylists().size());
+//		assertNotNull(user.getGameHistories());
+
+		
 	}
 
 }
