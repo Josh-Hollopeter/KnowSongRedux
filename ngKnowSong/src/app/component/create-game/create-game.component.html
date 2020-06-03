@@ -1,5 +1,5 @@
 
-<div class="body">
+<div class="create">
 
 <div style="text-align: center;">
   <h1>Create a Trivia Game</h1>
@@ -13,12 +13,12 @@
 <div *ngIf="searchArtist">
   <div class="card-block row justify-content-center">
     <div class="card col-sm-1.5" *ngFor="let result of searchArtist; let i = index"
-      style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='gray'"
-      onmouseout="this.style.color='black'" (click)="createGameForArtist(result)">
+      style="margin: 10px; padding: 10px; cursor: pointer;" onmouseover="this.style.color='green'" onmouseout="this.style.color='white'"
+    (click)="createGameForArtist(result)">
       <div class="card-block">
         <div class="search-res well">
           <img src="{{result.img}}" width="150px" height="150px" style="border-radius: 3px;">
-          <h4 style="text-align: center;"><a>{{result.name}}</a></h4>
+          <h2 style="text-align: center;"><a>{{result.name}}</a></h2>
           <!-- <h5><a [routerLink]="['/artist', {{result.artist.name}}]>{{result.artist.name}}</h5> -->
 
         </div>
