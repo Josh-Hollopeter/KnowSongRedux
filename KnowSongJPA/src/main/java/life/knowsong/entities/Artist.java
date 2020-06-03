@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 public class Artist {
 
 	@Id
-	private int id;
+	private String id;
 	
 	private String name;
 	
@@ -49,11 +49,11 @@ public class Artist {
 	
 	// GETTERS / SETTERS
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -119,76 +119,6 @@ public class Artist {
 
 	public void setGenres(Set<Genre> genres) {
 		this.genres = genres;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((albums == null) ? 0 : albums.hashCode());
-		result = prime * result + ((created == null) ? 0 : created.hashCode());
-		result = prime * result + ((genres == null) ? 0 : genres.hashCode());
-		result = prime * result + ((href == null) ? 0 : href.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((imgSource == null) ? 0 : imgSource.hashCode());
-		result = prime * result + ((lastUpdated == null) ? 0 : lastUpdated.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((popularity == null) ? 0 : popularity.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Artist other = (Artist) obj;
-		if (albums == null) {
-			if (other.albums != null)
-				return false;
-		} else if (!albums.equals(other.albums))
-			return false;
-		if (created == null) {
-			if (other.created != null)
-				return false;
-		} else if (!created.equals(other.created))
-			return false;
-		if (genres == null) {
-			if (other.genres != null)
-				return false;
-		} else if (!genres.equals(other.genres))
-			return false;
-		if (href == null) {
-			if (other.href != null)
-				return false;
-		} else if (!href.equals(other.href))
-			return false;
-		if (id != other.id)
-			return false;
-		if (imgSource == null) {
-			if (other.imgSource != null)
-				return false;
-		} else if (!imgSource.equals(other.imgSource))
-			return false;
-		if (lastUpdated == null) {
-			if (other.lastUpdated != null)
-				return false;
-		} else if (!lastUpdated.equals(other.lastUpdated))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (popularity == null) {
-			if (other.popularity != null)
-				return false;
-		} else if (!popularity.equals(other.popularity))
-			return false;
-		return true;
 	}
 	
 	
