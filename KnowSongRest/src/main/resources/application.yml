@@ -41,6 +41,6 @@ spring:
             authorization-grant-type: authorization_code
             client-id: a2398fd3acd54cf8b645af6884251a55
             client-name: Spotify
-            client-secret: e8c8ceef3b064187ada929c80caaca17
+            client-secret: ab88c01f4c3541bdbd238d4bcbae2635
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: user-read-private
