@@ -7,10 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
+@Table(name = "track")
 public class Track {
 
 	@Id
@@ -33,6 +37,8 @@ public class Track {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
+	// typically only getting tracks from album. not other way around.
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="fk_album_id")
 	private Album album;
