@@ -1,21 +1,29 @@
 package life.knowsong.entities;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
+@Table(name = "album")
 public class Album {
 
 	@Id
@@ -39,22 +47,25 @@ public class Album {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
-	@ManyToMany
+	@JsonIgnore
+	@ElementCollection
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name="album_market",
 		joinColumns=@JoinColumn(name="album_id"),
 		inverseJoinColumns=@JoinColumn(name="available_market_market"))
-	private Set<AvailableMarkets> markets;
+	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
 	
-	
-	@ManyToMany
+	@ElementCollection
+	@ManyToMany(mappedBy = "artist", fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinTable(name="artist_album",
 		joinColumns=@JoinColumn(name="album_id"),
 		inverseJoinColumns=@JoinColumn(name="artist_id"))
-	private Set<Artist> artists;
+	private Set<Artist> artists = new HashSet<Artist>();
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@ElementCollection
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
 	@JoinColumn(name="fk_album_id")
-	private Set<Track> tracks;
+	private Set<Track> tracks = new LinkedHashSet<Track>();
 	
 	
 	public String getId() {
@@ -125,16 +136,18 @@ public class Album {
 		return markets;
 	}
 
-	public void setMarkets(Set<AvailableMarkets> markets) {
-		this.markets = markets;
+	public void addMarkets(AvailableMarkets market) {
+		this.markets.add(market);
+		market.getAlbums().add(this);
 	}
 
 	public Set<Artist> getArtists() {
 		return artists;
 	}
 
-	public void setArtists(Set<Artist> artists) {
-		this.artists = artists;
+	public void addArtist(Artist artist) {
+		this.artists.add(artist);
+		artist.getAlbums().add(this);
 	}
 
 	public Set<Track> getTracks() {
