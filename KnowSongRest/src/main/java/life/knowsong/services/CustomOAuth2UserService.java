@@ -62,7 +62,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		}else {
 			User newUser = new User();
 			newUser.setEnabled(true);
-			newUser.setRole("standard");
 			newUser.setImgSource(imgSource);
 			newUser.setUsername(username);
 			Rank rank = rankRepo.findById(1).get();

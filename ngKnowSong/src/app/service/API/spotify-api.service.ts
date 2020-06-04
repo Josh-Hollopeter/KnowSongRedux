@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap, map, retryWhen } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -72,7 +72,8 @@ export class SpotifyAPIService {
         console.log(err);
         
         return [];
-      })
+      })//,
+      // retryWhen(errors =>)
     );
 
   }
