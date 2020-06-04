@@ -2,9 +2,7 @@ package life.knowsong.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.EntityManager;

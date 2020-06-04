@@ -34,7 +34,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.webjars/js-cookie
 	compile group: 'org.webjars', name: 'js-cookie', version: '2.0.2'
 	// spotify wrapper makes it quicker and easier to develop api requests 
-	compile 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
+	// https://mvnrepository.com/artifact/se.michaelthelin.spotify/spotify-web-api-java
+	compile group: 'se.michaelthelin.spotify', name: 'spotify-web-api-java', version: '1.5.0'
+
 	//compile 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
 	implementation ('org.springframework.boot:spring-boot-starter-tomcat')
 	
