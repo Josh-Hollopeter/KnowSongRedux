@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import life.knowsong.buildgame.AudioGame;
 import life.knowsong.buildgame.LyricGame;
-import life.knowsong.data.SimpleArtist;
 import life.knowsong.data.SpotifyDataClient;
+import life.knowsong.entities.Artist;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,7 +25,7 @@ public class SpotifyDataController {
 	SpotifyDataClient ourSpotifyData;
 	
 	@GetMapping("/spotifyData/getAllArtists")
-	public List<SimpleArtist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
+	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
 		if(principal != null) {
 			response.setStatus(200);
 			System.out.println("getting artists");
@@ -55,6 +55,14 @@ public class SpotifyDataController {
 	public AudioGame buildArtistLyricGame(@AuthenticationPrincipal OAuth2User principal, 
 			@PathVariable("artistId") String artistId,HttpServletResponse response) {
 		
+		return null;
+	}
+	
+	@GetMapping("/spotifyData/testPersistArtist/{artistId}/{accessToken}")
+	public AudioGame testPersistArtist(@PathVariable("artistId") String artistId
+			, @PathVariable("accessToken") String accessToken
+			, HttpServletResponse response) {
+		ourSpotifyData.getArtist(accessToken, artistId);
 		return null;
 	}
 
