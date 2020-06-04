@@ -1,4 +1,4 @@
-package com.skilldistillery.knowsong.entities;
+package life.knowsong.entities;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -12,13 +12,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import life.knowsong.entities.Trivia;
+import life.knowsong.entities.Rank;
 
-class TriviaTest {
-	
+class RankTest {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Trivia trivia;
+	private Rank rank;
+	
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,7 +32,7 @@ class TriviaTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		trivia = em.find(Trivia.class, 1);
+		rank = em.find(Rank.class, 1);
 	}
 
 	@AfterEach
@@ -41,8 +41,7 @@ class TriviaTest {
 
 	@Test
 	void test() {
-		assertNotNull(trivia);
-		assertNotNull(trivia.getQuestionCategory());
+		assertNotNull(rank);
 	}
 
 }

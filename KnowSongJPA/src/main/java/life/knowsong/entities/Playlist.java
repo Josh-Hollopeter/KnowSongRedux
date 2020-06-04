@@ -1,6 +1,7 @@
 package life.knowsong.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,13 +28,13 @@ public class Playlist {
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "playlists")
-	private List<User> users;
+	private Set<User> users;
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 

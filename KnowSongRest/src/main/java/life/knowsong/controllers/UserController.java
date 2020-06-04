@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,11 +62,16 @@ public class UserController {
 	}
 	
 	@GetMapping("/isLoggedIn")
-	public Boolean isLoggedIn(@AuthenticationPrincipal OAuth2User principal) {
-		if(principal != null)
+	public Boolean isLoggedIn(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
+		if(principal != null) {
+			response.setStatus(200);
 			return true;
-		else
+		}
+			
+		else {
+			response.setStatus(401);
 			return false;
-	}
+		}
+		}
 	
 }
