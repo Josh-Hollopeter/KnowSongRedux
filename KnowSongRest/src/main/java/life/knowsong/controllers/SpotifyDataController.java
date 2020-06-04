@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import life.knowsong.buildgame.AudioGame;
+import life.knowsong.buildgame.LyricGame;
 import life.knowsong.data.SimpleArtist;
 import life.knowsong.data.SpotifyDataClient;
 
@@ -35,18 +37,25 @@ public class SpotifyDataController {
 		}
 	}
 	
-	@GetMapping("/spotifyData/getArtistPresent/{id}")
+	@GetMapping("/spotifyData/getArtistPresent/{artistId}")
 	public boolean isArtistStored(// @AuthenticationPrincipal OAuth2User principal, 
-			@PathVariable("id") String spotifyId,HttpServletResponse response) {
+			@PathVariable("artistId") String artistId,HttpServletResponse response) {
 //		 if(principal != null) {
 			response.setStatus(200);
 			System.out.println("checking if artist stored");
-			return ourSpotifyData.isArtistStored(spotifyId);
+			return ourSpotifyData.isArtistStored(artistId);
 //		 }
 //		 else {
 //			response.setStatus(401);
 //			return false;
 //		}
+	}
+	
+	@GetMapping("/spotifyData/buildArtistAudioGame/{artistId}")
+	public AudioGame buildArtistLyricGame(@AuthenticationPrincipal OAuth2User principal, 
+			@PathVariable("artistId") String artistId,HttpServletResponse response) {
+		
+		return null;
 	}
 
 }
