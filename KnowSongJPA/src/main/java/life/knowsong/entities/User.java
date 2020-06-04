@@ -39,9 +39,9 @@ public class User {
 	@Column(name = "img_source")
 	private String imgSource;
 	
-//	@OneToMany(cascade=CascadeType.ALL)
-//	@JoinColumn(name="fk_user_id")
-//	private Set<SingleplayerGame> singleplayerGames;
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="fk_user_id")
+	private Set<SingleplayerGame> singleplayerGames;
 	
 	// not implemented
 	@JsonIgnore
@@ -107,13 +107,13 @@ public class User {
 		this.playlists = playlists;
 	}
 	
-//	public Set<SingleplayerGame> getSingleplayerGames() {
-//		return singleplayerGames;
-//	}
-//
-//	public void setSingleplayerGames(Set<SingleplayerGame> singleplayerGames) {
-//		this.singleplayerGames = singleplayerGames;
-//	}
+	public Set<SingleplayerGame> getSingleplayerGames() {
+		return singleplayerGames;
+	}
+
+	public void setSingleplayerGames(Set<SingleplayerGame> singleplayerGames) {
+		this.singleplayerGames = singleplayerGames;
+	}
 
 	@Override
 	public int hashCode() {
