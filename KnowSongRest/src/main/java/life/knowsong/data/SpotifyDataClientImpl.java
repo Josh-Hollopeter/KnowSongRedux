@@ -2,7 +2,6 @@ package life.knowsong.data;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.neovisionaries.i18n.CountryCode;
@@ -21,9 +21,9 @@ import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
+import com.wrapper.spotify.model_objects.specification.Image;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.TrackSimplified;
-import com.wrapper.spotify.models.Image;
 import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.artists.GetArtistRequest;
 import com.wrapper.spotify.requests.data.artists.GetArtistsAlbumsRequest;
@@ -89,7 +89,12 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			Artist artist = this.buildNewArtist(artistId, true);
 			
 			System.out.println("Beginning persistence of all albums!");
-			this.getAllAlbumsFromArtist(artist);
+			try {
+				this.getAllAlbumsFromArtist(artist);
+			} catch (org.apache.hc.core5.http.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 //			em.persist(artist);
 			return null;
 		}
@@ -109,7 +114,13 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		Artist artist = new Artist();
 		
 		try {
-		      com.wrapper.spotify.model_objects.specification.Artist fullArtist = getArtistRequest.execute();
+		      com.wrapper.spotify.model_objects.specification.Artist fullArtist = null;
+			try {
+				fullArtist = getArtistRequest.execute();
+			} catch (org.apache.hc.core5.http.ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		      
 		      artist.setTriviaReady(triviaReady); // IS THIS ARTIST ALSO GETTING ALBUMS STORED?
 		      artist.setId(artistId);
@@ -153,7 +164,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		return artist;
 	}
 	
-	private void getAllAlbumsFromArtist(Artist artist) {
+	private void getAllAlbumsFromArtist(Artist artist) throws org.apache.hc.core5.http.ParseException {
 		GetArtistsAlbumsRequest getArtistsAlbumsRequest = this.spotifyApi.getArtistsAlbums(artist.getId())
 				.album_type("album")
 				.limit(50)
@@ -162,7 +173,13 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				.build();
 
 		try {
-			Paging<AlbumSimplified> albumSimplified = getArtistsAlbumsRequest.execute();
+			Paging<AlbumSimplified> albumSimplified = null;
+			try {
+				albumSimplified = getArtistsAlbumsRequest.execute();
+			} catch (org.apache.hc.core5.http.ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			AlbumSimplified[] simplifiedAlbums = albumSimplified.getItems();
 			
 			for(int x = 0; x < simplifiedAlbums.length; x++) {
@@ -223,7 +240,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		}
 	}
 	
-	private Set<Track> getAllTracksFromAlbum(Album album) {
+	private Set<Track> getAllTracksFromAlbum(Album album) throws org.apache.hc.core5.http.ParseException {
 		GetAlbumsTracksRequest getAlbumsTracksRequest = this.spotifyApi.getAlbumsTracks(album.getId())
 				.limit(50)
 				.offset(0)

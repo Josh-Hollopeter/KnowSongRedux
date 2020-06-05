@@ -55,12 +55,8 @@ public class Album {
 		inverseJoinColumns=@JoinColumn(name="available_market_market"))
 	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
 	
-	@ElementCollection
-	@ManyToMany(mappedBy = "artist", fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
-	@JoinTable(name="artist_album",
-		joinColumns=@JoinColumn(name="album_id"),
-		inverseJoinColumns=@JoinColumn(name="artist_id"))
-	private Set<Artist> artists = new HashSet<Artist>();
+	@ManyToMany(mappedBy = "albums")
+	private Set<Artist> artists;
 
 	@ElementCollection
 	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
@@ -145,9 +141,13 @@ public class Album {
 		return artists;
 	}
 
-	public void addArtist(Artist artist) {
-		this.artists.add(artist);
-		artist.getAlbums().add(this);
+	public Artist addArtist(Artist artist) {
+		if(artists == null) {
+			artists = new LinkedHashSet<Artist>();
+		}
+		
+		artists.add(artist);
+		return artist;
 	}
 
 	public Set<Track> getTracks() {

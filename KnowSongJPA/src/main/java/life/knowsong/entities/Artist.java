@@ -25,8 +25,7 @@ import javax.persistence.TemporalType;
 public class Artist {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String id;
 	
 	private String name;
 	
@@ -60,24 +59,23 @@ public class Artist {
 	@JoinTable(name="artist_album",
 			joinColumns=@JoinColumn(name="artist_id"),
 			inverseJoinColumns=@JoinColumn(name="album_id"))
-	private Set<Album> albums = new LinkedHashSet<Album>();
+	private Set<Album> albums;
 	
 	@ElementCollection
-//	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="artist_has_genre",
 			joinColumns=@JoinColumn(name="artist_id"),
-			inverseJoinColumns=@JoinColumn(name="genre_id"))
+			inverseJoinColumns=@JoinColumn(name="genre_name"))
 	private Set<Genre> genres;
 
 	
 	// GETTERS / SETTERS
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -146,6 +144,16 @@ public class Artist {
 		
 		genres.add(genre);
 		return genre;
+		
+	}
+	public Album addAlbum(Album album) {
+		
+		if(albums == null) {
+			albums = new LinkedHashSet<Album>();
+		}
+		
+		albums.add(album);
+		return album;
 		
 	}
 	
