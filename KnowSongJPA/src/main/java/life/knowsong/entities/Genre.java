@@ -18,10 +18,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Genre {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
 	private String name;
+	
+//	private String name;
 	
 	public Genre() {
 		
@@ -34,7 +33,7 @@ public class Genre {
 	
 	@JsonIgnore
 	@ElementCollection
-	@ManyToMany(mappedBy = "artist")
+	@ManyToMany(mappedBy = "genres")
 	private Set<Artist> artists;
 
 	public String getName() {
