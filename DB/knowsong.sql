@@ -126,7 +126,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `knowsong`.`artist` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`artist` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NULL,
   `img_source` VARCHAR(255) NULL,
   `href` VARCHAR(255) NULL,
@@ -144,7 +144,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `knowsong`.`album` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`album` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NULL,
   `img_source` VARCHAR(255) NULL,
   `type` VARCHAR(255) NULL,
@@ -162,7 +162,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `knowsong`.`track` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`track` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NULL,
   `preview_url` VARCHAR(255) NULL,
   `explicit` TINYINT(1) NULL,
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`track` (
   `href` VARCHAR(255) NULL,
   `duration_ms` INT NULL,
   `created` DATETIME NULL,
-  `fk_album_id` INT NOT NULL,
+  `fk_album_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_album_id_idx` (`fk_album_id` ASC),
   CONSTRAINT `fk_album_id`
@@ -187,8 +187,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `knowsong`.`artist_album` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`artist_album` (
-  `artist_id` INT NOT NULL,
-  `album_id` INT NOT NULL,
+  `artist_id` VARCHAR(255) NOT NULL,
+  `album_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`artist_id`, `album_id`),
   INDEX `album_id_idx` (`album_id` ASC),
   CONSTRAINT `album_has_artist`
@@ -254,34 +254,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `knowsong`.`genre` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`genre` (
-  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `knowsong`.`artist_has_genre`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `knowsong`.`artist_has_genre` ;
-
-CREATE TABLE IF NOT EXISTS `knowsong`.`artist_has_genre` (
-  `artist_id` INT NOT NULL,
-  `genre_id` INT NOT NULL,
-  PRIMARY KEY (`artist_id`, `genre_id`),
-  INDEX `fk_artist_has_genre_genre1_idx` (`genre_id` ASC),
-  INDEX `fk_artist_has_genre_artist1_idx` (`artist_id` ASC),
-  CONSTRAINT `fk_artist_has_genre_artist1`
-    FOREIGN KEY (`artist_id`)
-    REFERENCES `knowsong`.`artist` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_artist_has_genre_genre1`
-    FOREIGN KEY (`genre_id`)
-    REFERENCES `knowsong`.`genre` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  PRIMARY KEY (`name`))
 ENGINE = InnoDB;
 
 
@@ -304,7 +279,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `knowsong`.`album_has_available_market` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`album_has_available_market` (
-  `album_id` INT NOT NULL,
+  `album_id` VARCHAR(255) NOT NULL,
   `available_market_id` INT NOT NULL,
   PRIMARY KEY (`album_id`, `available_market_id`),
   INDEX `fk_album_has_available_market_available_market1_idx` (`available_market_id` ASC),
@@ -317,6 +292,30 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`album_has_available_market` (
   CONSTRAINT `fk_album_has_available_market_available_market1`
     FOREIGN KEY (`available_market_id`)
     REFERENCES `knowsong`.`available_market` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `knowsong`.`artist_has_genre`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `knowsong`.`artist_has_genre` ;
+
+CREATE TABLE IF NOT EXISTS `knowsong`.`artist_has_genre` (
+  `artist_id` VARCHAR(255) NOT NULL,
+  `genre_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`artist_id`, `genre_name`),
+  INDEX `fk_artist_has_genre_genre1_idx` (`genre_name` ASC),
+  INDEX `fk_artist_has_genre_artist1_idx` (`artist_id` ASC),
+  CONSTRAINT `fk_artist_has_genre_artist1`
+    FOREIGN KEY (`artist_id`)
+    REFERENCES `knowsong`.`artist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_artist_has_genre_genre1`
+    FOREIGN KEY (`genre_name`)
+    REFERENCES `knowsong`.`genre` (`name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
