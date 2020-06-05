@@ -24,6 +24,9 @@ public class SpotifyDataController {
 	@Autowired
 	SpotifyDataClient ourSpotifyData;
 	
+//	@Autowired
+//	ArtistRepos
+	
 	@GetMapping("/spotifyData/getAllArtists")
 	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
 		if(principal != null) {
@@ -37,19 +40,19 @@ public class SpotifyDataController {
 		}
 	}
 	
-	@GetMapping("/spotifyData/getArtistPresent/{artistId}")
-	public boolean isArtistStored(// @AuthenticationPrincipal OAuth2User principal, 
-			@PathVariable("artistId") String artistId,HttpServletResponse response) {
-//		 if(principal != null) {
-			response.setStatus(200);
-			System.out.println("checking if artist stored");
-			return ourSpotifyData.isArtistStored(artistId);
-//		 }
-//		 else {
-//			response.setStatus(401);
-//			return false;
-//		}
-	}
+//	@GetMapping("/spotifyData/getArtistPresent/{artistId}")
+//	public boolean isArtistStored(// @AuthenticationPrincipal OAuth2User principal, 
+//			@PathVariable("artistId") String artistId,HttpServletResponse response) {
+////		 if(principal != null) {
+//			response.setStatus(200);
+//			System.out.println("checking if artist stored");
+//			return ourSpotifyData.isArtistStored(artistId);
+////		 }
+////		 else {
+////			response.setStatus(401);
+////			return false;
+////		}
+//	}
 	
 	@GetMapping("/spotifyData/buildArtistAudioGame/{artistId}")
 	public AudioGame buildArtistLyricGame(@AuthenticationPrincipal OAuth2User principal, 
