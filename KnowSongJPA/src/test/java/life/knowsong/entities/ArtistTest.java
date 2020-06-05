@@ -1,6 +1,8 @@
 package life.knowsong.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,7 +18,9 @@ class ArtistTest {
 	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
+	private Artist persistedArtist;
 	private Artist artist;
+	private Genre genre;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -30,7 +34,19 @@ class ArtistTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		artist = em.find(Artist.class, 1);
+		artist = new Artist();
+		artist.setCreated(new Date());
+		artist.setName("squirrrely");
+		artist.setPopularity(1);
+		genre = new Genre("MOOSIC");
+		artist.addGenre(genre);
+		em.getTransaction().begin();
+		em.persist(genre);
+		em.persist(artist);
+		em.flush();
+		System.out.println(artist.getId());
+		em.getTransaction().commit();
+		persistedArtist = em.find(Artist.class, 2);
 	}
 
 	@AfterEach
@@ -39,7 +55,7 @@ class ArtistTest {
 
 	@Test
 	void test() {
-		assertNotNull(artist);
+		assertNotNull(persistedArtist);
 	}
 
 }
