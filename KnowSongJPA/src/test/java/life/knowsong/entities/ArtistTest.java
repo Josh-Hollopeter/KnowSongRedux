@@ -21,6 +21,7 @@ class ArtistTest {
 	private Artist persistedArtist;
 	private Artist artist;
 	private Genre genre;
+	private Album album;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -38,15 +39,20 @@ class ArtistTest {
 		artist.setCreated(new Date());
 		artist.setName("squirrrely");
 		artist.setPopularity(1);
+		artist.setId("hello");
 		genre = new Genre("MOOSIC");
 		artist.addGenre(genre);
+		album = new Album();
+		album.setId("album");
+		artist.addAlbum(album);
 		em.getTransaction().begin();
 		em.persist(genre);
+		em.persist(album);
 		em.persist(artist);
 		em.flush();
 		System.out.println(artist.getId());
 		em.getTransaction().commit();
-		persistedArtist = em.find(Artist.class, 2);
+		persistedArtist = em.find(Artist.class, "hello");
 	}
 
 	@AfterEach

@@ -65,8 +65,10 @@ public class SpotifyDataController {
 	public AudioGame testPersistArtist(@PathVariable("artistId") String artistId
 			, @PathVariable("accessToken") String accessToken
 			, HttpServletResponse response) {
+		AudioGame ag = new AudioGame();
+
 		ourSpotifyData.getArtist(accessToken, artistId);
-		return null;
+		return ag;
 	}
 
 }
