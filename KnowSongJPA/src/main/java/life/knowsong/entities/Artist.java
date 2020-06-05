@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,7 +25,8 @@ import javax.persistence.TemporalType;
 public class Artist {
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	
 	private String name;
 	
@@ -60,20 +63,21 @@ public class Artist {
 	private Set<Album> albums = new LinkedHashSet<Album>();
 	
 	@ElementCollection
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinTable(name="artist_genre",
+//	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name="artist_has_genre",
 			joinColumns=@JoinColumn(name="artist_id"),
-			inverseJoinColumns=@JoinColumn(name="genre_name"))
-	private Set<Genre> genres = new HashSet<Genre>();
+			inverseJoinColumns=@JoinColumn(name="genre_id"))
+	private Set<Genre> genres;
 
 	
 	// GETTERS / SETTERS
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -133,9 +137,16 @@ public class Artist {
 		return genres;
 	}
 
-	public void addGenre(Genre genre) {
-		this.genres.add(genre);
-		genre.getArtists().add(this);
+
+	public Genre addGenre(Genre genre) {
+		
+		if(genres == null) {
+			genres = new HashSet<Genre>();
+		}
+		
+		genres.add(genre);
+		return genre;
+		
 	}
 	
 	
