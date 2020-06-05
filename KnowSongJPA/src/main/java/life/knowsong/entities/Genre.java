@@ -3,13 +3,11 @@ package life.knowsong.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -20,15 +18,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Genre {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	private String name;
+	
+	public Genre() {
+		
+	}
+	
+	public Genre(String name) {
+		this.name = name;
+		
+	}
 	
 	@JsonIgnore
 	@ElementCollection
-	@ManyToMany(mappedBy = "artist",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable(name="artist_genre",
-			joinColumns=@JoinColumn(name="genre_name"),
-			inverseJoinColumns=@JoinColumn(name="artist_id"))
-	private Set<Artist> Artists = new HashSet<Artist>();
+	@ManyToMany(mappedBy = "artist")
+	private Set<Artist> artists;
 
 	public String getName() {
 		return name;
@@ -39,7 +46,18 @@ public class Genre {
 	}
 
 	public Set<Artist> getArtists() {
-		return Artists;
+		return artists;
+	}
+	
+	public Artist addArtist(Artist artist) {
+		
+		if(artists == null) {
+			artists = new HashSet<Artist>();
+		}
+		
+		artists.add(artist);
+		return artist;
+		
 	}
 		
 }
