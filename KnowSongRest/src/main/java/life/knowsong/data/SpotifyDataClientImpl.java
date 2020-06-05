@@ -2,9 +2,7 @@ package life.knowsong.data;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +30,10 @@ import com.wrapper.spotify.requests.data.artists.GetArtistsAlbumsRequest;
 
 import life.knowsong.entities.Album;
 import life.knowsong.entities.Artist;
-import life.knowsong.entities.AvailableMarkets;
 import life.knowsong.entities.Genre;
 import life.knowsong.entities.Track;
 import life.knowsong.repositories.ArtistRepository;
+import life.knowsong.repositories.GenreRepository;
 
 @Transactional
 @Service
@@ -46,6 +44,9 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	
 	@Autowired
 	private ArtistRepository artistRepo;
+	
+	@Autowired
+	private GenreRepository genreRepo;
 	
 	private SpotifyApi spotifyApi;
 	
@@ -60,19 +61,8 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 //		List<SimpleArtist> simpleArtists = em.createQuery(jpql, SimpleArtist.class).getResultList();
 		
 	}
-
-	@Override
-	public boolean isArtistStored(String artistId) {
-		String jpql = "SELECT COUNT(*) FROM Artist a WHERE a.id = :spotifyId";
-		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("spotifyId", artistId).getResultList();
-		if (isPresent.get(0) > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
-	public boolean isArtistStoredAndTriviaReady(String artistId) {
+	private boolean isArtistStoredAndTriviaReady(String artistId) {
 		String jpql = "SELECT COUNT(*) FROM Artist a WHERE a.id = :spotifyId";
 		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("spotifyId", artistId).getResultList();
 		if (isPresent.get(0) > 0) {
@@ -83,17 +73,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			return false;
 		}
 	}
-	
-	public boolean isGenreStored(String name) {
-		String jpql = "SELECT COUNT(*) FROM Genre g WHERE g.name = :name";
-		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("name", name).getResultList();
-		
-		if(isPresent.get(0) > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 
 	@Override
 	public Artist getArtist(String accessToken, String artistId) {
@@ -107,7 +87,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			
 			System.out.println("Beginning persistence of new artist!");
 			Artist artist = this.buildNewArtist(artistId, true);
-			em.persist(artist);
 			
 			System.out.println("Beginning persistence of all albums!");
 			this.getAllAlbumsFromArtist(artist);
@@ -146,20 +125,27 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		      artist.setCreated(new Timestamp(new Date().getTime()));
 		      artist.setLastUpdated(new Timestamp(new Date().getTime()));
 		      
+		      em.persist(artist);	// register primary key before mapping genres
 		      fullArtist.getGenres();
 		      String[] genresUnparsed = fullArtist.getGenres();
 		      // genres are persisted through cascade effect with new artist
 		      for ( String x :genresUnparsed ) {
-		    	  Genre genre = new Genre();
-		    	  genre.setName(x);
-		    	  artist.addGenre(genre);
+		    	  Optional<Genre> managedGenre = this.genreRepo.findById(x);
+		    	  
 		    	  //check if genre stored
-		    	  if(! this.isGenreStored(x)) {
-		    		  em.persist(genre);
+		    	  if(managedGenre.isPresent()) {
+		    		 Genre storedGenre = managedGenre.get();
+		    		 artist.addGenre(storedGenre);
+		    		 em.persist(storedGenre);
+		    	  } else {
+		    		  Genre genre = new Genre();
+			    	  genre.setName(x);
+			    	  artist.addGenre(genre);
+			    	  em.persist(genre);
 		    	  }
 		    	  
 		      }
-		      
+		      em.persist(artist);
 		      System.out.println(artist.getName() + " has been added to the collection.");
 		    } catch (IOException | SpotifyWebApiException | ParseException e) {
 		      System.out.println("Error: " + e.getMessage());
