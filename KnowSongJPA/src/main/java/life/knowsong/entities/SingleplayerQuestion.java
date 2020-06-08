@@ -1,7 +1,9 @@
 package life.knowsong.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +19,10 @@ public class SingleplayerQuestion {
 	// SQL VALUES
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int num;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_singleplayer_game_id")
+	@JoinColumn(name = "fk_singeplayer_game_id")
 	private SingleplayerGame game;
 	
 	@Column(name = "question_text")
@@ -41,12 +42,12 @@ public class SingleplayerQuestion {
 	
 	// GETTERS / SETTERS 
 	
-	public int getId() {
-		return id;
+	public int getNum() {
+		return num;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setNum(int num) {
+		this.num = num;
 	}
 
 	public SingleplayerGame getGame() {
