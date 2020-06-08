@@ -36,12 +36,18 @@ class TrackTest {
 		em = emf.createEntityManager();
 		track = new Track();
 		track.setAlbum(new Album());
+		track.getAlbum().setId("trackAlbum");
 		track.setCreated(new Date());
 		track.setExplicit(false);
 		track.setName("track");
 		track.setPopularity(44);
+		track.setId("tackid");
+		em.getTransaction().begin();
+		em.persist(track.getAlbum());
 		em.persist(track);
-		persistedTrack = em.find(Track.class, 1);
+		em.flush();
+		em.getTransaction().commit();
+		persistedTrack = em.find(Track.class, "trackid");
 	}
 
 	@AfterEach
@@ -50,7 +56,7 @@ class TrackTest {
 
 	@Test
 	void test() {
-		assertNotNull(track);
+		assertNotNull(persistedTrack);
 		assertEquals(track.getPopularity(),persistedTrack.getPopularity());
 	}
 
