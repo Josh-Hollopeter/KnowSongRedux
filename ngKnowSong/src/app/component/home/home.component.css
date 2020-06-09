@@ -19,6 +19,7 @@ body {
   perspective-origin: 50% 50%;
   animation: animation 50s linear infinite;
   background-size: cover;
+  background-repeat: round;
 }
 
 @keyframes animation {
@@ -63,4 +64,5 @@ body {
     text-align: center;
     justify-content: center;
     align-items: center;
+    display: inline-table;
 }
