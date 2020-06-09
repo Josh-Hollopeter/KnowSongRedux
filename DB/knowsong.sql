@@ -231,7 +231,7 @@ DROP TABLE IF EXISTS `knowsong`.`singleplayer_question` ;
 
 CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_question` (
   `num` INT NOT NULL,
-  `fk_singeplayer_game_id` INT NOT NULL,
+  `fk_singleplayer_game_id` INT NOT NULL,
   `question_text` VARCHAR(255) NULL,
   `answer` VARCHAR(255) NULL,
   `option2` VARCHAR(255) NULL,
@@ -239,9 +239,9 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_question` (
   `option4` VARCHAR(255) NULL,
   `user_response` VARCHAR(255) NULL,
   PRIMARY KEY (`num`),
-  INDEX `fk_game_id_idx` (`fk_singeplayer_game_id` ASC),
+  INDEX `fk_game_id_idx` (`fk_singleplayer_game_id` ASC),
   CONSTRAINT `fk_singleplayer_game_id`
-    FOREIGN KEY (`fk_singeplayer_game_id`)
+    FOREIGN KEY (`fk_singleplayer_game_id`)
     REFERENCES `knowsong`.`singleplayer_game` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
