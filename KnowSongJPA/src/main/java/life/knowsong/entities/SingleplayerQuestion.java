@@ -22,7 +22,7 @@ public class SingleplayerQuestion {
 	private int num;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_singeplayer_game_id")
+	@JoinColumn(name = "fk_singleplayer_game_id")
 	private SingleplayerGame game;
 	
 	@Column(name = "question_text")
