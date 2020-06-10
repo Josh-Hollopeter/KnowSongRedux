@@ -90,13 +90,12 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			
 			System.out.println("Beginning persistence of all albums!");
 			try {
-				this.getAllAlbumsFromArtist(artist);
+				int offset = 0;	// first call's offset is 0 (for more than 50 artist albums)
+				this.getAllAlbumsFromArtist(artist, offset);	
 			} catch (org.apache.hc.core5.http.ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			em.persist(artist);
-			return null;
+			return artist;
 		}
 	}
 	
@@ -118,11 +117,10 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			try {
 				fullArtist = getArtistRequest.execute();
 			} catch (org.apache.hc.core5.http.ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		      
-		      artist.setTriviaReady(triviaReady); // IS THIS ARTIST ALSO GETTING ALBUMS STORED?
+		      artist.setTriviaReady(triviaReady); // IS THIS ARTIST ALSO GETTING ALBUMS STORED? // depends on the parameter, if(true) store albums else don't
 		      artist.setId(artistId);
 		      artist.setName(fullArtist.getName());
 		      Image[] image = fullArtist.getImages();
@@ -164,23 +162,32 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		return artist;
 	}
 	
-	private void getAllAlbumsFromArtist(Artist artist) throws org.apache.hc.core5.http.ParseException {
-		GetArtistsAlbumsRequest getArtistsAlbumsRequest = this.spotifyApi.getArtistsAlbums(artist.getId())
-				.album_type("album")
+	private void getAllAlbumsFromArtist(Artist artist, int offset) throws org.apache.hc.core5.http.ParseException {
+		GetArtistsAlbumsRequest getArtistsAlbumsRequest = this.spotifyApi
+				.getArtistsAlbums(artist.getId())
+				.album_type("album,single")
 				.limit(50)
-				.offset(0)
+				.offset(offset)
 				.market(CountryCode.US)
 				.build();
 
 		try {
-			Paging<AlbumSimplified> albumSimplified = null;
+			Paging<AlbumSimplified> pagingAlbums = null;
 			try {
-				albumSimplified = getArtistsAlbumsRequest.execute();
+				pagingAlbums = getArtistsAlbumsRequest.execute();	// HTTP Request to Spotify API
 			} catch (org.apache.hc.core5.http.ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			AlbumSimplified[] simplifiedAlbums = albumSimplified.getItems();
+			AlbumSimplified[] simplifiedAlbums = pagingAlbums.getItems();
+			
+		// recursion for getting all albums and singles
+		// ---------------------------------------
+			// if there is another page of items, call method again.
+			if(pagingAlbums.getNext() != null) {
+				int newOffset = offset + 50;
+				getAllAlbumsFromArtist(artist, newOffset);	// add 50 until total IE: (0 -> 50 -> 100 -> 112(done) )
+			}
+		// ---------------------------------------
 			
 			for(int x = 0; x < simplifiedAlbums.length; x++) {
 				AlbumSimplified sa = simplifiedAlbums[x];
@@ -242,7 +249,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	
 	private Set<Track> getAllTracksFromAlbum(Album album) throws org.apache.hc.core5.http.ParseException {
 		GetAlbumsTracksRequest getAlbumsTracksRequest = this.spotifyApi.getAlbumsTracks(album.getId())
-				.limit(50)
+				.limit(50)	// ever see an album with more than 50 tracks? i haven't. . . 
 				.offset(0)
 				.market(CountryCode.US)
 				.build();
@@ -258,7 +265,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		    	  track.setName(ts.getName());
 		    	  track.setPreviewUrl(ts.getPreviewUrl());
 		    	  track.setExplicit(ts.getIsExplicit());
-		    	  // track.setPopularity(ts.);
+//		    	  track.setPopularity(ts.get);	// simple object doesn't provide popularity :/
 		    	  track.setHref(ts.getHref());
 		    	  track.setDurationMs(ts.getDurationMs());
 		    	  track.setCreated(new Timestamp(new Date().getTime()));
