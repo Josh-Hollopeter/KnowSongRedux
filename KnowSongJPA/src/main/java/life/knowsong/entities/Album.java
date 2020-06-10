@@ -55,7 +55,7 @@ public class Album {
 		inverseJoinColumns=@JoinColumn(name="available_market_market"))
 	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
 	
-	@ManyToMany(mappedBy = "albums")
+	@ManyToMany(mappedBy = "albums", cascade = CascadeType.MERGE)
 	private Set<Artist> artists;
 
 	@ElementCollection
