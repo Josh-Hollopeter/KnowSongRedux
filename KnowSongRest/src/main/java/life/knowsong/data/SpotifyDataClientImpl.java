@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -66,7 +67,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		String jpql = "SELECT COUNT(*) FROM Artist a WHERE a.id = :spotifyId";
 		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("spotifyId", artistId).getResultList();
 		if (isPresent.get(0) > 0) {
-			String jpql2 = "SELECT trivia_ready FROM Artist a WHERE a.id = :spotifyId";
+			String jpql2 = "SELECT triviaReady FROM Artist a WHERE a.id = :spotifyId";
 			List<Boolean> ready = em.createQuery(jpql2, Boolean.class).setParameter("spotifyId", artistId).getResultList();
 			return ready.get(0);
 		} else {
@@ -85,8 +86,15 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 					.setAccessToken(accessToken)
 					.build();
 			
-			System.out.println("Beginning persistence of new artist!");
-			Artist artist = this.buildNewArtist(artistId, true);
+			Optional<Artist> optionalArtist = artistRepo.findById(artistId);
+			Artist artist = null;
+			if(optionalArtist.isPresent()) {
+				artist = optionalArtist.get();	// artist is already stored
+			} else {
+				System.out.println("Beginning persistence of new artist!");
+				artist = this.buildNewArtist(artistId);	// new artist
+			}
+			
 			
 			System.out.println("Beginning persistence of all albums!");
 			try {
@@ -105,7 +113,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	// therefore, when searching through artist collection, we will have many artists, but only some will be ready for trivia
 	// NOTE: having a large collection of artists and genres will provide us with a recommendations capability in the future!
 	//
-	private Artist buildNewArtist(String artistId, boolean triviaReady) {
+	private Artist buildNewArtist(String artistId) {
 		 
 		
 		GetArtistRequest getArtistRequest = spotifyApi.getArtist(artistId)
@@ -120,8 +128,8 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				e1.printStackTrace();
 			}
 		      
-		      artist.setTriviaReady(triviaReady); // IS THIS ARTIST ALSO GETTING ALBUMS STORED? // depends on the parameter, if(true) store albums else don't
-		      artist.setId(artistId);
+		      artist.setTriviaReady(false); // IS THIS ARTIST ALSO GETTING ALBUMS STORED? // depends on the parameter, if(true) store albums else don't
+			  artist.setId(artistId);
 		      artist.setName(fullArtist.getName());
 		      Image[] image = fullArtist.getImages();
 		      try {
@@ -170,7 +178,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				.offset(offset)
 				.market(CountryCode.US)
 				.build();
-
+		
 		try {
 			Paging<AlbumSimplified> pagingAlbums = null;
 			try {
@@ -221,16 +229,18 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			    ArtistSimplified[] simplifiedArtists = sa.getArtists();
 			    
 			    // gather associated artists (another HTTP to spotify server)
-			    album.addArtist(artist);	//add the primary artist
+			    artist.setTriviaReady(true);
+				album.addArtist(artist);	//add the primary artist
+			    
 			    for(ArtistSimplified sas : simplifiedArtists) {
 			    	//ignore the main artist
 			    	if(sas.getId() != artist.getId()) {
 			    		Optional<Artist> managedArtist = this.artistRepo.findById(sas.getId());
 			    		if(managedArtist.isPresent()) {
-			    			Artist storedArtist = managedArtist.get();
-			    			album.addArtist(storedArtist);
+			    			Artist storedNonPrimaryArtist = managedArtist.get();
+			    			album.addArtist(storedNonPrimaryArtist);
 			    		} else {
-			    			Artist newArtist = this.buildNewArtist(sas.getId(), false);
+			    			Artist newArtist = this.buildNewArtist(sas.getId());
 			    			album.addArtist(newArtist);
 			    		}
 			    	}
