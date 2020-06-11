@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 @Injectable({
 providedIn: 'root'
 })
-export class ErrorService implements ErrorHandler{
+export class GlobalErrorHandlerService implements ErrorHandler{
  constructor(private injector: Injector) { }
  handleError(error: any) {
   const router = this.injector.get(Router);

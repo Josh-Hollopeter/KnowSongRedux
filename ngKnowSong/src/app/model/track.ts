@@ -1,4 +1,3 @@
-import { Album } from './album';
 
 export class Track {
   id: string;
@@ -7,7 +6,6 @@ export class Track {
   popularity: number;
   previewUrl: string;
   explicit: boolean;
-  album: Album;
   lyrics: string;
 
   constructor(
@@ -17,7 +15,6 @@ export class Track {
     popularity?: number,
     previewUrl?: string,
     explicit?: boolean,
-    album?: Album,
     lyrics?: string
   ) {
     this.id = id;
@@ -26,7 +23,6 @@ export class Track {
     this.popularity = popularity;
     this.previewUrl = previewUrl;
     this.explicit = explicit;
-    this.album = album;
     this.lyrics = lyrics;
   }
 }

@@ -1,3 +1,4 @@
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -12,13 +13,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule} from '@angular/common/http';
-import { AuthService } from './service/auth.service';
+import { HttpClientModule, HttpXhrBackend } from '@angular/common/http';
+import { AuthService } from './service/API/auth.service';
 import { CreateGameComponent } from './component/create-game/create-game.component';
-import { SpotifyAPIService } from './service/spotify-api.service';
-import { MusixMatchService } from './service/musix-match.service';
+import { SpotifyAPIService } from './service/API/spotify-api.service';
+import { MusixMatchService } from './service/API/musix-match.service';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
+import { LyricMatcherComponent } from './game/lyric-matcher/lyric-matcher.component';
+import { ReleaseYearComponent } from './game/release-year/release-year.component';
+import { KnowSongComponent } from './game/know-song/know-song.component';
+import { MusicDataService } from './game/data/music-data.service';
+import { UserService } from './service/Data/user.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +33,10 @@ import { ErrorComponent } from './error/error.component';
     HomeComponent,
     CreateGameComponent,
     ErrorComponent,
+    LyricMatcherComponent,
+    ReleaseYearComponent,
+    KnowSongComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -39,12 +49,18 @@ import { ErrorComponent } from './error/error.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FormsModule
+    FormsModule,
+
+
   ],
   providers: [
     AuthService,
     SpotifyAPIService,
-    MusixMatchService
+    MusixMatchService,
+    MusicDataService,
+    UserService,
+
+
   ],
   bootstrap: [AppComponent]
 })
