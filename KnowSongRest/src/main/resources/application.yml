@@ -37,12 +37,10 @@ spring:
             user-info-uri: https://api.spotify.com/v1/me
             user-name-attribute: id
         registration:
-          spotify:
+           spotify:
             authorization-grant-type: authorization_code
             client-id: 3c5d78e34c9940dea2f07eb726799087
             client-name: Spotify
-
-            client-secret: ab88c01f4c3541bdbd238d4bcbae2635
-
+            client-secret: b1e6b2d94c6a47a69a19c2b2f8be9e76
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: user-read-private
