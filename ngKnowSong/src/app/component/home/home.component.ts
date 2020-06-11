@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/API/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'src/app/service/user.service';
+import { UserService } from 'src/app/service/Data/user.service';
 import { User } from 'src/app/model/user.model';
 import { map } from 'rxjs/operators';
 

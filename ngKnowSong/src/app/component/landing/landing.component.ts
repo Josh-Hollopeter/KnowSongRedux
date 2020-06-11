@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/API/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
+  [x: string]: any;
 
   private baseUrl = environment.baseUrl;
 
@@ -28,17 +29,17 @@ export class LandingComponent implements OnInit {
 
     if(this.checkLogin())
       this.router.navigate(['home']);
-    
+
   }
 
   checkLogin(): Observable<boolean>{
     return this.authService.isLoggedIn().pipe(map( (authorized: boolean) => {
       if(authorized)
         return true;
-      
+
       return false;
       })
-    ); 
+    );
   }
 
   // this function authenticates the client with the server and registers the user into database

@@ -19,6 +19,11 @@ repositories {
 
 dependencies {
     compile project(':KnowSongJPA')
+    
+    
+    // https://github.com/thelinmichael/spotify-web-api-java
+	compile 'se.michaelthelin.spotify:spotify-web-api-java:6.0.0'
+	
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-client
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.2.6.RELEASE'
   
@@ -29,16 +34,17 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.webjars/webjars-locator-core
 	compile group: 'org.webjars', name: 'webjars-locator-core', version: '0.45'
 	
+
 	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
   	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 	
 	
+
 	// https://mvnrepository.com/artifact/org.webjars/js-cookie
 	compile group: 'org.webjars', name: 'js-cookie', version: '2.0.2'
-	compile 'se.michaelthelin.spotify:spotify-web-api-java:4.2.1'
-	//compile 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
-	implementation ('org.springframework.boot:spring-boot-starter-tomcat')
 	
+	implementation ('org.springframework.boot:spring-boot-starter-tomcat')
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

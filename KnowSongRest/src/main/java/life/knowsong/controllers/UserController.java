@@ -1,4 +1,5 @@
 package life.knowsong.controllers;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,11 +48,16 @@ public class UserController {
 	}
 	
 	@GetMapping("/isLoggedIn")
-	public Boolean isLoggedIn(@AuthenticationPrincipal OAuth2User principal) {
-		if(principal != null)
+	public Boolean isLoggedIn(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
+		if(principal != null) {
+			response.setStatus(200);
 			return true;
-		else
+		}
+			
+		else {
+			response.setStatus(401);
 			return false;
-	}
+		}
+		}
 	
 }
