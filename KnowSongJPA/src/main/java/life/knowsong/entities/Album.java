@@ -42,8 +42,25 @@ public class Album {
 	@Column(name="release_date_precision")
 	private String releaseDatePrecision;
 	
-	private String href;
 	
+	public Album() {
+	}
+
+	public Album(String id, String name, String imgSource, String type, String releaseDate, String releaseDatePrecision,
+			Date created, Set<AvailableMarkets> markets, Set<Artist> artists, Set<Track> tracks) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.imgSource = imgSource;
+		this.type = type;
+		this.releaseDate = releaseDate;
+		this.releaseDatePrecision = releaseDatePrecision;
+		this.created = created;
+		this.markets = markets;
+		this.artists = artists;
+		this.tracks = tracks;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
@@ -112,14 +129,6 @@ public class Album {
 		this.releaseDatePrecision = releaseDatePrecision;
 	}
 
-	public String getHref() {
-		return href;
-	}
-
-	public void setHref(String href) {
-		this.href = href;
-	}
-
 	public Date getCreated() {
 		return created;
 	}
@@ -143,7 +152,7 @@ public class Album {
 
 	public Artist addArtist(Artist artist) {
 		if(artists == null) {
-			artists = new LinkedHashSet<Artist>();
+			artists = new HashSet<Artist>();
 		}
 		
 		artists.add(artist);
