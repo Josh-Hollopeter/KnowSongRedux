@@ -20,8 +20,6 @@ public class Genre {
 	@Id
 	private String name;
 	
-//	private String name;
-	
 	public Genre() {
 		
 	}

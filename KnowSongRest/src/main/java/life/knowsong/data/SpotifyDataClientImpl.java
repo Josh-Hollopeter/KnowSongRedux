@@ -2,6 +2,7 @@ package life.knowsong.data;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -63,43 +64,90 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		
 	}
 	
-	private boolean isArtistStoredAndTriviaReady(String artistId) {
-		String jpql = "SELECT COUNT(*) FROM Artist a WHERE a.id = :spotifyId";
-		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("spotifyId", artistId).getResultList();
-		if (isPresent.get(0) > 0) {
-			String jpql2 = "SELECT triviaReady FROM Artist a WHERE a.id = :spotifyId";
-			List<Boolean> ready = em.createQuery(jpql2, Boolean.class).setParameter("spotifyId", artistId).getResultList();
-			return ready.get(0);
-		} else {
-			return false;
-		}
-	}
+//	private boolean isArtistStoredAndTriviaReady(String artistId) {
+//		String jpql = "SELECT COUNT(*) FROM Artist a WHERE a.id = :spotifyId";
+//		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("spotifyId", artistId).getResultList();
+//		if (isPresent.get(0) > 0) {
+//			String jpql2 = "SELECT triviaReady FROM Artist a WHERE a.id = :spotifyId";
+//			List<Boolean> ready = em.createQuery(jpql2, Boolean.class).setParameter("spotifyId", artistId).getResultList();
+//			return ready.get(0);
+//		} else {
+//			return false;
+//		}
+//	}
 
 
 	@Override
 	public Artist getArtist(String accessToken, String artistId) {
-
-		if(this.isArtistStoredAndTriviaReady(artistId)) {
-			return em.find(Artist.class, artistId);
-		} else {
+		
+		Optional<Artist> optionalArtist = artistRepo.findById(artistId);
+		Artist artist = null;
+		if(optionalArtist.isPresent()) {
+			// artist exists, pull their albums as well
+			String jpql = "SELECT a FROM Artist a JOIN FETCH a.albums WHERE a.id = :artistId";
+			artist = em.createQuery(jpql, Artist.class)
+					.setParameter("artistId", artistId)
+					.getResultList()
+					.get(0);
+		}
+		
+		if(artist != null && artist.isTriviaReady()) { // null pointer on 2nd is avoided by && operand
+			// artist is in db with albums populated
+			return artist;
+		}
+		else if (artist != null){
+			// artist exists but has only a few albums by relation to another artist's pull
+			
+			Set<Album> albums = artist.getAlbums();	// WHY: by saving the list of albums already in database, we can prevent more sql calls later
+			albums.forEach(x -> {
+				System.out.println(x.getName());
+			});
+			System.out.println(albums.size());
+			
+			
+			if(!albums.isEmpty()) {
+				// artist has albums
+				List<String> albumIds = new ArrayList<String>();
+				
+				albums.forEach( album -> {
+					albumIds.add( album.getId() );
+				});
+				
+				System.out.println("Beginning persistence of all albums for existing artist with n albums!");
+				try {
+					int offset = 0;	// first call's offset is 0 (for more than 50 artist albums)
+					this.getAllAlbumsFromArtist(artist, offset, albumIds);	
+				} catch (org.apache.hc.core5.http.ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			else {
+				// artist doesn't have albums
+				System.out.println("Beginning persistence of all albums for existing artist with no albums!");
+				try {
+					int offset = 0;	// first call's offset is 0 (for more than 50 artist albums)
+					this.getAllAlbumsFromArtist(artist, offset, null);	
+				} catch (org.apache.hc.core5.http.ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return artist;
+		} 
+		else {
+			// artist is not in db
 			this.spotifyApi = new SpotifyApi.Builder()
 					.setAccessToken(accessToken)
 					.build();
 			
-			Optional<Artist> optionalArtist = artistRepo.findById(artistId);
-			Artist artist = null;
-			if(optionalArtist.isPresent()) {
-				artist = optionalArtist.get();	// artist is already stored
-			} else {
-				System.out.println("Beginning persistence of new artist!");
-				artist = this.buildNewArtist(artistId);	// new artist
-			}
+			System.out.println("Beginning persistence of new artist!");
+			artist = this.buildNewArtist(artistId);	// new artist
 			
-			
-			System.out.println("Beginning persistence of all albums!");
+			System.out.println("Beginning persistence of all albums for new artist!");
 			try {
 				int offset = 0;	// first call's offset is 0 (for more than 50 artist albums)
-				this.getAllAlbumsFromArtist(artist, offset);	
+				this.getAllAlbumsFromArtist(artist, offset, null);	
 			} catch (org.apache.hc.core5.http.ParseException e) {
 				e.printStackTrace();
 			}
@@ -137,7 +185,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		      } catch(Exception e) {
 		    	  e.printStackTrace();
 		      }
-		      artist.setHref(fullArtist.getHref());
 		      artist.setPopularity(fullArtist.getPopularity());
 		      artist.setCreated(new Timestamp(new Date().getTime()));
 		      artist.setLastUpdated(new Timestamp(new Date().getTime()));
@@ -170,7 +217,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		return artist;
 	}
 	
-	private void getAllAlbumsFromArtist(Artist artist, int offset) throws org.apache.hc.core5.http.ParseException {
+	private void getAllAlbumsFromArtist(Artist artist, int offset, List<String> albumIds) throws org.apache.hc.core5.http.ParseException {
 		GetArtistsAlbumsRequest getArtistsAlbumsRequest = this.spotifyApi
 				.getArtistsAlbums(artist.getId())
 				.album_type("album,single")
@@ -193,12 +240,21 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			// if there is another page of items, call method again.
 			if(pagingAlbums.getNext() != null) {
 				int newOffset = offset + 50;
-				getAllAlbumsFromArtist(artist, newOffset);	// add 50 until total IE: (0 -> 50 -> 100 -> 112(done) )
+				getAllAlbumsFromArtist(artist, newOffset, albumIds);	// add 50 until total IE: (0 -> 50 -> 100 -> 112(done) )
 			}
 		// ---------------------------------------
 			
+			parseAlbums: 
 			for(int x = 0; x < simplifiedAlbums.length; x++) {
 				AlbumSimplified sa = simplifiedAlbums[x];
+		// check if album is already stored via list of stored album id's
+				if (albumIds != null) {
+					for(String id : albumIds) {
+						if(id.equals(sa.getId()))
+							System.out.println("DUPLICATE ALBUM BRUH");
+							continue parseAlbums;
+					}
+				}
 				Album album = new Album();
 				album.setId(sa.getId());
 				album.setName(sa.getName());
@@ -213,7 +269,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			    album.setType(sa.getType().type);
 			    album.setReleaseDate(sa.getReleaseDate());
 			    album.setReleaseDatePrecision(sa.getReleaseDatePrecision().precision);
-			    album.setHref(sa.getHref());
 			    album.setCreated(new Timestamp(new Date().getTime()));
 			    
 			    // IF MARKET IS SPECIFIED, OBJECT IS "is_local: false;"
@@ -276,7 +331,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		    	  track.setPreviewUrl(ts.getPreviewUrl());
 		    	  track.setExplicit(ts.getIsExplicit());
 //		    	  track.setPopularity(ts.get);	// simple object doesn't provide popularity :/
-		    	  track.setHref(ts.getHref());
 		    	  track.setDurationMs(ts.getDurationMs());
 		    	  track.setCreated(new Timestamp(new Date().getTime()));
 		    	  track.setAlbum(album);
@@ -290,4 +344,9 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		return tracks;
 	}
 	
+
+	// 
+	// For artists with new album releases
+	// must add tables. to be added later.
+	//
 }
