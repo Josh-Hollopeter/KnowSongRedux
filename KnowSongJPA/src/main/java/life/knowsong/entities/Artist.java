@@ -54,7 +54,7 @@ public class Artist {
 	@Column(name="last_updated")
 	private Date lastUpdated;
 	
-	@ElementCollection
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name="artist_album",
 			joinColumns=@JoinColumn(name="artist_id"),
