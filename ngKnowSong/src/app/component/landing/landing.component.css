@@ -10,13 +10,37 @@
 
 }
  button{
-  font-size: large;
+  font-size: xx-large;
   border-radius: 10px;
   border-style: inset;
-  border: 3px solid green;
+  border: 4px solid green;
+  border-right: double;
+  border-left: double;
 
 }
-
+.text_1 {
+  animation: text1;
+  font-size: 25%;
+}
+.text_1 {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  position: relative;
+  animation-duration: 25s;
+  animation-timing-function: steps(40, end);
+  opacity: 0;
+  /* animation-iteration-count: 0; */
+}
+.text_1::after{
+  content: "|";
+  position: absolute;
+  right: 0;
+  animation: cursor;
+  animation-duration: 1s;
+  animation-timing-function: steps(5, end);
+  animation-iteration-count: infinite;
+}
 main {
   display: flex;
   justify-content: center;
@@ -86,5 +110,28 @@ main {
   100% {
     transform: scale(1.5) translate(100%, -100%);
     opacity: 0;
+  }
+}
+@keyframes text1 {
+  0%, 50%, 100% {
+    width: 0;
+
+
+  }
+  10%, 40% {
+    width: 15em;
+    opacity: 1;
+
+  }
+}
+@keyframes cursor {
+ from{
+    width: 1;
+
+
+  }
+  to {
+    width: 0;
+
   }
 }
