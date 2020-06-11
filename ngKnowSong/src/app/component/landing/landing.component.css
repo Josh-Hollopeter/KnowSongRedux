@@ -36,9 +36,10 @@
   content: "|";
   position: absolute;
   right: 0;
-  animation: caret infinite;
+  animation: cursor;
   animation-duration: 1s;
-  animation-timing-function: steps(1, end);
+  animation-timing-function: steps(5, end);
+  animation-iteration-count: infinite;
 }
 main {
   display: flex;
@@ -120,6 +121,17 @@ main {
   10%, 40% {
     width: 15em;
     opacity: 1;
+
+  }
+}
+@keyframes cursor {
+ from{
+    width: 1;
+
+
+  }
+  to {
+    width: 0;
 
   }
 }
