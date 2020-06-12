@@ -79,6 +79,9 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 
 	@Override
 	public Artist getArtist(String accessToken, String artistId) {
+		this.spotifyApi = new SpotifyApi.Builder()
+				.setAccessToken(accessToken)
+				.build();
 		
 		Optional<Artist> optionalArtist = artistRepo.findById(artistId);
 		Artist artist = null;
@@ -137,9 +140,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		} 
 		else {
 			// artist is not in db
-			this.spotifyApi = new SpotifyApi.Builder()
-					.setAccessToken(accessToken)
-					.build();
 			
 			System.out.println("Beginning persistence of new artist!");
 			artist = this.buildNewArtist(artistId);	// new artist
@@ -233,16 +233,17 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			} catch (org.apache.hc.core5.http.ParseException e1) {
 				e1.printStackTrace();
 			}
-			AlbumSimplified[] simplifiedAlbums = pagingAlbums.getItems();
 			
-		// recursion for getting all albums and singles
-		// ---------------------------------------
-			// if there is another page of items, call method again.
-			if(pagingAlbums.getNext() != null) {
-				int newOffset = offset + 50;
-				getAllAlbumsFromArtist(artist, newOffset, albumIds);	// add 50 until total IE: (0 -> 50 -> 100 -> 112(done) )
-			}
-		// ---------------------------------------
+			// recursion for getting all albums and singles
+			// ---------------------------------------
+				// if there is another page of items, call method again.
+				if(pagingAlbums.getNext() != null) {
+					int newOffset = offset + 50;
+					getAllAlbumsFromArtist(artist, newOffset, albumIds);	// add 50 until total IE: (0 -> 50 -> 100 -> 112(done) )
+				}
+			// ---------------------------------------
+			
+			AlbumSimplified[] simplifiedAlbums = pagingAlbums.getItems();
 			
 			parseAlbums: 
 			for(int x = 0; x < simplifiedAlbums.length; x++) {
@@ -250,9 +251,11 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		// check if album is already stored via list of stored album id's
 				if (albumIds != null) {
 					for(String id : albumIds) {
-						if(id.equals(sa.getId()))
+						if(id.equals(sa.getId())) {
 							System.out.println("DUPLICATE ALBUM BRUH");
 							continue parseAlbums;
+						}
+							
 					}
 				}
 				Album album = new Album();
