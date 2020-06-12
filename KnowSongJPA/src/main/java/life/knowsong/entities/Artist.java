@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "artist")
 public class Artist {
@@ -52,8 +54,9 @@ public class Artist {
 	@Column(name="last_updated")
 	private Date lastUpdated;
 	
-	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ElementCollection
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.PERSIST})
 	@JoinTable(name="artist_album",
 			joinColumns=@JoinColumn(name="artist_id"),
 			inverseJoinColumns=@JoinColumn(name="album_id"))
