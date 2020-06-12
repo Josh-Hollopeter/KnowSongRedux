@@ -23,21 +23,22 @@ import life.knowsong.repositories.RankRepository;
 import life.knowsong.repositories.UserRepository;
 
 @Component
-public class CustomOAuth2UserService extends DefaultOAuth2UserService{
+public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	@Autowired
 	UserRepository userRepo;
-	
+
 	@Autowired
 	RankRepository rankRepo;
-	
+
 	@Autowired
 	OAuth2AuthorizedClientService clientService;
-	
-	// user must go through this method every time they authenticate with the server (login / use the app)
+
+	// user must go through this method every time they authenticate with the server
+	// (login / use the app)
 	@Override
-	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
-		//create new user object and get the attributes
+	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+		// create new user object and get the attributes
 		OAuth2User oauthUser = super.loadUser(userRequest);
 		Map<String, Object> attributes = oauthUser.getAttributes();
 
@@ -45,21 +46,25 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 		String username = oauthUser.getName();
 //		refreshAccessToken(clientRegistrationId, username);
 		String imgSource = null;
-		try {
-			// Map -> ArrayList -> LinkedHashMap -> String
-			imgSource = ( (LinkedHashMap<String,String>) ((ArrayList<LinkedHashMap<String,String>>) attributes.get("images")).get(0)).get("url");	// get first image for your spotify account..
-		}catch(Exception e) {
-			System.err.println("user has no profile photo, not sure what error will look like. feel free to delete this ");
-			e.printStackTrace();
-		}
+		if (((ArrayList<LinkedHashMap<String, String>>) attributes.get("images")).size() > 0) {
 
+			try {
+				// Map -> ArrayList -> LinkedHashMap -> String
+				imgSource = ((LinkedHashMap<String, String>) ((ArrayList<LinkedHashMap<String, String>>) attributes
+						.get("images")).get(0)).get("url"); // get first image for your spotify account..
+			} catch (Exception e) {
+				System.err.println(
+						"user has no profile photo, not sure what error will look like. feel free to delete this ");
+				e.printStackTrace();
+			}
+		}
 		User user = userRepo.findByUsername(username);
-		
-		//check if user is in database, register new user or update image
-		if(user != null) {
-			user.setImgSource(imgSource);	
+
+		// check if user is in database, register new user or update image
+		if (user != null) {
+			user.setImgSource(imgSource);
 			userRepo.saveAndFlush(user);
-		}else {
+		} else {
 			User newUser = new User();
 			newUser.setEnabled(true);
 			newUser.setImgSource(imgSource);
