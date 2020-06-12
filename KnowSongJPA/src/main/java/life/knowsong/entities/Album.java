@@ -42,6 +42,28 @@ public class Album {
 	@Column(name="release_date_precision")
 	private String releaseDatePrecision;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created;
+	
+	@JsonIgnore
+	@ElementCollection
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinTable(name="album_market",
+		joinColumns=@JoinColumn(name="album_id"),
+		inverseJoinColumns=@JoinColumn(name="available_market_market"))
+	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
+	
+	@ElementCollection
+	@ManyToMany(mappedBy = "albums", cascade = {CascadeType.PERSIST, CascadeType.PERSIST})
+	@JoinTable(name="artist_album",
+	joinColumns=@JoinColumn(name="album_id"),
+	inverseJoinColumns=@JoinColumn(name="artist_id"))
+	private Set<Artist> artists;
+
+	@ElementCollection
+	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@JoinColumn(name="fk_album_id")
+	private Set<Track> tracks = new LinkedHashSet<Track>();
 	
 	public Album() {
 	}
@@ -60,26 +82,6 @@ public class Album {
 		this.artists = artists;
 		this.tracks = tracks;
 	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
-	
-	@JsonIgnore
-	@ElementCollection
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable(name="album_market",
-		joinColumns=@JoinColumn(name="album_id"),
-		inverseJoinColumns=@JoinColumn(name="available_market_market"))
-	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
-	
-	@ManyToMany(mappedBy = "albums", cascade = CascadeType.MERGE)
-	private Set<Artist> artists;
-
-	@ElementCollection
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
-	@JoinColumn(name="fk_album_id")
-	private Set<Track> tracks = new LinkedHashSet<Track>();
-	
 	
 	public String getId() {
 		return id;
