@@ -1,6 +1,6 @@
 @import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
-@import url(https://fonts.googleapis.com/css?family=Mr+Dafoe);
+@import url(https://fonts.googleapis.com/css2?family=Merriweather);
 
 
 .loader {
@@ -38,9 +38,12 @@
   padding: 0px;
 }
 
-.audio {
-  padding: 10px;
+audio{
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
+
+
 button {
   height: fit-content;
   width: 400px;
@@ -49,7 +52,7 @@ button {
   font-size: xx-large;
   display: block;
   width: 100%;
-  font-family: 'Mr Dafoe', cursive;
+  font-family: 'Merriweather';
   word-spacing: 7px;
   color: green;
   font-size: larger;
@@ -64,7 +67,7 @@ figcaption {
 .context {
   width: 100%;
   position: absolute;
-  top:25vh;
+  top:5vh;
   text-align: center;
   color: #fff;
   font-size: 50px;
@@ -83,8 +86,6 @@ figcaption {
  background: black;
   width: 100%;
   height:100vh;
-
-
 }
 
 .question{
