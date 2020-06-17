@@ -17,9 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
-import life.knowsong.entities.Rank;
 import life.knowsong.entities.User;
-import life.knowsong.repositories.RankRepository;
 import life.knowsong.repositories.UserRepository;
 
 @Component
@@ -27,9 +25,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	@Autowired
 	UserRepository userRepo;
-
-	@Autowired
-	RankRepository rankRepo;
 
 	@Autowired
 	OAuth2AuthorizedClientService clientService;
@@ -69,8 +64,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			newUser.setEnabled(true);
 			newUser.setImgSource(imgSource);
 			newUser.setUsername(username);
-			Rank rank = rankRepo.findById(1).get();
-			newUser.setRank(rank);
 			userRepo.saveAndFlush(newUser);
 		}
 		return oauthUser;

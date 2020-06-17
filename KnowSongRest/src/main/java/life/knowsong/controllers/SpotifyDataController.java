@@ -1,6 +1,7 @@
 package life.knowsong.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import life.knowsong.buildgame.AudioGame;
+import life.knowsong.buildgame.BuildAudioGame;
 import life.knowsong.data.SpotifyDataClient;
 import life.knowsong.entities.Artist;
+import life.knowsong.entities.SingleplayerGame;
+import life.knowsong.entities.Track;
 
 @RestController
 @RequestMapping("spotifyData")
@@ -25,8 +28,9 @@ public class SpotifyDataController {
 	@Autowired
 	SpotifyDataClient ourSpotifyData;
 	
-//	@Autowired
-//	ArtistRepos
+	
+	@Autowired
+	BuildAudioGame buildAudio;
 	
 	@GetMapping("/getAllArtists")
 	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
@@ -43,21 +47,20 @@ public class SpotifyDataController {
 	
 	
 	@GetMapping("/buildArtistAudioGame/{artistId}")
-	public AudioGame buildArtistLyricGame(@AuthenticationPrincipal OAuth2User principal, 
+	public SingleplayerGame buildArtistLyricGame(@AuthenticationPrincipal OAuth2User principal, 
 			@PathVariable("artistId") String artistId,HttpServletResponse response) {
 		
 		return null;
 	}
 	
 	@GetMapping("/testPersistArtist/{artistId}/{accessToken}")
-	public Artist testPersistArtist(@PathVariable("artistId") String artistId
+	public SingleplayerGame testPersistArtist(@PathVariable("artistId") String artistId
 			, @PathVariable("accessToken") String accessToken
 			, HttpServletResponse response) {
-//		AudioGame ag = new AudioGame();
 
-		Artist artist = ourSpotifyData.getArtist(accessToken, artistId);
-		
-		return artist;
+		boolean isExplicit = true;
+		SingleplayerGame game = buildAudio.build(artistId, accessToken, isExplicit);
+		return game;
 	}
 
 }

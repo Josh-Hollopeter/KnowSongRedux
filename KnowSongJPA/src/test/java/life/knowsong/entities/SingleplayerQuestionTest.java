@@ -21,7 +21,6 @@ class SingleplayerQuestionTest {
 	private SingleplayerQuestion persistedQuestion;
 	private SingleplayerGame game;
 	private User user;
-	private Rank rank;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -39,9 +38,6 @@ class SingleplayerQuestionTest {
 		game = new SingleplayerGame();
 		game.setPlayed(new Date());
 		user = new User();
-		rank = new Rank();
-		rank.setId(9999);
-		user.setRank(rank);
 		user.setUsername("uniquestUsername");
 		game.setDescription("game");
 		game.setUserId(user);
@@ -50,7 +46,6 @@ class SingleplayerQuestionTest {
 		spq.setGame(game);
 		spq.setNum(1);
 		em.getTransaction().begin();
-		em.persist(rank);
 		em.persist(user);
 		em.persist(game);
 		em.persist(spq);
