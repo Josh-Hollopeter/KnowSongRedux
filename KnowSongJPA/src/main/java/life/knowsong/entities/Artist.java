@@ -39,14 +39,6 @@ public class Artist {
 	@Column(name = "trivia_ready")
 	private boolean triviaReady;
 	
-	public boolean isTriviaReady() {
-		return triviaReady;
-	}
-
-	public void setTriviaReady(boolean triviaReady) {
-		this.triviaReady = triviaReady;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
@@ -56,7 +48,7 @@ public class Artist {
 	
 	@ElementCollection
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.PERSIST})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name="artist_album",
 			joinColumns=@JoinColumn(name="artist_id"),
 			inverseJoinColumns=@JoinColumn(name="album_id"))
@@ -137,7 +129,15 @@ public class Artist {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
+	
+	public boolean isTriviaReady() {
+		return triviaReady;
+	}
 
+	public void setTriviaReady(boolean triviaReady) {
+		this.triviaReady = triviaReady;
+	}
+	
 	public Set<Album> getAlbums() {
 		return albums;
 	}

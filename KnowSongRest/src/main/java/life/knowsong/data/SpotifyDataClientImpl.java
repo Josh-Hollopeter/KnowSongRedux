@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
@@ -55,34 +57,9 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	@Override
 	public List<Artist> listAllArtists() {
 		return artistRepo.findAll();
-		//leaving this here because its a nice query, but LAZY Loading made it unnecessary :)
-//		String jpql = "SELECT a.id AS id, a.name AS name, a.img_source AS imgSource, a.last_updated AS lastUpdated, a.popularity AS popularity, g.name AS genres"
-//				+ "FROM Artist a " + "JOIN artist_genre ag ON a.id = ag.artist_id "
-//				+ "JOIN Genre g ON ag.genre_name = g.name";
-//
-//		List<SimpleArtist> simpleArtists = em.createQuery(jpql, SimpleArtist.class).getResultList();
-		
 	}
 	
-//	private boolean isArtistStoredAndTriviaReady(String artistId) {
-//		String jpql = "SELECT COUNT(*) FROM Artist a WHERE a.id = :spotifyId";
-//		List<Long> isPresent = em.createQuery(jpql, Long.class).setParameter("spotifyId", artistId).getResultList();
-//		if (isPresent.get(0) > 0) {
-//			String jpql2 = "SELECT triviaReady FROM Artist a WHERE a.id = :spotifyId";
-//			List<Boolean> ready = em.createQuery(jpql2, Boolean.class).setParameter("spotifyId", artistId).getResultList();
-//			return ready.get(0);
-//		} else {
-//			return false;
-//		}
-//	}
-
-
-	@Override
-	public Artist getArtist(String accessToken, String artistId) {
-		this.spotifyApi = new SpotifyApi.Builder()
-				.setAccessToken(accessToken)
-				.build();
-		
+	private Artist populateArtistAlbumsToJavaMemory(String artistId) {
 		Optional<Artist> optionalArtist = artistRepo.findById(artistId);
 		Artist artist = null;
 		if(optionalArtist.isPresent()) {
@@ -93,6 +70,16 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 					.getResultList()
 					.get(0);
 		}
+		return artist;
+	}
+	
+	@Override
+	public Artist getArtist(String accessToken, String artistId) {
+		this.spotifyApi = new SpotifyApi.Builder()
+				.setAccessToken(accessToken)
+				.build();
+		
+		Artist artist = this.populateArtistAlbumsToJavaMemory(artistId);
 		
 		if(artist != null && artist.isTriviaReady()) { // null pointer on 2nd is avoided by && operand
 			// artist is in db with albums populated
@@ -102,11 +89,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			// artist exists but has only a few albums by relation to another artist's pull
 			
 			Set<Album> albums = artist.getAlbums();	// WHY: by saving the list of albums already in database, we can prevent more sql calls later
-			albums.forEach(x -> {
-				System.out.println(x.getName());
-			});
-			System.out.println(albums.size());
-			
 			
 			if(!albums.isEmpty()) {
 				// artist has albums
@@ -123,9 +105,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				} catch (org.apache.hc.core5.http.ParseException e) {
 					e.printStackTrace();
 				}
-			}
-			
-			else {
+			} else {
 				// artist doesn't have albums
 				System.out.println("Beginning persistence of all albums for existing artist with no albums!");
 				try {
@@ -135,10 +115,12 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 					e.printStackTrace();
 				}
 			}
-			
+			em.refresh(artist);
+			System.out.println("Refresh Artist");
 			return artist;
-		} 
-		else {
+			
+			
+		} else {
 			// artist is not in db
 			
 			System.out.println("Beginning persistence of new artist!");
@@ -151,6 +133,8 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			} catch (org.apache.hc.core5.http.ParseException e) {
 				e.printStackTrace();
 			}
+			System.out.println("Refresh Artist");
+			em.refresh(artist);
 			return artist;
 		}
 	}
@@ -214,6 +198,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		    } catch (IOException | SpotifyWebApiException | ParseException e) {
 		      System.out.println("Error: " + e.getMessage());
 		    }
+		em.flush();
 		return artist;
 	}
 	
@@ -226,6 +211,23 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				.market(CountryCode.US)
 				.build();
 		
+		//Issue:
+		// There is a legacy bug in spotify code...
+		// When pulling Deluxe, Super Deluxe, and regular versions of an album
+		// There are songs that are posted as seperate tracks, but contain the same ID.
+		// This breaks our persistence. 
+		// A spotify employee responds here
+		// https://stackoverflow.com/questions/32019376/spotify-api-same-music-with-differents-ids-in-app-get-the-same-ids-from-api
+		//My Solution:
+		// Add albums with tracks to a List.
+		// Before persisting each album in the list
+		// Check if any albums contain the word Deluxe Edition or Super Deluxe
+		//Thoughts: 
+		// Realistically for the purposes of Trivia, we won't be using the various live and remixed versions
+		// and will focus mainly on the original songs for the simplicity of questions.
+		// I mean, will someone know the difference, or care to know the difference between the San Francisco live version vs the New York Live version?? etc.
+		// In some cases the super deluxe version will contain new and novel songs but most are remakes of the same releases.
+		List<Album> albums = new ArrayList<Album>();
 		try {
 			Paging<AlbumSimplified> pagingAlbums = null;
 			try {
@@ -244,7 +246,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			// ---------------------------------------
 			
 			AlbumSimplified[] simplifiedAlbums = pagingAlbums.getItems();
-			
 			parseAlbums: 
 			for(int x = 0; x < simplifiedAlbums.length; x++) {
 				AlbumSimplified sa = simplifiedAlbums[x];
@@ -252,15 +253,22 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				if (albumIds != null) {
 					for(String id : albumIds) {
 						if(id.equals(sa.getId())) {
-							System.out.println("DUPLICATE ALBUM BRUH");
+							System.out.println("DUPLICATE ALBUM");
 							continue parseAlbums;
 						}
 							
 					}
 				}
+				String albumName = sa.getName();	// performance instead of calling object 3 times :p
+				// Remove the Deluxe Edition OR Super Deluxe album types for 2 reasons said above
+				if(albumName.contains("Deluxe Edition") || albumName.contains("Super Deluxe")) {
+					continue parseAlbums;
+				}
+					
+				
 				Album album = new Album();
 				album.setId(sa.getId());
-				album.setName(sa.getName());
+				album.setName(albumName);
 				
 				Image[] image = sa.getImages();
 			    try {
@@ -268,8 +276,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			    } catch(Exception e) {
 			    	e.printStackTrace();
 			    }
-			    
-			    album.setType(sa.getType().type);
+			    album.setType(sa.getAlbumType().getType());
 			    album.setReleaseDate(sa.getReleaseDate());
 			    album.setReleaseDatePrecision(sa.getReleaseDatePrecision().precision);
 			    album.setCreated(new Timestamp(new Date().getTime()));
@@ -313,6 +320,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 		      System.out.println("Error: " + e.getMessage());
 		}
+		
 	}
 	
 	private Set<Track> getAllTracksFromAlbum(Album album) throws org.apache.hc.core5.http.ParseException {
@@ -338,6 +346,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		    	  track.setCreated(new Timestamp(new Date().getTime()));
 		    	  track.setAlbum(album);
 		    	  tracks.add(track);
+		    	  System.out.println(track.getName() + " ID: " + track.getId());
 		      }
 		      
 		      System.out.println("Added <" + trackSimplifiedPaging.getTotal() + "> tracks.");
