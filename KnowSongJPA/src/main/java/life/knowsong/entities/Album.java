@@ -54,16 +54,16 @@ public class Album {
 	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
 	
 	@ElementCollection
-	@ManyToMany(mappedBy = "albums", cascade = {CascadeType.PERSIST, CascadeType.PERSIST})
+	@ManyToMany(mappedBy = "albums", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name="artist_album",
 	joinColumns=@JoinColumn(name="album_id"),
 	inverseJoinColumns=@JoinColumn(name="artist_id"))
 	private Set<Artist> artists;
 
 	@ElementCollection
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, cascade= {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="fk_album_id")
-	private Set<Track> tracks = new LinkedHashSet<Track>();
+	private Set<Track> tracks = new HashSet<Track>();
 	
 	public Album() {
 	}

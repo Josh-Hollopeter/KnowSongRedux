@@ -1,6 +1,7 @@
 package life.knowsong.entities;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -84,8 +85,12 @@ public class SingleplayerGame {
 		return questions;
 	}
 
-	public void setQuestions(List<SingleplayerQuestion> questions) {
-		this.questions = questions;
+	public SingleplayerQuestion addQuestion(SingleplayerQuestion question) {
+		if(questions == null) {
+			questions = new ArrayList<SingleplayerQuestion>();
+		}
+		questions.add(question);
+		return question;
 	}
 	
 

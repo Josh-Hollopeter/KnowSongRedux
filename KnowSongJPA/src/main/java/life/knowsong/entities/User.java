@@ -25,10 +25,6 @@ public class User {
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name = "fk_rank_id")
-	private Rank rank;
-	
 	private String username;
 
 	private Boolean enabled;
@@ -57,14 +53,6 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Rank getRank() {
-		return rank;
-	}
-
-	public void setRank(Rank rank) {
-		this.rank = rank;
 	}
 
 	public String getUsername() {
