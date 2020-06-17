@@ -45,22 +45,28 @@ public class SpotifyDataController {
 		}
 	}
 	
-	
-	@GetMapping("/buildArtistAudioGame/{artistId}")
-	public SingleplayerGame buildArtistLyricGame(@AuthenticationPrincipal OAuth2User principal, 
-			@PathVariable("artistId") String artistId,HttpServletResponse response) {
-		
-		return null;
-	}
-	
-	@GetMapping("/testPersistArtist/{artistId}/{accessToken}")
-	public SingleplayerGame testPersistArtist(@PathVariable("artistId") String artistId
+	@GetMapping("/buildArtistAudioGame/{artistId}/{accessToken}")
+	public SingleplayerGame BuildArtistAudioGame(@AuthenticationPrincipal OAuth2User principal
+			, @PathVariable("artistId") String artistId
 			, @PathVariable("accessToken") String accessToken
 			, HttpServletResponse response) {
-
-		boolean isExplicit = true;
-		SingleplayerGame game = buildAudio.build(artistId, accessToken, isExplicit);
-		return game;
+		if(principal != null) {
+			
+			boolean isExplicit = true;
+			SingleplayerGame game = buildAudio.build(artistId, accessToken, isExplicit);
+			if(game == null) {
+				response.setStatus(404);	// game was not created. artist may have too few tracks
+				return null;
+			}
+			
+			response.setStatus(200);	// game was built 
+			return game;
+		}
+		else {
+			response.setStatus(401);	// unauthorized request
+			return null;
+		}
+		
 	}
 
 }

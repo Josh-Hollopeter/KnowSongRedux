@@ -101,27 +101,4 @@ export class SpotifyAPIService {
 
     return this.hitSpotify(url);
   }
-
-  getAlbumsFromArtist(artistId: string, next?: string) {
-    if(next != undefined){
-      return this.hitSpotify(next);
-    } else{
-      let url = "https://api.spotify.com/v1/artists/" + artistId + "/albums?market=US&include_groups=album,single&limit=50";
-      return this.hitSpotify(url);
-    }
-  }
-
-  getTracksFromAlbum(albumId: string) {
-    let url = "https://api.spotify.com/v1/albums/" + albumId + "/tracks?limit=50";
-
-    return this.hitSpotify(url);
-  }
-
-
-  getAudioFeaturesTracks(csv: string){
-    let url = "https://api.spotify.com/v1/audio-features/?ids=" + csv;
-
-    return this.hitSpotify(url);
-  }
-
 }
