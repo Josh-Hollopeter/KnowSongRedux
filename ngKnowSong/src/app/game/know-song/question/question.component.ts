@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
 import { KnowSongComponent } from '../know-song.component';
 
@@ -7,36 +7,41 @@ import { KnowSongComponent } from '../know-song.component';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent implements OnInit, OnChanges {
+export class QuestionComponent implements AfterViewInit {
 
   @Input() questionOptions: Array<string>;
   @Input() newAudio: string;
 
   @Output() optionPicked: EventEmitter<string> = new EventEmitter<string>();
 
-  audio: string;
-  options: Array<string>;
+  @ViewChild('audioElement', {static: false}) 
+  public _audioRef: ElementRef;
+  private audio: HTMLAudioElement;
 
-  private showQuestion: boolean;
+
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges): void{
-    console.log(changes);
-    this.loadDom();
+  public ngAfterViewInit() {
+    this.audio = this._audioRef.nativeElement;
+    if (this.audio) {
+      this.audio.src = this.newAudio;
+      
+    }
   }
 
-  ngOnInit(): void{}
-
-  loadDom(){
-    this.audio = this.newAudio;
-    this.options = this.questionOptions;
-  }
 
   setUserResponse(answer: string){
     this.optionPicked.emit(answer);
   }
 
-  
+  public restart(): void{
+    // this.audio.
+  }
+
+  public play(){
+    this.audio.load();
+    this.audio.play();
+  }
 
 
 }
