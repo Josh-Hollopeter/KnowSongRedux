@@ -3,18 +3,9 @@
     <p>{{album.name}}</p>
 </div> -->
 <div class="context">
-
-  <div *ngIf="!artist" class="loader"></div>
-  <figure>
-    <figcaption>{{artist.name}}</figcaption><br>
-    <audio controls>
-        <source src={{previewUrl}} class ="audio">
-            Your browser does not support the
-            <code>audio</code> element.
-    </audio>
-  </figure>
-  <div *ngFor="let option of questions; let i = index">
-        <button (click)="setUserResponse(option)"> {{option}}</button>
-  </div>
+    <figcaption>{{gameDescription}}</figcaption><br><br>
+    <figcaption>Question {{questionNum}}</figcaption><br>
+ <app-question [questionOptions]="options"  [newAudio]="audio"  (optionPicked)="onOptionPicked($event)" >
+ </app-question>
 </div>
 
