@@ -1,12 +1,23 @@
   
-  <div >
-  <figure>
-    
-    <audio id="music" controls="controls">
+<div class="area">
+  <ul class="question">
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+    <li>?</li>
+</ul>
+    <audio #audioElement src="{{newAudio}}">
+      <p>Your browser does not support HTML5 audio.</p>
     </audio>
-  </figure>
-
-  <div *ngFor="let option of options; let i = index">
-        <button (click)="setUserResponse(option)"> {{option}}</button>
-  </div>
+    <i class="fa fa-play-circle" (click)="play()"></i>
+    
+    <div #questionBank *ngFor="let option of questionOptions; let i = index">
+      <button class= "questionButton" (click)="setUserResponse(option)"> {{option}}</button>
+    </div>
 </div>

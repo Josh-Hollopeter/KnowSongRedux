@@ -1,10 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
 .form-control {
-  width: 100%;
+  width: 75%;
   height: 4vh;
   background: green;
   color: white;
   font-size: x-large;
-
+  margin: auto;
+  text-align:center;
+}
+#findArtist{
+  text-align:center;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color:white;
@@ -31,3 +36,35 @@
   color:white;
   font-size: x-large;
 }
+
+.text{
+  user-select:none;
+  width: 100%;
+  position: sticky;
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+  z-index: 1;
+  font-family: cursive;
+}
+
+.artistCard{
+  position: flex;
+  margin: 10px; 
+  padding: 10px; 
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
+} 
+.artistCard:hover{
+  color: green;
+}
+
+.artistPhoto{
+  width:150px;
+  height:150px;
+  border-radius: 3px;
+}
+
+
