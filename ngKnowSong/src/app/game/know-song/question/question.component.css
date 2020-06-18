@@ -1,0 +1,197 @@
+@import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
+@import url(https://fonts.googleapis.com/css2?family=Merriweather);
+
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid black;
+  border-right: 16px solid green;
+  border-bottom: 16px solid black;
+  border-left: 16px solid green;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin: 0;
+  position: fixed;
+  top: 45%;
+  left: 42%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+audio{
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+#playButton{
+  height:100px;
+	width: 100px;
+	border: none;
+	background-size: 50% 50%;
+	background-position: center;
+}
+
+
+button {
+  height: fit-content;
+  width: 400px;
+  background: black;
+  color: white;
+  font-size: xx-large;
+  display: block;
+  width: 100%;
+  font-family: 'Merriweather';
+  word-spacing: 7px;
+  color: green;
+  font-size: larger;
+  border: inset;
+  border-color: green;
+  margin-bottom: 10px;
+}
+figcaption {
+  font-family: cursive;
+}
+
+.context {
+  width: 100%;
+  position: absolute;
+  top:5vh;
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+  z-index: 1;
+
+}
+
+/* .context h1{
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+} */
+
+
+.area{
+ background: black;
+  width: 100%;
+  height:100vh;
+}
+
+.question{
+   height:100vh;
+   width:100vw;
+   font-size: xx-large;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.question li{
+  height:50px;
+  width:50px;
+  text-align: center;
+   position: absolute;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.2);
+  animation: animate 25s linear infinite;
+  bottom: -150px;
+
+}
+
+.question li:nth-child(1){
+  left: 25%;
+  animation-delay: 0s;
+}
+
+
+.question li:nth-child(2){
+  left: 10%;
+  animation-delay: 2s;
+  animation-duration: 12s;
+}
+
+.question li:nth-child(3){
+  left: 70%;
+  animation-delay: 4s;
+}
+
+.question li:nth-child(4){
+  left: 40%;
+  animation-delay: 0s;
+  animation-duration: 13s;
+}
+
+.question li:nth-child(5){
+  left: 65%;
+   animation-delay: 0s;
+}
+
+.question li:nth-child(6){
+  left: 75%;
+
+  animation-delay: 3s;
+}
+
+.question li:nth-child(7){
+  left: 35%;
+
+  animation-delay: 7s;
+}
+
+.question li:nth-child(8){
+  left: 50%;
+  animation-delay: 15s;
+  animation-duration: 45s;
+}
+
+.question li:nth-child(9){
+  left: 20%;
+  animation-delay: 2s;
+  animation-duration: 35s;
+}
+
+.question li:nth-child(10){
+  left: 85%;
+  animation-delay: 0s;
+  animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+  100%{
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.35;
+      border-radius: 0;
+  }
+
+  0%{
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      border-radius: 50%;
+  }
+
+}

@@ -1,5 +1,5 @@
 import { AudioResolverService } from './../resolver/audio-resolver.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive } from '@angular/core';
 import { MusicDataService } from '../data/music-data.service';
 import { Artist } from 'src/app/model/artist';
 import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
@@ -14,52 +14,57 @@ import { Observable } from 'rxjs';
 })
 export class KnowSongComponent implements OnInit {
 
-  public artist: Artist;
-  public previewUrl: string;
-  public questions: Array<string>;
-  private game: SingleplayerGame; // private to prevent someone from scripting answers, i think this is effective anyway
+  // question exports
+  public options: Array<string>;
+  public audio: string;
 
+  // game properties
+  public gameDescription: string;
+  public questionNum: number;
+  private arrayCounter: number;
+  private game: SingleplayerGame; // private to prevent someone from scripting answers, i think this is effective anyway
+  
   constructor(
-    private musicData: MusicDataService,
     private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.artist = this.musicData.artist;
-
     this.activatedRoute.data.subscribe( (data: {game: SingleplayerGame}) => {
       this.game = data.game;
-      console.log(this.game.description);
+      this.gameDescription = this.game.description;
+      this.questionNum = 1;
+      this.arrayCounter = 0;
+      this.loadQuestion();
       
-      this.loadQuestion(1); //load the first question
     });
     
   }
 
+  loadQuestion(){
+    let question: SingleplayerQuestion = this.game.questions[this.arrayCounter];  // load current question
+    this.options = [question.answer, question.option2, question.option3, question.option4];
+    this.audio = question.questionText; 
+    this.shuffleArray(this.options); // shuffle the questions
 
-  loadQuestion(questionNum: number){
-    console.log(this.game);
+    // console.log(this.options);
+    // console.log(this.audio);
     
-    let question: SingleplayerQuestion = this.game.questions.find( item => item.num === questionNum);
-    let options: string[] = [question.answer, question.option2, question.option3, question.option4];
-    this.shuffleArray(options); // shuffle the questions
-    this.previewUrl = question.questionText;
-    this.questions = options;
-  }
-
-  setUserResponse(answer: string){
-    console.log(answer);
-  }
-
-  playAudio(){
     
   }
-
   private shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
   }
+
+  onOptionPicked(option: string){
+    
+    this.game.questions[this.arrayCounter].userResponse = option;  // set user response to game object
+    this.questionNum++; 
+    this.arrayCounter++;
+    this.loadQuestion();  // load next question
+  }
+  
 
 }
