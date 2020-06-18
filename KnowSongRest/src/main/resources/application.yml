@@ -2,10 +2,10 @@ logging:
   level:
     org:
       hibernate:
-        SQL: DEBUG
-        type: TRACE
+        SQL: WARN
+        type: WARN
       springframework:
-        web: DEBUG
+        web: WARN
     root: WARN
 server:
   port: 8085

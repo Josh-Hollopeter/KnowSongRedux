@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "artist")
 public class Artist {
@@ -32,21 +34,11 @@ public class Artist {
 	@Column(name = "img_source")
 	private String imgSource;
 	
-	private String href;
-	
 	private Integer popularity;
 	
 	@Column(name = "trivia_ready")
 	private boolean triviaReady;
 	
-	public boolean isTriviaReady() {
-		return triviaReady;
-	}
-
-	public void setTriviaReady(boolean triviaReady) {
-		this.triviaReady = triviaReady;
-	}
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
@@ -55,20 +47,38 @@ public class Artist {
 	private Date lastUpdated;
 	
 	@ElementCollection
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name="artist_album",
 			joinColumns=@JoinColumn(name="artist_id"),
 			inverseJoinColumns=@JoinColumn(name="album_id"))
 	private Set<Album> albums;
 	
 	@ElementCollection
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name="artist_has_genre",
 			joinColumns=@JoinColumn(name="artist_id"),
 			inverseJoinColumns=@JoinColumn(name="genre_name"))
 	private Set<Genre> genres;
 
 	
+	public Artist() {
+	}
+
+	public Artist(String id, String name, String imgSource, Integer popularity, boolean triviaReady, Date created,
+			Date lastUpdated, Set<Album> albums, Set<Genre> genres) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.imgSource = imgSource;
+		this.popularity = popularity;
+		this.triviaReady = triviaReady;
+		this.created = created;
+		this.lastUpdated = lastUpdated;
+		this.albums = albums;
+		this.genres = genres;
+	}
+
 	// GETTERS / SETTERS
 	
 	public String getId() {
@@ -95,13 +105,6 @@ public class Artist {
 		this.imgSource = imgSource;
 	}
 
-	public String getHref() {
-		return href;
-	}
-
-	public void setHref(String href) {
-		this.href = href;
-	}
 
 	public Integer getPopularity() {
 		return popularity;
@@ -126,7 +129,15 @@ public class Artist {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
+	
+	public boolean isTriviaReady() {
+		return triviaReady;
+	}
 
+	public void setTriviaReady(boolean triviaReady) {
+		this.triviaReady = triviaReady;
+	}
+	
 	public Set<Album> getAlbums() {
 		return albums;
 	}
@@ -149,7 +160,7 @@ public class Artist {
 	public Album addAlbum(Album album) {
 		
 		if(albums == null) {
-			albums = new LinkedHashSet<Album>();
+			albums = new HashSet<Album>();
 		}
 		
 		albums.add(album);

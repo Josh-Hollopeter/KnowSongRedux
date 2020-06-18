@@ -1,6 +1,6 @@
 @import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
-@import url(https://fonts.googleapis.com/css?family=Mr+Dafoe);
+@import url(https://fonts.googleapis.com/css2?family=Merriweather);
 
 
 .loader {
@@ -38,33 +38,17 @@
   padding: 0px;
 }
 
-.audio {
-  padding: 10px;
-}
-button {
-  height: fit-content;
-  width: 400px;
-  background: black;
-  color: white;
-  font-size: xx-large;
-  display: block;
-  width: 100%;
-  font-family: 'Mr Dafoe', cursive;
-  word-spacing: 7px;
-  color: green;
-  font-size: larger;
-  border: inset;
-  border-color: green;
-  margin-bottom: 10px;
-}
+
+
 figcaption {
   font-family: cursive;
 }
 
 .context {
+  user-select:none;
   width: 100%;
   position: absolute;
-  top:25vh;
+  top:5vh;
   text-align: center;
   color: #fff;
   font-size: 50px;
@@ -72,103 +56,6 @@ figcaption {
 
 }
 
-/* .context h1{
-  text-align: center;
-  color: #fff;
-  font-size: 50px;
-} */
-
-
-.area{
- background: black;
-  width: 100%;
-  height:100vh;
-
-
-}
-
-.question{
-   height:100vh;
-   width:100vw;
-   font-size: xx-large;
-  text-align: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.question li{
-  height:50px;
-  width:50px;
-  text-align: center;
-   position: absolute;
-  list-style: none;
-  background: rgba(255, 255, 255, 0.2);
-  animation: animate 25s linear infinite;
-  bottom: -150px;
-
-}
-
-.question li:nth-child(1){
-  left: 25%;
-  animation-delay: 0s;
-}
-
-
-.question li:nth-child(2){
-  left: 10%;
-  animation-delay: 2s;
-  animation-duration: 12s;
-}
-
-.question li:nth-child(3){
-  left: 70%;
-  animation-delay: 4s;
-}
-
-.question li:nth-child(4){
-  left: 40%;
-  animation-delay: 0s;
-  animation-duration: 13s;
-}
-
-.question li:nth-child(5){
-  left: 65%;
-   animation-delay: 0s;
-}
-
-.question li:nth-child(6){
-  left: 75%;
-
-  animation-delay: 3s;
-}
-
-.question li:nth-child(7){
-  left: 35%;
-
-  animation-delay: 7s;
-}
-
-.question li:nth-child(8){
-  left: 50%;
-  animation-delay: 15s;
-  animation-duration: 45s;
-}
-
-.question li:nth-child(9){
-  left: 20%;
-  animation-delay: 2s;
-  animation-duration: 35s;
-}
-
-.question li:nth-child(10){
-  left: 85%;
-  animation-delay: 0s;
-  animation-duration: 11s;
-}
 
 
 
