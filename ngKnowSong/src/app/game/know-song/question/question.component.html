@@ -1,0 +1,12 @@
+  
+  <div >
+  <figure>
+    
+    <audio id="music" controls="controls">
+    </audio>
+  </figure>
+
+  <div *ngFor="let option of options; let i = index">
+        <button (click)="setUserResponse(option)"> {{option}}</button>
+  </div>
+</div>
