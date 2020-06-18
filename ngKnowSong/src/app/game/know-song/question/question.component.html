@@ -15,7 +15,7 @@
     <audio #audioElement src="{{newAudio}}">
       <p>Your browser does not support HTML5 audio.</p>
     </audio>
-    <i class="fa fa-play-circle" (click)="play()"></i>
+    <i #playButton class="fa fa-play-circle" (click)="play()"></i>
     
     <div #questionBank *ngFor="let option of questionOptions; let i = index">
       <button class= "questionButton" (click)="setUserResponse(option)"> {{option}}</button>
