@@ -3,27 +3,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Merriweather);
 
 
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid black;
-  border-right: 16px solid green;
-  border-bottom: 16px solid black;
-  border-left: 16px solid green;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  margin: 0;
-  position: fixed;
-  top: 45%;
-  left: 42%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-
-}
-
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -42,20 +21,23 @@ audio{
   padding-bottom: 50px;
   padding-top: 50px;
 }
-#playButton{
-  height:100px;
-	width: 100px;
-	border: none;
-	background-size: 50% 50%;
-	background-position: center;
+
+.fa{
+  z-index: 1;
+  position: sticky;
+  cursor: pointer;
+  font-size: 4em;
+}
+.fa:active{
+  transform: translateY(7px);
 }
 
-
 button {
+  z-index: 1;
+  position: sticky;
   height: fit-content;
   width: 400px;
   background: black;
-  color: white;
   font-size: xx-large;
   display: block;
   width: 100%;
@@ -65,31 +47,22 @@ button {
   font-size: larger;
   border: inset;
   border-color: green;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+button:hover{
+  background: rgb(35, 58, 58);
+}
+button:active{
+  background: rgb(26, 124, 43);
+  transform: translateY(4px);
 }
 figcaption {
   font-family: cursive;
 }
 
-.context {
-  width: 100%;
-  position: absolute;
-  top:5vh;
-  text-align: center;
-  color: #fff;
-  font-size: 50px;
-  z-index: 1;
-
-}
-
-/* .context h1{
-  text-align: center;
-  color: #fff;
-  font-size: 50px;
-} */
-
 
 .area{
+user-select:none;
  background: black;
   width: 100%;
   height:100vh;
@@ -177,7 +150,6 @@ figcaption {
   animation-delay: 0s;
   animation-duration: 11s;
 }
-
 
 
 @keyframes animate {
