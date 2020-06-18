@@ -42,8 +42,6 @@ public class Album {
 	@Column(name="release_date_precision")
 	private String releaseDatePrecision;
 	
-	private String href;
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
@@ -55,14 +53,35 @@ public class Album {
 		inverseJoinColumns=@JoinColumn(name="available_market_market"))
 	private Set<AvailableMarkets> markets = new HashSet<AvailableMarkets>();
 	
-	@ManyToMany(mappedBy = "albums", cascade = CascadeType.MERGE)
+	@ElementCollection
+	@ManyToMany(mappedBy = "albums", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable(name="artist_album",
+	joinColumns=@JoinColumn(name="album_id"),
+	inverseJoinColumns=@JoinColumn(name="artist_id"))
 	private Set<Artist> artists;
 
 	@ElementCollection
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, cascade= {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name="fk_album_id")
-	private Set<Track> tracks = new LinkedHashSet<Track>();
+	private Set<Track> tracks = new HashSet<Track>();
 	
+	public Album() {
+	}
+
+	public Album(String id, String name, String imgSource, String type, String releaseDate, String releaseDatePrecision,
+			Date created, Set<AvailableMarkets> markets, Set<Artist> artists, Set<Track> tracks) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.imgSource = imgSource;
+		this.type = type;
+		this.releaseDate = releaseDate;
+		this.releaseDatePrecision = releaseDatePrecision;
+		this.created = created;
+		this.markets = markets;
+		this.artists = artists;
+		this.tracks = tracks;
+	}
 	
 	public String getId() {
 		return id;
@@ -112,14 +131,6 @@ public class Album {
 		this.releaseDatePrecision = releaseDatePrecision;
 	}
 
-	public String getHref() {
-		return href;
-	}
-
-	public void setHref(String href) {
-		this.href = href;
-	}
-
 	public Date getCreated() {
 		return created;
 	}
@@ -143,7 +154,7 @@ public class Album {
 
 	public Artist addArtist(Artist artist) {
 		if(artists == null) {
-			artists = new LinkedHashSet<Artist>();
+			artists = new HashSet<Artist>();
 		}
 		
 		artists.add(artist);

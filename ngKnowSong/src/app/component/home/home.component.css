@@ -1,68 +1,106 @@
-body {
-  background: #fff;
+@import url(https://fonts.googleapis.com/css2?family=Merriweather);
+
+.main-div{
+  color:white;
+  user-select:none;
+}
+.infoBar{
+  padding: 42px 0 40px;
 }
 
-.title {
-  font-size: 5.6rem;
-  font-family: 'Lobster', cursive;
+.profileImg{
+  height: 125px;
+  width: 125px;
+  border-radius: 50px;
 }
 
-.wrapper {
-  background: url("https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/when-no-music-no-life-tee-with-an-illustration-of-a-guitar-with-trees-tshirt-design-nature-lake-roland-andres.jpg");
-  color: #eee;
-  width: 100%;
-  height: 100vh;
+.userInfo{
+  position: fixed;
+  top: 20px;
+  left: 5%;
+}
+.column{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-  perspective-origin: 50% 50%;
-  animation: animation 50s linear infinite;
-  background-size: cover;
-  background-repeat: round;
+  flex-flow: column-reverse;
+  vertical-align: middle;
+  height: 100%;
+}
+.column p{
+  font-size: xx-large;
+  margin-top: 15px;
+  text-align: center;
 }
 
-@keyframes animation {
-   100%{
-    background-position:0px -3000px;
-  }
+.about{
+  position: fixed;
+  top: 30px;
+  right: 5%;
 }
-.lw {
-    font-size: 60px;
+.about button{
+  background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:'Merriweather Sans', sans-serif;
+	font-size:30px;
+	padding:28px 50px;
+	text-decoration:none;
+}.about button:hover {
+	background-color:#5cbf2a;
+}.about button:active {
+	transform: translateY(-8px);
+}.about button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.introHeader{
+  text-align-last: center;
+} .introHeader h1{
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 5em;
+  padding-top: 66px;
+  color: #44c767;
+} .introHeader h3{
+  padding-top: 20px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 2em;
+  color: bisque;
+}
+
+/* CARDS */
+
+.menuCard{
+  border-radius: 30px;
+    padding: 20px 30px;
+    background-color: #3f4740;
+    color: #fff;
+    width: 200px;
     text-align: center;
-    color: #FAEBD7;
+    margin: 15px;
+    display: inline-block;
+    vertical-align: top;
+    min-height: 200px;
+}.menuCard:hover{
+  background:linear-gradient(to bottom, #3f4740 70%, #44c767 100%);
+	background-color:#44c767;
+}.menuCard:active{
+  transform: translateY(8px);
+}.menuCard:focus {
+  outline: none;
+  box-shadow: none;
+}.menuCard img{
+  height: 60px;
+  width: 60px;
+}.menuCard h2{
+  font-size: 30px;
+}.menuCard p{
+  font-size: 17px;
 }
 
-.header {
-    text-align: center;
-    color: #FAEBD7;
-}
-
-.flex-container {
-    display: flex;
-    justify-content: center;
-}
-
-.link {
-    text-decoration: none;
-    font-family: "Andale Mono", AndaleMono, monospace;
-    font-size: X-large;
-    letter-spacing: 1px;
-    line-height: 35px;
-    color: white;
-
-}
-
-.box {
-    background-color: #FF6347;
-    padding: 10px;
-    /* border: 1px solid green; */
-    box-shadow: inset -5px -5px 5px black;
-    width: 120px;
-    height: 120px;
-    margin-right: 40;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    display: inline-table;
+.cardHolder{
+  text-align-last: center;
+  display: block;
 }

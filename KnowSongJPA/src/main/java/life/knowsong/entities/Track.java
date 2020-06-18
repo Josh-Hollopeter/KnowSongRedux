@@ -29,8 +29,6 @@ public class Track {
 	
 	private int popularity;
 	
-	private String href;
-	
 	@Column(name="duration_ms")
 	private int durationMs;
 	
@@ -42,6 +40,23 @@ public class Track {
 	@ManyToOne
 	@JoinColumn(name="fk_album_id")
 	private Album album;
+	
+	public Track() {
+		super();
+	}
+
+	public Track(String id, String name, String previewUrl, boolean explicit, int popularity, int durationMs,
+			Date created, Album album) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.previewUrl = previewUrl;
+		this.explicit = explicit;
+		this.popularity = popularity;
+		this.durationMs = durationMs;
+		this.created = created;
+		this.album = album;
+	}
 
 	public String getId() {
 		return id;
@@ -81,14 +96,6 @@ public class Track {
 
 	public void setPopularity(int popularity) {
 		this.popularity = popularity;
-	}
-
-	public String getHref() {
-		return href;
-	}
-
-	public void setHref(String href) {
-		this.href = href;
 	}
 
 	public int getDurationMs() {

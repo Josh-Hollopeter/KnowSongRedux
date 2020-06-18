@@ -25,6 +25,9 @@ import { ReleaseYearComponent } from './game/release-year/release-year.component
 import { KnowSongComponent } from './game/know-song/know-song.component';
 import { MusicDataService } from './game/data/music-data.service';
 import { UserService } from './service/Data/user.service';
+import { GameBuilderService } from './service/API/game-builder.service';
+import { GameServiceService } from './game/data/game-service.service';
+import { QuestionComponent } from './game/know-song/question/question.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { UserService } from './service/Data/user.service';
     LyricMatcherComponent,
     ReleaseYearComponent,
     KnowSongComponent,
+    QuestionComponent,
 
   ],
   imports: [
@@ -59,7 +63,8 @@ import { UserService } from './service/Data/user.service';
     MusixMatchService,
     MusicDataService,
     UserService,
-
+    GameBuilderService,
+    GameServiceService
 
   ],
   bootstrap: [AppComponent]

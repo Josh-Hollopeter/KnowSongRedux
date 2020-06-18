@@ -3,38 +3,9 @@
     <p>{{album.name}}</p>
 </div> -->
 <div class="context">
-
-  <div *ngIf="!artist" class="loader"></div>
-  <figure *ngIf="artist">
-    <figcaption>{{artist.name}}</figcaption>
-    <audio
-        controls
-        src={{artist.albums[0].tracks[0].previewUrl}} class ="audio">
-            Your browser does not support the
-            <code>audio</code> element.
-    </audio>
-  </figure>
-  <div *ngIf="artist">
-  <button> Too Late</button>
-  <button>Life is Good</button>
-  <button>Neon Skyline</button>
-  <button> Fire in Bone</button>
+    <figcaption>{{gameDescription}}</figcaption><br><br>
+    <figcaption>Question {{questionNum}}/5</figcaption><br>
+ <app-question [questionOptions]="options"  [newAudio]="audio"  (optionPicked)="onOptionPicked($event)" >
+ </app-question>
 </div>
-</div>
-
-
-<div class="area" >
-        <ul class="question">
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-                <li>?</li>
-        </ul>
-</div >
 

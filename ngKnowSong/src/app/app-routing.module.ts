@@ -19,7 +19,11 @@ const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'home', component: HomeComponent, resolve: {user: UserResolverService}, canActivate: [AdminGuard]},
   { path: 'creategame/:gameType', component: CreateGameComponent, canActivate: [AdminGuard]},
-  { path: 'audio', component: KnowSongComponent, resolve: {questions: AudioResolverService}, canActivate:[AdminGuard]},
+  { 
+    path: 'audio', component: KnowSongComponent, 
+    resolve: {game: AudioResolverService}, 
+    canActivate:[AdminGuard]
+  },
   { path: 'lyric', component: LyricMatcherComponent, resolve: {questions: LyricResolverService}, canActivate:[AdminGuard]},
   { path: 'year', component: ReleaseYearComponent, resolve: {questions: YearResolverService}, canActivate:[AdminGuard]},
   { path: 'error', component: ErrorComponent},
