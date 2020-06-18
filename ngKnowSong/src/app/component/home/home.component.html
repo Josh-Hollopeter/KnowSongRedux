@@ -1,21 +1,45 @@
+<div class="main-div">
+    <div class="userInfo">
+        <div class="column">
+            <img class="profileImg" src="{{user.imgSource}}">
+        </div>
+        <div class="column">
+            <p>{{user.username}}</p>
+        </div>
+    </div>
+    <div class="about">
+        <button>About</button>
+    </div>
+    <div class="introHeader">
+        <h1>KnowSong</h1>
+        <h3>An Artist Trivia Generator</h3>
+    </div>
 
-<head>
-    <title>Know Song</title>
-</head>
+    <div class="infoBar">
+        <p class="welcome-text"></p>
+    </div>
 
-<div class="wrapper">
-
-    <!-- <div>
-        <p>{{user.username}}</p>
-        <img src="{{user.imgSource}}">
-    </div><br> -->
-
-    <div>
-        <p class="lw">Know Song</p>
-        <h1 class="header">New Game</h1>
-        <div class="flex-container">
-            <!-- <div style="cursor: pointer;" class="box" [routerLink]="['/creategame', 'lyrics']"><span class="link"> The <br> Lyric <br> Matcher </span></div> -->
-            <div style="cursor: pointer;" class="box" [routerLink]="['/creategame', 'audio']"><span class="link">Name <br> the <br > Song</span></div>
+    <div class="cardHolder">
+        <div class="menuCard" [routerLink]="['/creategame', 'audio']">
+            <div>
+                <img src="https://img.icons8.com/ios/50/000000/room-sound.png"/>
+                <h2>Audio Clips</h2>
+            </div>
+            <p>Listen to the track. Can you guess the name?</p>
+        </div>
+        <div class="menuCard">
+            <div>
+                <img src="https://img.icons8.com/windows/96/000000/apple-music-lyrics.png"/>
+                <h2>Lyric Matcher</h2>
+            </div>
+            <p>Currently unavailable</p>
+        </div>
+        <div class="menuCard">
+            <div>
+                <img src="https://img.icons8.com/dotty/80/000000/activity-history.png"/>
+                <h2>Game History</h2>
+            </div>
+            <p>View your previous games in detail!</p>
         </div>
     </div>
 
