@@ -5,7 +5,7 @@ logging:
         SQL: WARN
         type: WARN
       springframework:
-        web: WARN
+        web: INFO
     root: WARN
 server:
   port: 8085
