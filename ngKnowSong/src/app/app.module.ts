@@ -28,6 +28,7 @@ import { UserService } from './service/Data/user.service';
 import { GameBuilderService } from './service/API/game-builder.service';
 import { GameServiceService } from './game/data/game-service.service';
 import { QuestionComponent } from './game/know-song/question/question.component';
+import { AboutComponent } from './component/about/about.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { QuestionComponent } from './game/know-song/question/question.component'
     ReleaseYearComponent,
     KnowSongComponent,
     QuestionComponent,
+    AboutComponent,
 
   ],
   imports: [

@@ -66,12 +66,10 @@ public class UserController {
 		if(principal != null) {
 			response.setStatus(200);
 			return true;
-		}
-			
-		else {
+		}else {
 			response.setStatus(401);
 			return false;
 		}
-		}
+	}
 	
 }
