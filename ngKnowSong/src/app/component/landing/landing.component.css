@@ -1,23 +1,69 @@
  #middle {
   align-items: center;
   text-align: center;
-  color: #008000;
+  color: #44c767;
   font-size: 700%;
   display: flexbox;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   letter-spacing: 1px;
   line-height: 100px;
-
 }
- button{
+.main-div{
+  user-select:none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  background-color: black;
+  color: white;
+}
+
+button{
   font-size: xx-large;
   border-radius: 10px;
   border-style: inset;
   border: 4px solid green;
-  border-right: double;
-  border-left: double;
-
+  background-color:#44c767bb;
+  padding:28px 50px;
+  color: bisque;
+  
+}button:focus {
+  outline: none;
+  box-shadow: none;
+}button:active{
+  transform: translateY(6px);
+}button:hover {
+  background-color:#333333;
+  border: #333333 4px solid;
 }
+
+.about{
+  position: fixed;
+  top: 30px;
+  right: 5%;
+}
+.about button{
+  background-color:#44c767bb;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+  color:bisque;
+  border: 4px solid green;
+	font-family:'Merriweather Sans', sans-serif;
+	font-size:30px;
+	padding:28px 50px;
+	text-decoration:none;
+}.about button:hover {
+  background-color:#333333;
+  border: #333333 4px solid;
+}.about button:active {
+	transform: translateY(-6px);
+}.about button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .text_1 {
   animation: text1;
   font-size: 25%;
@@ -40,14 +86,6 @@
   animation-duration: 1s;
   animation-timing-function: steps(5, end);
   animation-iteration-count: infinite;
-}
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: black;
-  color: white;
 }
 
 .muzieknootjes {
