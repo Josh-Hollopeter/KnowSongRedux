@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpXhrBackend, HttpRequest, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
 import { GameServiceService } from '../../game/data/game-service.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class GameBuilderService {
 
   constructor(
     private backend: HttpXhrBackend,
-    private gameStorage: GameServiceService
+    private gameStorage: GameServiceService,
+    private router: Router,
   ) { }
 
 
@@ -46,7 +48,11 @@ export class GameBuilderService {
           console.log("Game not built");
           return null;
         }
-      })
+      }),
+      catchError((err: any) => {
+        this.router.navigate(['']);
+        return throwError(err);
+      }
     )
-  }
+    )}
 }

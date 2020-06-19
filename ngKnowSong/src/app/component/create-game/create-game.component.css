@@ -1,9 +1,9 @@
 .form-control {
   width: 66%;
-  height: 4vh;
+  height: 5vh;
   background: green;
-  color: white;
-  font-size: x-large;
+  color: bisque;
+  font-size: xx-large;
   margin: auto;
   text-align:center;
   border-radius: 20px;
@@ -18,19 +18,19 @@
   text-align:center;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color:white;
+  color:bisque;
   opacity: 1; /* Firefox */
-  font-size: large;
+  font-size: xx-large;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color:white;
-  font-size: large;
+  color:bisque;
+  font-size: xx-large;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: white;
-  font-size: large;
+  color: bisque;
+  font-size: xx-large;
 }
 
 .create{
@@ -38,39 +38,70 @@
 
 }
 
-.card {
-  color:white;
-  font-size: x-large;
-}
 
 .text{
   user-select:none;
   width: 100%;
   position: sticky;
   text-align: center;
-  color: #fff;
+  color: bisque;
   font-size: 50px;
   z-index: 1;
   font-family: cursive;
 }
 
 .artistCard{
-  position: flex;
+  display: inline-block;
+  float:left;
   margin: 10px; 
   padding: 10px; 
   cursor: pointer;
-  color: white;
+  color: bisque;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   text-align: center;
-} 
-.artistCard:hover{
+}.artistCard:hover{
   color: green;
+}.artistCard h2{
+  width: 100%;
+  text-align: center;
 }
 
 .artistPhoto{
   width:150px;
   height:150px;
-  border-radius: 3px;
+  border-radius: 7px;
 }
 
+.header{
+  text-align-last: center;
+} .header h1{
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 5em;
+  padding-top: 66px;
+  color: #44c767;
+} .header h3{
+  padding-top: 20px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 2em;
+  color: bisque;
+}
+.main-div{
+  color:white;
+  user-select:none;
+}
+
+.backToHome{
+  position: fixed;
+  top: 20px;
+  left: 5%;
+  cursor: pointer;
+}.backToHome img{
+  width: 125px;
+  height: 125px;
+}.backToHome img:active{
+  transform: translateY(8px);
+}.backToHome:focus {
+  outline: none;
+  box-shadow: none;
+}
 

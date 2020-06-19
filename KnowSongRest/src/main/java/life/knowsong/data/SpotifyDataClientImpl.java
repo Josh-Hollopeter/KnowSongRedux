@@ -5,16 +5,22 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
@@ -39,7 +45,14 @@ import life.knowsong.entities.Track;
 import life.knowsong.repositories.ArtistRepository;
 import life.knowsong.repositories.GenreRepository;
 
-@Transactional
+//
+//The only way primary keys are duplicated from spotify's end is for Track relinking.
+//The exception is handled and tracks are appended with unique identifiers upon encountering this exception.
+//*************~ ~* *~ *~* *~* ~*~ @*!* *!*!* !*! 
+//** TURN OFF THE DONTROLLBACK IF EDITING CODE. !!!!~~
+//*************~ ~* *~ *~* *~* ~*~ @*!* *!*!* !*! 
+//*************~ ~* *~ *~* *~* ~*~ @*!* *!*!* !*! 
+@Transactional(value = TxType.REQUIRES_NEW)
 @Service
 public class SpotifyDataClientImpl implements SpotifyDataClient {
 
@@ -74,7 +87,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	}
 	
 	@Override
-	public Artist getArtist(String accessToken, String artistId) {
+	public Artist getArtist(String accessToken, String artistId){
 		this.spotifyApi = new SpotifyApi.Builder()
 				.setAccessToken(accessToken)
 				.build();
@@ -145,7 +158,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	// therefore, when searching through artist collection, we will have many artists, but only some will be ready for trivia
 	// NOTE: having a large collection of artists and genres will provide us with a recommendations capability in the future!
 	//
-	private Artist buildNewArtist(String artistId) {
+	private Artist buildNewArtist(String artistId){
 		 
 		
 		GetArtistRequest getArtistRequest = spotifyApi.getArtist(artistId)
@@ -202,7 +215,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		return artist;
 	}
 	
-	private void getAllAlbumsFromArtist(Artist artist, int offset, List<String> albumIds) throws org.apache.hc.core5.http.ParseException {
+	private void getAllAlbumsFromArtist(Artist artist, int offset, List<String> albumIds) throws org.apache.hc.core5.http.ParseException, EntityExistsException {
 		GetArtistsAlbumsRequest getArtistsAlbumsRequest = this.spotifyApi
 				.getArtistsAlbums(artist.getId())
 				.album_type("album,single")
@@ -218,15 +231,22 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		// This breaks our persistence. 
 		// A spotify employee responds here
 		// https://stackoverflow.com/questions/32019376/spotify-api-same-music-with-differents-ids-in-app-get-the-same-ids-from-api
+		
 		//My Solution:
 		// Add albums with tracks to a List.
 		// Before persisting each album in the list
 		// Check if any albums contain the word Deluxe Edition or Super Deluxe
+		
 		//Thoughts: 
 		// Realistically for the purposes of Trivia, we won't be using the various live and remixed versions
 		// and will focus mainly on the original songs for the simplicity of questions.
 		// I mean, will someone know the difference, or care to know the difference between the San Francisco live version vs the New York Live version?? etc.
 		// In some cases the super deluxe version will contain new and novel songs but most are remakes of the same releases.
+		
+		// Additional Thoughts: There are still cases (thanks hannah montana) where a track is duplicating the ID.
+		// In such a case, I must catch the error, and have decided to append the string with 
+		// '--d' to easily identify. multiple instantiations (ex: '--d--d') may occur for instances where more than 2 tracks have the same primary ID. Thanks.
+		
 		List<Album> albums = new ArrayList<Album>();
 		try {
 			Paging<AlbumSimplified> pagingAlbums = null;
@@ -259,7 +279,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 							
 					}
 				}
-				String albumName = sa.getName();	// performance instead of calling object 3 times :p
+				String albumName = sa.getName();	// performance instead of calling object 3 times
 				// Remove the Deluxe Edition OR Super Deluxe album types for 2 reasons said above
 				if(albumName.contains("Deluxe Edition") || albumName.contains("Super Deluxe")) {
 					continue parseAlbums;
@@ -314,7 +334,49 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			    // now get all tracks :) (another HTTP to spotify server)
 			    Set<Track> tracks = this.getAllTracksFromAlbum(album);
 			    album.setTracks(tracks);
-			    em.persist(album);
+			    // exception handling for duplicate primary keys. A Spotify legacy bug
+			    boolean flag = true;
+			    // while loop in case an album has multiple offenders
+			    while(flag) {
+			    	try {
+				    	em.persist(album);
+				    	
+				    	flag = false;
+				    } 
+			    	// EEE is a RUNTIME EXCEPTION. and by default sets up a rollback.
+			    	catch(EntityExistsException eee) {
+				    	Pattern pattern = Pattern.compile("\\[.+\\#(.+)\\]");
+				    	Matcher matcher = pattern.matcher(eee.getMessage());//A different object with the same identifier value was already associated with the session : [life.knowsong.entities.Track#6ftcAmQPmGbk7Gkr5MJe4T]
+				    	boolean matches = matcher.find();
+				    	
+				    	if(matches) {
+				    		MatchResult primaryKeyResult = matcher.toMatchResult();
+				    		String primaryKey = primaryKeyResult.group(1);
+				    		// get key, find perpetrator, append '--' followed by a random generated string, put back into list
+				    		Iterator<Track> trackIterator = tracks.iterator();
+				    		Track foundTrack = null;
+				    		while(trackIterator.hasNext()) {
+				    			Track t = trackIterator.next();
+				    			if(t.getId().equals(primaryKey)) {
+				    				foundTrack = t;
+				    				 trackIterator.remove();
+				    			}
+				    		}
+				    		if(foundTrack != null) {
+				    			foundTrack.setId(primaryKey + "--" + this.randomStringGenerator() );
+			    				tracks.add(foundTrack);
+			    				System.err.println(foundTrack.getName() + " ::: " + foundTrack.getId());
+					    		album.setTracks(tracks); // set the new tracks
+				    		}
+				    		
+				    	} else {
+				    		// Track already exists, this probably stopped working because of version change.
+				    		throw eee;
+				    	}
+				    }
+			    	// end while loop
+			    }
+			    
 			}
 			
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
@@ -346,14 +408,28 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		    	  track.setCreated(new Timestamp(new Date().getTime()));
 		    	  track.setAlbum(album);
 		    	  tracks.add(track);
-		    	  System.out.println(track.getName() + " ID: " + track.getId());
 		      }
 		      
-		      System.out.println("Added <" + trackSimplifiedPaging.getTotal() + "> tracks.");
 		    } catch (IOException | SpotifyWebApiException | ParseException e) {
 		      System.out.println("Error: " + e.getMessage());
 		    }
 		return tracks;
+	}
+	
+	private String randomStringGenerator() {
+		// i want to calculate the odds of actually generating the same string given the rare case of encountering spotify's legacy bug
+	    int leftLimit = 48; // numeral '0'
+	    int rightLimit = 122; // letter 'z'
+	    int targetStringLength = 4;
+	    Random random = new Random();
+	 
+	    String generatedString = random.ints(leftLimit, rightLimit + 1)
+	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+	      .limit(targetStringLength)
+	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+	      .toString();
+	    
+		return generatedString;
 	}
 	
 
