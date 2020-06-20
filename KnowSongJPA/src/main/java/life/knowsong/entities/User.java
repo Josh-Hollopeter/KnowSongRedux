@@ -35,7 +35,8 @@ public class User {
 	@Column(name = "img_source")
 	private String imgSource;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany()
 	@JoinColumn(name="fk_user_id")
 	private Set<SingleplayerGame> singleplayerGames;
 	

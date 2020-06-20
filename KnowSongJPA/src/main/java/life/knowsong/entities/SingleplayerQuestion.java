@@ -42,18 +42,10 @@ public class SingleplayerQuestion {
 	@Column(name = "user_response")
 	private String userResponse;
 
-	
 	// GETTERS / SETTERS 
 	
 	public int getNum() {
 		return num;
-	}
-
-	@Override
-	public String toString() {
-		return "SingleplayerQuestion [num=" + num + ", game=" + game + ", questionText=" + questionText + ", answer="
-				+ answer + ", option2=" + option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse="
-				+ userResponse + "]";
 	}
 
 	public void setNum(int num) {
@@ -115,5 +107,79 @@ public class SingleplayerQuestion {
 	public void setUserResponse(String userResponse) {
 		this.userResponse = userResponse;
 	}
+
+
+	@Override
+	public String toString() {
+		return "SingleplayerQuestion [num=" + num + ", game=" + game + ", questionText=" + questionText + ", answer="
+				+ answer + ", option2=" + option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse="
+				+ userResponse + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
+		result = prime * result + ((game == null) ? 0 : game.hashCode());
+		result = prime * result + num;
+		result = prime * result + ((option2 == null) ? 0 : option2.hashCode());
+		result = prime * result + ((option3 == null) ? 0 : option3.hashCode());
+		result = prime * result + ((option4 == null) ? 0 : option4.hashCode());
+		result = prime * result + ((questionText == null) ? 0 : questionText.hashCode());
+		result = prime * result + ((userResponse == null) ? 0 : userResponse.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SingleplayerQuestion other = (SingleplayerQuestion) obj;
+		if (answer == null) {
+			if (other.answer != null)
+				return false;
+		} else if (!answer.equals(other.answer))
+			return false;
+		if (game == null) {
+			if (other.game != null)
+				return false;
+		} else if (!game.equals(other.game))
+			return false;
+		if (num != other.num)
+			return false;
+		if (option2 == null) {
+			if (other.option2 != null)
+				return false;
+		} else if (!option2.equals(other.option2))
+			return false;
+		if (option3 == null) {
+			if (other.option3 != null)
+				return false;
+		} else if (!option3.equals(other.option3))
+			return false;
+		if (option4 == null) {
+			if (other.option4 != null)
+				return false;
+		} else if (!option4.equals(other.option4))
+			return false;
+		if (questionText == null) {
+			if (other.questionText != null)
+				return false;
+		} else if (!questionText.equals(other.questionText))
+			return false;
+		if (userResponse == null) {
+			if (other.userResponse != null)
+				return false;
+		} else if (!userResponse.equals(other.userResponse))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

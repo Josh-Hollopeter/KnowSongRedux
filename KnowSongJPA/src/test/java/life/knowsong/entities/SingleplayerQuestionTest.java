@@ -40,7 +40,6 @@ class SingleplayerQuestionTest {
 		user = new User();
 		user.setUsername("uniquestUsername");
 		game.setDescription("game");
-		game.setUserId(user);
 		spq.setAnswer("answer");
 		spq.setQuestionText("question");
 		spq.setGame(game);
