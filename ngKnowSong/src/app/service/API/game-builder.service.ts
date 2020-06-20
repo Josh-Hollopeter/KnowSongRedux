@@ -53,6 +53,31 @@ export class GameBuilderService {
         this.router.navigate(['']);
         return throwError(err);
       }
-    )
-    )}
+    ));
+  }
+
+  storeGame(game: SingleplayerGame){
+    console.log("persisting game");
+    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame',game, this.httpOptions );
+    
+    return this.backend.handle(request).pipe(
+      map((event: HttpResponse<any>): boolean =>{
+        console.log(event);
+        
+        if(event.status == 200){
+          return true;
+        } else if(event.status == 401){
+          console.log("Unauthorized user");
+          return false;
+        } else if(event.status == 404){
+          console.log("Game not built");
+          return false;
+        }
+      }),
+      catchError((err: any) => {
+        this.router.navigate(['']);
+        return throwError(err);
+      }
+    ));
+  }
 }
