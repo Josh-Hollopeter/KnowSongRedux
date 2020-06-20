@@ -10,9 +10,8 @@ import { ErrorComponent } from './error/error.component';
 import { AudioResolverService } from './game/resolver/audio-resolver.service';
 import { LyricResolverService } from './game/resolver/lyric-resolver.service';
 import { LyricMatcherComponent } from './game/lyric-matcher/lyric-matcher.component';
-import { ReleaseYearComponent } from './game/release-year/release-year.component';
-import { YearResolverService } from './game/resolver/year-resolver.service';
 import { AboutComponent } from './component/about/about.component';
+import { FinishedgameComponent } from './game/finishedgame/finishedgame.component';
 
 
 const routes: Routes = [
@@ -23,7 +22,7 @@ const routes: Routes = [
   { path: 'creategame/:gameType', component: CreateGameComponent, canActivate: [AdminGuard]},
   { path: 'audio', component: KnowSongComponent, resolve: {game: AudioResolverService}, canActivate:[AdminGuard]},
   { path: 'lyric', component: LyricMatcherComponent, resolve: {questions: LyricResolverService}, canActivate:[AdminGuard]},
-  { path: 'year', component: ReleaseYearComponent, resolve: {questions: YearResolverService}, canActivate:[AdminGuard]},
+  { path: 'finishedgame', component: FinishedgameComponent, canActivate:[AdminGuard]},
   { path: 'error', component: ErrorComponent},
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
