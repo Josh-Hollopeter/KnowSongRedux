@@ -7,7 +7,7 @@
             <p>{{user.username}}</p>
         </div>
     </div>
-    <div class="about">
+    <div class="about" [routerLink]="'/about'">
         <button>About</button>
     </div>
     <div class="introHeader">
@@ -32,9 +32,9 @@
                 <img src="https://img.icons8.com/windows/96/000000/apple-music-lyrics.png"/>
                 <h2>Lyric Matcher</h2>
             </div>
-            <p>Currently unavailable</p>
+            <p>Coming very soon!</p>
         </div>
-        <div class="menuCard">
+        <div class="menuCard" [routerLink]="'/gamehistory'">
             <div>
                 <img src="https://img.icons8.com/dotty/80/000000/activity-history.png"/>
                 <h2>Game History</h2>

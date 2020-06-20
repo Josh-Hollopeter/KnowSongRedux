@@ -29,6 +29,7 @@ import { GameServiceService } from './game/data/game-service.service';
 import { QuestionComponent } from './game/know-song/question/question.component';
 import { AboutComponent } from './component/about/about.component';
 import { FinishedgameComponent } from './game/finishedgame/finishedgame.component';
+import { GameHistoryComponent } from './component/game-history/game-history.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FinishedgameComponent } from './game/finishedgame/finishedgame.componen
     QuestionComponent,
     AboutComponent,
     FinishedgameComponent,
+    GameHistoryComponent,
 
   ],
   imports: [
