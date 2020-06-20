@@ -49,6 +49,13 @@ public class SingleplayerQuestion {
 		return num;
 	}
 
+	@Override
+	public String toString() {
+		return "SingleplayerQuestion [num=" + num + ", game=" + game + ", questionText=" + questionText + ", answer="
+				+ answer + ", option2=" + option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse="
+				+ userResponse + "]";
+	}
+
 	public void setNum(int num) {
 		this.num = num;
 	}
