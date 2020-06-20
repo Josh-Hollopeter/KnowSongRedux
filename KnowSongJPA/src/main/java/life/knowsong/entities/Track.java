@@ -29,6 +29,9 @@ public class Track {
 	
 	private int popularity;
 	
+	@Column(name="spotify_id")
+	private String spotifyId;
+	
 	@Column(name="duration_ms")
 	private int durationMs;
 	
@@ -112,6 +115,14 @@ public class Track {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+	
+	public String getSpotifyId() {
+		return spotifyId;
+	}
+
+	public void setSpotifyId(String spotifyId) {
+		this.spotifyId = spotifyId;
 	}
 
 	public Album getAlbum() {
