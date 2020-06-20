@@ -7,6 +7,7 @@ import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { isEmpty } from 'rxjs/operators';
+import { GameBuilderService } from 'src/app/service/API/game-builder.service';
 
 @Component({
   selector: 'app-know-song',
@@ -27,7 +28,8 @@ export class KnowSongComponent implements OnInit {
   
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private gameService: GameBuilderService
   ) { }
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class KnowSongComponent implements OnInit {
       this.arrayCounter++;
       this.loadQuestion();  // load next question
     } else{
+      this.gameService.storeGame(this.game).subscribe();
       this.router.navigate(['finishedgame']);
 
       console.log(this.game);

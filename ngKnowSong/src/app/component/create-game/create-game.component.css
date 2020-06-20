@@ -123,13 +123,13 @@
   border-right: 16px solid #18ab29;
   border-bottom: 16px solid black;
   border-left: 16px solid #18ab29;
-  width: 120px;
-  height: 120px;
+  width: 200px;
+  height: 200px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   margin: 0;
   position: fixed;
-  top: 45%;
+  top: 30%;
   left: 42%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);

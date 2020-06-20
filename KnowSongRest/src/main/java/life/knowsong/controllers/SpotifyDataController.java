@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,9 @@ public class SpotifyDataController {
 	BuildAudioGame buildAudio;
 	
 	@GetMapping("/getAllArtists")
-	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
+	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, 
+			HttpServletResponse response) 
+	{
 		if(principal != null) {
 			response.setStatus(200);
 			System.out.println("getting artists");
@@ -46,10 +50,11 @@ public class SpotifyDataController {
 	}
 	
 	@GetMapping("/buildArtistAudioGame/{artistId}/{accessToken}")
-	public SingleplayerGame BuildArtistAudioGame(@AuthenticationPrincipal OAuth2User principal
-			, @PathVariable("artistId") String artistId
-			, @PathVariable("accessToken") String accessToken
-			, HttpServletResponse response) {
+	public SingleplayerGame BuildArtistAudioGame(@AuthenticationPrincipal OAuth2User principal, 
+			@PathVariable("artistId") String artistId, 
+			@PathVariable("accessToken") String accessToken, 
+			HttpServletResponse response) 
+	{
 		if(principal != null) {
 			
 			boolean isExplicit = true;
@@ -66,7 +71,22 @@ public class SpotifyDataController {
 			response.setStatus(401);	// unauthorized request
 			return null;
 		}
+	}
+	
+	@PostMapping("/storeSingleplayerGame")
+	public SingleplayerGame StoreSingleplayerGame(@AuthenticationPrincipal OAuth2User principal, 
+			@RequestBody SingleplayerGame game,
+			HttpServletResponse response) 
+	{
+		if(principal != null) {
+			System.out.println(game.getDescription());
+			System.out.println(game.getQuestions().toString());
+		}else {
+			response.setStatus(401);	// unauthorized request
+			return null;
+		}
 		
+		return null;
 	}
 
 }
