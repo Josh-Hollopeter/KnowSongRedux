@@ -1,0 +1,14 @@
+.backToHome{
+    position: fixed;
+    top: 20px;
+    left: 5%;
+    cursor: pointer;
+  }.backToHome img{
+    width: 125px;
+    height: 125px;
+  }.backToHome img:active{
+    transform: translateY(8px);
+  }.backToHome:focus {
+    outline: none;
+    box-shadow: none;
+  }

@@ -1,38 +1,5 @@
 @import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
-@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
-@import url(https://fonts.googleapis.com/css2?family=Merriweather);
 
-
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid black;
-  border-right: 16px solid green;
-  border-bottom: 16px solid black;
-  border-left: 16px solid green;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-  margin: 0;
-  position: fixed;
-  top: 45%;
-  left: 42%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 *{
   margin: 0px;
   padding: 0px;
@@ -56,21 +23,3 @@ figcaption {
 
 }
 
-
-
-
-@keyframes animate {
-
-  100%{
-      transform: translateY(0) rotate(0deg);
-      opacity: 0.35;
-      border-radius: 0;
-  }
-
-  0%{
-      transform: translateY(-1000px) rotate(720deg);
-      opacity: 0;
-      border-radius: 50%;
-  }
-
-}
