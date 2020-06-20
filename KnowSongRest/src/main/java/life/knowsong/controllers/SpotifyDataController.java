@@ -74,19 +74,30 @@ public class SpotifyDataController {
 	}
 	
 	@PostMapping("/storeSingleplayerGame")
-	public SingleplayerGame StoreSingleplayerGame(@AuthenticationPrincipal OAuth2User principal, 
+	public boolean StoreSingleplayerGame(@AuthenticationPrincipal OAuth2User principal, 
 			@RequestBody SingleplayerGame game,
 			HttpServletResponse response) 
 	{
 		if(principal != null) {
 			System.out.println(game.getDescription());
 			System.out.println(game.getQuestions().toString());
+			return ourSpotifyData.storeSingleplayerGame(game, principal.getName());
 		}else {
+			response.setStatus(401);	// unauthorized request
+			return false;
+		}
+	}
+	
+	@GetMapping("/getSingleplayerGames")
+	public List<SingleplayerGame> GetSingleplayerGames(@AuthenticationPrincipal OAuth2User principal, 
+			HttpServletResponse response)
+	{
+		if(principal != null) {
+			return ourSpotifyData.getSingleplayerGames(principal.getName());
+		} else {
 			response.setStatus(401);	// unauthorized request
 			return null;
 		}
-		
-		return null;
 	}
 
 }
