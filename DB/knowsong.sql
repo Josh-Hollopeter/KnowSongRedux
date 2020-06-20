@@ -224,6 +224,7 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`track` (
   `duration_ms` INT(11) NULL DEFAULT NULL,
   `created` DATETIME NULL DEFAULT NULL,
   `fk_album_id` VARCHAR(255) NOT NULL,
+  `spotify_id` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_album_id_idx` (`fk_album_id` ASC),
   CONSTRAINT `fk_album_id`

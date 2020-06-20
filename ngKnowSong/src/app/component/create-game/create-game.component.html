@@ -9,17 +9,19 @@
   </div>
 
 <div id="findArtist">
-  <input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
-    class="form-control col-sm-8" placeholder="Search for artist....." /><br>
+  <input #input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
+    class="form-control col-sm-8" placeholder="Search for artist....." autofocus/><br>
 </div>
 
 <div *ngIf="searchArtist">
+  <div class="cardRow">
     <div *ngFor="let result of searchArtist; let i = index" (click)="createGameForArtist(result)">
       <div class="artistCard col-sm-12">
           <img class="artistPhoto" src="{{result.img}}">
           <h2><a>{{result.name}}</a></h2>
       </div>
     </div>
+  </div>
 </div>
 
 </div>

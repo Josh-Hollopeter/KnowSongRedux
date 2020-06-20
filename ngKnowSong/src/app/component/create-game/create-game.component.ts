@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { SpotifyAPIService } from 'src/app/service/API/spotify-api.service';
 import { MusixMatchService } from 'src/app/service/API/musix-match.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,6 +17,8 @@ import { Artist } from 'src/app/model/artist';
   styleUrls: ['./create-game.component.css']
 })
 export class CreateGameComponent implements OnInit {
+
+  @ViewChildren('input') inputBox;
 
   public gameType: string;
   // public userPlaylists: Playlist[];
@@ -48,6 +50,10 @@ export class CreateGameComponent implements OnInit {
       .subscribe(
         text => this.searchForArtist(text)
       );
+  }
+
+  ngAfterViewInit(){
+    this.inputBox.first.nativeElement.focus();
   }
 
   ngOnDestroy() {
