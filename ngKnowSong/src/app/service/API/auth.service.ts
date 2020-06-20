@@ -30,14 +30,10 @@ export class AuthService {
 
   
   isLoggedIn(): Observable<boolean>{
-    console.log("CHECKING LOGIN STATUS");
-    
     const request = new HttpRequest('GET', this.baseUrl + 'isLoggedIn', this.httpOptions);
     return this.backend.handle(request).pipe(     
       map( (event: HttpResponse<any>): boolean => {
         if(event.status == 200){
-          console.log("success");
-          
           return true;
         }
           
@@ -45,7 +41,6 @@ export class AuthService {
        catchError((err: any) => {
         this.router.navigate(['']);
         return throwError(err);
-        
       })
     );
 
