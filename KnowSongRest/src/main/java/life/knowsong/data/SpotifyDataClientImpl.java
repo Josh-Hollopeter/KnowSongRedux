@@ -330,14 +330,8 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				// now get all tracks :) (another HTTP to spotify server)
 				Set<Track> tracks = this.getAllTracksFromAlbum(album);
 				album.setTracks(tracks);
-				try {
-					em.persist(album);
-
-				}
-				// EEE is a RUNTIME EXCEPTION. and by default sets up a rollback.
-				catch (EntityExistsException eee) {
-					throw eee;
-				}
+				em.persist(album);
+				
 			}
 
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
