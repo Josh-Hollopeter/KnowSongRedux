@@ -1,4 +1,5 @@
 <div class="main-div">
+  <div *ngIf="!loading">
   <div class="header">
     <h1>{{gameType}}</h1>
     <h3>Find an artist to test your knowledge!</h3>
@@ -23,5 +24,12 @@
     </div>
   </div>
 </div>
+</div>
+
+  <div *ngIf="loading" >
+    <div class="loader"> 
+
+    </div>
+  </div>
 
 </div>

@@ -33,8 +33,6 @@ export class GameBuilderService {
     const request = new HttpRequest('GET', this.baseUrl + 'spotifyData/buildArtistAudioGame/' + artistId + '/' + sessionStorage.getItem('access'), this.httpOptions);
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): SingleplayerGame =>{
-        console.log("in service");
-        
         if(event.status == 200){
           let body = event.body;
           let description: string = body.description;
