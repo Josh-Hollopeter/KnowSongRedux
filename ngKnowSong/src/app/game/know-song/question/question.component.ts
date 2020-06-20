@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
 import { KnowSongComponent } from '../know-song.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { clear } from 'console';
 
 @Component({
   selector: 'app-question',
@@ -44,9 +45,9 @@ export class QuestionComponent implements AfterViewInit, OnChanges {
     this.audio = this._audioRef.nativeElement;
     if (this.audio) {
       this.audio.src = this.newAudio;
+      
     }
   }
-
 
   setUserResponse(answer: string){
     if(this.listened){
@@ -54,14 +55,44 @@ export class QuestionComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  public restart(): void{
-    // this.audio.
+  private timeout;
+  private intervalIn;
+  
+  play(){
+    this.listened = true;
+    if(this.timeout !=null){
+      clearTimeout(this.timeout);
+    }
+    if(this.intervalIn != null){
+      clearInterval(this.intervalIn);
+    }
+    this.audio.load();
+    this.audio.volume = 0;
+    this.audio.play();
+    
+    // fade in
+    this.intervalIn = setInterval( () =>{
+      if(this.audio.volume < .9){
+        this.audio.volume += 0.1;
+      }
+      else{
+        clearInterval(this.intervalIn);
+      }
+    }, 50);
+    
+    // fade out after 10 seconds
+    this.timeout = setTimeout( () =>{
+      let intervalOut = setInterval( () =>{
+        if(this.audio.volume > 0.1){
+          this.audio.volume -= 0.1;
+        }
+        else{
+          this.audio.pause();
+          clearInterval(intervalOut);
+        }
+      }, 100); 
+    } , 10000);
   }
 
-  public play(){
-    this.audio.load();
-    this.audio.play();
-    this.listened = true;
-  }
 
 }
