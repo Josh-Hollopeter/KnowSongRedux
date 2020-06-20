@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests(a -> a
                 .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 
             )
             .exceptionHandling(e -> e
@@ -50,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .cors().and()
             .csrf(c -> c
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .ignoringAntMatchers("/spotifyData/storeSingleplayerGame")
                     )
             .oauth2Login()
             	.userInfoEndpoint()
