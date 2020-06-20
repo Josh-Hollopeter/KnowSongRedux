@@ -4,8 +4,9 @@ import { MusicDataService } from '../data/music-data.service';
 import { Artist } from 'src/app/model/artist';
 import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-know-song',
@@ -66,6 +67,7 @@ export class KnowSongComponent implements OnInit {
       this.arrayCounter++;
       this.loadQuestion();  // load next question
     } else{
+      console.log(this.game);
       // end game
     }
   }

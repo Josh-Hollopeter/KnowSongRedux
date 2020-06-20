@@ -21,7 +21,6 @@ import { MusixMatchService } from './service/API/musix-match.service';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './error/error.component';
 import { LyricMatcherComponent } from './game/lyric-matcher/lyric-matcher.component';
-import { ReleaseYearComponent } from './game/release-year/release-year.component';
 import { KnowSongComponent } from './game/know-song/know-song.component';
 import { MusicDataService } from './game/data/music-data.service';
 import { UserService } from './service/Data/user.service';
@@ -29,6 +28,7 @@ import { GameBuilderService } from './service/API/game-builder.service';
 import { GameServiceService } from './game/data/game-service.service';
 import { QuestionComponent } from './game/know-song/question/question.component';
 import { AboutComponent } from './component/about/about.component';
+import { FinishedgameComponent } from './game/finishedgame/finishedgame.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +38,10 @@ import { AboutComponent } from './component/about/about.component';
     CreateGameComponent,
     ErrorComponent,
     LyricMatcherComponent,
-    ReleaseYearComponent,
     KnowSongComponent,
     QuestionComponent,
     AboutComponent,
+    FinishedgameComponent,
 
   ],
   imports: [
