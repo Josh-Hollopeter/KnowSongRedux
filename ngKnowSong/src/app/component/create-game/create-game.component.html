@@ -10,7 +10,7 @@
 
 <div id="findArtist">
   <input #input type="text" name="artistKeyword" [ngModel]="artistKeyword" (ngModelChange)='keywordModelChanged.next($event)'
-    class="form-control col-sm-8" placeholder="Search for artist....." autofocus/><br>
+    class="form-control col-sm-8" placeholder="Search for artist..." autofocus/><br>
 </div>
 
 <div *ngIf="searchArtist">

@@ -69,8 +69,6 @@ export class SpotifyAPIService {
         if(err.status == 429){
           console.log("EXCEEDED SPOTIFY API REQUEST LIMIT T_T");
         }
-        console.log(err);
-        
         return [];
       })//,
       // retryWhen(errors =>)

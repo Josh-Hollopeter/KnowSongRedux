@@ -16,19 +16,22 @@
   text-align:center;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color:bisque;
-  opacity: 1; /* Firefox */
+  color:rgb(219, 214, 208);
   font-size: xx-large;
+  opacity: .7;
+  
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color:bisque;
+  color:rgb(219, 214, 208);
   font-size: xx-large;
+  opacity: .7;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: bisque;
+  color:rgb(219, 214, 208);
   font-size: xx-large;
+  opacity: .7;
 }
 
 .create{

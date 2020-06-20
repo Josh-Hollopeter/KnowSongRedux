@@ -9,6 +9,7 @@ import { MusicDataService } from 'src/app/game/data/music-data.service';
 import { newArray } from '@angular/compiler/src/util';
 import { GameBuilderService } from 'src/app/service/API/game-builder.service';
 import { Artist } from 'src/app/model/artist';
+import { AuthService } from 'src/app/service/API/auth.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class CreateGameComponent implements OnInit {
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private musicDataService: MusicDataService,
+    private authService: AuthService
 
   ) { }
 
