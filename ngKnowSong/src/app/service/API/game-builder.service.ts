@@ -57,8 +57,7 @@ export class GameBuilderService {
   }
 
   storeGame(game: SingleplayerGame){
-    console.log("persisting game");
-    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame',game, this.httpOptions );
+    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame', game, this.httpOptions );
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): boolean =>{
@@ -70,8 +69,33 @@ export class GameBuilderService {
           console.log("Unauthorized user");
           return false;
         } else if(event.status == 404){
-          console.log("Game not built");
+          console.log("Game not stored");
           return false;
+        }
+      }),
+      catchError((err: any) => {
+        this.router.navigate(['']);
+        return throwError(err);
+      }
+    ));
+  }
+
+  getSingleplayerGames(): Observable<SingleplayerGame[]>{
+    const request = new HttpRequest('GET', this.baseUrl + 'spotifyData/getSingleplayerGames', this.httpOptions );
+    
+    return this.backend.handle(request).pipe(
+      map((event: HttpResponse<any>): SingleplayerGame[] =>{
+        console.log(event);
+        
+        if(event.status == 200){
+          console.log(event);
+          
+        } else if(event.status == 401){
+          console.log("Unauthorized user");
+          return null;
+        } else if(event.status == 404){
+          console.log("Game not built");
+          return null;
         }
       }),
       catchError((err: any) => {
