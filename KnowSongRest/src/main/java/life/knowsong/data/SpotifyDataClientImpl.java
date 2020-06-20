@@ -3,6 +3,8 @@ package life.knowsong.data;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,17 +43,14 @@ import com.wrapper.spotify.requests.data.artists.GetArtistsAlbumsRequest;
 import life.knowsong.entities.Album;
 import life.knowsong.entities.Artist;
 import life.knowsong.entities.Genre;
+import life.knowsong.entities.SingleplayerGame;
+import life.knowsong.entities.SingleplayerQuestion;
 import life.knowsong.entities.Track;
 import life.knowsong.repositories.ArtistRepository;
 import life.knowsong.repositories.GenreRepository;
+import life.knowsong.repositories.SingleplayerGameRepository;
+import life.knowsong.repositories.UserRepository;
 
-//
-//The only way primary keys are duplicated from spotify's end is for Track relinking.
-//The exception is handled and tracks are appended with unique identifiers upon encountering this exception.
-//*************~ ~* *~ *~* *~* ~*~ @*!* *!*!* !*! 
-//** TURN OFF THE DONTROLLBACK IF EDITING CODE. !!!!~~
-//*************~ ~* *~ *~* *~* ~*~ @*!* *!*!* !*! 
-//*************~ ~* *~ *~* *~* ~*~ @*!* *!*!* !*! 
 @Transactional()
 @Service
 public class SpotifyDataClientImpl implements SpotifyDataClient {
@@ -63,7 +62,13 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	private ArtistRepository artistRepo;
 
 	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
 	private GenreRepository genreRepo;
+	
+	@Autowired
+	private SingleplayerGameRepository singleplayerGameRepo;
 
 	private SpotifyApi spotifyApi;
 
@@ -388,4 +393,56 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	// For artists with new album releases
 	// must add tables. to be added later.
 	//
+	
+	
+	// GAME STORAGE
+	@Override
+	public boolean storeSingleplayerGame(SingleplayerGame game, String username) {
+		SingleplayerGame cleanedGame = new SingleplayerGame();
+		cleanedGame.setPlayed(new Timestamp(new Date().getTime()));
+		cleanedGame.setDescription(game.getDescription());
+		cleanedGame.setUser(userRepo.findByUsername(username));
+		List<SingleplayerQuestion> questions = game.getQuestions();
+		
+		for(int x = 0; x < questions.size(); x++) {
+			SingleplayerQuestion question = questions.get(x);
+			question.setGame(cleanedGame);
+		}
+		cleanedGame.setQuestions(questions);
+
+		try {
+			em.persist(cleanedGame);
+			return true;
+		} catch(Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	@Override
+	public List<SingleplayerGame> getSingleplayerGames(String username) {
+		Optional<List<SingleplayerGame>> optionalGames = singleplayerGameRepo.findByUser(userRepo.findByUsername(username));
+		if(optionalGames.isPresent()) {
+			List<SingleplayerGame> games = optionalGames.get();
+			System.out.println("UNORDERED:");
+			games.forEach(x ->{
+				System.out.println(x.getDescription() + " : " + x.getPlayed());
+			});
+			
+//			Collections.sort(games, (x, y) -> x.getPlayed().compareTo(y.getPlayed()));
+			
+			System.out.println("ORDERED:");
+			games.forEach(x ->{
+				System.out.println(x.getDescription() + " : " + x.getPlayed());
+			});
+			
+			
+			return games;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	
 }

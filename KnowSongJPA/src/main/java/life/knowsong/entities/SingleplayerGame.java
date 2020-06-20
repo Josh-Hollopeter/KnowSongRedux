@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +37,8 @@ public class SingleplayerGame {
 	@JoinColumn(name="fk_user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "game")
+	@ElementCollection
+	@OneToMany(mappedBy = "game", cascade= CascadeType.PERSIST)
 	private List<SingleplayerQuestion> questions;
 	
 	
@@ -65,14 +68,6 @@ public class SingleplayerGame {
 		this.description = description;
 	}
 
-	public User getUserId() {
-		return user;
-	}
-
-	public void setUserId(User user) {
-		this.user = user;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -92,7 +87,52 @@ public class SingleplayerGame {
 		questions.add(question);
 		return question;
 	}
-	
+	public void setQuestions(List<SingleplayerQuestion> questions) {
+		this.questions = questions;
+	}
 
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((played == null) ? 0 : played.hashCode());
+		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SingleplayerGame other = (SingleplayerGame) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		if (played == null) {
+			if (other.played != null)
+				return false;
+		} else if (!played.equals(other.played))
+			return false;
+		if (questions == null) {
+			if (other.questions != null)
+				return false;
+		} else if (!questions.equals(other.questions))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
 }
