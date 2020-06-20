@@ -27,6 +27,7 @@ export class KnowSongComponent implements OnInit {
   
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -46,10 +47,6 @@ export class KnowSongComponent implements OnInit {
     this.options = [question.answer, question.option2, question.option3, question.option4];
     this.audio = question.questionText; 
     this.shuffleArray(this.options); // shuffle the questions
-
-    // console.log(this.options);
-    // console.log(this.audio);
-    
     
   }
   private shuffleArray(array) {
@@ -67,6 +64,8 @@ export class KnowSongComponent implements OnInit {
       this.arrayCounter++;
       this.loadQuestion();  // load next question
     } else{
+      this.router.navigate(['finishedgame']);
+
       console.log(this.game);
       // end game
     }

@@ -40,10 +40,6 @@ export class QuestionComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.listened = false;
   }
-  ngOnInit(){
-    console.log("loading question page");
-    
-  }
 
   public ngAfterViewInit() {
     this.audio = this._audioRef.nativeElement;

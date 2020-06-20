@@ -12,6 +12,7 @@ import { LyricResolverService } from './game/resolver/lyric-resolver.service';
 import { LyricMatcherComponent } from './game/lyric-matcher/lyric-matcher.component';
 import { AboutComponent } from './component/about/about.component';
 import { FinishedgameComponent } from './game/finishedgame/finishedgame.component';
+import { GameHistoryComponent } from './component/game-history/game-history.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'audio', component: KnowSongComponent, resolve: {game: AudioResolverService}, canActivate:[AdminGuard]},
   { path: 'lyric', component: LyricMatcherComponent, resolve: {questions: LyricResolverService}, canActivate:[AdminGuard]},
   { path: 'finishedgame', component: FinishedgameComponent, canActivate:[AdminGuard]},
+  { path: 'gamehistory', component: GameHistoryComponent, canActivate:[AdminGuard]},
   { path: 'error', component: ErrorComponent},
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
