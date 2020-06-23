@@ -38,41 +38,48 @@ class SingleplayerGameTest {
 
 	@Test
 	void test() {
-		for(int x = 0; x < 3; x++) {
-			// jpql Count(*)
-		String jpql = "SELECT COUNT(*) FROM SingleplayerGame g WHERE g.id.user = :userId";
-		Integer count = em.createQuery(jpql, Long.class).setParameter("userId", user.getId()).getResultList().get(0).intValue();
-		System.out.println(count);
-		SingleplayerGame cleanedGame = new SingleplayerGame();
-		SingleplayerGameId gameId = new SingleplayerGameId();
-		gameId.setUser(user.getId());
-		gameId.setId(count+1);
-		cleanedGame.setId(gameId);
 		
-		cleanedGame.setUser(user);
-		cleanedGame.setDescription("fuckign lit");
-		System.out.println(cleanedGame);
-		em.persist(cleanedGame);
-		em.flush();
-		// generate questions
-//		List<SingleplayerQuestion> questions = new ArrayList<>();
-//		for(int y = 0; y < 5; y++) {
-//			SingleplayerQuestion question = new SingleplayerQuestion();
-//			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
-//			questionId.setNum(y+1);
-//			questionId.setUserId(user.getId());
-//			question.setUser(user);
-//			question.setId(questionId);
-//			question.setGame(cleanedGame);
-//			questions.add(question);
+		String jpql = "SELECT g FROM SingleplayerGame g WHERE g.user.id = :userId";
+		List<SingleplayerGame> games = em.createQuery(jpql, SingleplayerGame.class)
+				.setParameter("userId", user.getId())
+				.getResultList();
+		games.forEach(x ->{
+			System.out.println(x);
+		});
+//		for(int x = 0; x < 3; x++) {
+//			// jpql Count(*)
+//		String jpql = "SELECT COUNT(*) FROM SingleplayerGame g WHERE g.id.user = :userId";
+//		Integer count = em.createQuery(jpql, Long.class).setParameter("userId", user.getId()).getResultList().get(0).intValue();
+//		System.out.println(count);
+//		SingleplayerGame cleanedGame = new SingleplayerGame();
+//		SingleplayerGameId gameId = new SingleplayerGameId();
+//		gameId.setUser(user.getId());
+//		gameId.setId(count+1);
+//		cleanedGame.setId(gameId);
+//		
+//		cleanedGame.setUser(user);
+//		cleanedGame.setDescription("fuckign lit");
+//		System.out.println(cleanedGame);
+//		em.persist(cleanedGame);
+//		// generate questions
+////		List<SingleplayerQuestion> questions = new ArrayList<>();
+////		for(int y = 0; y < 5; y++) {
+////			SingleplayerQuestion question = new SingleplayerQuestion();
+////			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
+////			questionId.setNum(y+1);
+////			questionId.setUserId(user.getId());
+////			question.setUser(user);
+////			question.setId(questionId);
+////			question.setGame(cleanedGame);
+////			questions.add(question);
+////		}
+////		cleanedGame.setQuestions(questions);
+//		
+//		
+//		
+////		cleanedGame.setUser(userRepo.findByUsername(username));
+//		
 //		}
-//		cleanedGame.setQuestions(questions);
-		
-		
-		
-//		cleanedGame.setUser(userRepo.findByUsername(username));
-		
-		}
 	}
 
 }
