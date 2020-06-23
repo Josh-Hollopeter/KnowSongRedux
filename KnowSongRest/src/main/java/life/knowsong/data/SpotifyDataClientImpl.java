@@ -440,20 +440,25 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		System.out.println("get user");
 		User user = userRepo.findByUsername(username);
 		
-		// spring namin conventions break this. changes to application.yaml did not help.
-//		String jpql = "SELECT g FROM SingleplayerGame g WHERE g.user.id = :userId";
-//		List<SingleplayerGame> games = em.createQuery(jpql, SingleplayerGame.class)
-//				.setParameter("userId", user.getId())
-//				.getResultList();
-		System.out.println("get games");
-		Optional<List<SingleplayerGame>> optionalGames = singleplayerGameRepo.findById_User(user.getId());
-		if(optionalGames.isPresent()) {
-			List<SingleplayerGame> games = optionalGames.get();
-			Collections.sort( games, (x, y) -> x.getPlayed().compareTo( y.getPlayed() ) );
+		String jpql = "SELECT g FROM SingleplayerGame g WHERE g.user.id = :userId";
+		List<SingleplayerGame> games = em.createQuery(jpql, SingleplayerGame.class)
+				.setParameter("userId", user.getId())
+				.getResultList();
+		if(games.size()>0) {
 			return games;
 		}else {
 			return null;
 		}
+		
+//		System.out.println("get games");
+//		Optional<List<SingleplayerGame>> optionalGames = singleplayerGameRepo.findById_User(user.getId());
+//		if(optionalGames.isPresent()) {
+//			List<SingleplayerGame> games = optionalGames.get();
+//			Collections.sort( games, (x, y) -> x.getPlayed().compareTo( y.getPlayed() ) );
+//			return games;
+//		}else {
+//			return null;
+//		}
 		
 	}
 	

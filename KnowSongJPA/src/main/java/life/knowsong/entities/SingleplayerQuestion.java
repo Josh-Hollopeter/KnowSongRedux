@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
@@ -26,11 +27,16 @@ public class SingleplayerQuestion {
 
 	@JsonIgnore
 	@MapsId("fk_singleplayer_game_id")
+	@JoinColumns({
+		@JoinColumn(name = "fk_singleplayer_game_id", referencedColumnName = "id"),
+		@JoinColumn(name = "fk_user_ref", referencedColumnName = "fk_user_id")
+	})
 	@ManyToOne
 	private SingleplayerGame game;
 
 	@JsonIgnore
 	@MapsId("fk_user_ref")
+	@JoinColumn(name = "fk_user_ref")
 	@ManyToOne
 	private User user;
 	
