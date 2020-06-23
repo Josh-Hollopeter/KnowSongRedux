@@ -24,7 +24,7 @@ export class CreateGameComponent implements OnInit {
   public gameType: string;
   // public userPlaylists: Playlist[];
 
-  private loading: boolean;
+  public loading: boolean;
   public artistKeyword: string;  //search for artist keyword from user input
   public keywordModelChanged: Subject<string> = new Subject<string>();
   private keywordModelChangedSubscription: Subscription;

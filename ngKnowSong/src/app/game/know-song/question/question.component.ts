@@ -1,8 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
-import { KnowSongComponent } from '../know-song.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { clear } from 'console';
 
 @Component({
   selector: 'app-question',

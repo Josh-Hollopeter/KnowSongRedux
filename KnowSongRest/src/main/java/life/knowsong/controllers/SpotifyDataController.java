@@ -79,8 +79,6 @@ public class SpotifyDataController {
 			HttpServletResponse response) 
 	{
 		if(principal != null) {
-			System.out.println(game.getDescription());
-			System.out.println(game.getQuestions().toString());
 			return ourSpotifyData.storeSingleplayerGame(game, principal.getName());
 		}else {
 			response.setStatus(401);	// unauthorized request
