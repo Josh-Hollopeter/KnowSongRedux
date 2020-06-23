@@ -3,7 +3,7 @@ import { HttpHeaders, HttpXhrBackend, HttpRequest, HttpResponse } from '@angular
 import { environment } from 'src/environments/environment';
 import { Observable, throwError } from 'rxjs';
 import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, skip } from 'rxjs/operators';
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
 import { GameServiceService } from '../../game/data/game-service.service';
 import { Router } from '@angular/router';
@@ -97,7 +97,7 @@ export class GameBuilderService {
           console.log("Game not built");
           return null;
         }
-      }),
+      }),skip(1),
       catchError((err: any) => {
         this.router.navigate(['']);
         return throwError(err);

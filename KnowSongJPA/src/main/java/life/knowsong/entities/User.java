@@ -36,7 +36,7 @@ public class User {
 	private String imgSource;
 	
 	@JsonIgnore
-	@OneToMany()
+	@OneToMany
 	@JoinColumn(name="fk_user_id")
 	private Set<SingleplayerGame> singleplayerGames;
 	
@@ -124,6 +124,12 @@ public class User {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", enabled=" + enabled + ", admin=" + admin
+				+ ", imgSource=" + imgSource + "]";
 	}
 
 
