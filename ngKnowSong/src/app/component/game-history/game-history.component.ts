@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GameBuilderService } from 'src/app/service/API/game-builder.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game-history',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameHistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private gameService: GameBuilderService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.gameService.getSingleplayerGames().subscribe( 
+      response =>{
+        console.log(response);
+        
+    });
   }
 
 }

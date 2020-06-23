@@ -16,6 +16,7 @@ import life.knowsong.entities.Album;
 import life.knowsong.entities.Artist;
 import life.knowsong.entities.SingleplayerGame;
 import life.knowsong.entities.SingleplayerQuestion;
+import life.knowsong.entities.SingleplayerQuestionId;
 import life.knowsong.entities.Track;
 
 @Service
@@ -62,8 +63,9 @@ public class BuildAudioGame {
 		// build 5 questions
 		for (int x = 0; x < 5; x++) {
 			SingleplayerQuestion question = new SingleplayerQuestion();
-			
-			question.setNum(x + 1); // the question number
+			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
+			questionId.setNum(x+1);	// will give game and user id upon completion of game
+			question.setId(questionId); // the question number
 			question.setQuestionText(trackMap.get(trackNames.get(x))); // get preview url from key mapping
 			String answer = trackNames.get(x);
 			question.setAnswer(answer);

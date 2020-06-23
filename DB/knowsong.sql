@@ -174,11 +174,11 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `knowsong`.`singleplayer_game`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_game` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL,
+  `fk_user_id` INT(11) NOT NULL,
   `played` DATETIME NULL DEFAULT NULL,
   `description` VARCHAR(255) NULL DEFAULT NULL,
-  `fk_user_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`, `fk_user_id`),
   INDEX `fk_user_id_idx` (`fk_user_id` ASC),
   CONSTRAINT `fk_user_id`
     FOREIGN KEY (`fk_user_id`)
@@ -195,17 +195,24 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_question` (
   `num` INT(11) NOT NULL,
   `fk_singleplayer_game_id` INT(11) NOT NULL,
+  `fk_user_ref` INT(11) NOT NULL,
   `question_text` VARCHAR(255) NULL DEFAULT NULL,
   `answer` VARCHAR(255) NULL DEFAULT NULL,
   `option2` VARCHAR(255) NULL DEFAULT NULL,
   `option3` VARCHAR(255) NULL DEFAULT NULL,
   `option4` VARCHAR(255) NULL DEFAULT NULL,
   `user_response` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`num`),
-  INDEX `fk_game_id_idx` (`fk_singleplayer_game_id` ASC),
+  PRIMARY KEY (`num`, `fk_singleplayer_game_id`, `fk_user_ref`),
+  INDEX `fk_user_ref_idx` (`fk_user_ref` ASC),
+  INDEX `fk_singleplayer_game_id_idx` (`fk_singleplayer_game_id` ASC),
   CONSTRAINT `fk_singleplayer_game_id`
     FOREIGN KEY (`fk_singleplayer_game_id`)
     REFERENCES `knowsong`.`singleplayer_game` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_ref`
+    FOREIGN KEY (`fk_user_ref`)
+    REFERENCES `knowsong`.`singleplayer_game` (`fk_user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

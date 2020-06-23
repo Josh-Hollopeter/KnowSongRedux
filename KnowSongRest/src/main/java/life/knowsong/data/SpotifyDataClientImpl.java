@@ -44,8 +44,11 @@ import life.knowsong.entities.Album;
 import life.knowsong.entities.Artist;
 import life.knowsong.entities.Genre;
 import life.knowsong.entities.SingleplayerGame;
+import life.knowsong.entities.SingleplayerGameId;
 import life.knowsong.entities.SingleplayerQuestion;
+import life.knowsong.entities.SingleplayerQuestionId;
 import life.knowsong.entities.Track;
+import life.knowsong.entities.User;
 import life.knowsong.repositories.ArtistRepository;
 import life.knowsong.repositories.GenreRepository;
 import life.knowsong.repositories.SingleplayerGameRepository;
@@ -111,7 +114,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 					albumIds.add(album.getId());
 				});
 
-				System.out.println("Beginning persistence of all albums for existing artist with n albums!");
 				try {
 					int offset = 0; // first call's offset is 0 (for more than 50 artist albums)
 					this.getAllAlbumsFromArtist(artist, offset, albumIds);
@@ -120,7 +122,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				}
 			} else {
 				// artist doesn't have albums
-				System.out.println("Beginning persistence of all albums for existing artist with no albums!");
 				try {
 					int offset = 0; // first call's offset is 0 (for more than 50 artist albums)
 					this.getAllAlbumsFromArtist(artist, offset, null);
@@ -129,23 +130,18 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				}
 			}
 			em.refresh(artist);
-			System.out.println("Refresh Artist");
 			return artist;
 
 		} else {
 			// artist is not in db
-
-			System.out.println("Beginning persistence of new artist!");
 			artist = this.buildNewArtist(artistId); // new artist
 
-			System.out.println("Beginning persistence of all albums for new artist!");
 			try {
 				int offset = 0; // first call's offset is 0 (for more than 50 artist albums)
 				this.getAllAlbumsFromArtist(artist, offset, null);
 			} catch (org.apache.hc.core5.http.ParseException e) {
 				e.printStackTrace();
 			}
-			System.out.println("Refresh Artist");
 			em.refresh(artist);
 			return artist;
 		}
@@ -209,7 +205,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 
 			}
 			em.persist(artist);
-			System.out.println(artist.getName() + " has been added to the collection.");
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -379,7 +374,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		// rare case of encountering spotify's legacy bug
 		int leftLimit = 48; // numeral '0'
 		int rightLimit = 122; // letter 'z'
-		int targetStringLength = 4;
+		int targetStringLength = 5; // 6 gives roughly 30 billion artists wont have a duplicate assuming each one has one collision
 		Random random = new Random();
 
 		String generatedString = random.ints(leftLimit, rightLimit + 1)
@@ -399,17 +394,38 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	@Override
 	public boolean storeSingleplayerGame(SingleplayerGame game, String username) {
 		SingleplayerGame cleanedGame = new SingleplayerGame();
+		SingleplayerGameId gameId = new SingleplayerGameId();
+		System.out.println("get user");
+		User user = userRepo.findByUsername(username);
+		
+		System.out.println("get count of games");
+		String jpql = "SELECT COUNT(*) FROM SingleplayerGame g WHERE g.id.user = :userId";
+		Integer count = em.createQuery(jpql, Long.class)
+				.setParameter("userId", user.getId())
+				.getResultList().get(0).intValue();
+		
+		gameId.setUser(user.getId());
+		gameId.setId(count+1);
+		cleanedGame.setId(gameId);
 		cleanedGame.setPlayed(new Timestamp(new Date().getTime()));
 		cleanedGame.setDescription(game.getDescription());
-		cleanedGame.setUser(userRepo.findByUsername(username));
-		List<SingleplayerQuestion> questions = game.getQuestions();
+		cleanedGame.setUser(user);
 		
+		List<SingleplayerQuestion> questions = game.getQuestions();
 		for(int x = 0; x < questions.size(); x++) {
 			SingleplayerQuestion question = questions.get(x);
+			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
+			questionId.setGameId(gameId.getId());
+			questionId.setUserId(gameId.getUser());
+			questionId.setNum(x+1);
+			question.setId(questionId);
 			question.setGame(cleanedGame);
 		}
 		cleanedGame.setQuestions(questions);
 
+		cleanedGame.getQuestions().forEach(x ->{
+			System.out.println(x);
+		});
 		try {
 			em.persist(cleanedGame);
 			return true;
@@ -421,22 +437,19 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 
 	@Override
 	public List<SingleplayerGame> getSingleplayerGames(String username) {
-		Optional<List<SingleplayerGame>> optionalGames = singleplayerGameRepo.findByUser(userRepo.findByUsername(username));
+		System.out.println("get user");
+		User user = userRepo.findByUsername(username);
+		
+		// spring namin conventions break this. changes to application.yaml did not help.
+//		String jpql = "SELECT g FROM SingleplayerGame g WHERE g.user.id = :userId";
+//		List<SingleplayerGame> games = em.createQuery(jpql, SingleplayerGame.class)
+//				.setParameter("userId", user.getId())
+//				.getResultList();
+		System.out.println("get games");
+		Optional<List<SingleplayerGame>> optionalGames = singleplayerGameRepo.findById_User(user.getId());
 		if(optionalGames.isPresent()) {
 			List<SingleplayerGame> games = optionalGames.get();
-			System.out.println("UNORDERED:");
-			games.forEach(x ->{
-				System.out.println(x.getDescription() + " : " + x.getPlayed());
-			});
-			
-//			Collections.sort(games, (x, y) -> x.getPlayed().compareTo(y.getPlayed()));
-			
-			System.out.println("ORDERED:");
-			games.forEach(x ->{
-				System.out.println(x.getDescription() + " : " + x.getPlayed());
-			});
-			
-			
+			Collections.sort( games, (x, y) -> x.getPlayed().compareTo( y.getPlayed() ) );
 			return games;
 		}else {
 			return null;
