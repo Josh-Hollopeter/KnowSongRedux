@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
@@ -33,6 +34,7 @@ public class SingleplayerGame implements Serializable{
 	@JsonIgnore
 	@MapsId("fk_user_id")
 	@ManyToOne
+	@JoinColumn(name ="fk_user_id")
 	private User user;
 
 	@Temporal(TemporalType.TIMESTAMP)
