@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-about',
@@ -7,9 +7,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
+  showText:boolean;
+
+  private section;
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void{
+
   }
+
+  ngOnViewInit(){
+    
+  }
+
+  toggleText(toggle: boolean){
+
+    if(toggle){
+      
+    } 
+    
+    else{
+
+    }
+    
+
+  }
+
 
 }
