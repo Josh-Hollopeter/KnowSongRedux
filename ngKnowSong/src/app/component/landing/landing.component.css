@@ -14,7 +14,6 @@
   justify-content: center;
   align-items: center;
   min-height: 75vh;
-  background-color: black;
   color: white;
 }
 
@@ -153,23 +152,17 @@ button{
 @keyframes text1 {
   0%, 50%, 100% {
     width: 0;
-
-
   }
   10%, 40% {
     width: 15em;
     opacity: 1;
-
   }
 }
 @keyframes cursor {
  from{
     width: 1;
-
-
   }
   to {
     width: 0;
-
   }
 }
