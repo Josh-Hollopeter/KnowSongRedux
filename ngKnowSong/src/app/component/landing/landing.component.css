@@ -1,4 +1,4 @@
- #middle {
+#middle {
   align-items: center;
   text-align: center;
   color: #44c767;
@@ -66,24 +66,32 @@ button{
 .text_1 {
   animation: text1;
   font-size: 25%;
+  width:13em;
 }
 .text_1 {
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
   position: relative;
-  animation-duration: 25s;
-  animation-timing-function: steps(40, end);
-  opacity: 0;
-  /* animation-iteration-count: 0; */
+  animation-duration: 4s;
+  animation-timing-function: steps(26);
+  opacity: 1;
+  animation-iteration-count: 1;
+}
+@media (max-width: 1000px) {
+  .text_1 {
+    font-size: 4vw;
+    width:14em;
+  }
 }
 .text_1::after{
   content: "|";
   position: absolute;
+  margin-left: 2px;
   right: 0;
   animation: cursor;
   animation-duration: 1s;
-  animation-timing-function: steps(5, end);
+  animation-timing-function: steps(5,end);
   animation-iteration-count: infinite;
 }
 
@@ -150,19 +158,19 @@ button{
   }
 }
 @keyframes text1 {
-  0%, 50%, 100% {
+  from{
     width: 0;
   }
-  10%, 40% {
-    width: 15em;
-    opacity: 1;
+  to {
+    width: 13em;
+    
   }
 }
 @keyframes cursor {
  from{
-    width: 1;
+    opacity: 0;
   }
   to {
-    width: 0;
+    opacity: 1;
   }
 }
