@@ -73,7 +73,7 @@ button{
   white-space: nowrap;
   display: inline-block;
   position: relative;
-  animation-duration: 4s;
+  animation-duration: 2s;
   animation-timing-function: steps(26);
   opacity: 1;
   animation-iteration-count: 1;
@@ -168,9 +168,9 @@ button{
 }
 @keyframes cursor {
  from{
-    opacity: 0;
+    width: 0;
   }
   to {
-    opacity: 1;
+    width: 1;
   }
 }
