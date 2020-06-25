@@ -30,6 +30,7 @@ import { QuestionComponent } from './game/know-song/question/question.component'
 import { AboutComponent } from './component/about/about.component';
 import { FinishedgameComponent } from './game/finishedgame/finishedgame.component';
 import { GameHistoryComponent } from './component/game-history/game-history.component';
+import { GameHistory } from './game/data/game-history';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { GameHistoryComponent } from './component/game-history/game-history.comp
     MusixMatchService,
     MusicDataService,
     UserService,
+    GameHistory,
     GameBuilderService,
     GameServiceService
 
