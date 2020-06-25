@@ -22,14 +22,14 @@ export class GameHistoryComponent implements OnInit {
   ngOnInit(): void {
 
     // if games are not already loaded into client
-    if(this.gameService.getSingleplayerGames === undefined){
+    this.gameHistory = this.gameHistoryStorage.getSingleplayerGameHistory();
+    if(this.gameHistory === undefined){
       this.gameService.getSingleplayerGames().subscribe( 
       response =>{
-        console.log(response);
+        this.gameHistory = response;
+        console.log("Finished request");
         
       });
-    } else{
-      this.gameHistory = this.gameHistoryStorage.getSingleplayerGameHistory();
     }
   }
 
