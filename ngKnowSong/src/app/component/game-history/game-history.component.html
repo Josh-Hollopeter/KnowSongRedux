@@ -9,7 +9,7 @@
 
 
   <div *ngIf="displayReady">
-    <table mat-table [dataSource]="dataSource"  multiTemplateDataRows matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource"  multiTemplateDataRows matSort class="mat-elevation-z8" id="outerTable">
 
       <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedGameColumns">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
@@ -22,17 +22,12 @@
           <div class="example-element-detail" *ngIf="element.questions.length" [@detailExpand]="element == expandGameDetail ? 'expanded' : 'collapsed'">
             <div class="inner-table mat-elevation-z8" *ngIf="expandGameDetail">
 
-              <table #innerTables mat-table [dataSource]="element.questions" matSort>
-                <ng-container matColumnDef="num">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Num</th>
-                  <td mat-cell *matCellDef="let element"> {{element.num}} </td>
-                </ng-container>
+              <table #innerTables mat-table [dataSource]="element.questions" matSort id="innerTable">
+                
                 <ng-container matColumnDef="questionText">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Audio</th>
-                  <td mat-cell *matCellDef="let element"> {{element.Num}} 
-                    <audio controls>
-                      
-                    </audio>
+                  <td mat-cell *matCellDef="let element" id="audioBox"> {{element.Num}} 
+                    <audio controls src="{{element.questionText}}"></audio>
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="answer">
@@ -44,7 +39,7 @@
                   <td mat-cell *matCellDef="let element"> {{element.userResponse}} </td>
                 </ng-container>
 
-
+                <!-- [ngStyle]="'displayedQuestionColumns.answer' == 'displayedQuestionColumns.userResponse' ? {'background-color':'red'} : {'background-color': 'green'}" -->
                 
                 <tr mat-header-row *matHeaderRowDef="displayedQuestionColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedQuestionColumns;"></tr>
