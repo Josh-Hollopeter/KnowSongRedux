@@ -31,35 +31,35 @@
   table {
     width: 100%;
   }
-  tr.mat-row:hover{
+  #outerTable tr.mat-row:hover{
     background: rgba(8, 116, 26, 0.493);
     cursor: pointer;
   }
+  #innerTable tr.mat-row:hover{
+    background:fixed;
+  }
+  #innerTable td{
+    width: 250px;
+  }
 
+
+  #innerTable #audioBox{
+    width: 400px;
+  }
 
   /* new */
-  #innerTables table{
-    width: 100%;
-  }
   tr.example-detail-row {
     height: 0;
   }
   
-  tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
-  }
-  
-  tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
-  }
-  
   .example-element-row td {
-    border-bottom-width: 0;
+    border-bottom-width: 1;
   }
   
   .example-element-detail {
     overflow: hidden;
     display: flex;
+    justify-content: center;
   }
   
   .example-element-diagram {
