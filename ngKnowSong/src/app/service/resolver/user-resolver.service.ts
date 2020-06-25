@@ -15,6 +15,7 @@ export class UserResolverService implements Resolve<any>{
     private userStorage: UserService
     ) { }
   resolve(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot) {
+    
     if(this.userStorage.getUser() === undefined){
       return this.authService.getUserData().pipe(
         catchError( (error) => {

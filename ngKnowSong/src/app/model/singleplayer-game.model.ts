@@ -4,14 +4,14 @@ export class SingleplayerGame {
 
     description: string;
     questions: SingleplayerQuestion[];
-    played: Date;
+    played;
     id: number;
 
 
     constructor(
         description?: string,
         questions?: SingleplayerQuestion[],
-        played?: Date,
+        played?,
         id?: number
     ){
 
