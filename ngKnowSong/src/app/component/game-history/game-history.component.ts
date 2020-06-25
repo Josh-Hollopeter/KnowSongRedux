@@ -26,7 +26,7 @@ export class GameHistoryComponent implements OnInit {
   public gameHistory: Array<SingleplayerGame>;
   public dataSource;
   public displayedGameColumns: string[] = ['id', 'description', 'played'];
-  public displayedQuestionColumns: string[] = ['num','questionText', 'answer', 'userResponse'];
+  public displayedQuestionColumns: string[] = ['questionText', 'answer', 'userResponse'];
   public expandGameDetail: SingleplayerGame | null;
 
   constructor(
