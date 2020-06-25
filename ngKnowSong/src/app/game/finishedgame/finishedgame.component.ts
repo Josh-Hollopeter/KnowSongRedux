@@ -23,6 +23,9 @@ export class FinishedgameComponent implements OnInit {
     if(this.game === undefined){
       this.router.navigate(['home']);
     }
+    else{
+
+    }
   }
 
 }
