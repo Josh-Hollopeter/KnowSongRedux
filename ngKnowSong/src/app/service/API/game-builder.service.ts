@@ -7,6 +7,7 @@ import { map, catchError, skip } from 'rxjs/operators';
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
 import { GameServiceService } from '../../game/data/game-service.service';
 import { Router } from '@angular/router';
+import { GameHistory } from 'src/app/game/data/game-history';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class GameBuilderService {
   constructor(
     private backend: HttpXhrBackend,
     private gameStorage: GameServiceService,
+    private gameListStorage: GameHistory,
     private router: Router,
   ) { }
 
@@ -57,7 +59,7 @@ export class GameBuilderService {
   }
 
   storeGame(game: SingleplayerGame){
-    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame', game, this.httpOptions );
+    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame/', game, this.httpOptions );
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): boolean =>{
@@ -85,10 +87,23 @@ export class GameBuilderService {
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): SingleplayerGame[] =>{
-        console.log(event);
         
         if(event.status == 200){
           console.log(event);
+          let body = event["body"];
+          let gameList: SingleplayerGame[] = new Array<SingleplayerGame>();
+          
+          // parse all games recorded under user
+          for(let i = 0; i < body.length; i++){
+            let game: SingleplayerGame = new SingleplayerGame();
+            game.description = body[i]["description"];
+            game.id = body[i]["id"]["id"];
+            game.played =  new Date(body[i]["played"]);
+            game.questions = body[i]["questions"];
+            gameList.push(game);                 
+          }
+          this.gameListStorage.setSingleplayerGameHistory(gameList);
+          return gameList;
           
         } else if(event.status == 401){
           console.log("Unauthorized user");
