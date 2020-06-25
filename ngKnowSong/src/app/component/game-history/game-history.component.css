@@ -1,7 +1,19 @@
+.main-div{
+  color:white;
+  user-select:none;
+  height: 100%;
+  overflow: auto;
+}
+
+.header{
+  display: flex;
+  min-height: 150px;
+}
+
 .backToHome{
     position: fixed;
     top: 20px;
-    left: 5%;
+    left: 0%;
     cursor: pointer;
   }.backToHome img{
     width: 125px;
@@ -11,4 +23,15 @@
   }.backToHome:focus {
     outline: none;
     box-shadow: none;
+  }
+
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  table {
+    width: 100%;
+  }
+  tr:hover{
+    background: rgba(8, 116, 26, 0.493);
+    cursor: pointer;
   }
