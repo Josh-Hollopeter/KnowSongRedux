@@ -59,7 +59,7 @@ export class GameBuilderService {
   }
 
   storeGame(game: SingleplayerGame){
-    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame/', game, this.httpOptions );
+    const request = new HttpRequest('POST', this.baseUrl + 'spotifyData/storeSingleplayerGame', game, this.httpOptions );
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): boolean =>{
@@ -87,6 +87,7 @@ export class GameBuilderService {
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): SingleplayerGame[] =>{
+        console.log(event);
         
         if(event.status == 200){
           let body = event["body"];

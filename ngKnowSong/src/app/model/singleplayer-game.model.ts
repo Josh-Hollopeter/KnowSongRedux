@@ -7,12 +7,11 @@ export class SingleplayerGame {
     played;
     id: number;
 
-
     constructor(
         description?: string,
         questions?: SingleplayerQuestion[],
         played?,
-        id?: number
+        id?: number,
     ){
 
         this.description = description;

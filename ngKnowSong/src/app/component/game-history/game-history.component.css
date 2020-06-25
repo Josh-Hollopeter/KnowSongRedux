@@ -37,6 +37,7 @@
   }
   #innerTable tr.mat-row:hover{
     background:fixed;
+    cursor: auto;
   }
   #innerTable td{
     width: 250px;

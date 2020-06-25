@@ -60,8 +60,14 @@ export class KnowSongComponent implements OnInit {
 
   onOptionPicked(option: string){
     this.game.questions[this.arrayCounter].userResponse = option;  // set user response to game object
+    // correct answer?
+    if(option === this.game.questions[this.arrayCounter].answer){
+      this.game.questions[this.arrayCounter].correct = true;
+    } else{
+      this.game.questions[this.arrayCounter].correct = false;
+    }
+    // is last question?
     if(this.questionNum < 5){
-      this.game.questions[this.arrayCounter].userResponse = option;  // set user response to game object
       this.questionNum++; 
       this.arrayCounter++;
       this.loadQuestion();  // load next question
