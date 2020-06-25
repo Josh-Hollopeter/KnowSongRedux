@@ -39,8 +39,7 @@ public class UserController {
 	
 	@GetMapping("/user")
     public User user(@AuthenticationPrincipal OAuth2User principal) {
-		User user = userRepo.findByUsername(principal.getName());		
-        return user;
+		return userRepo.findByUsername(principal.getName());		
     }
 
 	@GetMapping("/getAccessToken")
