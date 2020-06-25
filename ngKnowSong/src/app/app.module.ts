@@ -59,6 +59,7 @@ import { GameHistory } from './game/data/game-history';
     MatIconModule,
     MatListModule,
     FormsModule,
+    
   ],
   providers: [
     AuthService,
