@@ -89,7 +89,6 @@ export class GameBuilderService {
       map((event: HttpResponse<any>): SingleplayerGame[] =>{
         
         if(event.status == 200){
-          console.log(event);
           let body = event["body"];
           let gameList: SingleplayerGame[] = new Array<SingleplayerGame>();
           
