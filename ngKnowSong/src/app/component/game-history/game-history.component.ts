@@ -5,19 +5,29 @@ import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
 import { GameHistory } from 'src/app/game/data/game-history';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-game-history',
   templateUrl: './game-history.component.html',
-  styleUrls: ['./game-history.component.css']
+  styleUrls: ['./game-history.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('200ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class GameHistoryComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   
+  public displayReady: Promise<boolean>;
   public gameHistory: Array<SingleplayerGame>;
   public dataSource;
-  public displayedGameColumns: string[] = ['id', 'description', 'date'];
-
+  public displayedGameColumns: string[] = ['id', 'description', 'played'];
+  public displayedQuestionColumns: string[] = ['num','questionText', 'answer', 'userResponse'];
+  public expandGameDetail: SingleplayerGame | null;
 
   constructor(
     private gameService: GameBuilderService,
@@ -42,8 +52,15 @@ export class GameHistoryComponent implements OnInit {
   }
 
   populateTable(){
+    
     this.dataSource = new MatTableDataSource(this.gameHistory);
     this.dataSource.sort = this.sort;
+    this.displayReady = Promise.resolve(true);
+    console.log(this.gameHistory);
+  }
+
+  displayGameDetail(game: SingleplayerGame){
+    
   }
 
 }
