@@ -98,7 +98,7 @@ export class GameBuilderService {
             let game: SingleplayerGame = new SingleplayerGame();
             game.description = body[i]["description"];
             game.id = body[i]["id"]["id"];
-            game.played =  new Date(body[i]["played"]);
+            game.played =  new Date(body[i]["played"]).toLocaleString();
             game.questions = body[i]["questions"];
             gameList.push(game);                 
           }
