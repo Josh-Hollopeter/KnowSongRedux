@@ -53,9 +53,19 @@ public class SingleplayerQuestion {
 
 	@Column(name = "user_response")
 	private String userResponse;
+	
+	private boolean correct;
 
 	// GETTERS / SETTERS
 
+
+	public boolean isCorrect() {
+		return correct;
+	}
+
+	public void setCorrect(boolean correct) {
+		this.correct = correct;
+	}
 
 	public SingleplayerGame getGame() {
 		return game;
@@ -132,7 +142,7 @@ public class SingleplayerQuestion {
 	@Override
 	public String toString() {
 		return "\n SingleplayerQuestion [id=" + id + ", questionText=" + questionText + ", answer=" + answer + ", option2="
-				+ option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse=" + userResponse + "]";
+				+ option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse=" + userResponse + ", userResponse=" + correct + "]";
 	}
 
 
