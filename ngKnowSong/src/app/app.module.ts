@@ -26,6 +26,7 @@ import { FinishedgameComponent } from './game/finishedgame/finishedgame.componen
 import { GameHistoryComponent } from './component/game-history/game-history.component';
 import { GameHistory } from './game/data/game-history';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MatTableModule } from '@angular/material/table';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule
   ],
   providers: [
     AuthService,
