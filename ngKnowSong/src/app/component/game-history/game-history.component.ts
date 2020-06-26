@@ -25,7 +25,7 @@ export class GameHistoryComponent implements OnInit {
   public displayReady: Promise<boolean>;
   public gameHistory: Array<SingleplayerGame>;
   public dataSource;
-  public displayedGameColumns: string[] = ['id', 'description', 'played'];
+  public displayedGameColumns: string[] = ['description', 'played'];
   public displayedQuestionColumns: string[] = ['correct', 'questionText', 'answer', 'userResponse'];
   public expandGameDetail: SingleplayerGame | null;
 
@@ -55,6 +55,8 @@ export class GameHistoryComponent implements OnInit {
     
     this.dataSource = new MatTableDataSource(this.gameHistory);
     this.dataSource.sort = this.sort;
+    console.log(this.dataSource.sort);
+    
     this.displayReady = Promise.resolve(true);
     console.log(this.gameHistory);
   }

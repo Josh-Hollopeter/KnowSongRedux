@@ -11,9 +11,13 @@
   <div *ngIf="displayReady" class="tableContainer">
     <table mat-table [dataSource]="dataSource"  multiTemplateDataRows matSort class="mat-elevation-z8" id="outerTable">
 
-      <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedGameColumns">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
-        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let element"> {{element.description}}</td>
+      </ng-container>
+      <ng-container matColumnDef="played">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Played</th>
+        <td mat-cell *matCellDef="let element"> {{element.played}}</td>
       </ng-container>
 
       <!-- nested table -->
@@ -25,18 +29,18 @@
               <table id="innerTable" #innerTables mat-table [dataSource]="element.questions" matSort >
                 
                 <ng-container matColumnDef="questionText">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Audio</th>
+                  <th mat-header-cell *matHeaderCellDef >Audio</th>
                   <td mat-cell *matCellDef="let element" id="audioBox" > 
                   {{element.num}} 
                     <audio controls src="{{element.questionText}}"></audio>
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="answer">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Song Name</th>
+                  <th mat-header-cell *matHeaderCellDef >Song Name</th>
                   <td mat-cell id="songNameColumn" *matCellDef="let element"> {{element.answer}}</td>
                 </ng-container>
                 <ng-container matColumnDef="userResponse">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>You Answered</th>
+                  <th mat-header-cell *matHeaderCellDef >You Answered</th>
                   <td mat-cell *matCellDef="let element"> {{element.userResponse}} </td>
                 </ng-container>
                 <ng-container matColumnDef="correct">
@@ -46,7 +50,7 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedQuestionColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedQuestionColumns;"
-                [ngStyle]="row.correct ? {'background-color':'rgba(8, 116, 26, 0.493)'} : {'background-color': 'rgb(231, 79, 79)'}"
+                [ngStyle]="row.correct ? {'background-color':'rgba(8, 116, 26, 0.49)'} : {'background-color': '#8a1313'}"
                 id="innerRow"></tr>
               </table>
             </div>
