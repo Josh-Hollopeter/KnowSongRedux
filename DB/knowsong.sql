@@ -177,7 +177,8 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_game` (
   `id` INT(11) NOT NULL,
   `fk_user_id` INT(11) NOT NULL,
   `played` DATETIME NULL DEFAULT NULL,
-  `description` VARCHAR(255) NULL DEFAULT NULL,
+  `artist` VARCHAR(255) NULL DEFAULT NULL,
+  `game_type` VARCHAR(45) NULL,
   PRIMARY KEY (`id`, `fk_user_id`),
   INDEX `fk_user_id_idx` (`fk_user_id` ASC),
   CONSTRAINT `fk_user_id`
