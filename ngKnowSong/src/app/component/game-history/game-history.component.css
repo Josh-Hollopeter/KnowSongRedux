@@ -25,28 +25,40 @@
     box-shadow: none;
   }
 
+.tableContainer{
+  display: flex;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
   th.mat-sort-header-sorted {
     color: black;
   }
   table {
     width: 100%;
   }
-  #outerTable tr.mat-row:hover{
+  #outerRow:hover{
     background: rgba(8, 116, 26, 0.493);
     cursor: pointer;
   }
-  #innerTable tr.mat-row:hover{
-    background:fixed;
-    cursor: auto;
-  }
   #innerTable td{
     width: 250px;
+  }#innerTable td:hover{
+    cursor: auto;
   }
-
-
+  #songNameColumn{
+    padding-right: 24px;
+  }
   #innerTable #audioBox{
-    width: 400px;
+    display: flex;
+    padding: 5px;
+    width: 325px;
   }
+  #innerTable #correctColumn{
+    width: 0px;
+  }
+  
+
 
   /* new */
   tr.example-detail-row {
@@ -60,6 +72,7 @@
   .example-element-detail {
     overflow: hidden;
     display: flex;
+    min-width: 20px;
     justify-content: center;
   }
   
