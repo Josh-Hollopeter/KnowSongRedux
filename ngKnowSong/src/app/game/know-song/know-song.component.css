@@ -1,14 +1,9 @@
 @import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
 
-*{
-  margin: 0px;
-  padding: 0px;
-}
-
-
 
 figcaption {
   font-family: cursive;
+  margin-bottom: 40px;
 }
 
 .context {

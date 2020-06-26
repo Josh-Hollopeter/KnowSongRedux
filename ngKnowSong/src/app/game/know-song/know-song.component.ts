@@ -1,12 +1,7 @@
-import { AudioResolverService } from './../resolver/audio-resolver.service';
 import { Component, OnInit, Directive } from '@angular/core';
-import { MusicDataService } from '../data/music-data.service';
-import { Artist } from 'src/app/model/artist';
 import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
 import { SingleplayerQuestion } from 'src/app/model/singleplayer-question.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { isEmpty } from 'rxjs/operators';
 import { GameBuilderService } from 'src/app/service/API/game-builder.service';
 
 @Component({
@@ -21,7 +16,8 @@ export class KnowSongComponent implements OnInit {
   public audio: string;
 
   // game properties
-  public gameDescription: string;
+  public artistName: string;
+  public gameType: string;
   public questionNum: number;
   private arrayCounter: number;
   private game: SingleplayerGame; // private to prevent someone from scripting answers, i think this is effective anyway
@@ -35,7 +31,8 @@ export class KnowSongComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe( (data: {game: SingleplayerGame}) => {
       this.game = data.game;
-      this.gameDescription = this.game.description;
+      this.gameType = this.game.gameType;
+      this.artistName = this.game.artist;
       this.questionNum = 1;
       this.arrayCounter = 0;
       this.loadQuestion();

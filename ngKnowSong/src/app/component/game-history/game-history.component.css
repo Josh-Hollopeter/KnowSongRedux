@@ -1,3 +1,4 @@
+
 .main-div{
   color:white;
   user-select:none;
@@ -32,15 +33,30 @@
     box-shadow: none;
   }
 
+
 .tableContainer{
   display: flex;
   justify-content: center;
   margin-left: 50px;
   margin-right: 50px;
 }
+input {
+  display: flex;
+  height: 3vh;
+  width: 76%;
+  background: rgb(13, 70, 13);
+  color: white;
+  font-size: large;
+  margin: auto;
+  text-align:left;
+  border-radius: 5px;
+}input:focus {
+  outline: none;
+  box-shadow: none;
+}
 th{
-  font-size: x-large;
-  font-weight: 200;
+  font-size: 40px;
+  background: #2f3234;
   color: white;
   font-style: oblique;
 }
@@ -48,18 +64,32 @@ th{
   th.mat-sort-header-sorted {
     color: black;
   }
-  table {
+  #outerTable {
     width: 80%;
-    border-radius:28px;
   }
-  #outerRow:hover{
+  #outerRow td{
+    font-size: 25px;
+  }#outerRow:hover{
     background: rgba(8, 116, 26, 0.493);
     cursor: pointer;
   }
+
+  audio:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  #innerTable{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
   #innerTable td{
-    width: 250px;
+    font-size: 15px;
   }#innerTable td:hover{
     cursor: auto;
+  }
+  #innerTable th{
+    font-size: 20px;
   }
   #songNameColumn{
     padding-right: 24px;
@@ -67,13 +97,11 @@ th{
   #innerTable #audioBox{
     display: flex;
     padding: 5px;
-    width: 325px;
+    padding-right: 20px;
   }
   #innerTable #correctColumn{
     width: 0px;
   }
-  
-
 
   /* new */
   tr.example-detail-row {
@@ -87,7 +115,6 @@ th{
   .example-element-detail {
     overflow: hidden;
     display: flex;
-    min-width: 20px;
     justify-content: center;
   }
   
@@ -114,7 +141,7 @@ th{
     opacity: 0.5;
   }
 
-@media(max-width: 800px){
+@media(max-width: 1000px){
   table {
     width: 100%;
   }
