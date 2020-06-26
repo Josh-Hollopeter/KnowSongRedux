@@ -25,7 +25,7 @@ public class BuildAudioGame {
 	@Autowired
 	SpotifyDataClient spotifyData;
 
-	public SingleplayerGame build(String artistId, String accessToken, boolean explicit) {
+	public SingleplayerGame build(String artistId, String accessToken, String gameType, boolean explicit) {
 		Artist artist = spotifyData.getArtist(accessToken, artistId);
 
 		Set<Album> albums = artist.getAlbums();
@@ -53,8 +53,8 @@ public class BuildAudioGame {
 
 		// create new game
 		SingleplayerGame game = new SingleplayerGame();
-		game.setDescription(artist.getName() + " Audio Trivia");
-		
+		game.setArtist(artist.getName());
+		game.setGameType(gameType);
 		
 		// get track names and shuffle
 		List<String> trackNames = new ArrayList<String>(trackMap.keySet());

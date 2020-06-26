@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,7 @@ import { GameHistoryComponent } from './component/game-history/game-history.comp
 import { GameHistory } from './game/data/game-history';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     FormsModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSortModule,
   ],
   providers: [
     AuthService,
@@ -63,7 +65,10 @@ import { MatButtonModule } from '@angular/material/button';
     GameServiceService
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule { }
 

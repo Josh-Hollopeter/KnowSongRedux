@@ -409,7 +409,8 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		gameId.setId(count+1);
 		cleanedGame.setId(gameId);
 		cleanedGame.setPlayed(new Timestamp(new Date().getTime()));
-		cleanedGame.setDescription(game.getDescription());
+		cleanedGame.setArtist(game.getArtist());
+		cleanedGame.setGameType(game.getGameType());
 		cleanedGame.setUser(user);
 		
 		List<SingleplayerQuestion> questions = game.getQuestions();
@@ -446,20 +447,13 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				.setParameter("userId", user.getId())
 				.getResultList();
 		if(games.size()>0) {
+//			Collections.sort( games, (x, y) -> x.getPlayed().compareTo( y.getPlayed() ) );
+			Collections.reverse(games);
 			return games;
 		}else {
 			return null;
 		}
 		
-//		System.out.println("get games");
-//		Optional<List<SingleplayerGame>> optionalGames = singleplayerGameRepo.findById_User(user.getId());
-//		if(optionalGames.isPresent()) {
-//			List<SingleplayerGame> games = optionalGames.get();
-//			Collections.sort( games, (x, y) -> x.getPlayed().compareTo( y.getPlayed() ) );
-//			return games;
-//		}else {
-//			return null;
-//		}
 		
 	}
 	

@@ -31,16 +31,17 @@ export class GameBuilderService {
   ) { }
 
 
-  buildAudioGame(artistId: string): Observable<SingleplayerGame>{
-    const request = new HttpRequest('GET', this.baseUrl + 'spotifyData/buildArtistAudioGame/' + artistId + '/' + sessionStorage.getItem('access'), this.httpOptions);
+  buildAudioGame(artistId: string, gameType: string): Observable<SingleplayerGame>{
+    const request = new HttpRequest('GET', this.baseUrl + 'spotifyData/buildArtistAudioGame/' + artistId + '/' + gameType + '/'+ sessionStorage.getItem('access'), this.httpOptions);
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): SingleplayerGame =>{
         if(event.status == 200){
           let body = event.body;
-          let description: string = body.description;
+          let artist: string = body.artist;
+          let gameType: string = body.gameType;
           let questions: Array<SingleplayerQuestion> = body.questions;
 
-          let game: SingleplayerGame = new SingleplayerGame(description, questions);
+          let game: SingleplayerGame = new SingleplayerGame(artist, gameType, questions);
           this.gameStorage.setGame(game);
           return game;
         } else if(event.status == 401){
@@ -96,7 +97,8 @@ export class GameBuilderService {
           // parse all games recorded under user
           for(let i = 0; i < body.length; i++){
             let game: SingleplayerGame = new SingleplayerGame();
-            game.description = body[i]["description"];
+            game.artist = body[i]["artist"];
+            game.gameType = body[i]["gameType"];
             game.id = body[i]["id"]["id"];
             game.played =  new Date(body[i]["played"]).toLocaleString();
             game.questions = body[i]["questions"];
