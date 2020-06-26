@@ -23,7 +23,7 @@ export class LyricResolverService implements Resolve<any>{
       this.router.navigate(['home']);
     }
     
-    return this.gameBuilder.buildAudioGame(this.musicDataService.getArtist().id);
+    return this.gameBuilder.buildAudioGame(this.musicDataService.getArtist().id, 'Lyric');
     
   }
 }

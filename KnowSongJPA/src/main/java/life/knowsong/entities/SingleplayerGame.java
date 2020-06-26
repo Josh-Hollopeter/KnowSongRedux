@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -40,7 +41,10 @@ public class SingleplayerGame implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date played;
 
-	private String description;
+	private String artist;
+	
+	@Column(name = "game_type")
+	private String gameType;
 
 	@ElementCollection
 	@OneToMany(mappedBy = "game", cascade = CascadeType.PERSIST)
@@ -57,13 +61,6 @@ public class SingleplayerGame implements Serializable{
 		this.played = played;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public User getUser() {
 		return user;
@@ -97,11 +94,28 @@ public class SingleplayerGame implements Serializable{
 		this.id = id;
 	}
 
+	public String getArtist() {
+		return artist;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
+	public String getGameType() {
+		return gameType;
+	}
+
+	public void setGameType(String gameType) {
+		this.gameType = gameType;
+	}
+
 	@Override
 	public String toString() {
-		return "SingleplayerGame [id=" + id + ", played=" + played + ", description=" + description + ", questions="
-				+ questions + "]";
+		return "SingleplayerGame [id=" + id + ", played=" + played + ", artist=" + artist + ", gameType=" + gameType
+				+ ", questions=" + questions + "]";
 	}
+
 
 
 }

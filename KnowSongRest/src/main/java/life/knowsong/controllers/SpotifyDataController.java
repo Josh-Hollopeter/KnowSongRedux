@@ -49,16 +49,17 @@ public class SpotifyDataController {
 		}
 	}
 	
-	@GetMapping("/buildArtistAudioGame/{artistId}/{accessToken}")
+	@GetMapping("/buildArtistAudioGame/{artistId}/{gameType}/{accessToken}")
 	public SingleplayerGame BuildArtistAudioGame(@AuthenticationPrincipal OAuth2User principal, 
 			@PathVariable("artistId") String artistId, 
+			@PathVariable("gameType") String gameType,
 			@PathVariable("accessToken") String accessToken, 
 			HttpServletResponse response) 
 	{
 		if(principal != null) {
 			
 			boolean isExplicit = true;
-			SingleplayerGame game = buildAudio.build(artistId, accessToken, isExplicit);
+			SingleplayerGame game = buildAudio.build(artistId, accessToken, gameType, isExplicit);
 			if(game == null) {
 				response.setStatus(404);	// game was not created. artist may have too few tracks
 				return null;
