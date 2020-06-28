@@ -8,6 +8,7 @@ export class SingleplayerQuestion {
     option4: string;
     userResponse: string;
     correct:boolean;
+    answerHref: string;
 
     constructor(
         num?: number,
@@ -17,7 +18,8 @@ export class SingleplayerQuestion {
         option3?: string,
         option4?: string,
         userResponse?: string,
-        correct?:boolean
+        correct?:boolean,
+        answerHref?: string
     ){
 
         this.num = num;
@@ -28,5 +30,6 @@ export class SingleplayerQuestion {
         this.option4 = option4;
         this.userResponse = userResponse;
         this.correct = correct;
+        this.answerHref = answerHref;
     }
 }

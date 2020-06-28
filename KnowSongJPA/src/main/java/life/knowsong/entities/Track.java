@@ -35,6 +35,8 @@ public class Track {
 	@Column(name="duration_ms")
 	private int durationMs;
 	
+	private String href;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
@@ -131,6 +133,20 @@ public class Track {
 
 	public void setAlbum(Album album) {
 		this.album = album;
+	}
+
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
+	}
+
+	@Override
+	public String toString() {
+		return "Track [id=" + id + ", name=" + name + ", previewUrl=" + previewUrl + ", explicit=" + explicit
+				+ ", durationMs=" + durationMs + ", href=" + href + ", created=" + created + "]";
 	}
 	
 	

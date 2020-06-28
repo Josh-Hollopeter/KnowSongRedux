@@ -29,7 +29,7 @@ public class BuildAudioGame {
 		Artist artist = spotifyData.getArtist(accessToken, artistId);
 
 		Set<Album> albums = artist.getAlbums();
-		Map<String, String> trackMap = new HashMap<>();
+		Map<String, Track> trackMap = new HashMap<>();
 		// put all tracks into list
 		for (Album album : albums) {
 			for (Track track : album.getTracks()) {
@@ -43,7 +43,7 @@ public class BuildAudioGame {
 				if (track.getName().contains(" - ") || track.getName().contains("(Live")) {
 					continue;
 				}
-				trackMap.put(track.getName(), track.getPreviewUrl());
+				trackMap.put(track.getName(), track);
 			}
 		}
 
@@ -66,9 +66,10 @@ public class BuildAudioGame {
 			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
 			questionId.setNum(x+1);	// will give game and user id upon completion of game
 			question.setId(questionId); // the question number
-			question.setQuestionText(trackMap.get(trackNames.get(x))); // get preview url from key mapping
+			question.setQuestionText(trackMap.get(trackNames.get(x)).getPreviewUrl()); // get preview url from key mapping
 			String answer = trackNames.get(x);
 			question.setAnswer(answer);
+			question.setAnswerHref(trackMap.get(answer).getHref());
 
 			// get 3 random indexes
 
@@ -101,7 +102,6 @@ public class BuildAudioGame {
 			question.setOption2(trackNames.get(intArray[0]) );
 			question.setOption3(trackNames.get(intArray[1]) );
 			question.setOption4(trackNames.get(intArray[2]) );
-
 			game.addQuestion(question);
 		}
 		// get the album for each track
