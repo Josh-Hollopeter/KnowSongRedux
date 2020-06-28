@@ -352,6 +352,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			for (int x = 0; x < st.length; x++) {
 				TrackSimplified ts = st[x];
 				Track track = new Track();
+				track.setHref(ts.getExternalUrls().get("spotify"));
 				track.setId(ts.getId() + this.randomStringGenerator());
 				track.setSpotifyId(ts.getId());
 				track.setName(ts.getName());
