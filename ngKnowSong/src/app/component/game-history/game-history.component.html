@@ -69,7 +69,8 @@
       <tr mat-row *matRowDef="let basicGameInfo; columns: displayedGameColumns;" class ="gameRow"
         [class.gameRow] = "expandGameDetail === basicGameInfo"
         (click)="expandGameDetail = expandGameDetail === basicGameInfo ? null : basicGameInfo"
-        (click)="pauseAudioElement()" id="outerRow">
+        (click)="pauseAudioElement()" 
+        id="outerRow">
 
       </tr>
       <!-- inner row -->
@@ -77,10 +78,4 @@
     </table>
   </div>
 
-
-  
 </div>
-
-<!-- Copyright 2019 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
