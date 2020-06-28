@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_question` (
   `option4` VARCHAR(255) NULL DEFAULT NULL,
   `user_response` VARCHAR(255) NULL DEFAULT NULL,
   `correct` TINYINT(1) NULL,
+  `answer_href` VARCHAR(100) NULL,
   PRIMARY KEY (`num`, `fk_singleplayer_game_id`, `fk_user_ref`),
   INDEX `fk_user_ref_idx` (`fk_user_ref` ASC),
   INDEX `fk_singleplayer_game_id_idx` (`fk_singleplayer_game_id` ASC),
@@ -234,6 +235,7 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`track` (
   `created` DATETIME NULL DEFAULT NULL,
   `fk_album_id` VARCHAR(255) NOT NULL,
   `spotify_id` VARCHAR(45) NULL,
+  `href` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_album_id_idx` (`fk_album_id` ASC),
   CONSTRAINT `fk_album_id`
