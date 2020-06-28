@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, ViewEncapsulation } from '@angular/core';
 import { SpotifyAPIService } from 'src/app/service/API/spotify-api.service';
 import { MusixMatchService } from 'src/app/service/API/musix-match.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +9,7 @@ import { MusicDataService } from 'src/app/game/data/music-data.service';
 import { newArray } from '@angular/compiler/src/util';
 import { GameBuilderService } from 'src/app/service/API/game-builder.service';
 import { Artist } from 'src/app/model/artist';
+import { AuthService } from 'src/app/service/API/auth.service';
 
 
 @Component({
@@ -18,9 +19,12 @@ import { Artist } from 'src/app/model/artist';
 })
 export class CreateGameComponent implements OnInit {
 
+  @ViewChildren('input') inputBox;
+
   public gameType: string;
   // public userPlaylists: Playlist[];
 
+  public loading: boolean;
   public artistKeyword: string;  //search for artist keyword from user input
   public keywordModelChanged: Subject<string> = new Subject<string>();
   private keywordModelChangedSubscription: Subscription;
@@ -32,10 +36,13 @@ export class CreateGameComponent implements OnInit {
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private musicDataService: MusicDataService,
+    private authService: AuthService
 
   ) { }
 
   ngOnInit(): void {
+    ViewEncapsulation.ShadowDom;
+
     this.activatedRouter.paramMap.subscribe(param => {
       this.gameType = param.get('gameType');
     });
@@ -50,6 +57,10 @@ export class CreateGameComponent implements OnInit {
       );
   }
 
+  ngAfterViewInit(){
+    this.inputBox.first.nativeElement.focus();
+  }
+
   ngOnDestroy() {
     this.keywordModelChangedSubscription.unsubscribe();
   }
@@ -59,11 +70,12 @@ export class CreateGameComponent implements OnInit {
   //---------------------------------
 
   createGameForArtist(artist: Artist){
+    
     this.musicDataService.removeArtist(); // by default we assume you are choosing a new artist, this can be changed later to check if same artist, which will save us from doing unnecessary api calls. and just generating a new game!
     this.musicDataService.setArtist(artist);
-    
+    this.loading = true;
     switch(this.gameType) {
-      case 'audio': {
+      case 'Audio Clips': {
         this.router.navigate(['audio']);
         break;
       }

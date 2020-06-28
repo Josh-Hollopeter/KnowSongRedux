@@ -1,53 +1,57 @@
 package life.knowsong.entities;
 
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+// auto generating id in composite primary key JPA
+// https://vladmihalcea.com/how-to-map-a-composite-identifier-using-an-automatically-generatedvalue-with-jpa-and-hibernate/
 @Entity
 @Table(name = "singleplayer_game")
-public class SingleplayerGame {
+public class SingleplayerGame implements Serializable{
 
 	// SQL VALUES
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;	
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date played;
-	
-	private String description;
-	
+
+	@EmbeddedId
+	private SingleplayerGameId id;
+
+	@JsonIgnore
+	@MapsId("fk_user_id")
 	@ManyToOne
-	@JoinColumn(name="fk_user_id")
+	@JoinColumn(name ="fk_user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "game")
-	private List<SingleplayerQuestion> questions;
-	
-	
-	// GETTERS / SETTERS
-	
-	public int getId() {
-		return id;
-	}
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date played;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	private String artist;
+	
+	@Column(name = "game_type")
+	private String gameType;
+
+	@ElementCollection
+	@OneToMany(mappedBy = "game", cascade = CascadeType.PERSIST)
+	private List<SingleplayerQuestion> questions;
+
+	// GETTERS / SETTERS
+
 
 	public Date getPlayed() {
 		return played;
@@ -57,21 +61,6 @@ public class SingleplayerGame {
 		this.played = played;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public User getUserId() {
-		return user;
-	}
-
-	public void setUserId(User user) {
-		this.user = user;
-	}
 
 	public User getUser() {
 		return user;
@@ -86,13 +75,47 @@ public class SingleplayerGame {
 	}
 
 	public SingleplayerQuestion addQuestion(SingleplayerQuestion question) {
-		if(questions == null) {
+		if (questions == null) {
 			questions = new ArrayList<SingleplayerQuestion>();
 		}
 		questions.add(question);
 		return question;
 	}
-	
 
-	
+	public void setQuestions(List<SingleplayerQuestion> questions) {
+		this.questions = questions;
+	}
+
+	public SingleplayerGameId getId() {
+		return id;
+	}
+
+	public void setId(SingleplayerGameId id) {
+		this.id = id;
+	}
+
+	public String getArtist() {
+		return artist;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
+	public String getGameType() {
+		return gameType;
+	}
+
+	public void setGameType(String gameType) {
+		this.gameType = gameType;
+	}
+
+	@Override
+	public String toString() {
+		return "SingleplayerGame [id=" + id + ", played=" + played + ", artist=" + artist + ", gameType=" + gameType
+				+ ", questions=" + questions + "]";
+	}
+
+
+
 }

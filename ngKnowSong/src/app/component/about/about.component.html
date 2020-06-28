@@ -1,0 +1,39 @@
+<div class="main-div">
+    <div class="about" [routerLink]="'/home'">
+        <button>Exit</button>
+    </div>
+
+    <div class = "text">
+        <h1>KnowSong</h1>
+       
+            <button class ="contentButton" ng-show="toggleText">About</button>
+            <div class ="content">
+                <h2>Free Trivia</h2>
+                    <p>KnowSong provides a way for people to test their knowledge of music artists. Connect a Spotify account 
+                    and quickly start a trivia game! 
+                    Our game modes focus on 5 randomly generated questions based off of a single music artist's collection of tracks.
+                    </p>
+                <h2>Audio Quiz</h2>
+                    <p> Listen to the song preview and choose the name of the song from 4 options.</p>
+                <h2>Lyric Quiz</h2>
+                    <p>_COMING_SOON_ View a portion of a song's lyrics and choose the name of the song from 4 options.</p>
+            </div>
+
+        <button class ="contentButton">Technology</button>
+        <div class ="content">
+            <h2>Data</h2>
+            <p>
+            Spotify provides a considerable amount of data through an exposed API. KnowSong connects to Spotify from 
+            a dedicated servlet for all of the heavy requests and extra security. KnowSong utilizes a relational database to 
+            store data on artists as users make requests for new games. Subsequent games using that artist are built from 
+            the data on hand instead of using up limited requests to Spotify's API. 
+            </p>
+            <h2>Displayed App</h2>
+            <p>
+                Built on Angular 9, the front end application is good.
+            </p>
+        </div>
+    </div>
+   
+
+</div>

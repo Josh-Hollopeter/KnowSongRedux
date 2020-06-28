@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests(a -> a
-                .antMatchers("/**").permitAll()
-                .anyRequest().authenticated()
+//                .antMatchers("/").permitAll()
+                .anyRequest().authenticated()//Specify that URLs are allowed by any authenticated user.
                 
             )
             .exceptionHandling(e -> e
@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             )
             .cors().and()
             .csrf(c -> c
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                    .csrfTokenRepository(new CookieCsrfTokenRepository())
+                    .ignoringAntMatchers("/spotifyData/storeSingleplayerGame")
                     )
             .oauth2Login()
             	.userInfoEndpoint()

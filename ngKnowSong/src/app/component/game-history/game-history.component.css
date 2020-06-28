@@ -1,0 +1,155 @@
+
+.main-div{
+  color:white;
+  user-select:none;
+  height: 100%;
+  overflow: auto;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  
+}.header h1{
+  min-height: 100px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 5em;
+  padding-top: 66px;
+  color: #44c767;
+}
+
+.backToHome{
+    position: fixed;
+    top: 15px;
+    left: 0%;
+    cursor: pointer;
+  }.backToHome img{
+    width: 125px;
+    height: 125px;
+  }.backToHome img:active{
+    transform: translateY(8px);
+  }.backToHome:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+
+.tableContainer{
+  display: flex;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+input {
+  display: flex;
+  height: 3vh;
+  width: 76%;
+  background: rgb(13, 70, 13);
+  color: white;
+  font-size: large;
+  margin: auto;
+  text-align:left;
+  border-radius: 5px;
+}input:focus {
+  outline: none;
+  box-shadow: none;
+}
+th{
+  font-size: 40px;
+  background: #2f3234;
+  color: white;
+  font-style: oblique;
+}
+
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  #outerTable {
+    width: 80%;
+  }
+  #outerRow td{
+    font-size: 25px;
+  }#outerRow:hover{
+    background: rgba(8, 116, 26, 0.493);
+    cursor: pointer;
+  }
+
+  audio:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  #innerTable{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+  #innerTable td{
+    font-size: 15px;
+  }#innerTable td:hover{
+    cursor: auto;
+  }
+  #innerTable th{
+    font-size: 20px;
+  }
+  #songNameColumn{
+    padding-right: 24px;
+  }
+  #innerTable #audioBox{
+    display: flex;
+    padding: 5px;
+    padding-right: 20px;
+  }
+  #innerTable #correctColumn{
+    width: 0px;
+  }
+
+  /* new */
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 1;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .example-element-diagram {
+    display: flex;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+  }
+  
+  .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  .example-element-description-attribution {
+    opacity: 0.5;
+  }
+
+@media(max-width: 1000px){
+  table {
+    width: 100%;
+  }
+
+  .backToHome img{
+    width: 75px;
+    height: 75px;
+    top: 0px;
+    position: fixed;
+  }
+}

@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,9 @@ public class SpotifyDataController {
 	BuildAudioGame buildAudio;
 	
 	@GetMapping("/getAllArtists")
-	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) {
+	public List<Artist> getAllArtists(@AuthenticationPrincipal OAuth2User principal, 
+			HttpServletResponse response) 
+	{
 		if(principal != null) {
 			response.setStatus(200);
 			System.out.println("getting artists");
@@ -45,15 +49,17 @@ public class SpotifyDataController {
 		}
 	}
 	
-	@GetMapping("/buildArtistAudioGame/{artistId}/{accessToken}")
-	public SingleplayerGame BuildArtistAudioGame(@AuthenticationPrincipal OAuth2User principal
-			, @PathVariable("artistId") String artistId
-			, @PathVariable("accessToken") String accessToken
-			, HttpServletResponse response) {
+	@GetMapping("/buildArtistAudioGame/{artistId}/{gameType}/{accessToken}")
+	public SingleplayerGame BuildArtistAudioGame(@AuthenticationPrincipal OAuth2User principal, 
+			@PathVariable("artistId") String artistId, 
+			@PathVariable("gameType") String gameType,
+			@PathVariable("accessToken") String accessToken, 
+			HttpServletResponse response) 
+	{
 		if(principal != null) {
 			
 			boolean isExplicit = true;
-			SingleplayerGame game = buildAudio.build(artistId, accessToken, isExplicit);
+			SingleplayerGame game = buildAudio.build(artistId, accessToken, gameType, isExplicit);
 			if(game == null) {
 				response.setStatus(404);	// game was not created. artist may have too few tracks
 				return null;
@@ -66,7 +72,31 @@ public class SpotifyDataController {
 			response.setStatus(401);	// unauthorized request
 			return null;
 		}
-		
+	}
+	
+	@PostMapping("/storeSingleplayerGame")
+	public boolean StoreSingleplayerGame(@AuthenticationPrincipal OAuth2User principal, 
+			@RequestBody SingleplayerGame game,
+			HttpServletResponse response) 
+	{
+		if(principal != null) {
+			return ourSpotifyData.storeSingleplayerGame(game, principal.getName());
+		}else {
+			response.setStatus(401);	// unauthorized request
+			return false;
+		}
+	}
+	
+	@GetMapping("/getSingleplayerGames")
+	public List<SingleplayerGame> GetSingleplayerGames(@AuthenticationPrincipal OAuth2User principal, 
+			HttpServletResponse response)
+	{
+		if(principal != null) {
+			return ourSpotifyData.getSingleplayerGames(principal.getName());
+		} else {
+			response.setStatus(401);	// unauthorized request
+			return null;
+		}
 	}
 
 }
