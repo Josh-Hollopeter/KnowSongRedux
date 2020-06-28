@@ -43,7 +43,7 @@
                 </ng-container>
                 <ng-container matColumnDef="answer">
                   <th mat-header-cell *matHeaderCellDef >Song Name</th>
-                  <td mat-cell id="songNameColumn" *matCellDef="let element"> {{element.answer}}</td>
+                  <td mat-cell id="songNameColumn" *matCellDef="let element"> <a href={{element.answerHref}} target="_blank">{{element.answer}}</a></td>
                 </ng-container>
                 <ng-container matColumnDef="userResponse">
                   <th mat-header-cell *matHeaderCellDef >You Answered</th>
