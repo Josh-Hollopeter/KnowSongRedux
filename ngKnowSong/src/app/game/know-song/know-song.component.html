@@ -1,10 +1,7 @@
-<!-- <p>{{artist.name}}</p>
- <div *ngFor="let album of artist.albums; let i = index">
-    <p>{{album.name}}</p>
-</div> -->
+
 <div class="context">
-    <figcaption>{{gameDescription}}</figcaption><br><br>
-    <figcaption>Question {{questionNum}}/5</figcaption><br>
+    <figcaption>{{artistName}} {{gameType}} Game</figcaption>
+    <figcaption>Question {{questionNum}}/5</figcaption>
  <app-question [questionOptions]="options"  [newAudio]="audio"  (optionPicked)="onOptionPicked($event)" >
  </app-question>
 </div>

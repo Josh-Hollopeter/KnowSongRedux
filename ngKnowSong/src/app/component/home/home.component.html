@@ -1,13 +1,9 @@
 <div class="main-div">
     <div class="userInfo">
-        <div class="column">
             <img class="profileImg" src="{{user.imgSource}}">
-        </div>
-        <div class="column">
             <p>{{user.username}}</p>
-        </div>
     </div>
-    <div class="about">
+    <div class="about" [routerLink]="'/about'">
         <button>About</button>
     </div>
     <div class="introHeader">
@@ -20,7 +16,7 @@
     </div>
 
     <div class="cardHolder">
-        <div class="menuCard" [routerLink]="['/creategame', 'audio']">
+        <div class="menuCard" [routerLink]="['/creategame', 'Audio Clips']">
             <div>
                 <img src="https://img.icons8.com/ios/50/000000/room-sound.png"/>
                 <h2>Audio Clips</h2>
@@ -32,17 +28,20 @@
                 <img src="https://img.icons8.com/windows/96/000000/apple-music-lyrics.png"/>
                 <h2>Lyric Matcher</h2>
             </div>
-            <p>Currently unavailable</p>
+            <p>Coming very soon!</p>
         </div>
-        <div class="menuCard">
+        <div class="menuCard" [routerLink]="'/gamehistory'">
             <div>
                 <img src="https://img.icons8.com/dotty/80/000000/activity-history.png"/>
                 <h2>Game History</h2>
             </div>
             <p>View your previous games in detail!</p>
         </div>
+        
     </div>
-
+    <div class="aboutMobile" >
+        <button [routerLink]="'/about'">About</button>
+    </div>
 </div>
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpXhrBackend, HttpRequest, HttpResponse} from '@angular/common/http'
+import { HttpHeaders, HttpXhrBackend, HttpRequest, HttpResponse, HttpErrorResponse} from '@angular/common/http'
 import { environment } from 'src/environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap, map, filter, takeWhile, skip } from 'rxjs/operators';
@@ -32,12 +32,16 @@ export class AuthService {
   isLoggedIn(): Observable<boolean>{
     const request = new HttpRequest('GET', this.baseUrl + 'isLoggedIn', this.httpOptions);
     return this.backend.handle(request).pipe(     
-      map((event: HttpResponse<any>): boolean => {
-        if(event.body == true)
+      map( (event: HttpResponse<any>): boolean => {
+        if(event.status == 200){
           return true;
-        else if(event.body == false)
-          return false;
-       }),skip(1) //skip the success packet
+        }
+          
+       }),skip(1), //skip the success packet
+       catchError((err: any) => {
+        this.router.navigate(['']);
+        return throwError(err);
+      })
     );
 
   }

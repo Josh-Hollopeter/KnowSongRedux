@@ -16,6 +16,7 @@ import life.knowsong.entities.Album;
 import life.knowsong.entities.Artist;
 import life.knowsong.entities.SingleplayerGame;
 import life.knowsong.entities.SingleplayerQuestion;
+import life.knowsong.entities.SingleplayerQuestionId;
 import life.knowsong.entities.Track;
 
 @Service
@@ -24,11 +25,11 @@ public class BuildAudioGame {
 	@Autowired
 	SpotifyDataClient spotifyData;
 
-	public SingleplayerGame build(String artistId, String accessToken, boolean explicit) {
+	public SingleplayerGame build(String artistId, String accessToken, String gameType, boolean explicit) {
 		Artist artist = spotifyData.getArtist(accessToken, artistId);
 
 		Set<Album> albums = artist.getAlbums();
-		Map<String, String> trackMap = new HashMap<>();
+		Map<String, Track> trackMap = new HashMap<>();
 		// put all tracks into list
 		for (Album album : albums) {
 			for (Track track : album.getTracks()) {
@@ -42,7 +43,7 @@ public class BuildAudioGame {
 				if (track.getName().contains(" - ") || track.getName().contains("(Live")) {
 					continue;
 				}
-				trackMap.put(track.getName(), track.getPreviewUrl());
+				trackMap.put(track.getName(), track);
 			}
 		}
 
@@ -52,8 +53,8 @@ public class BuildAudioGame {
 
 		// create new game
 		SingleplayerGame game = new SingleplayerGame();
-		game.setDescription(artist.getName() + " Audio Trivia");
-		
+		game.setArtist(artist.getName());
+		game.setGameType(gameType);
 		
 		// get track names and shuffle
 		List<String> trackNames = new ArrayList<String>(trackMap.keySet());
@@ -62,11 +63,13 @@ public class BuildAudioGame {
 		// build 5 questions
 		for (int x = 0; x < 5; x++) {
 			SingleplayerQuestion question = new SingleplayerQuestion();
-			
-			question.setNum(x + 1); // the question number
-			question.setQuestionText(trackMap.get(trackNames.get(x))); // get preview url from key mapping
+			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
+			questionId.setNum(x+1);	// will give game and user id upon completion of game
+			question.setId(questionId); // the question number
+			question.setQuestionText(trackMap.get(trackNames.get(x)).getPreviewUrl()); // get preview url from key mapping
 			String answer = trackNames.get(x);
 			question.setAnswer(answer);
+			question.setAnswerHref(trackMap.get(answer).getHref());
 
 			// get 3 random indexes
 
@@ -99,7 +102,6 @@ public class BuildAudioGame {
 			question.setOption2(trackNames.get(intArray[0]) );
 			question.setOption3(trackNames.get(intArray[1]) );
 			question.setOption4(trackNames.get(intArray[2]) );
-
 			game.addQuestion(question);
 		}
 		// get the album for each track

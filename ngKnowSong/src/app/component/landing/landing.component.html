@@ -1,11 +1,14 @@
 <title>KnowSong</title>
-<main>
+<div class="main-div">
+  <div class="about" [routerLink]="'/about'">
+    <button>About</button>
+  </div>  
 <div class="muzieknootjes">
   <div class="noot-1">
   &#9835; &#9833;
 </div>
   <div id ="middle">
-<p>Know Song<p>
+    <p>Know Song<p>
   <span class="text_1">A Music Trivia Experience</span>
   <br>
     <button class="btn btn-lg btn-primary" (click)='requestAuth()'>Login With Spotify</button>
@@ -21,4 +24,4 @@
   &#9834;
 </div>
 </div>
-</main>
+</div>

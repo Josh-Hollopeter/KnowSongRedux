@@ -29,8 +29,13 @@ public class Track {
 	
 	private int popularity;
 	
+	@Column(name="spotify_id")
+	private String spotifyId;
+	
 	@Column(name="duration_ms")
 	private int durationMs;
+	
+	private String href;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
@@ -113,6 +118,14 @@ public class Track {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+	
+	public String getSpotifyId() {
+		return spotifyId;
+	}
+
+	public void setSpotifyId(String spotifyId) {
+		this.spotifyId = spotifyId;
+	}
 
 	public Album getAlbum() {
 		return album;
@@ -120,6 +133,20 @@ public class Track {
 
 	public void setAlbum(Album album) {
 		this.album = album;
+	}
+
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
+	}
+
+	@Override
+	public String toString() {
+		return "Track [id=" + id + ", name=" + name + ", previewUrl=" + previewUrl + ", explicit=" + explicit
+				+ ", durationMs=" + durationMs + ", href=" + href + ", created=" + created + "]";
 	}
 	
 	
