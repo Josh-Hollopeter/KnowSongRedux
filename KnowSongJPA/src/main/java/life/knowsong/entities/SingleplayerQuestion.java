@@ -55,6 +55,9 @@ public class SingleplayerQuestion {
 	private String userResponse;
 	
 	private boolean correct;
+	
+	@Column(name = "answer_href")
+	private String answerHref;
 
 	// GETTERS / SETTERS
 
@@ -139,12 +142,25 @@ public class SingleplayerQuestion {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "\n SingleplayerQuestion [id=" + id + ", questionText=" + questionText + ", answer=" + answer + ", option2="
-				+ option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse=" + userResponse + ", userResponse=" + correct + "]";
+	public String getAnswerHref() {
+		return answerHref;
 	}
 
+	public void setAnswerHref(String answerHref) {
+		this.answerHref = answerHref;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "SingleplayerQuestion [id=" + id + ", questionText=" + questionText + ", answer=" + answer + ", option2="
+				+ option2 + ", option3=" + option3 + ", option4=" + option4 + ", userResponse=" + userResponse
+				+ ", correct=" + correct + ", answerHref=" + answerHref + ", userResponseHref="
+				+ "]";
+	}
+
+	
 
 
 }
