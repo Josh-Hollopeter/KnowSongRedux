@@ -1,0 +1,43 @@
+.green {
+    background-color: #44c767;
+}
+.red {
+    background-color: #f222ff;
+}
+table{
+    border-collapse:collapse;
+    margin-left:auto; 
+    margin-right:auto;
+    font-size: 3vh;
+    width:100%;
+    table-layout: fixed;
+    font-family: 'Merriweather Sans', sans-serif
+}
+table tr td {
+    border-right: 1px solid blue;
+    color: black;
+    text-align: center;
+    /* vertical-align: middle; */
+    text-align: -webkit-auto;
+    padding: 1vh;
+
+  }
+  
+table tr td:last-of-type {
+    border: none;
+  }
+  th {
+      padding:1.2vh;
+      font-size: 4vh;
+      font-weight: 800;
+      color:#44c767;
+  }
+  h1{
+    word-spacing: 5px;
+    text-align: center;
+    font-size: 4vh;
+    font-family: 'Merriweather Sans', sans-serif;
+    padding: 50px;
+    overflow-wrap: break-word;
+    color: #44c767;
+  }
