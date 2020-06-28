@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class FinishedgameComponent implements OnInit {
 
-  private game: SingleplayerGame;
+  public game: SingleplayerGame;
 
   constructor(
     private gameData: GameServiceService,
