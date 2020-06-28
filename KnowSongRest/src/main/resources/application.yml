@@ -26,7 +26,7 @@ spring:
   jmx:
     default-domain: knowsong
   jpa:
-    show-sql: true
+    show-sql: false
   security:
     oauth2:
       client:
