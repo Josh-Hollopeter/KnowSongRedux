@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { GameBuilderService } from 'src/app/service/API/game-builder.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SingleplayerGame } from 'src/app/model/singleplayer-game.model';
 import { GameHistory } from 'src/app/game/data/game-history';
 import { MatTableDataSource} from '@angular/material/table';
@@ -19,7 +19,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]),
   ]
 })
-export class GameHistoryComponent implements OnInit {
+export class GameHistoryComponent implements OnInit{
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   
   
@@ -33,21 +33,20 @@ export class GameHistoryComponent implements OnInit {
   constructor(
     private gameService: GameBuilderService,
     private gameHistoryStorage: GameHistory,
-    private cd: ChangeDetectorRef,
-    private router: Router
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // if games are not already loaded into client
-    this.gameHistory = this.gameHistoryStorage.getSingleplayerGameHistory();
-    if(this.gameHistory === undefined){
+    // if game has been played since last load, resync with backend
+    if(this.gameHistoryStorage.getGamePlayed){
       this.gameService.getSingleplayerGames().subscribe( 
       response =>{
+        this.gameHistoryStorage.setGamePlayed(false); //reset flag
         this.gameHistory = response;
-  
         this.populateTable();
       });
     } else{
+      this.gameHistoryStorage.getSingleplayerGameHistory();
       this.populateTable();
     }
   }
@@ -56,6 +55,11 @@ export class GameHistoryComponent implements OnInit {
     this.displayReady = Promise.resolve(true);
     this.dataSource = new MatTableDataSource(this.gameHistory);
     this.dataSource.sort = this.sort;
+    
+    if(this.activatedRoute.snapshot.paramMap.get('viewGame') === 'viewpreviousgame'){
+      this.expandGameDetail = this.gameHistory[0];
+    }
+    
   }
 
   applyFilter(event: Event){
@@ -67,6 +71,7 @@ export class GameHistoryComponent implements OnInit {
   @ViewChild('audioPlayers', {static: false}) audioRef: ElementRef;
   audio: HTMLAudioElement;
   pauseAudioElement(){
+    console.log(this.audioRef);
     
     if( this.audioRef){
       console.log("it is playing");
@@ -78,7 +83,7 @@ export class GameHistoryComponent implements OnInit {
       
     }
     
-
-   
   }
+
+
 }
