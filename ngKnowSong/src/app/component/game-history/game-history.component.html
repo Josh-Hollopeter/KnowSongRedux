@@ -9,8 +9,6 @@
 
   <input autofocus type ="text" (keyup)="applyFilter($event)" placeholder="Filter Table..." >
   <div class="tableContainer">
-    
-    
 
     <table mat-table [dataSource]="dataSource"  multiTemplateDataRows matSort class="mat-elevation-z8" id="outerTable">
 
@@ -30,27 +28,30 @@
       <!-- nested table -->
       <ng-container matColumnDef="expandedGame">
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedGameColumns.length">
-          <div class="example-element-detail" *ngIf="element.questions.length" [@detailExpand]="element == expandGameDetail ? 'expanded' : 'collapsed'">
-            <div id="innerTable" class="inner-table mat-elevation-z8" *ngIf="expandGameDetail">
+          <div class="example-element-detail" *ngIf="element.questions.length" 
+              [@detailExpand]="element == expandGameDetail ? 'expanded' : 'collapsed'">
+            <div id="innerTable" class="inner-table mat-elevation-z8" 
+            *ngIf="expandGameDetail">
 
-              <table  #innerTables mat-table [dataSource]="element.questions" matSort >
+              <table  #innerTables mat-table [dataSource]="expandGameDetail" matSort >
                 
                 <ng-container matColumnDef="questionText">
                   <th mat-header-cell *matHeaderCellDef >Song Clip</th>
-                  <td mat-cell *matCellDef="let element" id="audioBox" > 
-                    <audio controls #audioPlayers preload="none" src="{{element.questionText}}"></audio>
+                  <td mat-cell *matCellDef="let element" class="audioBox" > 
+                    <audio controls class ="audioPlayers" preload="none" src="{{element.questionText}}"></audio>
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="answer">
                   <th mat-header-cell *matHeaderCellDef >Song Name</th>
-                  <td mat-cell id="songNameColumn" *matCellDef="let element"> <a href={{element.answerHref}} target="_blank">{{element.answer}}</a></td>
+                  <td mat-cell class="songNameColumn" *matCellDef="let element"> 
+                    <a href={{element.answerHref}} target="_blank">{{element.answer}}</a></td>
                 </ng-container>
                 <ng-container matColumnDef="userResponse">
                   <th mat-header-cell *matHeaderCellDef >You Answered</th>
                   <td mat-cell *matCellDef="let element"> {{element.userResponse}} </td>
                 </ng-container>
                 <ng-container matColumnDef="correct">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                  <th mat-header-cell *matHeaderCellDef></th>
                   <td id="correctColumn" mat-cell *matCellDef="let element">  </td>
                 </ng-container>
 
@@ -66,10 +67,11 @@
 
     
       <tr mat-header-row *matHeaderRowDef="displayedGameColumns"></tr>
-      <tr mat-row *matRowDef="let basicGameInfo; columns: displayedGameColumns;" class ="gameRow"
-        [class.gameRow] = "expandGameDetail === basicGameInfo"
-        (click)="expandGameDetail = expandGameDetail === basicGameInfo ? null : basicGameInfo"
-        (click)="pauseAudioElement()" 
+      <tr mat-row *matRowDef="let element; columns: displayedGameColumns;" 
+        class ="gameRow"
+        [class.gameRow] = "expandGameDetail === element"
+        (click)="expandGameDetail = expandGameDetail === element ? null : element"
+        (click)="toggleRow(element)"
         id="outerRow">
 
       </tr>
@@ -77,5 +79,5 @@
       <tr mat-row *matRowDef="let row; columns: ['expandedGame']" class="example-detail-row"></tr>
     </table>
   </div>
-
+  <mat-paginator [pageSize] = "10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
