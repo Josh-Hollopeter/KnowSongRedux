@@ -9,7 +9,10 @@
 .infoBar{
   padding: 42px 0 40px;
 }
-
+.knowSongLogo{
+  width: 200px;
+  height: 200px;
+}
 .profileImg{
   height: 125px;
   width: 125px;
@@ -59,7 +62,11 @@
 
 .introHeader{
   text-align-last: center;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
 } .introHeader h1{
+  margin-left: 5px;
   font-family: 'Merriweather Sans', sans-serif;
   font-size: 5em;
   padding-top: 66px;
@@ -69,6 +76,8 @@
   font-family: 'Merriweather Sans', sans-serif;
   font-size: 2em;
   color: bisque;
+} .headerText{
+  flex-direction: column;
 }
 
 /* CARDS */
@@ -111,6 +120,14 @@
 }
 
 @media(max-width: 800px){
+  .introHeader{
+    flex-wrap: wrap;
+    margin-top: 5px;
+  }.introHeader h1{
+    padding-top: 15px;
+  }.introHeader h3{
+    margin-bottom: 0px;
+  }
   .cardHolder{
     flex-direction: column;
   }
