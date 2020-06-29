@@ -80,7 +80,7 @@ tr{
 th{
   font-size: 40px;
   background: #2f3234;
-  text-align: center;
+  text-align: center !important;
   color: white;
   font-style: oblique;
 }
@@ -90,7 +90,7 @@ th{
   }
   #outerRow td{
     font-size: 25px;
-    text-align: center;
+    text-align: left;
   }#outerRow:hover{
     background: rgba(8, 116, 26, 0.493);
     cursor: pointer;
@@ -103,45 +103,41 @@ th{
     border:1px solid #18ab29;
     display:inline-block;
     cursor:pointer;
-    color:bisque;
-    border: 1px solid green;
-    font-family:'Merriweather Sans', sans-serif;
-    font-size:15px;
-    padding:5px 5px;
+    color:white;
+    font-size:25px;
+    padding:10px 10px;
     text-decoration:none;
   } a:hover {
     background-color:#333333;
-    border: #333333 4px solid;
+    border: #333333 2px solid;
   } a:active {
     transform: translateY(-6px);
   }a:focus {
     outline: none;
     box-shadow: none;
   }
-  /* audio:focus {
-    outline: none;
-    box-shadow: none;
-  } */
+
   #innerTable{
     display: flex;
     flex: 1 1 auto;
     justify-content: center;
+    
   } #innerTable th{
     background-color: #0059ff;
+    font-size: 20px;
+    padding: 10px;
   }
+
   #innerTable td{
-    font-size: 15px;
+    font-size: 25px;
     text-align: center;
   }#innerTable td:hover{
     cursor: auto;
   }
-  #innerTable th{
-    font-size: 20px;
-  }
   .songNameColumn{
     padding-right: 24px;
   }
-  #innerTable .audioBox{
+  .audioPlayers{
     display: flex;
     padding: 5px;
     padding-right: 20px;
@@ -194,6 +190,12 @@ th{
     width: 100%;
   }
  
+  a{
+    font-size: 15px;
+  }
+  #innerTable td{
+    font-size: 15px
+  }
   .backToHome img{
     width: 6vh;
     height: 6vh;
@@ -209,7 +211,7 @@ th{
   .header h1{
     min-height: 50px;
     font-size: 5em;
-    padding-top: 42px;
+    padding-top: 10px;
     color: #44c767;
   }
   #outerRow td{
