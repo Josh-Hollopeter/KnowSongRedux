@@ -34,12 +34,6 @@
   opacity: .7;
 }
 
-.create{
-  background: black;
-
-}
-
-
 .text{
   user-select:none;
   width: 100%;
@@ -54,17 +48,17 @@
 .cardRow{
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .artistCard{
   display: inline-block;
   margin: 10px; 
   padding: 10px; 
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   cursor: pointer;
   color: bisque;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   text-align: center;
 }.artistCard:hover{
   color: green;
@@ -82,6 +76,9 @@
 
 .header{
   text-align-last: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 } .header h1{
   font-family: 'Merriweather Sans', sans-serif;
   font-size: 5em;
@@ -100,8 +97,8 @@
 
 .backToHome{
   position: fixed;
-  top: 20px;
-  left: 5%;
+  top: 15px;
+  left: 0%;
   cursor: pointer;
 }.backToHome img{
   width: 125px;
@@ -160,5 +157,32 @@
       opacity: 0;
       border-radius: 50%;
   }
+
+}
+@media (max-width: 800px) {
+  /* h1{
+    font-size: 1vh;
+  } */
+  .backToHome img{
+    width: 7vh;
+    height: 7vh;
+  }
+  /* a{
+    font-size: 2vh;
+  } */
+  /* .header{
+    text-align-last: center;
+    text-align: center;
+  } .header h1{
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 3vh;
+    padding-top: 2vh;
+    color: #44c767;
+  } .header h3{
+    padding-top: 2vh;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 2em;
+    color: bisque;
+  } */
 
 }

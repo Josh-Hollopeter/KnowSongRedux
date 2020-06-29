@@ -31,7 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests(a -> a
+
                 .antMatchers("/**").permitAll()
+
                 .anyRequest().authenticated()//Specify that URLs are allowed by any authenticated user.
                 
             )
