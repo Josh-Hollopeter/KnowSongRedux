@@ -64,8 +64,6 @@ export class GameBuilderService {
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): boolean =>{
-        console.log(event);
-        
         if(event.status == 200){
           return true;
         } else if(event.status == 401){
@@ -88,8 +86,6 @@ export class GameBuilderService {
     
     return this.backend.handle(request).pipe(
       map((event: HttpResponse<any>): SingleplayerGame[] =>{
-        console.log(event);
-        
         if(event.status == 200){
           let body = event["body"];
           let gameList: SingleplayerGame[] = new Array<SingleplayerGame>();
