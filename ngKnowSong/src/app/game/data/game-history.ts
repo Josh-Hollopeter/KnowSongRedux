@@ -4,7 +4,10 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class GameHistory {
 
-    public singleplayerGameHistory: Array<SingleplayerGame>
+    public gamePlayed: boolean;
+
+    public singleplayerGameHistory: Array<SingleplayerGame>;
+
     constructor() { }
   
     setSingleplayerGameHistory(singleplayerGameHistory: Array<SingleplayerGame>){
@@ -13,5 +16,13 @@ export class GameHistory {
   
     getSingleplayerGameHistory(): Array<SingleplayerGame>{
       return this.singleplayerGameHistory;
+    }
+
+    setGamePlayed(played: boolean){
+      this.gamePlayed = played;
+    }
+
+    getGamePlayed(): boolean{
+      return this.gamePlayed;
     }
 }
