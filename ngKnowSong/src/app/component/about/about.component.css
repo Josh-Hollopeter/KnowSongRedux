@@ -3,6 +3,14 @@
     color: bisque;
     font-size: x-large;
 }
+.title{
+  font-family: 'Merriweather Sans', sans-serif;
+  display: flex;
+  font-size: 50px;
+  justify-content: center;
+  padding-top: 25px;
+  color: #44c767;
+}
 .text{
   display: inline-block;
   margin-left: 15%;
@@ -34,7 +42,6 @@ a {
   font-family:'Merriweather Sans', sans-serif;
   font-size:20px;
   padding:10px 20px;
-  width: 20%;
   margin-bottom: 12px;
   text-decoration:none;
   
@@ -64,7 +71,7 @@ h2{
 
 .about{
   position: fixed;
-  top: 30px;
+  top: 25px;
   right: 5%;
 }
 .about button{
@@ -87,4 +94,24 @@ h2{
 }.about button:focus {
   outline: none;
   box-shadow: none;
+}
+
+@media(max-width: 800px){
+
+.content p{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+h2{
+  margin-left: none;
+}
+
+.about button{
+  border-radius: 10px;
+  border: 4px solid rgb(83, 82, 82);
+  font-family:'Merriweather Sans', sans-serif;
+  font-size:30px;
+  padding:10px 25px;
+  text-decoration:none;
+}
 }

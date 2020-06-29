@@ -14,7 +14,9 @@
   min-height: 100px;
   font-family: 'Merriweather Sans', sans-serif;
   font-size: 5em;
-  padding-top: 66px;
+  padding-top: 10px;
+  margin-top: 25px;
+  margin-bottom: 10px;
   color: #44c767;
 }
 
@@ -44,6 +46,7 @@ input {
   display: flex;
   height: 3vh;
   width: 75.5%;
+  padding: 0px 8px;
   background: rgb(13, 70, 13);
   color: white;
   font-size: large;
@@ -54,31 +57,67 @@ input {
   outline: none;
   box-shadow: none;
 }
+
 mat-paginator{
-  display: flex;
-  width: 75.5%;
-  margin: auto;
+  background-color: #2f3234;
+  color: white !important;
+}
+
+.mat-cell{
+  color: white;
+}
+::ng-deep .mat-select-value {
+  color: white;
+}
+::ng-deep .mat-select-arrow{
+  color: white;
+}
+
+tr{
+  background-color: #2f3234;
+  color: white;
 }
 th{
   font-size: 40px;
   background: #2f3234;
+  text-align: center;
   color: white;
   font-style: oblique;
 }
 
-  th.mat-sort-header-sorted {
-    color: black;
-  }
   #outerTable {
     width: 80%;
   }
   #outerRow td{
     font-size: 25px;
+    text-align: center;
   }#outerRow:hover{
     background: rgba(8, 116, 26, 0.493);
     cursor: pointer;
+    color: rgb(219, 54, 54);
   }
-
+ 
+  a{
+    background-color:#44c767bb;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:bisque;
+    border: 1px solid green;
+    font-family:'Merriweather Sans', sans-serif;
+    font-size:15px;
+    padding:5px 5px;
+    text-decoration:none;
+  } a:hover {
+    background-color:#333333;
+    border: #333333 4px solid;
+  } a:active {
+    transform: translateY(-6px);
+  }a:focus {
+    outline: none;
+    box-shadow: none;
+  }
   /* audio:focus {
     outline: none;
     box-shadow: none;
@@ -87,9 +126,12 @@ th{
     display: flex;
     flex: 1 1 auto;
     justify-content: center;
+  } #innerTable th{
+    background-color: #0059ff;
   }
   #innerTable td{
     font-size: 15px;
+    text-align: center;
   }#innerTable td:hover{
     cursor: auto;
   }
@@ -147,12 +189,11 @@ th{
   }
  
 
-@media(max-width: 1000px){
+@media(max-width: 850px){
   table {
     width: 100%;
   }
  
-
   .backToHome img{
     width: 6vh;
     height: 6vh;
@@ -160,15 +201,54 @@ th{
     position: fixed;
   }
   .main-div{
-    font-size: 1vh ;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .header h1{
+    min-height: 50px;
+    font-size: 5em;
+    padding-top: 42px;
+    color: #44c767;
   }
   #outerRow td{
-    font-size: 2vh ;
+    font-size: 15px ;
+    text-align: center;
   }
+
   #innerTable th{
-    font-size: 2vh;
+    font-size: 25px;
+    text-align: center;
+  }#innerTable tr{
+    text-align: center;
   }
- .mobile{
-   font-size: 2vh;
- }
+  #outerTable th{
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .hideOnMobile{
+    display: none;
+  }
+
+  .tableContainer{
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  #outerTable {
+    width: 100%;
+  }
+  .mat-paginator-container{
+    display: flex;
+    width: 100%;
+    margin-bottom: auto;
+    font-size: 12px;
+    flex-wrap: none;
+  }
+  ::ng-deep .mat-paginator-page-size{
+    margin-right: 0px !important; 
+  }
+
+
 }

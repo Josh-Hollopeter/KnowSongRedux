@@ -7,21 +7,24 @@
     <h1>Game History</h1>
   </div>
 
-  <input autofocus type ="text" (keyup)="applyFilter($event)" placeholder="Filter Table..." >
+  <div class = "inputFilter">
+    <input autofocus type ="text" (keyup)="applyFilter($event)" placeholder="Filter Table..." >
+  </div>
+
   <div class="tableContainer">
 
     <table mat-table [dataSource]="dataSource"  multiTemplateDataRows matSort class="mat-elevation-z8" id="outerTable">
 
       <ng-container matColumnDef="artist">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobile">Artist</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Artist</th>
         <td mat-cell *matCellDef="let element"> {{element.artist}}</td>
       </ng-container>
       <ng-container matColumnDef="gameType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobile" >Game Type</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header >Game Type</th>
         <td mat-cell *matCellDef="let element"> {{element.gameType}}</td>
       </ng-container>
       <ng-container matColumnDef="played">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobile">Date Played</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Played</th>
         <td mat-cell *matCellDef="let element"> {{element.played}}</td>
       </ng-container>
 
@@ -33,31 +36,31 @@
             <div id="innerTable" class="inner-table mat-elevation-z8" 
             *ngIf="expandGameDetail">
 
-              <table  #innerTables mat-table [dataSource]="expandGameDetail" matSort >
+              <table  #innerTables mat-table [dataSource]="element.questions" matSort >
                 
-                <ng-container matColumnDef="questionText">
-                  <th mat-header-cell *matHeaderCellDef >Song Clip</th>
-                  <td mat-cell *matCellDef="let element" class="audioBox" > 
+                <ng-container matColumnDef="questionText" >
+                  <th mat-header-cell *matHeaderCellDef class="hideOnMobile">Song Clip</th>
+                  <td mat-cell *matCellDef="let element" class="audioBox" class="hideOnMobile"> 
                     <audio controls class ="audioPlayers" preload="none" src="{{element.questionText}}"></audio>
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="answer">
                   <th mat-header-cell *matHeaderCellDef >Song Name</th>
                   <td mat-cell class="songNameColumn" *matCellDef="let element"> 
-                    <a href={{element.answerHref}} target="_blank">{{element.answer}}</a></td>
+                    <a href={{element.answerHref}} target="_blank" class ="button">{{element.answer}}</a></td>
                 </ng-container>
                 <ng-container matColumnDef="userResponse">
                   <th mat-header-cell *matHeaderCellDef >You Answered</th>
                   <td mat-cell *matCellDef="let element"> {{element.userResponse}} </td>
                 </ng-container>
                 <ng-container matColumnDef="correct">
-                  <th mat-header-cell *matHeaderCellDef></th>
-                  <td id="correctColumn" mat-cell *matCellDef="let element">  </td>
+                  <th mat-header-cell *matHeaderCellDef class="hideOnMobile"></th>
+                  <td id="correctColumn" mat-cell *matCellDef="let element" class="hideOnMobile">  </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedQuestionColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedQuestionColumns;"
-                [ngStyle]="row.correct ? {'background-color':'rgba(8, 116, 26, 0.49)'} : {'background-color': '#8a1313'}"
+                [ngStyle]="row.correct ? {'background-color':'rgba(8, 116, 26, 0.49)'} : {'background-color': 'rgb(219, 54, 54)'}"
                 id="innerRow"></tr>
               </table>
             </div>
@@ -79,5 +82,5 @@
       <tr mat-row *matRowDef="let row; columns: ['expandedGame']" class="example-detail-row"></tr>
     </table>
   </div>
-  <mat-paginator [pageSize] = "10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSize] = "10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
