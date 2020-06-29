@@ -43,7 +43,7 @@
 input {
   display: flex;
   height: 3vh;
-  width: 76%;
+  width: 75.5%;
   background: rgb(13, 70, 13);
   color: white;
   font-size: large;
@@ -53,6 +53,11 @@ input {
 }input:focus {
   outline: none;
   box-shadow: none;
+}
+mat-paginator{
+  display: flex;
+  width: 75.5%;
+  margin: auto;
 }
 th{
   font-size: 40px;
@@ -74,10 +79,10 @@ th{
     cursor: pointer;
   }
 
-  audio:focus {
+  /* audio:focus {
     outline: none;
     box-shadow: none;
-  }
+  } */
   #innerTable{
     display: flex;
     flex: 1 1 auto;
@@ -91,10 +96,10 @@ th{
   #innerTable th{
     font-size: 20px;
   }
-  #songNameColumn{
+  .songNameColumn{
     padding-right: 24px;
   }
-  #innerTable #audioBox{
+  #innerTable .audioBox{
     display: flex;
     padding: 5px;
     padding-right: 20px;
