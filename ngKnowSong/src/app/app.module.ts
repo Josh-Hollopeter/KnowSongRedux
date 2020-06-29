@@ -26,9 +26,8 @@ import { FinishedgameComponent } from './game/finishedgame/finishedgame.componen
 import { GameHistoryComponent } from './component/game-history/game-history.component';
 import { GameHistory } from './game/data/game-history';
 import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -51,8 +50,8 @@ import { MatSortModule } from '@angular/material/sort';
     HttpClientModule,
     FormsModule,
     MatTableModule,
-    MatButtonModule,
     MatSortModule,
+    MatPaginatorModule
   ],
   providers: [
     AuthService,

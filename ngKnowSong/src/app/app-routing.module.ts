@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'lyric', component: LyricMatcherComponent, resolve: {questions: LyricResolverService}, canActivate:[AdminGuard]},
   { path: 'finishedgame', component: FinishedgameComponent, canActivate:[AdminGuard]},
   { path: 'gamehistory', component: GameHistoryComponent, canActivate:[AdminGuard]},
+  { path: 'gamehistory/:viewGame', component: GameHistoryComponent, canActivate:[AdminGuard]},
   { path: 'error', component: ErrorComponent},
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
