@@ -40,12 +40,12 @@
                 
                 <ng-container matColumnDef="questionText" >
                   <th mat-header-cell *matHeaderCellDef class="hideOnMobile">Song Clip</th>
-                  <td mat-cell *matCellDef="let element" class="audioBox" class="hideOnMobile"> 
+                  <td mat-cell *matCellDef="let element" class="hideOnMobile"> 
                     <audio controls class ="audioPlayers" preload="none" src="{{element.questionText}}"></audio>
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="answer">
-                  <th mat-header-cell *matHeaderCellDef >Song Name</th>
+                  <th mat-header-cell *matHeaderCellDef >Song Link</th>
                   <td mat-cell class="songNameColumn" *matCellDef="let element"> 
                     <a href={{element.answerHref}} target="_blank" class ="button">{{element.answer}}</a></td>
                 </ng-container>
