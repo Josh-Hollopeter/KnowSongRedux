@@ -162,3 +162,46 @@
   }
 
 }
+@media (max-width: 1024px) {
+  h1{
+    font-size: 1vh;
+  }
+  .backToHome img{
+    width: 6vh;
+    height: 6vh;
+  }
+  .artistCard{
+    display: inline-block;
+    margin: 1vh; 
+    padding: 1vh; 
+    width: 6vh;
+    height: 6vh;
+    cursor: pointer;
+    color: bisque;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  .artistPhoto{
+    width:6vh;
+    height:6vh;
+    border-radius: .5vh;
+  }
+  a{
+    font-size: 2vh;
+  }
+  .header{
+    text-align-last: center;
+    text-align: center;
+  } .header h1{
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 3vh;
+    padding-top: 2vh;
+    color: #44c767;
+  } .header h3{
+    padding-top: 2vh;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 2em;
+    color: bisque;
+  }
+
+}
