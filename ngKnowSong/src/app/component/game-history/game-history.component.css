@@ -145,16 +145,30 @@ th{
   .example-element-description-attribution {
     opacity: 0.5;
   }
+ 
 
 @media(max-width: 1000px){
   table {
     width: 100%;
   }
+ 
 
   .backToHome img{
-    width: 75px;
-    height: 75px;
+    width: 6vh;
+    height: 6vh;
     top: 0px;
     position: fixed;
   }
+  .main-div{
+    font-size: 1vh ;
+  }
+  #outerRow td{
+    font-size: 2vh ;
+  }
+  #innerTable th{
+    font-size: 2vh;
+  }
+ .mobile{
+   font-size: 2vh;
+ }
 }
