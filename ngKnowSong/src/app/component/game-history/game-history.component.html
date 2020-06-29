@@ -13,15 +13,15 @@
     <table mat-table [dataSource]="dataSource"  multiTemplateDataRows matSort class="mat-elevation-z8" id="outerTable">
 
       <ng-container matColumnDef="artist">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Artist</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobile">Artist</th>
         <td mat-cell *matCellDef="let element"> {{element.artist}}</td>
       </ng-container>
       <ng-container matColumnDef="gameType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Game Type</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobile" >Game Type</th>
         <td mat-cell *matCellDef="let element"> {{element.gameType}}</td>
       </ng-container>
       <ng-container matColumnDef="played">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Played</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="mobile">Date Played</th>
         <td mat-cell *matCellDef="let element"> {{element.played}}</td>
       </ng-container>
 
