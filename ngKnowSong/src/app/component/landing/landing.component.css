@@ -3,7 +3,8 @@
   text-align: center;
   color: #44c767;
   font-size: 700%;
-  display: flexbox;
+  display: flex;
+  flex-direction: column;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   letter-spacing: 1px;
   line-height: 100px;
@@ -15,6 +16,19 @@
   align-items: center;
   min-height: 75vh;
   color: white;
+}
+.knowSongLogo{
+  width: 200px;
+  height: 200px;
+}
+.middleRow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  padding-left: 20px;
+}.middleRow p{
+  margin-left: 40px;
 }
 
 button{
@@ -78,10 +92,24 @@ button{
   opacity: 1;
   animation-iteration-count: 1;
 }
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
   .text_1 {
     font-size: 4vw;
     width:14em;
+  }
+  .knowSongLogo{
+    position: fixed;
+    top: 10px;
+    left: 5%;
+    width: 150px;
+    height: 150px;
+  }
+  .about button{
+    font-size:20px;
+	  padding:10px 25px;
+  }
+  .middleRow{
+    padding-left: 0px;
   }
 }
 .text_1::after{

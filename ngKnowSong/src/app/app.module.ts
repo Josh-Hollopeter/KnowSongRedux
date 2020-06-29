@@ -61,7 +61,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     UserService,
     GameHistory,
     GameBuilderService,
-    GameServiceService
+    GameServiceService,
 
   ],
   bootstrap: [AppComponent],
