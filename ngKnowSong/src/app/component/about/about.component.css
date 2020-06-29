@@ -105,6 +105,13 @@ h2{
 h2{
   margin-left: none;
 }
+.title{
+  justify-content: left;
+}
+.text{
+  margin-left: 5%;
+  margin-right: 5%;
+}
 
 .about button{
   border-radius: 10px;
