@@ -36,17 +36,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		// create new user object and get the attributes
 		OAuth2User oauthUser = super.loadUser(userRequest);
 		Map<String, Object> attributes = oauthUser.getAttributes();
-		
 		String id = oauthUser.getName();
 		
-		String username = null;
-		try {
-			username = attributes.get("display_name").toString();
-		} catch (Exception e) {
-			System.err.println(
-					"failed to get display_name from spotify ");
-			e.printStackTrace();
+		String username = attributes.get("display_name").toString();;
+		
+		String countryCode = attributes.get("country").toString();
+		Boolean premium;
+		if(attributes.get("product").toString().equals("premium")){
+			premium = true;
+		} else {
+			premium = false;
 		}
+		
+		
 		
 		String imgSource = null;
 		if (((ArrayList<LinkedHashMap<String, String>>) attributes.get("images")).size() > 0) {
@@ -71,14 +73,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		Optional<User> optionalUser = userRepo.findById(id);
 		if(optionalUser.isPresent()) {
 			User user = optionalUser.get();
+			// fields that change
 			user.setImgSource(imgSource);
+			user.setUsername(username);
+			user.setPremium(premium);
 			userRepo.saveAndFlush(user);
 		} else {
 			User newUser = new User();
 			newUser.setEnabled(true);
 			newUser.setImgSource(imgSource);
 			newUser.setId(id);
+			newUser.setPremium(premium);
 			newUser.setUsername(username);
+			newUser.setMarket(countryCode);
+			
 			userRepo.saveAndFlush(newUser);
 		}
 		
