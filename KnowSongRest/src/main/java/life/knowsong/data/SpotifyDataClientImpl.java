@@ -434,7 +434,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		User user = optionalUser.get();
 		// user will always be present. it's checked in controller
 		
-		System.out.println("get count of games");
 		String jpql = "SELECT COUNT(*) FROM SingleplayerGame g WHERE g.id.user = :userId";
 		Integer count = em.createQuery(jpql, Long.class)
 				.setParameter("userId", user.getId())
