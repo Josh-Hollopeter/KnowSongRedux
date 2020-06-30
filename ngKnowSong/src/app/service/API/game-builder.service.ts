@@ -96,10 +96,9 @@ export class GameBuilderService {
             game.artist = body[i]["artist"];
             game.gameType = body[i]["gameType"];
             game.id = body[i]["id"]["id"];
-            console.log(body[i]["played"]);
-            
+  
+            // date does not work for mobile browsers!!!
             game.played =  new Date(body[i]["played"]).toLocaleString();
-            console.log(game.played);
             
             game.questions = body[i]["questions"];
             gameList.push(game);                 
