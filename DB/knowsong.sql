@@ -10,6 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema knowsong
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `knowsong` ;
 
 -- -----------------------------------------------------
 -- Schema knowsong
@@ -158,13 +159,12 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `knowsong`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `knowsong`.`user` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
+  `id` VARCHAR(50) NOT NULL,
+  `username` VARCHAR(75) NOT NULL,
   `enabled` TINYINT(4) NULL DEFAULT '0',
   `admin` TINYINT(4) NULL DEFAULT '0',
   `img_source` TEXT NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
@@ -175,7 +175,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_game` (
   `id` INT(11) NOT NULL,
-  `fk_user_id` INT(11) NOT NULL,
+  `fk_user_id` VARCHAR(50) NOT NULL,
   `played` DATETIME NULL DEFAULT NULL,
   `artist` VARCHAR(255) NULL DEFAULT NULL,
   `game_type` VARCHAR(45) NULL,
@@ -196,7 +196,7 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `knowsong`.`singleplayer_question` (
   `num` INT(11) NOT NULL,
   `fk_singleplayer_game_id` INT(11) NOT NULL,
-  `fk_user_ref` INT(11) NOT NULL,
+  `fk_user_ref` VARCHAR(50) NOT NULL,
   `question_text` VARCHAR(255) NULL DEFAULT NULL,
   `answer` VARCHAR(255) NULL DEFAULT NULL,
   `option2` VARCHAR(255) NULL DEFAULT NULL,
@@ -248,35 +248,11 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `knowsong`.`user_has_friend`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `knowsong`.`user_has_friend` (
-  `user_id` INT(11) NOT NULL,
-  `friend_id` INT(11) NOT NULL,
-  `date_friended` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`, `friend_id`),
-  INDEX `fk_user_has_user_user2_idx` (`friend_id` ASC),
-  INDEX `fk_user_has_user_user1_idx` (`user_id` ASC),
-  CONSTRAINT `fk_user_has_user_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `knowsong`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_has_user_user2`
-    FOREIGN KEY (`friend_id`)
-    REFERENCES `knowsong`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `knowsong`.`user_playlist`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `knowsong`.`user_playlist` (
   `playlist_id` INT(11) NOT NULL,
-  `user_id` INT(11) NOT NULL,
+  `user_id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`playlist_id`, `user_id`),
   INDEX `fk_playlist_has_user_user1_idx` (`user_id` ASC),
   INDEX `fk_playlist_has_user_playlist1_idx` (`playlist_id` ASC),

@@ -69,7 +69,6 @@ export class GameHistoryComponent implements OnInit{
     if(this.activatedRoute.snapshot.paramMap.get('viewGame') === 'viewpreviousgame'){
       this.expandGameDetail = this.gameHistory[0];
     }
-    this.audioElements = document.getElementsByClassName('audioPlayers');
     
   }
 
@@ -83,30 +82,5 @@ export class GameHistoryComponent implements OnInit{
       this.dataSource.paginator.pageSize = 10;
     }
   }
-
-  toggleRow(element: SingleplayerGame){
-    console.log("toggled");
-    // element.questions as MatTableDataSource
-    console.log(element);
-    this.audioElements = document.getElementsByClassName('audioPlayers');
-    console.log(document.getElementsByClassName('songNameColumn').length);
-    
-    console.log(this.audioElements.length);
-    
-  }
-  
-  // load 5 at a time when game is expanded to prevent lag
-  // @ViewChild('audioPlayers', {static: false}) audioRef: ElementRef;
-  // audio: HTMLAudioElement;
-  audioElements;
-  // audioUr
-  pauseAudioElement(){
-    this.audioElements = document.getElementsByClassName('audioPlayers');
-    console.log(this.audioElements.length);
-    console.log(this.expandGameDetail);
-    
-    
-  }
-
 
 }

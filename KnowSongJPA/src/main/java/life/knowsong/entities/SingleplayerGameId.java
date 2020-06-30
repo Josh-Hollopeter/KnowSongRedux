@@ -15,7 +15,7 @@ public class SingleplayerGameId  implements Serializable{
 	private int id;
 	
 	@Column(name = "fk_user_id")
-	private int user;
+	private String user;
 
 	// GETTERS / SETTERS
 	public int getId() {
@@ -26,15 +26,15 @@ public class SingleplayerGameId  implements Serializable{
 		this.id = id;
 	}
 
-	public int getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(int user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
-	public SingleplayerGameId(int id, int user) {
+	public SingleplayerGameId(int id, String user) {
 		super();
 		this.id = id;
 		this.user = user;

@@ -394,11 +394,14 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	
 	// GAME STORAGE
 	@Override
-	public boolean storeSingleplayerGame(SingleplayerGame game, String username) {
+	public boolean storeSingleplayerGame(SingleplayerGame game, String userId) {
 		SingleplayerGame cleanedGame = new SingleplayerGame();
 		SingleplayerGameId gameId = new SingleplayerGameId();
-		System.out.println("get user");
-		User user = userRepo.findByUsername(username);
+
+		
+		Optional<User> optionalUser = userRepo.findById(userId);
+		User user = optionalUser.get();
+		// user will always be present. it's checked in controller
 		
 		System.out.println("get count of games");
 		String jpql = "SELECT COUNT(*) FROM SingleplayerGame g WHERE g.id.user = :userId";
@@ -426,9 +429,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		}
 		cleanedGame.setQuestions(questions);
 
-		cleanedGame.getQuestions().forEach(x ->{
-			System.out.println(x);
-		});
 		try {
 			em.persist(cleanedGame);
 			return true;
@@ -439,9 +439,9 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	}
 
 	@Override
-	public List<SingleplayerGame> getSingleplayerGames(String username) {
-		System.out.println("get user");
-		User user = userRepo.findByUsername(username);
+	public List<SingleplayerGame> getSingleplayerGames(String userId) {
+		Optional<User> optionalUser = userRepo.findById(userId);
+		User user = optionalUser.get();
 		
 		String jpql = "SELECT g FROM SingleplayerGame g WHERE g.user.id = :userId";
 		List<SingleplayerGame> games = em.createQuery(jpql, SingleplayerGame.class)

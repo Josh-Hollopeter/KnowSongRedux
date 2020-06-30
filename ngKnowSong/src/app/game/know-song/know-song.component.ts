@@ -74,8 +74,6 @@ export class KnowSongComponent implements OnInit {
       this.gameHistory.setGamePlayed(true);
       this.gameService.storeGame(this.game).subscribe();
       this.router.navigate(['gamehistory', 'viewpreviousgame']);
-
-      console.log(this.game);
       // end game
     }
   }
