@@ -39,7 +39,12 @@ public class UserController {
 	
 	@GetMapping("/user")
     public User user(@AuthenticationPrincipal OAuth2User principal) {
-		return userRepo.findByUsername(principal.getName());		
+		Optional<User> optionalUser = userRepo.findById(principal.getName());
+		if(optionalUser.isPresent()) {
+			return optionalUser.get();
+		} else {
+			return null;
+		}
     }
 
 	@GetMapping("/getAccessToken")

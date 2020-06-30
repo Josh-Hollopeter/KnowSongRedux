@@ -22,7 +22,6 @@ import { GameBuilderService } from './service/API/game-builder.service';
 import { GameServiceService } from './game/data/game-service.service';
 import { QuestionComponent } from './game/know-song/question/question.component';
 import { AboutComponent } from './component/about/about.component';
-import { FinishedgameComponent } from './game/finishedgame/finishedgame.component';
 import { GameHistoryComponent } from './component/game-history/game-history.component';
 import { GameHistory } from './game/data/game-history';
 import { MatTableModule } from '@angular/material/table';
@@ -40,7 +39,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     KnowSongComponent,
     QuestionComponent,
     AboutComponent,
-    FinishedgameComponent,
     GameHistoryComponent,
   ],
   imports: [
