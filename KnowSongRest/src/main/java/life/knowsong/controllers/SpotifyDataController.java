@@ -1,6 +1,7 @@
 package life.knowsong.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,8 @@ import life.knowsong.data.SpotifyDataClient;
 import life.knowsong.entities.Artist;
 import life.knowsong.entities.SingleplayerGame;
 import life.knowsong.entities.Track;
+import life.knowsong.entities.User;
+import life.knowsong.repositories.UserRepository;
 
 @RestController
 @RequestMapping("spotifyData")
@@ -30,6 +33,8 @@ public class SpotifyDataController {
 	@Autowired
 	SpotifyDataClient ourSpotifyData;
 	
+	@Autowired
+	UserRepository userRepo;
 	
 	@Autowired
 	BuildAudioGame buildAudio;
@@ -57,9 +62,12 @@ public class SpotifyDataController {
 			HttpServletResponse response) 
 	{
 		if(principal != null) {
-			
-			boolean isExplicit = true;
-			SingleplayerGame game = buildAudio.build(artistId, accessToken, gameType, isExplicit);
+			// check if user is using a free or premium account
+			Optional<User> optionalUser = userRepo.findById(principal.getName());
+			User user = optionalUser.get();
+			boolean premium = user.getPremium();	// premium games store information for faster future load times. free games do not.
+
+			SingleplayerGame game = buildAudio.build(artistId, accessToken, gameType, premium);
 			if(game == null) {
 				response.setStatus(404);	// game was not created. artist may have too few tracks
 				return null;

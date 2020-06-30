@@ -164,6 +164,8 @@ CREATE TABLE IF NOT EXISTS `knowsong`.`user` (
   `enabled` TINYINT(4) NULL DEFAULT '0',
   `admin` TINYINT(4) NULL DEFAULT '0',
   `img_source` TEXT NULL DEFAULT NULL,
+  `premium` TINYINT(1) NULL,
+  `market` VARCHAR(2) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 6

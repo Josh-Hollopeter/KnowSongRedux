@@ -93,7 +93,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	}
 
 	@Override
-	public Artist getArtist(String accessToken, String artistId) {
+	public Artist getArtist(String accessToken, String artistId, boolean premium) {
 		this.spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
 
 		Artist artist = this.populateArtistAlbumsToJavaMemory(artistId);
@@ -106,7 +106,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 
 			Set<Album> albums = artist.getAlbums(); // WHY: by saving the list of albums already in database, we can
 													// prevent more sql calls later
-
+			Set<Album> newAlbums = null;
 			if (!albums.isEmpty()) {
 				// artist has albums
 				List<String> albumIds = new ArrayList<String>();
@@ -117,7 +117,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 
 				try {
 					int offset = 0; // first call's offset is 0 (for more than 50 artist albums)
-					this.getAllAlbumsFromArtist(artist, offset, albumIds);
+					newAlbums = this.getAllAlbumsFromArtist(artist, offset, albumIds, premium);
 				} catch (org.apache.hc.core5.http.ParseException e) {
 					e.printStackTrace();
 				}
@@ -125,25 +125,43 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				// artist doesn't have albums
 				try {
 					int offset = 0; // first call's offset is 0 (for more than 50 artist albums)
-					this.getAllAlbumsFromArtist(artist, offset, null);
+					newAlbums = this.getAllAlbumsFromArtist(artist, offset, null, premium);
 				} catch (org.apache.hc.core5.http.ParseException e) {
 					e.printStackTrace();
 				}
 			}
-			em.refresh(artist);
+			
+			if(premium) {
+				em.refresh(artist);
+			} else {
+				Iterator<Album> it = newAlbums.iterator();
+				while(it.hasNext()) {
+					artist.addAlbum(it.next());
+				}
+			}
+			
 			return artist;
 
 		} else {
 			// artist is not in db
-			artist = this.buildNewArtist(artistId); // new artist
-
+			artist = this.buildNewArtist(artistId, premium); // new artist
+			Set<Album> newAlbums = null;
 			try {
 				int offset = 0; // first call's offset is 0 (for more than 50 artist albums)
-				this.getAllAlbumsFromArtist(artist, offset, null);
+				newAlbums = this.getAllAlbumsFromArtist(artist, offset, null, premium);
 			} catch (org.apache.hc.core5.http.ParseException e) {
 				e.printStackTrace();
 			}
-			em.refresh(artist);
+			
+			if(premium) {
+				em.refresh(artist);
+			} else {
+				Iterator<Album> it = newAlbums.iterator();
+				while(it.hasNext()) {
+					artist.addAlbum(it.next());
+				}
+			}
+			
 			return artist;
 		}
 	}
@@ -158,7 +176,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 	// NOTE: having a large collection of artists and genres will provide us with a
 	// recommendations capability in the future!
 	//
-	private Artist buildNewArtist(String artistId) {
+	private Artist buildNewArtist(String artistId, boolean premium) {
 
 		GetArtistRequest getArtistRequest = spotifyApi.getArtist(artistId).build();
 		Artist artist = new Artist();
@@ -184,8 +202,11 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			artist.setPopularity(fullArtist.getPopularity());
 			artist.setCreated(new Timestamp(new Date().getTime()));
 			artist.setLastUpdated(new Timestamp(new Date().getTime()));
-
-			em.persist(artist); // register primary key before mapping genres
+			
+			// only do database functions for premium
+			if(premium) {
+				em.persist(artist); // register primary key before mapping genres
+			
 			fullArtist.getGenres();
 			String[] genresUnparsed = fullArtist.getGenres();
 			// genres are persisted through cascade effect with new artist
@@ -206,6 +227,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 
 			}
 			em.persist(artist);
+			}
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -213,7 +235,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		return artist;
 	}
 
-	private void getAllAlbumsFromArtist(Artist artist, int offset, List<String> albumIds)
+	private Set<Album> getAllAlbumsFromArtist(Artist artist, int offset, List<String> albumIds, boolean premium)
 			throws org.apache.hc.core5.http.ParseException, EntityExistsException {
 		GetArtistsAlbumsRequest getArtistsAlbumsRequest = this.spotifyApi.getArtistsAlbums(artist.getId())
 				.album_type("album,single").limit(50).offset(offset).market(CountryCode.US).build();
@@ -244,7 +266,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		// track is duplicating the ID.
 		// for this reason, the tracks will have 4 extra characters added to the end
 
-		List<Album> albums = new ArrayList<Album>();
+		Set<Album> albums = new HashSet<Album>();
 		try {
 			Paging<AlbumSimplified> pagingAlbums = null;
 			try {
@@ -258,7 +280,7 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 			// if there is another page of items, call method again.
 			if (pagingAlbums.getNext() != null) {
 				int newOffset = offset + 50;
-				getAllAlbumsFromArtist(artist, newOffset, albumIds); // add 50 until total IE: (0 -> 50 -> 100 ->
+				getAllAlbumsFromArtist(artist, newOffset, albumIds, premium); // add 50 until total IE: (0 -> 50 -> 100 ->
 																		// 112(done) )
 			}
 			// ---------------------------------------
@@ -270,7 +292,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				if (albumIds != null) {
 					for (String id : albumIds) {
 						if (id.equals(sa.getId())) {
-							System.out.println("DUPLICATE ALBUM");
 							continue parseAlbums;
 						}
 
@@ -311,9 +332,14 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 				ArtistSimplified[] simplifiedArtists = sa.getArtists();
 
 				// gather associated artists (another HTTP to spotify server)
-				artist.setTriviaReady(true);
+				if(premium) {
+					artist.setTriviaReady(true);
+				}
+				
 				album.addArtist(artist); // add the primary artist
 
+				// dont need related artists for current implementation of knowsong
+				if(premium) {
 				for (ArtistSimplified sas : simplifiedArtists) {
 					// ignore the main artist
 					if (sas.getId() != artist.getId()) {
@@ -322,22 +348,28 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 							Artist storedNonPrimaryArtist = managedArtist.get();
 							album.addArtist(storedNonPrimaryArtist);
 						} else {
-							Artist newArtist = this.buildNewArtist(sas.getId());
+							Artist newArtist = this.buildNewArtist(sas.getId(), premium);
 							album.addArtist(newArtist);
 						}
 					}
+				}
 				}
 
 				// now get all tracks :) (another HTTP to spotify server)
 				Set<Track> tracks = this.getAllTracksFromAlbum(album);
 				album.setTracks(tracks);
-				em.persist(album);
+				albums.add(album);
+				if(premium) {
+					em.persist(album);
+				}
+				
 				
 			}
 
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
+		return albums;
 
 	}
 
@@ -348,7 +380,6 @@ public class SpotifyDataClientImpl implements SpotifyDataClient {
 		try {
 			Paging<TrackSimplified> trackSimplifiedPaging = getAlbumsTracksRequest.execute();
 			TrackSimplified[] st = trackSimplifiedPaging.getItems();
-
 			for (int x = 0; x < st.length; x++) {
 				TrackSimplified ts = st[x];
 				Track track = new Track();
