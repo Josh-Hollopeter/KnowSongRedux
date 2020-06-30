@@ -36,10 +36,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		// create new user object and get the attributes
 		OAuth2User oauthUser = super.loadUser(userRequest);
 		Map<String, Object> attributes = oauthUser.getAttributes();
-
-//		String clientRegistrationId = userRequest.getClientRegistration()
-		String username = oauthUser.getName();
-//		refreshAccessToken(clientRegistrationId, username);
+		
+		String id = oauthUser.getName();
+		
+		String username = null;
+		try {
+			username = attributes.get("display_name").toString();
+		} catch (Exception e) {
+			System.err.println(
+					"failed to get display_name from spotify ");
+			e.printStackTrace();
+		}
+		
 		String imgSource = null;
 		if (((ArrayList<LinkedHashMap<String, String>>) attributes.get("images")).size() > 0) {
 
@@ -53,19 +61,28 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 				e.printStackTrace();
 			}
 		}
-		User user = userRepo.findByUsername(username);
-
+		
+		// user does not have profile photo, add the knowsong logo instead
+		if(imgSource == null) {
+			imgSource = "https://i.imgur.com/WEPSjQg.png";
+		}
+		
 		// check if user is in database, register new user or update image
-		if (user != null) {
+		Optional<User> optionalUser = userRepo.findById(id);
+		if(optionalUser.isPresent()) {
+			User user = optionalUser.get();
 			user.setImgSource(imgSource);
 			userRepo.saveAndFlush(user);
 		} else {
 			User newUser = new User();
 			newUser.setEnabled(true);
 			newUser.setImgSource(imgSource);
+			newUser.setId(id);
 			newUser.setUsername(username);
 			userRepo.saveAndFlush(newUser);
 		}
+		
+	
 		return oauthUser;
 	}
 //	

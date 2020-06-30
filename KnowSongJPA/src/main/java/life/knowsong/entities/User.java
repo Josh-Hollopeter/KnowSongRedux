@@ -22,8 +22,7 @@ public class User {
 	
 	
 	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY)
-	private int id;
+	private String id;
 	
 	private String username;
 
@@ -48,11 +47,11 @@ public class User {
 		inverseJoinColumns=@JoinColumn(name="playlist_id"))
 	private List<Playlist> playlists;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -104,11 +103,20 @@ public class User {
 		this.singleplayerGames = singleplayerGames;
 	}
 
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((admin == null) ? 0 : admin.hashCode());
+		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((imgSource == null) ? 0 : imgSource.hashCode());
+		result = prime * result + ((playlists == null) ? 0 : playlists.hashCode());
+		result = prime * result + ((singleplayerGames == null) ? 0 : singleplayerGames.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -121,7 +129,40 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id != other.id)
+		if (admin == null) {
+			if (other.admin != null)
+				return false;
+		} else if (!admin.equals(other.admin))
+			return false;
+		if (enabled == null) {
+			if (other.enabled != null)
+				return false;
+		} else if (!enabled.equals(other.enabled))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (imgSource == null) {
+			if (other.imgSource != null)
+				return false;
+		} else if (!imgSource.equals(other.imgSource))
+			return false;
+		if (playlists == null) {
+			if (other.playlists != null)
+				return false;
+		} else if (!playlists.equals(other.playlists))
+			return false;
+		if (singleplayerGames == null) {
+			if (other.singleplayerGames != null)
+				return false;
+		} else if (!singleplayerGames.equals(other.singleplayerGames))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
