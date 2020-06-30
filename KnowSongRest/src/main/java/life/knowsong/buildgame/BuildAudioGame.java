@@ -25,8 +25,8 @@ public class BuildAudioGame {
 	@Autowired
 	SpotifyDataClient spotifyData;
 
-	public SingleplayerGame build(String artistId, String accessToken, String gameType, boolean explicit) {
-		Artist artist = spotifyData.getArtist(accessToken, artistId);
+	public SingleplayerGame build(String artistId, String accessToken, String gameType, boolean premium) {
+		Artist artist = spotifyData.getArtist(accessToken, artistId, premium);
 
 		Set<Album> albums = artist.getAlbums();
 		Map<String, Track> trackMap = new HashMap<>();
@@ -56,8 +56,24 @@ public class BuildAudioGame {
 		game.setArtist(artist.getName());
 		game.setGameType(gameType);
 		
+		
+		
 		// get track names and shuffle
 		List<String> trackNames = new ArrayList<String>(trackMap.keySet());
+		
+		// get list of track names with preview URL
+		List<String> possibleAnswers = new ArrayList<String>();
+		for(int i =0; i < trackNames.size(); i++) {
+			if(trackMap.get(trackNames.get(i)).getPreviewUrl() != null) {
+				possibleAnswers.add(trackNames.get(i));
+			}
+		}
+		// NOT ENOUGH POSSIBILITIES FOR A GAME
+		if(possibleAnswers.size() < 5) {
+			return null;
+		}
+		
+		Collections.shuffle(possibleAnswers);
 		Collections.shuffle(trackNames);
 		
 		// build 5 questions
@@ -66,16 +82,20 @@ public class BuildAudioGame {
 			SingleplayerQuestionId questionId = new SingleplayerQuestionId();
 			questionId.setNum(x+1);	// will give game and user id upon completion of game
 			question.setId(questionId); // the question number
-			question.setQuestionText(trackMap.get(trackNames.get(x)).getPreviewUrl()); // get preview url from key mapping
-			String answer = trackNames.get(x);
+			question.setQuestionText(trackMap.get(possibleAnswers.get(x)).getPreviewUrl()); // get preview url from key mapping
+			String answer = possibleAnswers.get(x);
 			question.setAnswer(answer);
 			question.setAnswerHref(trackMap.get(answer).getHref());
 
+			// copy tracknames list and remove answer from list
+			List<String> trackNamesCopy = trackNames;
+			trackNamesCopy.removeIf( n -> (n == answer));
+			
 			// get 3 random indexes
 
 			// -----------------------------------------------------
 			// random number generator between 0 and size of track list
-			int range = trackNames.size();
+			int range = trackNamesCopy.size();
 			int intArray[] = new int[3];
 			for (int y = 0; y < 3; y++) {
 				int random;
@@ -99,9 +119,9 @@ public class BuildAudioGame {
 				
 			}
 			// -----------------------------------------------------
-			question.setOption2(trackNames.get(intArray[0]) );
-			question.setOption3(trackNames.get(intArray[1]) );
-			question.setOption4(trackNames.get(intArray[2]) );
+			question.setOption2(trackNamesCopy.get(intArray[0]) );
+			question.setOption3(trackNamesCopy.get(intArray[1]) );
+			question.setOption4(trackNamesCopy.get(intArray[2]) );
 			game.addQuestion(question);
 		}
 		// get the album for each track
