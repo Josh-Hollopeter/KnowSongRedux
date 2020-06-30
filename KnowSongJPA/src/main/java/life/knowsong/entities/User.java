@@ -30,6 +30,9 @@ public class User {
 	
 	private Boolean admin;
 		
+	private Boolean premium;
+	
+	private String market;
 	
 	@Column(name = "img_source")
 	private String imgSource;
@@ -103,8 +106,21 @@ public class User {
 		this.singleplayerGames = singleplayerGames;
 	}
 
+	public Boolean getPremium() {
+		return premium;
+	}
 
+	public void setPremium(Boolean premium) {
+		this.premium = premium;
+	}
 
+	public String getMarket() {
+		return market;
+	}
+
+	public void setMarket(String market) {
+		this.market = market;
+	}
 
 	@Override
 	public int hashCode() {
@@ -114,8 +130,8 @@ public class User {
 		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((imgSource == null) ? 0 : imgSource.hashCode());
-		result = prime * result + ((playlists == null) ? 0 : playlists.hashCode());
-		result = prime * result + ((singleplayerGames == null) ? 0 : singleplayerGames.hashCode());
+		result = prime * result + ((market == null) ? 0 : market.hashCode());
+		result = prime * result + ((premium == null) ? 0 : premium.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -149,15 +165,15 @@ public class User {
 				return false;
 		} else if (!imgSource.equals(other.imgSource))
 			return false;
-		if (playlists == null) {
-			if (other.playlists != null)
+		if (market == null) {
+			if (other.market != null)
 				return false;
-		} else if (!playlists.equals(other.playlists))
+		} else if (!market.equals(other.market))
 			return false;
-		if (singleplayerGames == null) {
-			if (other.singleplayerGames != null)
+		if (premium == null) {
+			if (other.premium != null)
 				return false;
-		} else if (!singleplayerGames.equals(other.singleplayerGames))
+		} else if (!premium.equals(other.premium))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -167,13 +183,7 @@ public class User {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", enabled=" + enabled + ", admin=" + admin
-				+ ", imgSource=" + imgSource + "]";
-	}
-
-
+	
 
 
 }
