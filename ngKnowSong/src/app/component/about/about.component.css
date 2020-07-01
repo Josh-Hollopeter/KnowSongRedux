@@ -16,6 +16,9 @@
   margin-left: 15%;
   margin-right: 15%;
 }
+b{
+  color: red;
+}
 a {
   color: aquamarine;
   text-decoration: none;

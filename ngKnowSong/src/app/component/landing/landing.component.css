@@ -18,17 +18,18 @@
   color: white;
 }
 .knowSongLogo{
-  width: 10vh;
-  height: 10vh;
+  width: 20vh;
+  height: 20vh;
 }
 .middleRow{
   display: flex;
   flex-direction: row;
   align-items: center;
   align-self: flex-start;
-  padding-left: 15%;
+  padding-left: 5%;
 }.middleRow p{
-  margin-left: 40px;
+
+  margin-left: 10px;
 }
 
 button{
