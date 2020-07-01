@@ -9,7 +9,7 @@ public interface SpotifyDataClient {
 
 	public List<Artist> listAllArtists();
 	
-	public Artist getArtist(String accessToken, String artistId);
+	public Artist getArtist(String accessToken, String artistId, boolean premium);
 	
 	public boolean storeSingleplayerGame(SingleplayerGame game, String username);
 	

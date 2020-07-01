@@ -20,7 +20,7 @@ public class SingleplayerQuestionId implements Serializable {
 	private int gameId;
 
 	@Column(name = "fk_user_ref")
-	private int userId;
+	private String userId;
 
 	public int getNum() {
 		return num;
@@ -38,15 +38,15 @@ public class SingleplayerQuestionId implements Serializable {
 		this.gameId = gameId;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public SingleplayerQuestionId(int num, int gameId, int userId) {
+	public SingleplayerQuestionId(int num, int gameId, String userId) {
 		super();
 		this.num = num;
 		this.gameId = gameId;
@@ -57,13 +57,15 @@ public class SingleplayerQuestionId implements Serializable {
 		
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + gameId;
 		result = prime * result + num;
-		result = prime * result + userId;
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -80,7 +82,10 @@ public class SingleplayerQuestionId implements Serializable {
 			return false;
 		if (num != other.num)
 			return false;
-		if (userId != other.userId)
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
 	}
