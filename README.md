@@ -4,21 +4,20 @@
 - Neal Savant
 
 ### Overview
-A RESTful web application using Musixmatch and Spotify API to generate trivia questions on music artists. A user can log in through spotify using OAuth2. Database currently allows storage of refresh tokens, login information, and match history.
+A RESTful web application using Musixmatch and Spotify API to generate trivia questions on music artists. A user can log in through spotify using OAuth2 setup in Spring Security. Artist information is stored in the database for the purpose of developing questions for users, with the additional functionality of limiting external API requests. Database also keeps track of all games played.
+Note: We are not UI designers, but did our best.
 
 Game modes include: 
 
 - Identify song from 30 second audio segment 
 
-- Identify song from lyrics
-
-- Guess the release year of an album
+- Identify song from lyrics (currently not available due to rate limiting issues)
 
 ### Technologies and Development Techniques
 - Java 8
 - TypeScript 
 - Javascript
-- Angular 9 
+- Angular 10 
 - Spring REST
 - Spring Boot
 - Spring Security
