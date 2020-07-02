@@ -1,28 +1,128 @@
- #middle {
+#middle {
   align-items: center;
   text-align: center;
-  color: #008000;
+  color: #44c767;
   font-size: 700%;
+  display: flex;
+  flex-direction: column;
   font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   letter-spacing: 1px;
   line-height: 100px;
-
 }
- button{
-  font-size: large;
-  border-radius: 10px;
-  border-style: inset;
-  border: 3px solid green;
-
-}
-
-main {
+.main-div{
+  user-select:none;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: black;
+  min-height: 75vh;
   color: white;
+}
+.knowSongLogo{
+  width: 20vh;
+  height: 20vh;
+}
+.middleRow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  padding-left: 5%;
+}.middleRow p{
+
+  margin-left: 10px;
+}
+
+button{
+  font-size: xx-large;
+  border-radius: 10px;
+  border-style: inset;
+  border: 4px solid green;
+  background-color:#44c767bb;
+  padding:28px 50px;
+  color: bisque;
+
+}button:focus {
+  outline: none;
+  box-shadow: none;
+}button:active{
+  transform: translateY(6px);
+}button:hover {
+  background-color:#333333;
+  border: #333333 4px solid;
+}
+
+.about{
+  position: fixed;
+  top: 30px;
+  right: 5%;
+}
+.about button{
+  background-color:#44c767bb;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+  color:bisque;
+  border: 4px solid green;
+	font-family:'Merriweather Sans', sans-serif;
+	font-size:30px;
+	padding:28px 50px;
+	text-decoration:none;
+}.about button:hover {
+  background-color:#333333;
+  border: #333333 4px solid;
+}.about button:active {
+	transform: translateY(-6px);
+}.about button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+.text_1 {
+  animation: text1;
+  font-size: 25%;
+  width:13em;
+}
+.text_1 {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  position: relative;
+  animation-duration: 2s;
+  animation-timing-function: steps(26);
+  opacity: 1;
+  animation-iteration-count: 1;
+}
+@media (max-width: 1024px) {
+  .text_1 {
+    font-size: 4vw;
+    width:14em;
+  }
+  .knowSongLogo{
+    position: fixed;
+    top: .5vh;
+    left: 5%;
+     width: 15vh;
+    height:15vh;
+  }
+  .about button{
+    font-size:20px;
+	  padding:10px 25px;
+  }
+  .middleRow{
+    padding-left: 0px;
+  }
+}
+.text_1::after{
+  content: "|";
+  position: absolute;
+  margin-left: 2px;
+  right: 0;
+  animation: cursor;
+  animation-duration: 1s;
+  animation-timing-function: steps(5,end);
+  animation-iteration-count: infinite;
 }
 
 .muzieknootjes {
@@ -85,5 +185,22 @@ main {
   100% {
     transform: scale(1.5) translate(100%, -100%);
     opacity: 0;
+  }
+}
+@keyframes text1 {
+  from{
+    width: 0;
+  }
+  to {
+    width: 13em;
+
+  }
+}
+@keyframes cursor {
+ from{
+    width: 0;
+  }
+  to {
+    width: 1;
   }
 }

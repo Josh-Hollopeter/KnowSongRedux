@@ -1,0 +1,256 @@
+
+.main-div{
+  color:white;
+  user-select:none;
+  height: 100%;
+  overflow: auto;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  
+}.header h1{
+  min-height: 100px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 5em;
+  padding-top: 10px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #44c767;
+}
+
+.backToHome{
+    position: fixed;
+    top: 15px;
+    left: 0%;
+    cursor: pointer;
+  }.backToHome img{
+    width: 125px;
+    height: 125px;
+  }.backToHome img:active{
+    transform: translateY(8px);
+  }.backToHome:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+
+.tableContainer{
+  display: flex;
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+input {
+  display: flex;
+  height: 3vh;
+  width: 75.5%;
+  padding: 0px 8px;
+  background: rgb(13, 70, 13);
+  color: white;
+  font-size: large;
+  margin: auto;
+  text-align:left;
+  border-radius: 5px;
+}input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+mat-paginator{
+  background-color: #2f3234;
+  color: white !important;
+}
+
+.mat-cell{
+  color: white;
+}
+::ng-deep .mat-select-value {
+  color: white;
+}
+::ng-deep .mat-select-arrow{
+  color: white;
+}
+
+tr{
+  background-color: #2f3234;
+  color: white;
+}
+th{
+  font-size: 40px;
+  background: #2f3234;
+  text-align: center !important;
+  color: white;
+  font-style: oblique;
+}
+
+  #outerTable {
+    width: 80%;
+  }
+  #outerRow td{
+    font-size: 25px;
+    text-align: left;
+  }#outerRow:hover{
+    background: rgba(8, 116, 26, 0.493);
+    cursor: pointer;
+    color: rgb(219, 54, 54);
+  }
+ 
+  a{
+    background-color:#44c767bb;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:white;
+    font-size:25px;
+    padding:10px 10px;
+    text-decoration:none;
+  } a:hover {
+    background-color:#333333;
+    border: #333333 2px solid;
+  } a:active {
+    transform: translateY(-6px);
+  }a:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  #innerTable{
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    
+  } #innerTable th{
+    background-color: #0059ff;
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  #innerTable td{
+    font-size: 25px;
+    text-align: center;
+  }#innerTable td:hover{
+    cursor: auto;
+  }
+  .songNameColumn{
+    padding-right: 24px;
+  }
+  .audioPlayers{
+    display: flex;
+    padding: 5px;
+    padding-right: 20px;
+  }
+  #innerTable #correctColumn{
+    width: 0px;
+  }
+
+  /* new */
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 1;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .example-element-diagram {
+    display: flex;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+  }
+  
+  .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  .example-element-description-attribution {
+    opacity: 0.5;
+  }
+ 
+
+@media(max-width: 850px){
+  table {
+    width: 100%;
+  }
+ 
+  a{
+    font-size: 15px;
+  }
+  #innerTable td{
+    font-size: 15px
+  }
+  .backToHome img{
+    width: 6vh;
+    height: 6vh;
+    top: 0px;
+    position: fixed;
+  }
+  .main-div{
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .header h1{
+    min-height: 50px;
+    font-size: 5em;
+    padding-top: 10px;
+    color: #44c767;
+  }
+  #outerRow td{
+    font-size: 15px ;
+    text-align: center;
+  }
+
+  #innerTable th{
+    font-size: 25px;
+    text-align: center;
+  }#innerTable tr{
+    text-align: center;
+  }
+  #outerTable th{
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .hideOnMobile{
+    display: none;
+  }
+
+  .tableContainer{
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  #outerTable {
+    width: 100%;
+  }
+  .mat-paginator-container{
+    display: flex;
+    width: 100%;
+    margin-bottom: auto;
+    font-size: 12px;
+    flex-wrap: none;
+  }
+  ::ng-deep .mat-paginator-page-size{
+    margin-right: 0px !important; 
+  }
+
+
+}

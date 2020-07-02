@@ -1,0 +1,8 @@
+
+<div class="context">
+    <figcaption>{{artistName}} {{gameType}} Game</figcaption>
+    <figcaption>Question {{questionNum}}/5</figcaption>
+ <app-question [questionOptions]="options"  [newAudio]="audio"  (optionPicked)="onOptionPicked($event)" >
+ </app-question>
+</div>
+

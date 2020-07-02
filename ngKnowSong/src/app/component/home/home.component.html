@@ -1,28 +1,51 @@
-<html>
-
-<head>
-    <title>Know Song</title>
-</head>
-
-<body>
-
-    <button (click)='getUserDetail()'>Display User Info in console</button>
-    <button (click)='getAccessToken()'>Display AccessToken in console</button>
-<div class="wrapper">
-
-
-    <div>
-        <p class="lw">Know Song</p>
-        <h1 class="header">New Game</h1>
-        <div class="flex-container">
-            <div style="cursor: pointer;" class="box" onclick="window.location='http://google.com'"><span class="link"> The <br> Lyric <br> Matcher </span></div>
-            <div style="cursor: pointer;" class="box" onclick="window.location='http://google.com'"><span class="link">Name <br> the <br > Song</span></div>
-            <div style="cursor: pointer;" class="box" onclick="window.location='http://google.com'"><span class="link">Album <br > Release <br > Year</span></div>
+<div class="main-div">
+    <div class="userInfo">
+            <img class="profileImg" src="{{user.imgSource}}">
+            <p>{{user.username}}</p>
+    </div>
+    <div class="about" [routerLink]="'/about'">
+        <button>About</button>
+    </div>
+    <div class="introHeader">
+        <img class ="knowSongLogo" src="assets/KnowSongQED.png" alt='knowsong_icon'>
+        <div class ="headerText">
+            <h1>KnowSong</h1>
+            <h3>An Artist Trivia Generator</h3>
         </div>
+    </div>
+
+    <div class="infoBar">
+        <p class="welcome-text"></p>
+    </div>
+
+    <div class="cardHolder">
+        <div class="menuCard" [routerLink]="['/creategame', 'Audio Clips']">
+            <div>
+                <img src="https://img.icons8.com/ios/50/000000/room-sound.png"/>
+                <h2>Audio Clips</h2>
+            </div>
+            <p>Listen to the track. Can you guess the name?</p>
+        </div>
+        <div class="menuCard" [routerLink]="'/gamehistory'">
+            <div>
+                <img src="https://img.icons8.com/dotty/80/000000/activity-history.png"/>
+                <h2>Game History</h2>
+            </div>
+            <p>View your previous games in detail!</p>
+        </div>
+        <div class="menuCard">
+            <div>
+                <img src="https://img.icons8.com/windows/96/000000/apple-music-lyrics.png"/>
+                <h2>Lyric Matcher</h2>
+            </div>
+            <p>Coming very soon!</p>
+        </div>
+        
+    </div>
+    <div class="aboutMobile" >
+        <button [routerLink]="'/about'">About</button>
     </div>
 </div>
 
 
-</body>
 
-</html>

@@ -1,0 +1,188 @@
+.form-control {
+  width: 66%;
+  height: 5vh;
+  background: green;
+  color: bisque;
+  font-size: xx-large;
+  margin: auto;
+  text-align:center;
+  border-radius: 20px;
+}.form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#findArtist{
+  text-align:center;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color:rgb(219, 214, 208);
+  font-size: xx-large;
+  opacity: .7;
+  
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color:rgb(219, 214, 208);
+  font-size: xx-large;
+  opacity: .7;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color:rgb(219, 214, 208);
+  font-size: xx-large;
+  opacity: .7;
+}
+
+.text{
+  user-select:none;
+  width: 100%;
+  position: sticky;
+  text-align: center;
+  color: bisque;
+  font-size: 50px;
+  z-index: 1;
+  font-family: cursive;
+}
+
+.cardRow{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.artistCard{
+  display: inline-block;
+  margin: 10px; 
+  padding: 10px; 
+  width: 220px;
+  height: 220px;
+  cursor: pointer;
+  color: bisque;
+  text-align: center;
+}.artistCard:hover{
+  color: green;
+}.artistCard h2{
+  width: 100%;
+  text-align: center;
+  font-size: xx-large;
+}
+
+.artistPhoto{
+  width:200px;
+  height:200px;
+  border-radius: 10px;
+}
+
+.header{
+  text-align-last: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+} .header h1{
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 5em;
+  padding-top: 66px;
+  color: #44c767;
+} .header h3{
+  padding-top: 20px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 2em;
+  color: bisque;
+}
+.main-div{
+  color:white;
+  user-select:none;
+}
+
+.backToHome{
+  position: fixed;
+  top: 15px;
+  left: 0%;
+  cursor: pointer;
+}.backToHome img{
+  width: 125px;
+  height: 125px;
+}.backToHome img:active{
+  transform: translateY(8px);
+}.backToHome:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+/* loading animation */
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid black;
+  border-right: 16px solid #18ab29;
+  border-bottom: 16px solid black;
+  border-left: 16px solid #18ab29;
+  width: 200px;
+  height: 200px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin: 0;
+  position: fixed;
+  top: 30%;
+  left: 42%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes animate {
+
+  100%{
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.35;
+      border-radius: 0;
+  }
+
+  0%{
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      border-radius: 50%;
+  }
+
+}
+@media (max-width: 800px) {
+  /* h1{
+    font-size: 1vh;
+  } */
+  .backToHome img{
+    width: 7vh;
+    height: 7vh;
+  }
+  /* a{
+    font-size: 2vh;
+  } */
+  /* .header{
+    text-align-last: center;
+    text-align: center;
+  } .header h1{
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 3vh;
+    padding-top: 2vh;
+    color: #44c767;
+  } .header h3{
+    padding-top: 2vh;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 2em;
+    color: bisque;
+  } */
+
+}

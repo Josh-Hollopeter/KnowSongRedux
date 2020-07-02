@@ -1,66 +1,183 @@
-body {
-  background: #fff;
+@import url(https://fonts.googleapis.com/css2?family=Merriweather);
+
+.main-div{
+  color:white;
+  user-select:none;
+  height: 100%;
+  overflow: auto;
+}
+.infoBar{
+  padding: 42px 0 40px;
+}
+.knowSongLogo{
+  width: 200px;
+  height: 200px;
+}
+.profileImg{
+  height: 125px;
+  width: 125px;
+  border-radius: 50px;
 }
 
-.title {
-  font-size: 5.6rem;
-  font-family: 'Lobster', cursive;
+.userInfo{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 20px;
+  left: 5%;
+}.userInfo p{
+  font-size: xx-large;
+  margin-top: 15px;
+  text-align: center;
 }
 
-.wrapper {
-  background: url("https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/when-no-music-no-life-tee-with-an-illustration-of-a-guitar-with-trees-tshirt-design-nature-lake-roland-andres.jpg");
-  color: #eee;
-  width: 100%;
-  height: 100vh;
+.about{
+  position: fixed;
+  top: 30px;
+  right: 5%;
+}.about button{
+  background-color:#44c767bb;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+  color:bisque;
+  border: 4px solid green;
+	font-family:'Merriweather Sans', sans-serif;
+	font-size:30px;
+	padding:28px 50px;
+	text-decoration:none;
+}.about button:hover {
+  background-color:#333333;
+  border: #333333 4px solid;
+}.about button:active {
+	transform: translateY(-6px);
+}.about button:focus {
+  outline: none;
+  box-shadow: none;
+}
+.aboutMobile{
+  display: none;
+}
+
+.introHeader{
+  text-align-last: center;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-  perspective-origin: 50% 50%;
-  animation: animation 50s linear infinite;
-  background-size: cover;
+} .introHeader h1{
+  margin-left: 5px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 5em;
+  padding-top: 66px;
+  color: #44c767;
+} .introHeader h3{
+  padding-top: 20px;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 2em;
+  color: bisque;
+} .headerText{
+  flex-direction: column;
 }
 
-@keyframes animation {
-   100%{
-    background-position:0px -3000px;
+/* CARDS */
+
+.menuCard{
+  flex: 1;
+  
+    border-radius: 30px;
+    border: 4px solid black;
+    padding: 30px 30px;
+    background-color: #3f4740;
+    color: #fff;
+    text-align: center;
+    margin: 25px;
+    display: inline-block;
+    vertical-align: top;
+    min-height: 200px;
+}.menuCard:hover{
+  background:linear-gradient(to bottom, #3f4740 70%, #44c767 100%);
+	background-color:#44c767;
+}.menuCard:active{
+  transform: translateY(8px);
+}.menuCard:focus {
+  outline: none;
+  box-shadow: none;
+}.menuCard img{
+  height: 60px;
+  width: 60px;
+}.menuCard h2{
+  font-size: 30px;
+}.menuCard p{
+  font-size: 17px;
+}
+
+.cardHolder{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around safe;
+  flex-wrap: wrap;
+}
+
+@media(max-width: 800px){
+  .introHeader{
+    flex-wrap: wrap;
+    margin-top: 5px;
+  }.introHeader h1{
+    padding-top: 15px;
+  }.introHeader h3{
+    margin-bottom: 0px;
   }
-}
-.lw {
-    font-size: 60px;
-    text-align: center;
-    color: #FAEBD7;
-}
-
-.header {
-    text-align: center;
-    color: #FAEBD7;
-}
-
-.flex-container {
+  .cardHolder{
+    flex-direction: column;
+  }
+  .menuCard{
+    min-height: 100px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  .infoBar{
+    padding: 0px;
+  }
+  .userInfo{
+    display: none;
+  }
+  .about{
+    display: none;
+  }
+  .aboutMobile{
     display: flex;
     justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }.aboutMobile button{
+    background-color:#44c767bb;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    cursor:pointer;
+    color:bisque;
+    border: 4px solid green;
+    font-family:'Merriweather Sans', sans-serif;
+    font-size:30px;
+    padding:28px 50px;
+    text-decoration:none;
+  }.aboutMobile button:hover {
+    background-color:#333333;
+    border: #333333 4px solid;
+  }.aboutMobile button:active {
+    transform: translateY(-6px);
+  }.aboutMobile button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
 }
 
-.link {
-    text-decoration: none;
-    font-family: "Andale Mono", AndaleMono, monospace;
-    font-size: X-large;
-    letter-spacing: 1px;
-    line-height: 35px;
-    color: white;
-
-}
-
-.box {
-    background-color: #FF6347;
-    padding: 10px;
-    /* border: 1px solid green; */
-    box-shadow: inset -5px -5px 5px black;
-    width: 120px;
-    height: 120px;
-    margin-right: 40;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+@media(max-width: 350px){
+  .introHeader {
+    font-size: 12px;
+  }
 }

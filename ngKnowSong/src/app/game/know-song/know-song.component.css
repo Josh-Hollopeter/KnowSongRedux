@@ -1,0 +1,28 @@
+@import url('https://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css');
+
+
+figcaption {
+  font-family: cursive;
+  margin-bottom: 40px;
+}
+
+.context {
+  user-select:none;
+  width: 100%;
+  position: absolute;
+  top:5vh;
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+  z-index: 1;
+
+}
+
+figcaption{
+  font-size: 3vh;
+}
+
+app-question{
+font-size: 3vh;
+}
+
