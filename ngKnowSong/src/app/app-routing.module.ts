@@ -15,7 +15,7 @@ import { GameHistoryComponent } from './component/game-history/game-history.comp
 
 
 const routes: Routes = [
-  
+
   { path: '', component: LandingComponent },
   { path: 'about', component: AboutComponent },
   { path: 'home', component: HomeComponent, resolve: {user: UserResolverService}, canActivate: [AdminGuard]},
