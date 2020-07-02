@@ -40,7 +40,7 @@ button{
   background-color:#44c767bb;
   padding:28px 50px;
   color: bisque;
-  
+
 }button:focus {
   outline: none;
   box-shadow: none;
@@ -102,7 +102,7 @@ button{
   .knowSongLogo{
     position: fixed;
     top: .5vh;
-    left: 5%; 
+    left: 5%;
      width: 15vh;
     height:15vh;
   }
@@ -193,7 +193,7 @@ button{
   }
   to {
     width: 13em;
-    
+
   }
 }
 @keyframes cursor {
