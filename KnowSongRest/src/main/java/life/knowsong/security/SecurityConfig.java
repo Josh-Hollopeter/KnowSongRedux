@@ -2,27 +2,16 @@ package life.knowsong.security;
 
 import java.util.Arrays;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
-import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
-import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -42,7 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests(a -> a
-                .antMatchers("/").permitAll()
+
+                .antMatchers("/**").permitAll()
+
                 .anyRequest().authenticated()//Specify that URLs are allowed by any authenticated user.
                 
             )
@@ -58,15 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             	.userInfoEndpoint()
             			.userService(userService) // upon login, user information is opened in this service. conditionals applied in here
             	.and()
-            	.defaultSuccessUrl("http://localhost:4200/home")
-            	.failureUrl("http://localhost:4200");
+            	.defaultSuccessUrl("https://www.knowsong.life/home")
+            	.failureUrl("https://www.knowsong.life");
    
     }
     
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
     	CorsConfiguration configuration = new CorsConfiguration();
-    	configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+    	configuration.setAllowedOrigins(Arrays.asList("https://www.knowsong.life","https://knowsong.life"));
     	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT"));
     	configuration.setAllowedHeaders(Arrays.asList("Content-Type", "credentials"));
     	configuration.setAllowCredentials(true);
@@ -76,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	
     	return source;
     }
+
+   
 
    
 }
