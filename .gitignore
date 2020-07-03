@@ -5,4 +5,4 @@ target
 .gradle
 /.metadata/
 string.txt
-*.yml
+application.yml
