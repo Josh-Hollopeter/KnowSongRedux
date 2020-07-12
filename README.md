@@ -37,6 +37,16 @@ Game modes include:
 Simplified the question and game history storage with expansion for multiplayer in mind. More noticeably, storage of Spotify media metadata is implemented. This is a necessary transition due to the limitations of API requests. Client side instances will check the database for artist information before hitting Spotify's API.
 ![Database.png](https://user-images.githubusercontent.com/55298338/86310676-dab8d680-bbdb-11ea-8e37-14d16a3070be.png)
 
+### Gameplay Photos
+## Searching for an Artist using Spotify's catalogue
+![ArtistSearch.png](https://user-images.githubusercontent.com/55298338/87256634-a4881c00-c451-11ea-84f7-4b241542025f.PNG)
+
+## Dynamically generated questions using the artist's full music catalogue
+![Game.png](https://user-images.githubusercontent.com/55298338/87256637-a94cd000-c451-11ea-8458-e73c198869d4.PNG)
+
+## A user's game history page
+![GameHistory.png](https://user-images.githubusercontent.com/55298338/87256636-a6ea7600-c451-11ea-9b23-3b34d470d006.PNG)
+
 ### Future Versions
 
 - Web Socket Application Layer Protocol
