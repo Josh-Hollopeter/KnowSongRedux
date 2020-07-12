@@ -23,6 +23,7 @@ Game modes include:
 - Spring Security
 - Java Persistence API (JPA)
 - SQL
+- MySQL Workbench
 - OAuth2
 - HTML / CSS
 - Gradle
