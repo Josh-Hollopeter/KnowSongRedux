@@ -1,4 +1,4 @@
-## Know Song | A Spotify Trivia Web Application
+# Know Song | A Spotify Trivia Web Application
 
 - Josh Hollopeter
 - Neal Savant
@@ -47,7 +47,7 @@ Simplified the question and game history storage with expansion for multiplayer 
 ## A user's game history page
 ![GameHistory.png](https://user-images.githubusercontent.com/55298338/87256636-a6ea7600-c451-11ea-9b23-3b34d470d006.PNG)
 
-### Future Versions
+## Future Versions
 
 - Web Socket Application Layer Protocol
   - Multiplayer Trivia
