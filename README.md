@@ -16,6 +16,13 @@ Game modes include:
 
 - Identify song from lyrics (currently not available due to rate limiting issues)
 
+### Data Flow
+![Diagram.png](https://user-images.githubusercontent.com/55298338/90298257-c27cde00-de4e-11ea-9e25-9375bbfb2c1b.png)
+
+### Database (New v 1.0 Release)
+Simplified the question and game history storage with expansion for multiplayer in mind. More noticeably, storage of Spotify media metadata is implemented. This is a necessary transition due to the limitations of API requests. Client side instances will check the database for artist information before hitting Spotify's API.
+![Database.png](https://user-images.githubusercontent.com/55298338/86310676-dab8d680-bbdb-11ea-8e37-14d16a3070be.png)
+
 ### Technologies and Development Techniques
 - Java 8
 - TypeScript
@@ -36,11 +43,6 @@ Game modes include:
 - AWS EC2
 - Github/Git: Version Control
 - Agile Development
-
-### Database (New v 1.0 Release)
-Simplified the question and game history storage with expansion for multiplayer in mind. More noticeably, storage of Spotify media metadata is implemented. This is a necessary transition due to the limitations of API requests. Client side instances will check the database for artist information before hitting Spotify's API.
-![Database.png](https://user-images.githubusercontent.com/55298338/86310676-dab8d680-bbdb-11ea-8e37-14d16a3070be.png)
-
 # Gameplay Photos
 ## Searching for an Artist using Spotify's catalogue
 ![ArtistSearch.png](https://user-images.githubusercontent.com/55298338/87256634-a4881c00-c451-11ea-84f7-4b241542025f.PNG)
